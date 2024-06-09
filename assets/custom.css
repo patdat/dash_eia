@@ -1,0 +1,17 @@
+body {
+    background-color: #f8f9fa; /* Light yellow background */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12pt;
+}
+
+.card, .btn, .form-check-label {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Standard graph styling */
+.dash-graph {
+    border: 1px solid #ccc; /* Light gray border around graphs */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px;
+}
+
