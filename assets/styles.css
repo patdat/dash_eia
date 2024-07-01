@@ -1,0 +1,210 @@
+/* Import the font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+/* CSS for main content area */
+.content-area {
+    margin-left: 18rem;    /* Space for sidebar */
+    margin-right: 2rem;    /* Right margin for padding */
+    padding: 2rem;         /* Padding inside the content area */
+}
+
+/* Apply the font and background globally */
+body {
+    font-family: 'Corbel', sans-serif;
+    background-color: #f4f5f9; /* Custom RGB background color */
+}
+
+/* Ensure other text elements also inherit the font */
+h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
+    font-family: 'Corbel', sans-serif;
+}
+
+.large-font .dash-daq-toggle-switch__label {
+    font-size: 200px !important;
+}
+
+
+/* Optional: Add a hover effect for better user interaction */
+.nav, .nav-item, .btn, .btn-block {
+    width: 100%; /* Ensures each element fills its container */
+    margin: 0; /* Removes margin */
+    padding: 0; /* Eliminates padding inside nav elements */
+    border-radius: 10px; /* Rounder corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shaded effect for floating appearance */
+    transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
+
+/* Optional: Add a hover effect for better user interaction */
+.btn:hover, .btn-block:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
+
+
+/* Default style for the sidebar button */
+.sidebar-button.page-button {
+    padding: 0.75rem 1.25rem;
+    /* Additional styles can be added here if needed */
+}
+
+/* Default style for the sidebar button */
+.sidebar-button.subpage-button {
+    padding: 0.75rem 1.25rem;
+    /* Additional styles can be added here if needed */
+}
+
+/* General sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 18rem;
+    padding: 0;
+    background-color: #f4f5f9; /* Custom RGB background color */
+    overflow-y: auto;
+    z-index: 1001; /* Ensure sidebar is above other content */
+    border-right: 1px solid white; /* Thick grey border to the right */
+}
+
+/* Styling for all navigation links */
+.nav-link {
+    color: black; /* Black text for readability */
+    background-color: #f4f5f9; /* Custom RGB background color */
+    padding: 0.75rem 1.25rem; /* Consistent padding */
+    margin: 0; /* No margin for a flush look */
+    text-decoration: none; /* No underline */
+    display: block; /* Block display to fill the container */
+    width: 100%; /* Ensure full width coverage */
+    text-align: left; /* Align text to the left */
+}
+
+.nav-link:hover {
+    background-color: white; /* Red background on hover */
+    color: black; /* Light grey text on hover */
+    box-shadow: 0px 0px 8px 3px rgba(255,255,255,0.6); /* White glow effect */
+    text-shadow: 0px 0px 5px rgba(255,255,255,0.5); /* Soft white text shadow */
+
+    transition: all 0.3s ease; /* Smooth transition for all effects */
+    font-weight: bold;
+}
+
+.nav-link.active {
+    background-color: #f4f5f9 !important; /* Orange background when active */
+    color:#C00000 !important; /* Keep text white when active */
+    border-left: 35px solid #C00000; /* Red left border */
+    font-weight: bold;
+}
+
+.subpage-button {
+    font-weight: bold;
+    background-color:  #C0C0C0; /* Red background */
+    color: white; /* White text */
+    display: block;
+    width: 100%; /* Full width */
+    text-align: left;
+    border: none;
+    padding: 0.75rem 1.25rem; /* Corrected padding */
+    margin: 0; /* No margin */
+}
+
+.subpage-button:hover, .subpage-button:focus {
+    background-color: #C0C0C0; /* Slightly darker red on hover */
+    color: white;
+    box-shadow: 0px 0px 8px 3px rgba(255,255,255,0.6); /* White glow effect */
+    text-shadow: 0px 0px 5px rgba(255,255,255,0.5); /* Soft white text shadow */
+    transition: all 0.3s ease; /* Smooth transition for all effects */
+    font-weight: bold;
+}
+
+.page-button {
+    font-weight: bold;
+    background-color: rgb(34,97,145); /* Blue background */
+    color: white; /* White text */
+    display: block;
+    width: 100%; /* Full width */
+    text-align: left;
+    border: none;
+    padding: 0.75rem 1.25rem; /* Corrected padding */
+    margin: 0; /* No margin */
+    position: relative; /* Required for pseudo-element positioning */
+    overflow: hidden; /* Keeps the pseudo-element within the button bounds */
+}
+
+.page-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* Start from the left */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.2); /* Light white overlay */
+    transition: all 0.3s ease; /* Smooth transition for the effect */
+    pointer-events: none; /* Prevent mouse events on the pseudo-element */
+}
+
+.page-button:hover::before {
+    animation: flash 0.5s forwards; /* Animation named 'flash', run forwards */
+}
+
+@keyframes flash {
+    0% { left: -100%; } /* Start off the left side of the button */
+    100% { left: 100%; } /* Move to the right side of the button */
+}
+
+.page-button:hover, .page-button:focus {
+    background-color: rgb(34,97,145); /* Keep the background color on hover/focus */
+    color: white;
+    box-shadow: none; /* Optional: Remove box shadow if you want no pop effect */
+    text-shadow: none; /* Optional: Remove text shadow if you want no pop effect */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Ensure smooth color transition */
+    font-weight: bold;
+}
+
+/* assets/styles.css */
+
+.eia-weekly-top-spacing {
+    height: 15px;
+}
+
+.eia-weekly-header-title {
+    text-align: left;
+    margin-top: 20px;
+}
+
+/* styles.css */
+.graph-container {
+    border-radius: 15px !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    background-color: white !important;  /* Optional: ensures the background color of the graph container is white */
+    padding: 10px !important;
+}
+
+.eia-weekly-graph-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-gap: 20px !important;
+    justify-content: space-around !important;
+}
+
+.eia-weekly-graph-page-layout {
+    margin-top: 50px;
+}
+
+/* assets/custom_styles.css */
+.custom-loading .dash-spinner {
+    border: 8px solid #226191; /* Light border color */
+    border-top-color: #C00000; /* Green top border */
+    width: 60px; /* Size of the spinner */
+    height: 60px; /* Size of the spinner */
+    border-radius: 50%; /* Make it a circle */
+    animation: spin 1s linear infinite; /* Smooth spinning animation */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
