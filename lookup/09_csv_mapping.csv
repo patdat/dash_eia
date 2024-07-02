@@ -1,0 +1,511 @@
+aspect,location,category,6/21/24,6/14/24,wow,yoy
+crude oil production ,us,domestic production,13200.0,13200.0,0.0,1000.0
+crude oil production ,us,alaska,410.0,414.0,-4.0,-17.0
+crude oil production ,us,lower 48,12800.0,12800.0,0.0,1000.0
+refiner inputs and utilization ,us,crude oil inputs,16532.0,16765.0,-233.0,278.0
+refiner inputs and utilization ,p1,crude oil inputs,779.0,812.0,-33.0,128.0
+refiner inputs and utilization ,p2,crude oil inputs,3881.0,3963.0,-82.0,-176.0
+refiner inputs and utilization ,p3,crude oil inputs,9119.0,9129.0,-10.0,496.0
+refiner inputs and utilization ,p4,crude oil inputs,619.0,645.0,-26.0,10.0
+refiner inputs and utilization ,p5,crude oil inputs,2134.0,2217.0,-83.0,-181.0
+refiner inputs and utilization ,us,gross inputs,16895.0,17143.0,-248.0,48.0
+refiner inputs and utilization ,p1,gross inputs,829.0,834.0,-5.0,151.0
+refiner inputs and utilization ,p2,gross inputs,3889.0,3975.0,-86.0,-193.0
+refiner inputs and utilization ,p3,gross inputs,9337.0,9388.0,-51.0,307.0
+refiner inputs and utilization ,p4,gross inputs,616.0,641.0,-25.0,8.0
+refiner inputs and utilization ,p5,gross inputs,2224.0,2304.0,-80.0,-225.0
+refiner inputs and utilization ,us,operable capacity,18326.0,18326.0,0.0,56.0
+refiner inputs and utilization ,p1,operable capacity,910.0,910.0,0.0,32.0
+refiner inputs and utilization ,p2,operable capacity,4246.0,4246.0,0.0,40.0
+refiner inputs and utilization ,p3,operable capacity,9987.0,9987.0,0.0,70.0
+refiner inputs and utilization ,p4,operable capacity,652.0,652.0,0.0,2.0
+refiner inputs and utilization ,p5,operable capacity,2531.0,2531.0,0.0,-89.0
+refiner inputs and utilization ,us,percent utilization,92.2,93.5,-1.2999999999999972,0.0
+refiner inputs and utilization ,p1,percent utilization,91.1,91.7,-0.6000000000000085,13.899999999999991
+refiner inputs and utilization ,p2,percent utilization,91.6,93.6,-2.0,-5.5
+refiner inputs and utilization ,p3,percent utilization,93.5,94.0,-0.5,2.4000000000000057
+refiner inputs and utilization ,p4,percent utilization,94.4,98.3,-3.8999999999999915,0.9000000000000057
+refiner inputs and utilization ,p5,percent utilization,87.9,91.0,-3.0999999999999943,-5.599999999999994
+refiner and blender net inputs ,us,motor gasoline blending components,625.0,829.0,-204.0,419.0
+refiner and blender net inputs ,p1,motor gasoline blending components,2537.0,2580.0,-43.0,60.0
+refiner and blender net inputs ,p2,motor gasoline blending components,304.0,221.0,83.0,155.0
+refiner and blender net inputs ,p3,motor gasoline blending components,-2421.0,-2211.0,-210.0,94.0
+refiner and blender net inputs ,p4,motor gasoline blending components,57.0,59.0,-2.0,30.0
+refiner and blender net inputs ,p5,motor gasoline blending components,148.0,180.0,-32.0,80.0
+refiner and blender net inputs ,us,rbob,254.0,538.0,-284.0,197.0
+refiner and blender net inputs ,p1,rbob,564.0,586.0,-22.0,94.0
+refiner and blender net inputs ,p2,rbob,136.0,90.0,46.0,107.0
+refiner and blender net inputs ,p3,rbob,-577.0,-326.0,-251.0,-69.0
+refiner and blender net inputs ,p4,rbob,55.0,51.0,4.0,55.0
+refiner and blender net inputs ,p5,rbob,76.0,138.0,-62.0,10.0
+refiner and blender net inputs ,us,cbob,96.0,297.0,-201.0,197.0
+refiner and blender net inputs ,p1,cbob,1600.0,1770.0,-170.0,37.0
+refiner and blender net inputs ,p2,cbob,264.0,139.0,125.0,150.0
+refiner and blender net inputs ,p3,cbob,-1761.0,-1597.0,-164.0,-20.0
+refiner and blender net inputs ,p4,cbob,-4.0,-4.0,0.0,-19.0
+refiner and blender net inputs ,p5,cbob,-4.0,-11.0,7.0,47.0
+refiner and blender net inputs ,us,gtab,131.0,18.0,113.0,-33.0
+refiner and blender net inputs ,p1,gtab,131.0,18.0,113.0,-33.0
+refiner and blender net inputs ,p2,gtab,0.0,0.0,0.0,0.0
+refiner and blender net inputs ,p3,gtab,0.0,0.0,0.0,0.0
+refiner and blender net inputs ,p4,gtab,0.0,0.0,0.0,0.0
+refiner and blender net inputs ,p5,gtab,0.0,0.0,0.0,0.0
+refiner and blender net inputs ,us,all other blending components,144.0,-25.0,169.0,59.0
+refiner and blender net inputs ,p1,all other blending components,243.0,206.0,37.0,-37.0
+refiner and blender net inputs ,p2,all other blending components,-97.0,-8.0,-89.0,-103.0
+refiner and blender net inputs ,p3,all other blending components,-83.0,-288.0,205.0,183.0
+refiner and blender net inputs ,p4,all other blending components,6.0,12.0,-6.0,-6.0
+refiner and blender net inputs ,p5,all other blending components,76.0,53.0,23.0,23.0
+refiner and blender net inputs ,us,fuel ethanol,927.0,931.0,-4.0,30.0
+refiner and blender net inputs ,p1,fuel ethanol,334.0,339.0,-5.0,14.0
+refiner and blender net inputs ,p2,fuel ethanol,254.0,253.0,1.0,7.0
+refiner and blender net inputs ,p3,fuel ethanol,157.0,158.0,-1.0,4.0
+refiner and blender net inputs ,p4,fuel ethanol,34.0,33.0,1.0,5.0
+refiner and blender net inputs ,p5,fuel ethanol,147.0,148.0,-1.0,-1.0
+refiner and blender net production ,us,finished motor gasoline,9881.0,10170.0,-289.0,-236.0
+refiner and blender net production ,us,finished motor gasoline (excl. adjustment),10016.0,9904.0,112.0,433.0
+refiner and blender net production ,p1,finished motor gasoline (excl. adjustment),3308.0,3339.0,-31.0,177.0
+refiner and blender net production ,p2,finished motor gasoline (excl. adjustment),2598.0,2572.0,26.0,73.0
+refiner and blender net production ,p3,finished motor gasoline (excl. adjustment),2248.0,2175.0,73.0,125.0
+refiner and blender net production ,p4,finished motor gasoline (excl. adjustment),400.0,378.0,22.0,40.0
+refiner and blender net production ,p5,finished motor gasoline (excl. adjustment),1462.0,1441.0,21.0,18.0
+refiner and blender net production ,us,adjustment,-135.0,266.0,-401.0,-669.0
+refiner and blender net production ,us,reformulated,3173.0,3162.0,11.0,210.0
+refiner and blender net production ,p1,reformulated,1220.0,1209.0,11.0,63.0
+refiner and blender net production ,p2,reformulated,363.0,351.0,12.0,46.0
+refiner and blender net production ,p3,reformulated,512.0,521.0,-9.0,36.0
+refiner and blender net production ,p4,reformulated,62.0,58.0,4.0,62.0
+refiner and blender net production ,p5,reformulated,1016.0,1023.0,-7.0,3.0
+refiner and blender net production ,us,blended with fuel ethanol,3172.0,3162.0,10.0,209.0
+refiner and blender net production ,p1,blended with fuel ethanol,1220.0,1209.0,11.0,63.0
+refiner and blender net production ,p2,blended with fuel ethanol,363.0,351.0,12.0,46.0
+refiner and blender net production ,p3,blended with fuel ethanol,512.0,521.0,-9.0,36.0
+refiner and blender net production ,p4,blended with fuel ethanol,62.0,58.0,4.0,62.0
+refiner and blender net production ,p5,blended with fuel ethanol,1016.0,1023.0,-7.0,3.0
+refiner and blender net production ,us,other,0.0,0.0,0.0,0.0
+refiner and blender net production ,p1,other,0.0,0.0,0.0,0.0
+refiner and blender net production ,p2,other,0.0,0.0,0.0,0.0
+refiner and blender net production ,p3,other,0.0,0.0,0.0,0.0
+refiner and blender net production ,p4,other,0.0,0.0,0.0,0.0
+refiner and blender net production ,p5,other,0.0,0.0,0.0,0.0
+refiner and blender net production ,us,conventional,6843.0,6742.0,101.0,223.0
+refiner and blender net production ,p1,conventional,2088.0,2129.0,-41.0,114.0
+refiner and blender net production ,p2,conventional,2235.0,2222.0,13.0,27.0
+refiner and blender net production ,p3,conventional,1736.0,1653.0,83.0,89.0
+refiner and blender net production ,p4,conventional,339.0,320.0,19.0,-21.0
+refiner and blender net production ,p5,conventional,446.0,418.0,28.0,15.0
+refiner and blender net production ,us,ed55 and lower,5959.0,5987.0,-28.0,91.0
+refiner and blender net production ,p1,ed55 and lower,2098.0,2137.0,-39.0,86.0
+refiner and blender net production ,p2,ed55 and lower,2100.0,2098.0,2.0,24.0
+refiner and blender net production ,p3,ed55 and lower,1040.0,1043.0,-3.0,0.0
+refiner and blender net production ,p4,ed55 and lower,276.0,265.0,11.0,-16.0
+refiner and blender net production ,p5,ed55 and lower,445.0,443.0,2.0,-3.0
+refiner and blender net production ,us,greater than ed55,10.0,8.0,2.0,-1.0
+refiner and blender net production ,p1,greater than ed55,3.0,2.0,1.0,0.0
+refiner and blender net production ,p2,greater than ed55,6.0,5.0,1.0,-1.0
+refiner and blender net production ,p3,greater than ed55,1.0,1.0,0.0,0.0
+refiner and blender net production ,p4,greater than ed55,0.0,0.0,0.0,-1.0
+refiner and blender net production ,p5,greater than ed55,0.0,0.0,0.0,0.0
+refiner and blender net production ,us,kerosene-type jet fuel,1932.0,1889.0,43.0,110.0
+refiner and blender net production ,p1,kerosene-type jet fuel,105.0,102.0,3.0,25.0
+refiner and blender net production ,p2,kerosene-type jet fuel,308.0,312.0,-4.0,1.0
+refiner and blender net production ,p3,kerosene-type jet fuel,987.0,987.0,0.0,80.0
+refiner and blender net production ,p4,kerosene-type jet fuel,32.0,29.0,3.0,0.0
+refiner and blender net production ,p5,kerosene-type jet fuel,501.0,460.0,41.0,5.0
+refiner and blender net production ,us,commercial,1868.0,1869.0,-1.0,163.0
+refiner and blender net production ,p1,commercial,105.0,102.0,3.0,25.0
+refiner and blender net production ,p2,commercial,308.0,312.0,-4.0,0.0
+refiner and blender net production ,p3,commercial,964.0,982.0,-18.0,117.0
+refiner and blender net production ,p4,commercial,26.0,23.0,3.0,-1.0
+refiner and blender net production ,p5,commercial,466.0,451.0,15.0,23.0
+refiner and blender net production ,us,military,60.0,16.0,44.0,-53.0
+refiner and blender net production ,p1,military,0.0,0.0,0.0,0.0
+refiner and blender net production ,p2,military,1.0,1.0,0.0,0.0
+refiner and blender net production ,p3,military,21.0,3.0,18.0,-37.0
+refiner and blender net production ,p4,military,3.0,3.0,0.0,1.0
+refiner and blender net production ,p5,military,35.0,9.0,26.0,-17.0
+refiner and blender net production ,us,distillate fuel oil,4902.0,4760.0,142.0,193.0
+refiner and blender net production ,p1,distillate fuel oil,213.0,213.0,0.0,36.0
+refiner and blender net production ,p2,distillate fuel oil,1115.0,1100.0,15.0,-116.0
+refiner and blender net production ,p3,distillate fuel oil,2953.0,2916.0,37.0,361.0
+refiner and blender net production ,p4,distillate fuel oil,197.0,175.0,22.0,-16.0
+refiner and blender net production ,p5,distillate fuel oil,424.0,356.0,68.0,-72.0
+refiner and blender net production ,us,15 ppm sulfur and under,4700.0,4575.0,125.0,118.0
+refiner and blender net production ,p1,15 ppm sulfur and under,209.0,212.0,-3.0,25.0
+refiner and blender net production ,p2,15 ppm sulfur and under,1126.0,1107.0,19.0,-99.0
+refiner and blender net production ,p3,15 ppm sulfur and under,2770.0,2737.0,33.0,293.0
+refiner and blender net production ,p4,15 ppm sulfur and under,197.0,174.0,23.0,-16.0
+refiner and blender net production ,p5,15 ppm sulfur and under,400.0,344.0,56.0,-83.0
+refiner and blender net production ,us,> 15 ppm to 500 ppm sulfur,124.0,91.0,33.0,38.0
+refiner and blender net production ,p1,> 15 ppm to 500 ppm sulfur,7.0,4.0,3.0,7.0
+refiner and blender net production ,p2,> 15 ppm to 500 ppm sulfur,7.0,-1.0,8.0,4.0
+refiner and blender net production ,p3,> 15 ppm to 500 ppm sulfur,104.0,77.0,27.0,33.0
+refiner and blender net production ,p4,> 15 ppm to 500 ppm sulfur,0.0,0.0,0.0,-1.0
+refiner and blender net production ,p5,> 15 ppm to 500 ppm sulfur,6.0,11.0,-5.0,-6.0
+refiner and blender net production ,us,> 500 ppm sulfur,79.0,94.0,-15.0,38.0
+refiner and blender net production ,p1,> 500 ppm sulfur,-3.0,-3.0,0.0,4.0
+refiner and blender net production ,p2,> 500 ppm sulfur,-17.0,-6.0,-11.0,-20.0
+refiner and blender net production ,p3,> 500 ppm sulfur,80.0,102.0,-22.0,35.0
+refiner and blender net production ,p4,> 500 ppm sulfur,0.0,0.0,0.0,1.0
+refiner and blender net production ,p5,> 500 ppm sulfur,19.0,1.0,18.0,18.0
+refiner and blender net production ,us,residual fuel oil,294.0,274.0,20.0,138.0
+refiner and blender net production ,p1,residual fuel oil,59.0,42.0,17.0,51.0
+refiner and blender net production ,p2,residual fuel oil,21.0,38.0,-17.0,-7.0
+refiner and blender net production ,p3,residual fuel oil,117.0,123.0,-6.0,50.0
+refiner and blender net production ,p4,residual fuel oil,11.0,12.0,-1.0,1.0
+refiner and blender net production ,p5,residual fuel oil,87.0,60.0,27.0,44.0
+refiner and blender net production ,us,propane/propylene,2705.0,2660.0,45.0,184.0
+refiner and blender net production ,p1,propane/propylene,244.0,242.0,2.0,-47.0
+refiner and blender net production ,p2,propane/propylene,514.0,518.0,-4.0,-28.0
+refiner and blender net production ,p3,propane/propylene,1710.0,1674.0,36.0,278.0
+refiner and blender net production ,p45,propane/propylene,238.0,226.0,12.0,-18.0
+ethanol plant production ,us,fuel ethanol,1043.0,1057.0,-14.0,-9.0
+ethanol plant production ,p1,fuel ethanol,12.0,12.0,0.0,-1.0
+ethanol plant production ,p2,fuel ethanol,987.0,998.0,-11.0,-4.0
+ethanol plant production ,p3,fuel ethanol,24.0,26.0,-2.0,-1.0
+ethanol plant production ,p4,fuel ethanol,10.0,10.0,0.0,-3.0
+ethanol plant production ,p5,fuel ethanol,10.0,12.0,-2.0,-1.0
+stocks (million barrels) ,us,crude oil (including spr),832.893,828.017,4.875999999999976,30.586000000000013
+stocks (million barrels) ,us,commercial,460.696,457.105,3.591000000000008,7.006000000000029
+stocks (million barrels) ,p1,commercial,8.099,8.374,-0.27500000000000036,0.5810000000000004
+stocks (million barrels) ,p2,commercial,116.311,117.258,-0.9469999999999885,-10.471999999999994
+stocks (million barrels) ,us,"cushing, oklahoma",33.896,34.122,-0.2259999999999991,-9.347999999999999
+stocks (million barrels) ,p3,"cushing, oklahoma",264.305,262.256,2.049000000000035,18.040999999999997
+stocks (million barrels) ,p4,"cushing, oklahoma",24.036,24.163,-0.1269999999999989,-1.1199999999999974
+stocks (million barrels) ,p5,"cushing, oklahoma",47.944,45.054,2.8900000000000006,-0.02599999999999625
+stocks (million barrels) ,us,alaska in-transit,3.623,1.95,1.6730000000000003,0.7200000000000002
+stocks (million barrels) ,us,spr,372.197,370.912,1.285000000000025,23.579999999999984
+stocks (million barrels) ,us,total motor gasoline,233.886,231.232,2.6539999999999964,11.881
+stocks (million barrels) ,p1,total motor gasoline,55.99,56.141,-0.15099999999999625,0.3260000000000005
+stocks (million barrels) ,p2,total motor gasoline,47.854,47.834,0.01999999999999602,3.4780000000000015
+stocks (million barrels) ,p3,total motor gasoline,90.003,88.749,1.2540000000000049,3.7579999999999956
+stocks (million barrels) ,p4,total motor gasoline,8.056,8.111,-0.05500000000000149,1.544999999999999
+stocks (million barrels) ,p5,total motor gasoline,31.982,30.397,1.5850000000000009,2.7729999999999997
+stocks (million barrels) ,us,finished motor gasoline,18.0,16.586,1.4140000000000015,0.16100000000000136
+stocks (million barrels) ,us,reformulated,0.015,0.017,-0.0020000000000000018,-0.006999999999999999
+stocks (million barrels) ,p1,reformulated,0.003,0.003,0.0,-0.001
+stocks (million barrels) ,p2,reformulated,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p3,reformulated,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p4,reformulated,0.0,0.0,0.0,-0.001
+stocks (million barrels) ,p5,reformulated,0.012,0.014,-0.002,-0.005000000000000001
+stocks (million barrels) ,us,blended with fuel ethanol,0.015,0.017,-0.0020000000000000018,-0.006999999999999999
+stocks (million barrels) ,p1,blended with fuel ethanol,0.003,0.003,0.0,-0.001
+stocks (million barrels) ,p2,blended with fuel ethanol,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p3,blended with fuel ethanol,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p4,blended with fuel ethanol,0.0,0.0,0.0,-0.001
+stocks (million barrels) ,p5,blended with fuel ethanol,0.012,0.014,-0.002,-0.005000000000000001
+stocks (million barrels) ,us,other,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p1,other,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p2,other,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p3,other,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p4,other,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p5,other,0.0,0.0,0.0,0.0
+stocks (million barrels) ,us,conventional,17.985,16.569,1.4160000000000004,0.16799999999999926
+stocks (million barrels) ,p1,conventional,2.683,3.177,-0.4940000000000002,-0.41900000000000004
+stocks (million barrels) ,p2,conventional,3.603,3.185,0.41800000000000015,-0.01200000000000001
+stocks (million barrels) ,p3,conventional,8.428,7.249,1.1790000000000012,0.15200000000000102
+stocks (million barrels) ,p4,conventional,1.198,1.142,0.05600000000000005,0.2799999999999999
+stocks (million barrels) ,p5,conventional,2.074,1.816,0.2579999999999998,0.16799999999999993
+stocks (million barrels) ,us,ed55 and lower,0.193,0.178,0.015000000000000013,0.0030000000000000027
+stocks (million barrels) ,p1,ed55 and lower,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p2,ed55 and lower,0.107,0.107,0.0,-0.012999999999999998
+stocks (million barrels) ,p3,ed55 and lower,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p4,ed55 and lower,0.086,0.071,0.015,0.015999999999999986
+stocks (million barrels) ,p5,ed55 and lower,0.0,0.0,0.0,0.0
+stocks (million barrels) ,us,greater than ed55,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p1,greater than ed55,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p2,greater than ed55,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p3,greater than ed55,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p4,greater than ed55,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p5,greater than ed55,0.0,0.0,0.0,0.0
+stocks (million barrels) ,us,motor gasoline blending components,215.886,214.646,1.240000000000009,11.719999999999999
+stocks (million barrels) ,p1,motor gasoline blending components,53.305,52.96,0.34499999999999886,0.7469999999999999
+stocks (million barrels) ,p2,motor gasoline blending components,44.251,44.649,-0.39800000000000324,3.489999999999995
+stocks (million barrels) ,p3,motor gasoline blending components,81.575,81.5,0.07500000000000284,3.605000000000004
+stocks (million barrels) ,p4,motor gasoline blending components,6.859,6.969,-0.11000000000000032,1.2670000000000003
+stocks (million barrels) ,p5,motor gasoline blending components,29.896,28.568,1.3279999999999994,2.6099999999999994
+stocks (million barrels) ,us,rbob,50.6,51.14,-0.5399999999999991,1.4549999999999983
+stocks (million barrels) ,p1,rbob,18.132,18.498,-0.36599999999999966,0.2630000000000017
+stocks (million barrels) ,p2,rbob,5.515,5.673,-0.15800000000000036,-0.06300000000000061
+stocks (million barrels) ,p3,rbob,11.745,12.341,-0.5960000000000001,-0.3370000000000015
+stocks (million barrels) ,p4,rbob,0.516,0.542,-0.026000000000000023,0.516
+stocks (million barrels) ,p5,rbob,14.691,14.087,0.604000000000001,1.075000000000001
+stocks (million barrels) ,us,cbob,107.447,104.338,3.109000000000009,4.299000000000007
+stocks (million barrels) ,p1,cbob,27.331,25.699,1.631999999999998,0.26699999999999946
+stocks (million barrels) ,p2,cbob,30.381,30.741,-0.35999999999999943,2.048000000000002
+stocks (million barrels) ,p3,cbob,37.067,35.928,1.139000000000003,0.5060000000000002
+stocks (million barrels) ,p4,cbob,4.929,4.869,0.0600000000000005,0.633
+stocks (million barrels) ,p5,cbob,7.738,7.101,0.6370000000000005,0.8450000000000006
+stocks (million barrels) ,us,gtab,1.194,1.525,-0.33099999999999996,0.46499999999999997
+stocks (million barrels) ,p1,gtab,0.948,1.279,-0.33099999999999996,0.31799999999999995
+stocks (million barrels) ,p2,gtab,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p3,gtab,0.246,0.246,0.0,0.147
+stocks (million barrels) ,p4,gtab,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p5,gtab,0.0,0.0,0.0,0.0
+stocks (million barrels) ,us,all other blending components,56.646,57.642,-0.9960000000000022,5.5020000000000024
+stocks (million barrels) ,p1,all other blending components,6.893,7.484,-0.5910000000000002,-0.10200000000000031
+stocks (million barrels) ,p2,all other blending components,8.355,8.236,0.11899999999999977,1.5060000000000002
+stocks (million barrels) ,p3,all other blending components,32.516,32.985,-0.4690000000000012,3.2879999999999967
+stocks (million barrels) ,p4,all other blending components,1.414,1.558,-0.14400000000000013,0.119
+stocks (million barrels) ,p5,all other blending components,7.468,7.38,0.08800000000000008,0.6909999999999998
+stocks (million barrels) ,us,fuel ethanol,23.423,23.617,-0.19400000000000261,0.44399999999999906
+stocks (million barrels) ,p1,fuel ethanol,6.972,7.189,-0.21699999999999964,-0.30299999999999994
+stocks (million barrels) ,p2,fuel ethanol,9.618,9.34,0.27800000000000047,0.9160000000000004
+stocks (million barrels) ,p3,fuel ethanol,4.234,4.315,-0.0810000000000004,0.027000000000000135
+stocks (million barrels) ,p4,fuel ethanol,0.333,0.351,-0.01799999999999996,-0.02999999999999997
+stocks (million barrels) ,p5,fuel ethanol,2.266,2.421,-0.1549999999999998,-0.16699999999999982
+stocks (million barrels) ,us,kerosene-type jet fuel,43.878,41.947,1.9309999999999974,2.7849999999999966
+stocks (million barrels) ,p1,kerosene-type jet fuel,10.635,11.255,-0.620000000000001,-1.543000000000001
+stocks (million barrels) ,p2,kerosene-type jet fuel,7.01,6.762,0.24800000000000022,-0.46499999999999986
+stocks (million barrels) ,p3,kerosene-type jet fuel,14.849,13.108,1.7409999999999997,2.51
+stocks (million barrels) ,p4,kerosene-type jet fuel,0.827,0.832,-0.0050000000000000044,0.04499999999999993
+stocks (million barrels) ,p5,kerosene-type jet fuel,10.556,9.99,0.565999999999999,2.2369999999999983
+stocks (million barrels) ,us,distillate fuel oil,121.263,121.64,-0.37699999999999534,6.852000000000004
+stocks (million barrels) ,p1,distillate fuel oil,32.957,30.944,2.0130000000000017,6.472999999999999
+stocks (million barrels) ,p1a,distillate fuel oil,4.127,3.883,0.24399999999999977,0.6559999999999997
+stocks (million barrels) ,p1b,distillate fuel oil,17.078,15.53,1.548,5.129
+stocks (million barrels) ,p1c,distillate fuel oil,11.753,11.531,0.22199999999999953,0.6899999999999995
+stocks (million barrels) ,p2,distillate fuel oil,31.138,31.745,-0.6069999999999993,3.9150000000000027
+stocks (million barrels) ,p3,distillate fuel oil,43.347,44.877,-1.5300000000000011,-1.0120000000000005
+stocks (million barrels) ,p4,distillate fuel oil,3.84,4.088,-0.24800000000000022,-0.1770000000000005
+stocks (million barrels) ,p5,distillate fuel oil,9.981,9.986,-0.005000000000000782,-2.3469999999999995
+stocks (million barrels) ,us,15 ppm sulfur and under,111.027,111.634,-0.6069999999999993,7.242999999999995
+stocks (million barrels) ,p1,15 ppm sulfur and under,31.283,29.621,1.6620000000000026,6.261000000000003
+stocks (million barrels) ,p1a,15 ppm sulfur and under,4.124,3.879,0.24499999999999966,0.6619999999999995
+stocks (million barrels) ,p1b,15 ppm sulfur and under,16.246,14.906,1.339999999999998,4.981999999999999
+stocks (million barrels) ,p1c,15 ppm sulfur and under,10.913,10.836,0.07699999999999996,0.6180000000000003
+stocks (million barrels) ,p2,15 ppm sulfur and under,30.377,30.937,-0.5600000000000023,4.064999999999998
+stocks (million barrels) ,p3,15 ppm sulfur and under,36.542,37.9,-1.357999999999997,-0.7160000000000011
+stocks (million barrels) ,p4,15 ppm sulfur and under,3.636,3.877,-0.24099999999999966,-0.13599999999999968
+stocks (million barrels) ,p5,15 ppm sulfur and under,9.189,9.3,-0.11100000000000065,-2.231
+stocks (million barrels) ,us,> 15 ppm to 500 ppm sulfur,2.52,2.697,-0.17700000000000005,-0.8740000000000001
+stocks (million barrels) ,p1,> 15 ppm to 500 ppm sulfur,0.573,0.61,-0.03700000000000003,-0.007000000000000006
+stocks (million barrels) ,p1a,> 15 ppm to 500 ppm sulfur,0.003,0.005,-0.002,-0.005999999999999999
+stocks (million barrels) ,p1b,> 15 ppm to 500 ppm sulfur,0.141,0.151,-0.010000000000000009,0.06699999999999999
+stocks (million barrels) ,p1c,> 15 ppm to 500 ppm sulfur,0.429,0.455,-0.026000000000000023,-0.068
+stocks (million barrels) ,p2,> 15 ppm to 500 ppm sulfur,0.334,0.288,0.04600000000000004,0.0050000000000000044
+stocks (million barrels) ,p3,> 15 ppm to 500 ppm sulfur,1.267,1.467,-0.20000000000000018,-0.7230000000000001
+stocks (million barrels) ,p4,> 15 ppm to 500 ppm sulfur,0.117,0.125,-0.007999999999999993,-0.05799999999999998
+stocks (million barrels) ,p5,> 15 ppm to 500 ppm sulfur,0.229,0.206,0.02300000000000002,-0.091
+stocks (million barrels) ,us,> 500 ppm sulfur,7.716,7.31,0.4060000000000006,0.48300000000000054
+stocks (million barrels) ,p1,> 500 ppm sulfur,1.101,0.713,0.388,0.21899999999999997
+stocks (million barrels) ,p1a,> 500 ppm sulfur,0.0,0.0,0.0,0.0
+stocks (million barrels) ,p1b,> 500 ppm sulfur,0.69,0.473,0.21699999999999997,0.07899999999999996
+stocks (million barrels) ,p1c,> 500 ppm sulfur,0.411,0.24,0.17099999999999999,0.13999999999999996
+stocks (million barrels) ,p2,> 500 ppm sulfur,0.428,0.521,-0.09300000000000003,-0.15399999999999997
+stocks (million barrels) ,p3,> 500 ppm sulfur,5.537,5.51,0.027000000000000135,0.42600000000000016
+stocks (million barrels) ,p4,> 500 ppm sulfur,0.087,0.086,0.0010000000000000009,0.017999999999999988
+stocks (million barrels) ,p5,> 500 ppm sulfur,0.563,0.48,0.08299999999999996,-0.026000000000000023
+stocks (million barrels) ,us,residual fuel oil,28.463,28.987,-0.5239999999999974,-2.503999999999998
+stocks (million barrels) ,p1,residual fuel oil,5.894,6.291,-0.39700000000000024,-0.47499999999999964
+stocks (million barrels) ,p1a,residual fuel oil,0.114,0.127,-0.012999999999999998,-0.0020000000000000018
+stocks (million barrels) ,p1b,residual fuel oil,4.302,4.685,-0.383,-0.4280000000000008
+stocks (million barrels) ,p1c,residual fuel oil,1.478,1.48,-0.0020000000000000018,-0.04499999999999993
+stocks (million barrels) ,p2,residual fuel oil,1.1,1.155,-0.05499999999999994,0.15400000000000014
+stocks (million barrels) ,p3,residual fuel oil,17.089,17.367,-0.27800000000000225,-1.8220000000000027
+stocks (million barrels) ,p4,residual fuel oil,0.208,0.229,-0.02100000000000002,-0.010000000000000009
+stocks (million barrels) ,p5,residual fuel oil,4.172,3.945,0.22699999999999987,-0.3520000000000003
+stocks (million barrels) ,us,propane/propylene,73.535,71.443,2.0919999999999987,-6.0120000000000005
+stocks (million barrels) ,p1,propane/propylene,6.233,5.887,0.3460000000000001,0.7639999999999993
+stocks (million barrels) ,p1a,propane/propylene,0.23,0.212,0.018000000000000016,0.05500000000000002
+stocks (million barrels) ,p1b,propane/propylene,4.316,3.917,0.399,0.13699999999999957
+stocks (million barrels) ,p1c,propane/propylene,1.687,1.759,-0.07199999999999984,0.571
+stocks (million barrels) ,p2,propane/propylene,22.297,20.933,1.3640000000000008,2.2010000000000005
+stocks (million barrels) ,p3,propane/propylene,40.363,40.186,0.1769999999999996,-9.304000000000002
+stocks (million barrels) ,us,padds 4 and 5 ,4.643,4.437,0.20599999999999952,0.32899999999999974
+stocks (million barrels) ,us,"propane, fractionated and ready for sale",46.49,45.184,1.3060000000000045,
+stocks (million barrels) ,p1,"propane, fractionated and ready for sale",4.623,4.239,0.38400000000000034,
+stocks (million barrels) ,p1a,"propane, fractionated and ready for sale",0.23,0.212,0.018000000000000016,
+stocks (million barrels) ,p1b,"propane, fractionated and ready for sale",3.125,2.696,0.4289999999999998,
+stocks (million barrels) ,p1c,"propane, fractionated and ready for sale",1.268,1.332,-0.06400000000000006,
+stocks (million barrels) ,p2,"propane, fractionated and ready for sale",15.846,14.863,0.9830000000000005,
+stocks (million barrels) ,p3,"propane, fractionated and ready for sale",23.441,23.7,-0.25900000000000034,
+stocks (million barrels) ,p4,"propane, fractionated and ready for sale",0.971,0.938,0.03300000000000003,
+stocks (million barrels) ,p5,"propane, fractionated and ready for sale",1.609,1.445,0.16399999999999992,
+stocks (million barrels) ,us,other oils,310.879,311.896,-1.016999999999996,11.644000000000005
+stocks (million barrels) ,us,unfinished oils,87.149,89.315,-2.165999999999997,0.9489999999999981
+stocks (million barrels) ,us,kerosene,1.224,1.191,0.03299999999999992,-0.15100000000000002
+stocks (million barrels) ,us,asphalt and road oil,32.682,34.118,-1.436,-0.20899999999999608
+stocks (million barrels) ,us,ngpls/lrgs (excluding propane/propylene),157.075,154.41,2.664999999999992,13.890999999999991
+stocks (million barrels) ,us,total stocks (excluding spr),1296.025,1287.868,8.157000000000153,32.098000000000184
+stocks (million barrels) ,us,total stocks (including spr),1668.222,1658.78,9.442000000000007,55.677999999999884
+imports ,us,total crude oil incl spr,6611.0,7054.0,-443.0,31.0
+imports ,us,commercial,6611.0,7054.0,-443.0,31.0
+imports ,p1,commercial,458.0,772.0,-314.0,115.0
+imports ,p2,commercial,2989.0,2882.0,107.0,-46.0
+imports ,p3,commercial,976.0,1658.0,-682.0,-454.0
+imports ,p4,commercial,375.0,394.0,-19.0,-121.0
+imports ,p5,commercial,1813.0,1349.0,464.0,538.0
+imports ,us,imports by spr,0.0,0.0,0.0,0.0
+imports ,us,imports into spr by others,0.0,0.0,0.0,0.0
+imports ,us,total motor gasoline,762.0,1000.0,-238.0,-95.0
+imports ,p1,total motor gasoline,577.0,667.0,-90.0,-212.0
+imports ,p2,total motor gasoline,3.0,1.0,2.0,-6.0
+imports ,p3,total motor gasoline,27.0,53.0,-26.0,-24.0
+imports ,p4,total motor gasoline,3.0,4.0,-1.0,-1.0
+imports ,p5,total motor gasoline,151.0,275.0,-124.0,148.0
+imports ,us,finished motor gasoline,166.0,160.0,6.0,6.0
+imports ,p1,finished motor gasoline,146.0,142.0,4.0,-12.0
+imports ,p2,finished motor gasoline,0.0,0.0,0.0,0.0
+imports ,p3,finished motor gasoline,0.0,2.0,-2.0,0.0
+imports ,p4,finished motor gasoline,0.0,0.0,0.0,0.0
+imports ,p5,finished motor gasoline,20.0,16.0,4.0,18.0
+imports ,us,reformulated,0.0,0.0,0.0,0.0
+imports ,p1,reformulated,0.0,0.0,0.0,0.0
+imports ,p2,reformulated,0.0,0.0,0.0,0.0
+imports ,p3,reformulated,0.0,0.0,0.0,0.0
+imports ,p4,reformulated,0.0,0.0,0.0,0.0
+imports ,p5,reformulated,0.0,0.0,0.0,0.0
+imports ,us,blended with fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p1,blended with fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p2,blended with fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p3,blended with fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p4,blended with fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p5,blended with fuel ethanol,0.0,0.0,0.0,0.0
+imports ,us,other,0.0,0.0,0.0,0.0
+imports ,p1,other,0.0,0.0,0.0,0.0
+imports ,p2,other,0.0,0.0,0.0,0.0
+imports ,p3,other,0.0,0.0,0.0,0.0
+imports ,p4,other,0.0,0.0,0.0,0.0
+imports ,p5,other,0.0,0.0,0.0,0.0
+imports ,us,conventional,166.0,160.0,6.0,6.0
+imports ,p1,conventional,146.0,142.0,4.0,-12.0
+imports ,p2,conventional,0.0,0.0,0.0,0.0
+imports ,p3,conventional,0.0,2.0,-2.0,0.0
+imports ,p4,conventional,0.0,0.0,0.0,0.0
+imports ,p5,conventional,20.0,16.0,4.0,18.0
+imports ,us,ed55 and lower,0.0,0.0,0.0,0.0
+imports ,p1,ed55 and lower,0.0,0.0,0.0,0.0
+imports ,p2,ed55 and lower,0.0,0.0,0.0,0.0
+imports ,p3,ed55 and lower,0.0,0.0,0.0,0.0
+imports ,p4,ed55 and lower,0.0,0.0,0.0,0.0
+imports ,p5,ed55 and lower,0.0,0.0,0.0,0.0
+imports ,us,greater than ed55,0.0,0.0,0.0,0.0
+imports ,p1,greater than ed55,0.0,0.0,0.0,0.0
+imports ,p2,greater than ed55,0.0,0.0,0.0,0.0
+imports ,p3,greater than ed55,0.0,0.0,0.0,0.0
+imports ,p4,greater than ed55,0.0,0.0,0.0,0.0
+imports ,p5,greater than ed55,0.0,0.0,0.0,0.0
+imports ,us,motor gasoline blending components,595.0,840.0,-245.0,-102.0
+imports ,p1,motor gasoline blending components,430.0,525.0,-95.0,-201.0
+imports ,p2,motor gasoline blending components,3.0,1.0,2.0,-6.0
+imports ,p3,motor gasoline blending components,27.0,51.0,-24.0,-24.0
+imports ,p4,motor gasoline blending components,3.0,4.0,-1.0,-1.0
+imports ,p5,motor gasoline blending components,131.0,259.0,-128.0,131.0
+imports ,us,rbob,207.0,126.0,81.0,49.0
+imports ,p1,rbob,207.0,126.0,81.0,49.0
+imports ,p2,rbob,0.0,0.0,0.0,0.0
+imports ,p3,rbob,0.0,0.0,0.0,0.0
+imports ,p4,rbob,0.0,0.0,0.0,0.0
+imports ,p5,rbob,0.0,0.0,0.0,0.0
+imports ,us,cbob,25.0,110.0,-85.0,-33.0
+imports ,p1,cbob,25.0,110.0,-85.0,-27.0
+imports ,p2,cbob,0.0,0.0,0.0,-6.0
+imports ,p3,cbob,0.0,0.0,0.0,0.0
+imports ,p4,cbob,0.0,0.0,0.0,0.0
+imports ,p5,cbob,0.0,0.0,0.0,0.0
+imports ,us,gtab,103.0,124.0,-21.0,-73.0
+imports ,p1,gtab,59.0,78.0,-19.0,-117.0
+imports ,p2,gtab,0.0,0.0,0.0,0.0
+imports ,p3,gtab,0.0,0.0,0.0,0.0
+imports ,p4,gtab,0.0,0.0,0.0,0.0
+imports ,p5,gtab,44.0,46.0,-2.0,44.0
+imports ,us,all other blending components,260.0,480.0,-220.0,-44.0
+imports ,p1,all other blending components,139.0,211.0,-72.0,-106.0
+imports ,p2,all other blending components,3.0,1.0,2.0,0.0
+imports ,p3,all other blending components,27.0,51.0,-24.0,-24.0
+imports ,p4,all other blending components,3.0,4.0,-1.0,-1.0
+imports ,p5,all other blending components,88.0,213.0,-125.0,88.0
+imports ,us,fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p1,fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p2,fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p3,fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p4,fuel ethanol,0.0,0.0,0.0,0.0
+imports ,p5,fuel ethanol,0.0,0.0,0.0,0.0
+imports ,us,kerosene-type jet fuel,173.0,55.0,118.0,-61.0
+imports ,p1,kerosene-type jet fuel,14.0,14.0,0.0,-56.0
+imports ,p2,kerosene-type jet fuel,0.0,0.0,0.0,0.0
+imports ,p3,kerosene-type jet fuel,0.0,0.0,0.0,0.0
+imports ,p4,kerosene-type jet fuel,0.0,0.0,0.0,-1.0
+imports ,p5,kerosene-type jet fuel,159.0,41.0,118.0,-4.0
+imports ,us,distillate fuel oil,133.0,150.0,-17.0,14.0
+imports ,p1,distillate fuel oil,73.0,131.0,-58.0,-23.0
+imports ,p2,distillate fuel oil,21.0,6.0,15.0,15.0
+imports ,p3,distillate fuel oil,4.0,0.0,4.0,4.0
+imports ,p4,distillate fuel oil,7.0,10.0,-3.0,6.0
+imports ,p5,distillate fuel oil,27.0,2.0,25.0,10.0
+imports ,us,15 ppm sulfur and under,127.0,148.0,-21.0,8.0
+imports ,p1,15 ppm sulfur and under,73.0,131.0,-58.0,-23.0
+imports ,p2,15 ppm sulfur and under,20.0,4.0,16.0,14.0
+imports ,p3,15 ppm sulfur and under,0.0,0.0,0.0,0.0
+imports ,p4,15 ppm sulfur and under,7.0,10.0,-3.0,6.0
+imports ,p5,15 ppm sulfur and under,27.0,2.0,25.0,10.0
+imports ,us,> 15 ppm to 500 ppm sulfur,4.0,0.0,4.0,4.0
+imports ,p1,> 15 ppm to 500 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p2,> 15 ppm to 500 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p3,> 15 ppm to 500 ppm sulfur,4.0,0.0,4.0,4.0
+imports ,p4,> 15 ppm to 500 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p5,> 15 ppm to 500 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,us,> 500 ppm to 2000 ppm sulfur,1.0,2.0,-1.0,1.0
+imports ,p1,> 500 ppm to 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p2,> 500 ppm to 2000 ppm sulfur,1.0,2.0,-1.0,1.0
+imports ,p3,> 500 ppm to 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p4,> 500 ppm to 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p5,> 500 ppm to 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,us,> 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p1,> 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p2,> 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p3,> 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p4,> 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,p5,> 2000 ppm sulfur,0.0,0.0,0.0,0.0
+imports ,us,residual fuel oil,87.0,152.0,-65.0,72.0
+imports ,p1,residual fuel oil,1.0,86.0,-85.0,1.0
+imports ,p2,residual fuel oil,2.0,1.0,1.0,2.0
+imports ,p3,residual fuel oil,78.0,58.0,20.0,63.0
+imports ,p4,residual fuel oil,0.0,0.0,0.0,0.0
+imports ,p5,residual fuel oil,6.0,6.0,0.0,6.0
+imports ,us,propane/propylene,75.0,77.0,-2.0,-2.0
+imports ,p1,propane/propylene,25.0,25.0,0.0,5.0
+imports ,p2,propane/propylene,20.0,22.0,-2.0,-1.0
+imports ,p3,propane/propylene,0.0,0.0,0.0,0.0
+imports ,p45,propane/propylene,29.0,30.0,-1.0,-7.0
+imports ,us,other oils,730.0,763.0,-33.0,-312.0
+imports ,p1,other oils,150.0,156.0,-6.0,-87.0
+imports ,p2,other oils,38.0,49.0,-11.0,1.0
+imports ,p3,other oils,439.0,470.0,-31.0,-169.0
+imports ,p4,other oils,4.0,11.0,-7.0,2.0
+imports ,p5,other oils,99.0,77.0,22.0,-60.0
+imports ,us,kerosene,0.0,0.0,0.0,0.0
+imports ,us,ngpls/lrgs (excluding propane/propylene),40.0,49.0,-9.0,-1.0
+imports ,us,total product imports,1959.0,2198.0,-239.0,-385.0
+imports ,p1,total product imports,839.0,1079.0,-240.0,-373.0
+imports ,p2,total product imports,85.0,81.0,4.0,13.0
+imports ,p3,total product imports,549.0,581.0,-32.0,-125.0
+imports ,p4,total product imports,18.0,28.0,-10.0,1.0
+imports ,p5,total product imports,468.0,429.0,39.0,99.0
+imports ,us,total imports (incl spr),8570.0,9252.0,-682.0,-354.0
+imports ,p1,total imports (incl spr),1297.0,1851.0,-554.0,-258.0
+imports ,p2,total imports (incl spr),3074.0,2963.0,111.0,-33.0
+imports ,p3,total imports (incl spr),1526.0,2239.0,-713.0,-578.0
+imports ,p4,total imports (incl spr),392.0,422.0,-30.0,-122.0
+imports ,p5,total imports (incl spr),2281.0,1778.0,503.0,637.0
+exports ,us,total,10189.0,10979.0,-790.0,-1586.0
+exports ,us,crude oil,3910.0,4418.0,-508.0,-1428.0
+exports ,us,products,6279.0,6561.0,-282.0,-158.0
+exports ,us,total motor gasoline,876.0,1010.0,-134.0,
+exports ,us,fuel ethanol,72.0,76.0,-4.0,-32.0
+exports ,us,kerosene-type jet fuel,147.0,247.0,-100.0,60.0
+exports ,us,distillate fuel oil,1553.0,1180.0,373.0,57.0
+exports ,us,residual fuel oil,180.0,99.0,81.0,84.0
+exports ,us,propane/propylene,1454.0,1791.0,-337.0,-441.0
+exports ,us,other oils,1997.0,2158.0,-161.0,105.0
+net imports (incl spr) ,us,total,-1619.0,-1727.0,108.0,1232.0
+net imports (incl spr) ,us,crude oil,2701.0,2636.0,65.0,1459.0
+net imports (incl spr) ,us,products,-4320.0,-4363.0,43.0,-227.0
+product supplied ,us,total product supplied,20689.0,21081.0,-392.0,383.0
+product supplied ,us,finished motor gasoline,8969.0,9386.0,-417.0,-337.0
+product supplied ,us,kerosene-type jet fuel,1683.0,1705.0,-22.0,-259.0
+product supplied ,us,distillate fuel oil,3536.0,3977.0,-441.0,222.0
+product supplied ,us,residual fuel oil,276.0,292.0,-16.0,157.0
+product supplied ,us,propane/propylene,1027.0,712.0,315.0,694.0
+product supplied ,us,other oils,5199.0,5009.0,190.0,-92.0
