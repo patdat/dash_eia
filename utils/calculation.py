@@ -1,23 +1,19 @@
+import dash
+from dash import Output, Input
 import pandas as pd
 from utils.graph_seag import chart_seasonality
 from utils.graph_line import chart_trend
 from utils.mapping import production_mapping
-from dash import Output, Input
 
-# Load initial data only once
 def get_initial_data():
-    df = pd.read_csv('./data/wps_gte_2015.csv', parse_dates=['period'])
+    df = pd.read_csv('./data/wps_gte_2015_pivot.csv', parse_dates=['period'])
     df = df[df['period'] > '2015-01-01']
-    df = df.drop(columns=['uom'])
     return df
 
 def get_data(df, id):
-    # Filter and transform data specific to the identifier
-    filtered_df = df[df['id'] == id].copy()
-    name = filtered_df['name'].iloc[0]
-    filtered_df = filtered_df[['period', 'value']]
-    
-    mapping_name = production_mapping.get(id, name)
+    filtered_df = df[['period', id]]
+    filtered_df = filtered_df.rename(columns={id: 'value'})
+    mapping_name = production_mapping.get(id)
     stocks_in_name = 'stocks' in mapping_name.lower()
     mapping_name = mapping_name.replace('(kbd)', '(kb/d)')
 
@@ -34,13 +30,28 @@ def create_chart(df, id, type_chart, year_toggle, range_toggle):
     else:
         return chart_seasonality(filtered_df, mapping_name, stocks_in_name, year_toggle, range_toggle)
 
-def create_callbacks(app, page_id, num_graphs, idents, raw_data):
+def create_callbacks(app, page_id, num_graphs, idents, data_store_id):
     @app.callback(
         [Output(f'{page_id}-graph-{i}', 'figure') for i in range(1, num_graphs + 1)],
         [Input(f'{page_id}-graph-toggle', 'value'),
-         Input(f'{page_id}-year-toggle', 'value'),
-         Input(f'{page_id}-toggle-range', 'value')]
+        Input(f'{page_id}-year-toggle', 'value'),
+        Input(f'{page_id}-toggle-range', 'value'),
+        Input(data_store_id, 'data')]
     )
-    def update_graphs(toggle_chart, year_toggle, toggle_range):
-        figures = [create_chart(raw_data, ident, toggle_chart, year_toggle, toggle_range) for ident in idents]
+    def update_graphs(toggle_chart, year_toggle, toggle_range, data):
+        if data is None:
+            print("No data available, cannot update graphs.")  # Add debugging statement to confirm data state
+            return [dash.no_update] * num_graphs
+
+        raw_data = pd.DataFrame(data)
+        # Ensure 'period' column is handled correctly
+        if 'period' in raw_data.columns:
+            raw_data['period'] = pd.to_datetime(raw_data['period'])
+        else:
+            print("Expected 'period' column not found in data.")  # Debugging statement
+            return [dash.no_update] * num_graphs
+
+        figures = [
+            create_chart(raw_data, ident, toggle_chart, year_toggle, toggle_range) for ident in idents
+        ]
         return figures[:num_graphs]

@@ -1,19 +1,22 @@
 from dash import Dash, dcc, html, Input, Output, State
 import dash_bootstrap_components as dbc
 from app import app  # Ensure this import points to where your Dash app is initialized
+from app import initial_data
 
-import pages.page1
-
-import pages.page2_1 #stocks
-import pages.page2_2 #runs
-import pages.page2_4 #movements
-import pages.page2_5 #production
-import pages.page2_6 #other
-import pages.page2_7 #p9
-
-
-
-
+import pages.page1 #Home
+import pages.page2_1 #Headline
+# import pages.page2_2 #Crude Stocks
+# import pages.page2_3 #Crude Runs
+# import pages.page2_4 #Crude Imports
+import pages.page2_5 #Crude Production
+# import pages.page2_6 #Crude Exports
+# import pages.page2_7 #Crude Other
+# import pages.page2_8 #Gasoline
+# import pages.page2_9 #Distillate
+# import pages.page2_10 #Jet
+# import pages.page2_11 #Residual
+# import pages.page2_12 #Propane
+# import pages.page2_13 #Products Supplied
 
 
 # Layout with fixed-width sidebar
@@ -60,102 +63,34 @@ sidebar = html.Div(
 
         dbc.Nav(
             [
-                dbc.NavLink("Home", href="/", active="exact", className="sidebar-button page-button"),
-
-                #LEVEL 2 PAGE
-                dbc.NavItem([
-                    dbc.Button("Balances", id="toggle-page-1", className="sidebar-button page-button", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [                             
-                                dbc.NavLink("Cushing", href="/balances/cushing", active='exact', className="nav-link"),
-                                dbc.NavLink("PADD9", href="/balances/padd9", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-1",
-                    ),
-                ]),
-                #LEVEL 2 PAGE
+                dbc.NavLink("Home", href="/home", active="exact", className="sidebar-button page-button"),
+                
                 dbc.NavItem([
                     dbc.Button("EIA Weekly", id="toggle-page-2", className="sidebar-button page-button", n_clicks=0),
                     dbc.Collapse(
                         dbc.Nav(
                             [
                                 dbc.NavLink("Headline", href="/stats/headline", active='exact', className="nav-link"),
-                                dbc.NavLink("Crude", href="/stats/crude", active='exact', className="nav-link"),                                
-                                dbc.NavLink("Gasoline", href="/stats/gasoline", active='exact', className="nav-link"),                                
+                                # dbc.NavLink("Crude Stocks", href="/stats/crude_stocks", active='exact', className="nav-link"),                                
+                                # dbc.NavLink("Crude Runs", href="/stats/crude_runs", active='exact', className="nav-link"),
+                                # dbc.NavLink("Crude Imports", href="/stats/crude_imports", active='exact', className="nav-link"),
+                                dbc.NavLink("Crude Production", href="/stats/crude_production", active='exact', className="nav-link"),
+                                # dbc.NavLink("Crude Exports", href="/stats/crude_exports", active='exact', className="nav-link"),
+                                # dbc.NavLink("Crude Other", href="/stats/crude_other", active='exact', className="nav-link"),
+                                # dbc.NavLink("Gasoline", href="/stats/gasoline", active='exact', className="nav-link"),
+                                # dbc.NavLink("Distillate", href="/stats/distillate", active='exact', className="nav-link"),
+                                # dbc.NavLink("Jet", href="/stats/jet", active='exact', className="nav-link"),
+                                # dbc.NavLink("Residual", href="/stats/residual", active='exact', className="nav-link"),
+                                # dbc.NavLink("Propane", href="/stats/propane", active='exact', className="nav-link"),
+                                # dbc.NavLink("Products Supplied", href="/stats/products_supplied", active='exact', className="nav-link"),                                                                
                             ],
                             vertical=True, pills=True
                         ),
                         id="collapse-page-2",
+                        is_open=True,
                     ),
-                ]),            
-                       
-                #LEVEL 3 PAGE                                    
-                dbc.NavItem([
-                    dbc.Button("Production", id="toggle-page-3", className="sidebar-button page-button", n_clicks=0),
-                    dbc.Collapse(
-                        #SUB LEVEL PAGE 1
-                        dbc.Nav(
-                            [                             
-                                dbc.NavLink("Rig Count", href="/production/rig_count", active='exact', className="nav-link"),
-                                dbc.NavLink("US Production", href="/production/us_production", active='exact', className="nav-link"),
-                                dbc.NavLink("Natural Gas", href="/production/natural_gas", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-3",
-                    ),                    
-                ]),
-
-                #LEVEL 4 PAGE
-                dbc.NavItem([
-                    dbc.Button("Refining", id="toggle-page-4", className="sidebar-button page-button", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [                             
-                             dbc.NavLink("Turnarounds", href="/refining/turnarounds", active='exact', className="nav-link"),
-                             dbc.NavLink("Margins", href="/refining/margins", active='exact', className="nav-link"),
-                                dbc.NavLink("Runs", href="/refining/runs", active='exact', className="nav-link"),
-                                dbc.NavLink("Other Indicators", href="/refining/other_indicators", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-4",
-                    ),                    
-                ]),
-
-                #LEVEL 5 PAGE
-                dbc.NavItem([
-                    dbc.Button("Trade Flows", id="toggle-page-5", className="sidebar-button page-button", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [                             
-                             dbc.NavLink("Iran", href="/trade_flows/iran", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-5",
-                    ),                    
-                ]),
-
-                #LEVEL 6 PAGE
-                dbc.NavItem([
-                    dbc.Button("Prices", id="toggle-page-6", className="sidebar-button page-button", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [                             
-                             dbc.NavLink("US Forwards", href="/prices/us_forwards", active='exact', className="nav-link"),
-                                dbc.NavLink("Brent", href="/prices/brent", active='exact', className="nav-link"),
-                                dbc.NavLink("US Map", href="/prices/us_map", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-6",
-                    ),                    
-                ]),
-                
+                    
+                ]),                                                   
             ],
             vertical=True,
             pills=True,
@@ -167,7 +102,12 @@ sidebar = html.Div(
 
 content = html.Div(id="page-content", className="content-area")
 
-app.layout = html.Div([dcc.Location(id='url', refresh=False), sidebar, content])
+app.layout = html.Div([
+    dcc.Location(id='url', refresh=False),
+    dcc.Store(id='data-store', data=initial_data, storage_type='session'),
+    sidebar,
+    content
+])
 
 @app.callback(
     Output("collapse-page-1", "is_open"),
@@ -232,55 +172,37 @@ def toggle_collapse_page_6(n, is_open):
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    #Balances
-    if pathname == '/balances/cushing':
-        return pages.page1_1.layout
-    elif pathname == '/balances/padd9':
-        return pages.page1_2.layout
-    
+    if pathname == '/home':
+        return pages.page1.layout        
     #EIA Weekly
     elif pathname == '/stats/headline':
         return pages.page2_1.layout        
-    elif pathname == '/stats/crude':
-        return pages.page2_2.layout
-    elif pathname == '/stats/gasoline':
-        return pages.page2_3.layout
+    # elif pathname == '/stats/crude_stocks':
+    #     return pages.page2_2.layout
+    # elif pathname == '/stats/crude_runs':
+    #     return pages.page2_3.layout
+    # elif pathname == '/stats/crude_imports':
+    #     return pages.page2_4.layout
+    elif pathname == '/stats/crude_production':
+        return pages.page2_5.layout
+    # elif pathname == '/stats/crude_exports':
+    #     return pages.page2_6.layout
+    # elif pathname == '/stats/crude_other':
+    #     return pages.page2_7.layout
+    # elif pathname == '/stats/gasoline':
+    #     return pages.page2_8.layout
+    # elif pathname == '/stats/distillate':
+    #     return pages.page2_9.layout
+    # elif pathname == '/stats/jet':
+    #     return pages.page2_10.layout
+    # elif pathname == '/stats/residual':
+    #     return pages.page2_11.layout
+    # elif pathname == '/stats/propane':
+    #     return pages.page2_12.layout
+    # elif pathname == '/stats/products_supplied':
+    #     return pages.page2_13.layout
+    
 
-    #Produciton
-    elif pathname == '/stats/production/rig_count':
-        return pages.page3_1.layout
-    elif pathname == '/stats/production/us_production':
-        return pages.page3_2.layout
-    elif pathname == '/stats/production/natural_gas':
-        return pages.page3_3.layout
-    
-    #Refining
-    elif pathname == '/stats/refining/turnarounds':
-        return pages.page4_1.layout
-    elif pathname == '/stats/refining/margins':
-        return pages.page4_2.layout
-    elif pathname == '/stats/refining/runs':
-        return pages.page4_3.layout
-    elif pathname == '/stats/refining/other_indicators':
-        return pages.page4_4.layout
-    
-    #Trade Flows
-    elif pathname == '/stats/trade_flows/iran':
-        return pages.page5_1.layout
-    
-    #Prices
-    elif pathname == '/stats/prices/us_forwards':
-        return pages.page6_1.layout
-    elif pathname == '/stats/prices/brent':
-        return pages.page6_2.layout
-    elif pathname == '/stats/prices/us_map':
-        return pages.page6_3.layout
-    
-    elif pathname == '/':
-        return html.Div([
-            html.H3("Home Page"),
-            html.P("Welcome to the home page of the multi-page app.")
-        ])
     else:
         return "404 Page Not Found"
 

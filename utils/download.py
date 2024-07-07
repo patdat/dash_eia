@@ -142,6 +142,11 @@ def reorder_columns(df):
     df = df[['id','name','uom','period','value']]
     return df
 
+def pivot_data(df):
+    df = df.copy()
+    df = df.pivot(index='period',columns='id',values='value').reset_index()
+    return df
+
 def main():
     download_raw_file()
     sheets = read_excel_file()
@@ -152,10 +157,12 @@ def main():
     df = add_uom(df)
     df = filter_data(df)
     df = reorder_columns(df)
-    df.to_csv('./data/wps_gte_2015.csv')
+    df.to_csv('./data/wps_gte_2015.csv',index=False)
+    pv = pivot_data(df)
+    pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+    return pv
 
-#if name is main, run the main function
 if __name__ == '__main__':
-    main()
+    df = main()
 
 
