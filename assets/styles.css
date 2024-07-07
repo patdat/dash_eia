@@ -90,8 +90,8 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 
 .nav-link.active {
     background-color: #f4f5f9 !important; /* Orange background when active */
-    color:#C00000 !important; /* Keep text white when active */
-    border-left: 35px solid #C00000; /* Red left border */
+    color:#e97132 !important; /* Keep text white when active */
+    border-left: 35px solid #e97132; /* Red left border */
     font-weight: bold;
 }
 
@@ -118,7 +118,7 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 
 .page-button {
     font-weight: bold;
-    background-color: rgb(34,97,145); /* Blue background */
+    background-color: #c00000; /* Blue background */
     color: white; /* White text */
     display: block;
     width: 100%; /* Full width */
@@ -152,7 +152,7 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 }
 
 .page-button:hover, .page-button:focus {
-    background-color: rgb(34,97,145); /* Keep the background color on hover/focus */
+    background-color: #c00000; /* Keep the background color on hover/focus */
     color: white;
     box-shadow: none; /* Optional: Remove box shadow if you want no pop effect */
     text-shadow: none; /* Optional: Remove text shadow if you want no pop effect */
@@ -192,8 +192,8 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 
 /* assets/custom_styles.css */
 .custom-loading .dash-spinner {
-    border: 8px solid #226191; /* Light border color */
-    border-top-color: #C00000; /* Green top border */
+    border: 8px solid #c00000; /* Light border color */
+    border-top-color: #e97132; /* Green top border */
     width: 60px; /* Size of the spinner */
     height: 60px; /* Size of the spinner */
     border-radius: 50%; /* Make it a circle */

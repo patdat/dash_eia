@@ -13,9 +13,9 @@ def chart_trend(df, mapping_name, stocks_in_name):
         x=df['period'],
         y=df['value'],
         mode='lines',
-        line=dict(color='#226191'),
+        line=dict(color='#c00000'),
         hoverinfo='text',
-        hoverlabel=dict(bgcolor='#C00000', font=dict(color='white')),
+        hoverlabel=dict(bgcolor='#e97132', font=dict(color='white')),
         text=[f"{d.strftime('%m/%d')}, {formatted_value}" for d in df['period']]  # List comprehension to format each hover text
     )
 
@@ -47,7 +47,7 @@ def chart_trend(df, mapping_name, stocks_in_name):
             linecolor='black',
             gridcolor='white',
             spikedash='dot',
-            spikecolor='#C00000',
+            spikecolor='#e97132',
             spikethickness=1,
             showspikes=True
         ),
@@ -56,7 +56,7 @@ def chart_trend(df, mapping_name, stocks_in_name):
             linecolor='black',
             gridcolor='white',
             spikedash='dot',
-            spikecolor='#C00000',
+            spikecolor='#e97132',
             spikethickness=1,
             showspikes=True
         ),
@@ -67,7 +67,7 @@ def chart_trend(df, mapping_name, stocks_in_name):
                 y0=last_value,
                 x1=df['period'].max(),
                 y1=last_value,
-                line=dict(color='#226191', width=1, dash='dot'),
+                line=dict(color='#e97132', width=1, dash='dot'),
                 xref='x',
                 yref='y'
             )
@@ -80,7 +80,7 @@ def chart_trend(df, mapping_name, stocks_in_name):
                 y=last_value,
                 text=formatted_value,
                 showarrow=False,
-                bgcolor='#226191',
+                bgcolor='#e97132',
                 font=dict(color='white'),
                 xanchor='right'
             )

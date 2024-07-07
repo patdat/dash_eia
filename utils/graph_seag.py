@@ -130,7 +130,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
             name='2024',
             hoverinfo='text',
             text=df.apply(lambda row: f"{format_date(row['period_2024'])}: {format_value(row['value_2024'],stocks_in_name)}", axis=1),
-            line=dict(color='#226191', dash='solid', width=2),
+            line=dict(color='#c00000', dash='solid', width=2),
         ))
 
     if '2023' in year_toggle:
@@ -140,7 +140,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
             mode='lines',
             name='2023',
             hoverinfo='text',
-            line=dict(color='#C00000', dash='solid', width=2),
+            line=dict(color='#e97132', dash='solid', width=2),
             text=df.apply(lambda row: f"{format_date(row['period_2023'])}: {format_value(row['value_2023'],stocks_in_name)}", axis=1),
         ))
 
@@ -151,7 +151,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
             mode='lines',
             name='2022',
             hoverinfo='text',
-            line=dict(color='#7F7F7F', dash='solid', width=2),
+            line=dict(color='#bfbec4', dash='solid', width=2),
             text=df.apply(lambda row: f"{format_date(row['period_2022'])}: {format_value(row['value_2022'],stocks_in_name)}", axis=1),
         ))
 

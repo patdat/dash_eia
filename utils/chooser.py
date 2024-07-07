@@ -12,9 +12,9 @@ def checklist_header(toggle_graph, checklist_id, toggle_id, checklist_div_id, to
             dbc.Checklist(
                 id=checklist_id,
                 options=[
-                    {"label": html.Div(['22'], style={'color': 'white', 'font-size': '20px', 'background-color': '#7F7F7F', 'padding': '5px', 'border-radius': '5px', 'height': '33px', 'width': '60px', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}), "value": '2022'},
-                    {"label": html.Div(['23'], style={'color': 'white', 'font-size': '20px', 'background-color': '#C00000', 'padding': '5px', 'border-radius': '5px', 'height': '33px', 'width': '60px', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}), "value": '2023'},
-                    {"label": html.Div(['24'], style={'color': 'white', 'font-size': '20px', 'background-color': '#226191', 'padding': '5px', 'border-radius': '5px', 'height': '33px', 'width': '60px', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}), "value": '2024'},
+                    {"label": html.Div(['22'], style={'color': 'white', 'font-size': '20px', 'background-color': '#bfbec4', 'padding': '5px', 'border-radius': '5px', 'height': '33px', 'width': '60px', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}), "value": '2022'},
+                    {"label": html.Div(['23'], style={'color': 'white', 'font-size': '20px', 'background-color': '#e97132', 'padding': '5px', 'border-radius': '5px', 'height': '33px', 'width': '60px', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}), "value": '2023'},
+                    {"label": html.Div(['24'], style={'color': 'white', 'font-size': '20px', 'background-color': '#c00000', 'padding': '5px', 'border-radius': '5px', 'height': '33px', 'width': '60px', 'display': 'flex', 'justify-content': 'center', 'align-items': 'center'}), "value": '2024'},
                 ],
                 label_checked_style={"color": "red"},
                 input_checked_style={
