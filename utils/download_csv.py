@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from utils.mapping import production_mapping
+from utils.generate_additional_tickers import generate_additional_tickers
 
 def first_pass(df):    
     df = df.copy()
@@ -35,7 +37,7 @@ def second_pass(df):
 
     df['location'] = np.where(df['STUB_2'].isin(list(locations_dict.values())), df['STUB_2'], 'us')
     df['category'] = np.where(df['location'] == 'us', df['STUB_2'], None)
-    df['category'] = df['category'].fillna(method='ffill')
+    df['category'] = df['category'].ffill()
 
     df = df.rename(columns={'STUB_1': 'aspect'})
     pop = df.pop('location')
@@ -53,257 +55,81 @@ def second_pass(df):
     
     return df
 
+def third_pass(df):
+    df = df.copy()
+    mapping = pd.read_csv('./lookup/09_csv_mapping.csv')
+    df['lookup'] = df['aspect'] + df['location'] + df['category']
+    df = mapping.merge(df, left_on='lookup', right_on='lookup', how='left')
+    return df
+
+def fourth_pass(df):
+    df = df.copy()
+    df = df.drop(['lookup', 'aspect', 'location', 'category', 'wow','yoy'], axis=1)
+    df = df.drop_duplicates(subset='id')
+    df = df.melt(id_vars=['id'], var_name='period', value_name='value')
+    df['period'] = pd.to_datetime(df['period'], format='%m/%d/%y')
+    df['value'] = pd.to_numeric(df['value'], errors='coerce')
+    df = df.sort_values(['period', 'id'])
+    return df
+    
+def fifth_pass(df):
+    df = df.copy()
+    df['name'] = df['id'].map(production_mapping)
+    df['value'] = pd.to_numeric(df['value'], errors='coerce')
+    df.loc[df['name'].str.contains('stocks', case=False), 'value'] *= 1000
+    #if name doesn't contain (pct) then round to 0
+    df.loc[~df['name'].str.contains('pct', case=False), 'value'] = df['value'].round(0)
+    df = df[['id', 'period', 'value']]
+    return df
+
+def sixth_pass(df):
+    df = df.copy()
+    df = generate_additional_tickers(df)
+    df = df[df['period'] == df['period'].max()]
+    return df
+
+def seventh_pass(df):
+    df = df.copy()
+    df['name'] = df['id'].map(production_mapping)
+    df = df[['period', 'id', 'name', 'value']]
+    return df
+
 def download_data():
     try:
         df = pd.read_csv('https://ir.eia.gov/wpsr/table9.csv', encoding='ISO-8859-1')
         isAvailable = True
-    except:
-        df = pd.DataFrame()
-        df['aspect'] = ['A', 'B', 'C', 'D', 'E']
-        df['location'] = ['p1', 'p2', 'p3', 'p4', 'p5']
-        df['category'] = ['a', 'b', 'c', 'd', 'e']
-        df['now'] = [1, 2, 3, 4, 5]
-        df['prior'] = [1, 2, 3, 4, 5]
-        df['wow'] = [0, 0, 0, 0, 0]
-        df['yoy'] = [0, 0, 0, 0, 0]        
+        print('Data downloaded from EIA')
+    except:    
         isAvailable = False
+        print('Data not available from EIA')
+        return pd.read_csv('eia_weekly_fast_download_psw09.csv')
         
     if isAvailable:
         df = first_pass(df)
-        df = second_pass(df)        
+        df = second_pass(df)    
+        df = third_pass(df)    
+        df = fourth_pass(df)
+        df = fifth_pass(df)
+        df = sixth_pass(df)
+        df = seventh_pass(df)
+        df.to_csv('./data/eia_weekly_fast_download_psw09.csv', index=False)
         
-    return df, isAvailable
-    
-df, isAvailable = download_data()    
+    return df
 
+def pivot_data(df):
+    df = df.copy()
+    df = df.pivot(index='period',columns='id',values='value').reset_index()
+    return df
 
-lst_aspect = [
-'crude oil production ',
-'crude oil production ',
-'crude oil production ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'refiner inputs and utilization ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'stocks (million barrels) ',
-'product supplied ',
-'product supplied ',
-'product supplied ',
-'product supplied ',
-'product supplied ',
-'product supplied ',
-'product supplied ',    
-]
-
-lst_location = [
-'us',
-'us',
-'us',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'us',
-'p1',
-'p2',
-'us',
-'p3',
-'p4',
-'p5',
-'us',
-'us',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'p1',
-'p2',
-'p3',
-'p4',
-'p5',
-'us',
-'p1',
-'p2',
-'p3',
-'us',
-'us',
-'us',
-'us',
-'us',
-'us',
-'us',
-'us',    
-]
-
-lst_category = [
-'domestic production',
-'alaska',
-'lower 48',
-'crude oil inputs',
-'crude oil inputs',
-'crude oil inputs',
-'crude oil inputs',
-'crude oil inputs',
-'crude oil inputs',
-'gross inputs',
-'gross inputs',
-'gross inputs',
-'gross inputs',
-'gross inputs',
-'gross inputs',
-'operable capacity',
-'operable capacity',
-'operable capacity',
-'operable capacity',
-'operable capacity',
-'operable capacity',
-'percent utilization',
-'percent utilization',
-'percent utilization',
-'percent utilization',
-'percent utilization',
-'percent utilization',
-'crude oil (including spr)',
-'commercial',
-'commercial',
-'commercial',
-'cushing, oklahoma',
-'cushing, oklahoma',
-'cushing, oklahoma',
-'cushing, oklahoma',
-'alaska in-transit',
-'spr',
-'total motor gasoline',
-'total motor gasoline',
-'total motor gasoline',
-'total motor gasoline',
-'total motor gasoline',
-'total motor gasoline',
-'kerosene-type jet fuel',
-'kerosene-type jet fuel',
-'kerosene-type jet fuel',
-'kerosene-type jet fuel',
-'kerosene-type jet fuel',
-'kerosene-type jet fuel',
-'distillate fuel oil',
-'distillate fuel oil',
-'distillate fuel oil',
-'distillate fuel oil',
-'distillate fuel oil',
-'distillate fuel oil',
-'residual fuel oil',
-'residual fuel oil',
-'residual fuel oil',
-'residual fuel oil',
-'residual fuel oil',
-'residual fuel oil',
-'propane/propylene',
-'propane/propylene',
-'propane/propylene',
-'propane/propylene',
-'padds 4 and 5 ',
-'total product supplied',
-'finished motor gasoline',
-'kerosene-type jet fuel',
-'distillate fuel oil',
-'residual fuel oil',
-'propane/propylene',
-'other oils',    
-]    
-
-df_lst = pd.DataFrame({'aspect': lst_aspect, 'location': lst_location, 'category': lst_category})
-df = pd.merge(df, df_lst, on=['aspect', 'location', 'category'], how='inner')
+def update_master():
+    df = download_data()
+    df = df.copy()
+    max_date = df['period'].max()
+    master = pd.read_csv('./data/wps_gte_2015.csv',parse_dates=['period'])
+    master = master[master['period'] != max_date]
+    df = pd.concat([master, df], ignore_index=True)
+    df = df.sort_values(['id', 'period'])
+    df.to_csv('./data/wps_gte_2015.csv', index=False)
+    pv = pivot_data(df)
+    pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+    return pv

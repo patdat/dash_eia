@@ -8,10 +8,10 @@ production_mapping = {
     'WCESTP41' : 'P4 Commercial Stocks (kb)',
     'WCESTP51' : 'P5 Commercial Stocks (kb)',
     #Other Crude Stocks
-    'W_EPC0_SAX_YCUOK_MBBL' : 'Cushing Crude Stocks (kb)',
-    'crudeStocksP2E' : 'P2E Crude Stocks (kb)',
+    'W_EPC0_SAX_YCUOK_MBBL' : 'Cushing Stocks (kb)',
+    'crudeStocksP2E' : 'P2E Stocks (kb)',
     'WCSSTUS1' : 'SPR Stocks (kb)',
-    'W_EPC0_SKA_NUS_MBBL' : 'Alaska Crude Stocks (kb)',
+    'W_EPC0_SKA_NUS_MBBL' : 'Alaska Stocks (kb)',
     'WCRSTUS1' : 'Total Stocks (kb)',
     #Crude Exports
     'WCREXUS2' : 'US Crude Exports (kbd)',
@@ -40,12 +40,12 @@ production_mapping = {
     # 'W_EPLLNGPU_TVP_NUS_MBBLD' : 'US Trf to Crude Supply of NG and Unf. Oil Prod. Spld. (kbd)',
     # 'WCRAUUS2' : 'US Crude Adjustment Factor (kbd)',
     #Crude Refinery Utilizaiton
-    'WPULEUS3' : 'US Refinery Utilization (%)',
-    'W_NA_YUP_R10_PER' : 'P1 Refinery Utilization (%)',
-    'W_NA_YUP_R20_PER' : 'P2 Refinery Utilization (%)',
-    'W_NA_YUP_R30_PER' : 'P3 Refinery Utilization (%)',
-    'W_NA_YUP_R40_PER' : 'P4 Refinery Utilization (%)',
-    'W_NA_YUP_R50_PER' : 'P5 Refinery Utilization (%)',
+    'WPULEUS3' : 'US Refinery Utilization (pct)',
+    'W_NA_YUP_R10_PER' : 'P1 Refinery Utilization (pct)',
+    'W_NA_YUP_R20_PER' : 'P2 Refinery Utilization (pct)',
+    'W_NA_YUP_R30_PER' : 'P3 Refinery Utilization (pct)',
+    'W_NA_YUP_R40_PER' : 'P4 Refinery Utilization (pct)',
+    'W_NA_YUP_R50_PER' : 'P5 Refinery Utilization (pct)',
     #Feedstock Runs
     'feedstockRunsUS' : 'US Feedstock Runs (kbd)',
     'feddStockRunsP1' : 'P1 Feedstock Runs (kbd)',
@@ -61,21 +61,11 @@ production_mapping = {
     'WGIRIP42' : 'P4 Gross Runs (kbd)',
     'WGIRIP52' : 'P5 Gross Runs (kbd)',        
     #PADD9 Stats
-    'crudeStocksP9' : 'P9 Crude Stocks (kb)',
+    'crudeStocksP9' : 'P9 Stocks (kb)',
     'crudeRunsP9' : 'P9 Crude Runs (kbd)',
     'grossRunsP9' : 'P9 Gross Runs (kbd)',
     'feedstockRunsP9' : 'P9 Feedstock Runs (kbd)',
     'crudeImportsP9' : 'P9 Crude Imports (kbd)',
-    #Crude Country Level Imports
-    'W_EPC0_IM0_NUS-NBR_MBBLD' : 'Brazil Imports (kbd)',
-    'W_EPC0_IM0_NUS-NCA_MBBLD' : 'Canada Imports (kbd)',
-    'W_EPC0_IM0_NUS-NCO_MBBLD' : 'Colombia Imports (kbd)',
-    'W_EPC0_IM0_NUS-NEC_MBBLD' : 'Ecuador Imports (kbd)',
-    'W_EPC0_IM0_NUS-NIZ_MBBLD' : 'Iraq Imports (kbd)',
-    'W_EPC0_IM0_NUS-NMX_MBBLD' : 'Mexico Imports (kbd)',
-    'W_EPC0_IM0_NUS-NNI_MBBLD' : 'Nigeria Imports (kbd)',
-    'W_EPC0_IM0_NUS-NRS_MBBLD' : 'Russia Imports (kbd)',
-    'W_EPC0_IM0_NUS-NSA_MBBLD' : 'Saudi Arabia Imports (kbd)',    
     
     #Gasoline Stocks
     'WGTSTUS1' : 'USGasoline Stocks (kb)',
@@ -84,7 +74,6 @@ production_mapping = {
     'WGTSTP31' : 'P3 Gasoline Stocks (kb)',
     'WGTSTP41' : 'P4 Gasoline Stocks (kb)',
     'WGTSTP51' : 'P5 Gasoline Stocks (kb)',
-
     #Gasoline Imports
     'WGTIMUS2' : 'US Gasoline Imports (kbd)',
     'WGTIM_R10-Z00_2' : 'P1 Gasoline Imports (kbd)',
@@ -92,7 +81,6 @@ production_mapping = {
     'WGTIM_R30-Z00_2' : 'P3 Gasoline Imports (kbd)',
     'WGTIM_R40-Z00_2' : 'P4 Gasoline Imports (kbd)',
     'WGTIM_R50-Z00_2' : 'P5 Gasoline Imports (kbd)',
-
     #Gasoline Production
     'WGFRPUS2' : 'US Gasoline Production (kbd)',
     'WGFRPP12' : 'P1 Gasoline Production (kbd)',
@@ -100,7 +88,6 @@ production_mapping = {
     'WGFRPP32' : 'P3 Gasoline Production (kbd)',
     'WGFRPP42' : 'P4 Gasoline Production (kbd)',
     'WGFRPP52' : 'P5 Gasoline Production (kbd)',
-    
     #Gasoline Exports
     'W_EPM0F_EEX_NUS-Z00_MBBLD' : 'US Gasoline Exports (kbd)',
 
@@ -111,7 +98,6 @@ production_mapping = {
     'WDISTP31' : 'P3 Distillate Stocks (kb)',
     'WDISTP41' : 'P4 Distillate Stocks (kb)',
     'WDISTP51' : 'P5 Distillate Stocks (kb)',
-    
     #Distillate Imports
     'WDIIMUS2' : 'US Distillate Imports (kbd)',
     'WDIIM_R10-Z00_2' : 'P1 Distillate Imports (kbd)',
@@ -119,7 +105,6 @@ production_mapping = {
     'WDIIM_R30-Z00_2' : 'P3 Distillate Imports (kbd)',
     'WDIIM_R40-Z00_2' : 'P4 Distillate Imports (kbd)',
     'WDIIM_R50-Z00_2' : 'P5 Distillate Imports (kbd)',
-    
     #Distillate Produciton
     'WDIRPUS2' : 'US Distillate Production (kbd)',
     'WDIRPP12' : 'P1 Distillate Production (kbd)',
@@ -127,7 +112,6 @@ production_mapping = {
     'WDIRPP32' : 'P3 Distillate Production (kbd)',
     'WDIRPP42' : 'P4 Distillate Production (kbd)',
     'WDIRPP52' : 'P5 Distillate Production (kbd)',
-    
     #Distillate Exports
     'WDIEXUS2' : 'US Distillate Exports (kbd)',
 
@@ -138,7 +122,6 @@ production_mapping = {
     'WKJSTP31' : 'P3 Jet Stocks (kb)',
     'WKJSTP41' : 'P4 Jet Stocks (kb)',
     'WKJSTP51' : 'P5 Jet Stocks (kb)',
-    
     #Jet Imports
     'WKJIMUS2' : 'US Jet Imports (kbd)',
     'WKJIM_R10-Z00_2' : 'P1 Jet Imports (kbd)',
@@ -146,7 +129,6 @@ production_mapping = {
     'WKJIM_R30-Z00_2' : 'P3 Jet Imports (kbd)',
     'WKJIM_R40-Z00_2' : 'P4 Jet Imports (kbd)',
     'WKJIM_R50-Z00_2' : 'P5 Jet Imports (kbd)',
-    
     #Jet Production
     'WKJRPUS2' : 'US Jet Production (kbd)',
     'WKJRPP12' : 'P1 JetProduction (kbd)',
@@ -154,18 +136,16 @@ production_mapping = {
     'WKJRPP32' : 'P3 Jet Production (kbd)',
     'WKJRPP42' : 'P4 Jet Production (kbd)',
     'WKJRPP52' : 'P5 Jet Production (kbd)',
-    
     #Jet Exports
     'WKJEXUS2' : 'US Jet Exports (kbd)',
     
     #Fuel Oil Stocks
-    'WRERPUS2' : 'US Fuel Oil Stocks (kb)',
-    'WRERPP12' : 'P1 Fuel Oil Stocks (kb)',
-    'WRERPP22' : 'P2 Fuel Oil Stocks (kb)',
-    'WRERPP32' : 'P3 Fuel Oil Stocks (kb)',
-    'WRERPP42' : 'P4 Fuel Oil Stocks (kb)',
-    'WRERPP52' : 'P5 Fuel Oil Stocks (kb)',
-    
+    'WRESTUS1' : 'US Fuel Oil Stocks (kb)',
+    'WRESTP11' : 'P1 Fuel Oil Stocks (kb)',
+    'WRESTP21' : 'P2 Fuel Oil Stocks (kb)',
+    'WRESTP31' : 'P3 Fuel Oil Stocks (kb)',
+    'WRESTP41' : 'P4 Fuel Oil Stocks (kb)',
+    'WRESTP51' : 'P5 Fuel Oil Stocks (kb)',
     #Fuel Oil Imports
     'WREIMUS2' : 'US Fuel Oil Imports (kbd)',
     'WREIM_R10-Z00_2' : 'P1 Fuel Oil Imports (kbd)',
@@ -173,7 +153,6 @@ production_mapping = {
     'WREIM_R30-Z00_2' : 'P3 Fuel Oil Imports (kbd)',
     'WREIM_R40-Z00_2' : 'P4 Fuel Oil Imports (kbd)',
     'WREIM_R50-Z00_2' : 'P5 Fuel Oil Imports (kbd)',
-    
     #Fuel Oil Production
     'WRERPUS2' : 'US Fuel Oil Production (kbd)',
     'WRERPP12' : 'P1 Fuel Oil Production (kbd)',
@@ -181,32 +160,28 @@ production_mapping = {
     'WRERPP32' : 'P3 Fuel Oil Production (kbd)',
     'WRERPP42' : 'P4 Fuel Oil Production (kbd)',
     'WRERPP52' : 'P5 Fuel Oil Production (kbd)',
-    
     #Fuel Oil Exports
     'WREEXUS2' : 'US Fuel Oil Exports (kbd)',    
     			
-    #Propane Stocks
+    #C3/C3= Stocks
     'WPRSTUS1' : 'US C3/C3= Stocks (kb)',
     'WPRSTP11' : 'P1 C3/C3= Stocks (kb)',
     'WPRSTP21' : 'P2 C3/C3= Stocks (kb)',
     'WPRSTP31' : 'P3 C3/C3= Stocks (kb)',
     'WPRST_R4N5_1' : 'P4P5 C3/C3= Stocks (kb)',
-    
-    #Propane Imports
+    #C3/C3= Imports
     'WPRIM_NUS-Z00_2' : 'US C3/C3= Imports (kbd)',
     'WPRIMP12' : 'P1 C3/C3= Imports (kbd)',
     'WPRIMP22' : 'P2 C3/C3= Imports (kbd)',
     'WPRIMP32' : 'P3 C3/C3= Imports (kbd)',
     'W_EPLLPZ_IM0_R45-Z00_MBBLD' : 'P4P5 C3/C3= Imports (kbd)',
-    
-    #Propane Produciton
+    #C3/C3= Production
     'WPRTP_NUS_2' : 'US C3/C3= Production (kbd)',
     'WPRNPP12' : 'P1 C3/C3= Production (kbd)',
     'WPRNPP22' : 'P2 C3/C3= Production (kbd)',
     'WPRNPP32' : 'P3 C3/C3= Production (kbd)',
     'W_EPLLPZ_YPT_R4N5_MBBLD' : 'P4P5 C3/C3= Production (kbd)',
-    
-    #Propane Exports
+    #C3/C3= Exports
     'W_EPLLPZ_EEX_NUS-Z00_MBBLD' : 'US C3/C3= Exports (kbd)',
 
     #Products Supplied
@@ -218,5 +193,12 @@ production_mapping = {
     'WPRUP_NUS_2' : ' C3/C3= Supplied (kbd)',
     'WWOUP_NUS_2' : 'Other Oils Supplied (kbd)',
 
-    
+    #Operable CDU Capacity
+    'WOCLEUS2':'US CDU Capacity (kbd)',
+    'W_NA_YRL_R10_MBBLD':'P1 CDU Capacity (kbd)',
+    'W_NA_YRL_R20_MBBLD':'P2 CDU Capacity (kbd)',
+    'W_NA_YRL_R30_MBBLD':'P3 CDU Capacity (kbd)',
+    'W_NA_YRL_R40_MBBLD':'P4 CDU Capacity (kbd)',
+    'W_NA_YRL_R50_MBBLD':'P5 CDU Capacity (kbd)',
+
 }
