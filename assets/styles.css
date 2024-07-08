@@ -79,26 +79,25 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 }
 
 .nav-link:hover {
-    background-color: white; /* Red background on hover */
+    background-color: #f4f5f9; /* Red background on hover */
     color: black; /* Light grey text on hover */
     box-shadow: 0px 0px 8px 3px rgba(255,255,255,0.6); /* White glow effect */
     text-shadow: 0px 0px 5px rgba(255,255,255,0.5); /* Soft white text shadow */
-
     transition: all 0.3s ease; /* Smooth transition for all effects */
     font-weight: bold;
 }
 
 .nav-link.active {
     background-color: #f4f5f9 !important; /* Orange background when active */
-    color:#e97132 !important; /* Keep text white when active */
-    border-left: 35px solid #e97132; /* Red left border */
+    color:black !important; /* Keep text white when active */
+    border-left: 10px solid #e97132; /* Red left border */
     font-weight: bold;
 }
 
 .subpage-button {
     font-weight: bold;
-    background-color:  #C0C0C0; /* Red background */
-    color: white; /* White text */
+    background-color:  #f4f5f9; /* Red background */
+    color: black; /* White text */
     display: block;
     width: 100%; /* Full width */
     text-align: left;
@@ -108,8 +107,8 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 }
 
 .subpage-button:hover, .subpage-button:focus {
-    background-color: #C0C0C0; /* Slightly darker red on hover */
-    color: white;
+    background-color: #f4f5f9; /* Slightly darker red on hover */
+    color: black;
     box-shadow: 0px 0px 8px 3px rgba(255,255,255,0.6); /* White glow effect */
     text-shadow: 0px 0px 5px rgba(255,255,255,0.5); /* Soft white text shadow */
     transition: all 0.3s ease; /* Smooth transition for all effects */
@@ -118,7 +117,7 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 
 .page-button {
     font-weight: bold;
-    background-color: #c00000; /* Blue background */
+    background-color: #c00000; /* Red background */
     color: white; /* White text */
     display: block;
     width: 100%; /* Full width */
@@ -137,9 +136,25 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     left: -100%; /* Start from the left */
     width: 100%;
     height: 100%;
-    background-color: rgba(255,255,255,0.2); /* Light white overlay */
+    background-color: rgba(255, 255, 255, 0.2); /* Light white overlay */
     transition: all 0.3s ease; /* Smooth transition for the effect */
     pointer-events: none; /* Prevent mouse events on the pseudo-element */
+}
+
+.page-button::after {
+    content: '\25BC' !important; /* Down arrow */
+    position: absolute;
+    right: 1rem;
+    font-size: 1rem;
+    transition: transform 0.3s ease; /* Smooth transition for the rotation */
+}
+
+.page-button.open::after {
+    content: '\25B2' !important; /* Up arrow */
+}
+
+.page-button.closed::after {
+    content: '\25BC' !important; /* Down arrow */
 }
 
 .page-button:hover::before {
@@ -147,11 +162,16 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 }
 
 @keyframes flash {
-    0% { left: -100%; } /* Start off the left side of the button */
-    100% { left: 100%; } /* Move to the right side of the button */
+    0% {
+        left: -100%; /* Start off the left side of the button */
+    }
+    100% {
+        left: 100%; /* Move to the right side of the button */
+    }
 }
 
-.page-button:hover, .page-button:focus {
+.page-button:hover,
+.page-button:focus {
     background-color: #c00000; /* Keep the background color on hover/focus */
     color: white;
     box-shadow: none; /* Optional: Remove box shadow if you want no pop effect */
@@ -159,6 +179,7 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     transition: background-color 0.3s ease, color 0.3s ease; /* Ensure smooth color transition */
     font-weight: bold;
 }
+
 
 /* assets/styles.css */
 
@@ -171,7 +192,19 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     margin-top: 20px;
 }
 
-/* styles.css */
+.eia_table_style {
+    margin-bottom: 20px !important;
+    width: 700px !important;
+    margin-right: 20px !important;
+}
+
+.eia_h1_header {
+    text-align: left !important;
+    color: #c00000 !important;
+    font-size: 12pt !important;
+}
+
+/* assets/custom_styles.css */
 .graph-container {
     border-radius: 15px !important;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
@@ -189,44 +222,3 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 .eia-weekly-graph-page-layout {
     margin-top: 50px;
 }
-
-/* assets/custom_styles.css */
-.custom-loading .dash-spinner {
-    border: 8px solid #c00000; /* Light border color */
-    border-top-color: #e97132; /* Green top border */
-    width: 60px; /* Size of the spinner */
-    height: 60px; /* Size of the spinner */
-    border-radius: 50%; /* Make it a circle */
-    animation: spin 1s linear infinite; /* Smooth spinning animation */
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.eia_table_style {
-    margin-bottom: 20px;
-    width: 700px;
-    margin-right: 20px;
-}
-
-.eia_h1_header {
-    text-align: left !important;
-    color: #c00000 !important;
-    font-size: 12pt !important;
-}
-
-
-
-
-
-
-
-
-
-

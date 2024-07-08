@@ -1,9 +1,11 @@
+from utils.mapping import production_mapping
 import dash
-from dash import Output, Input
+from dash import Output, Input, dcc, html
 import pandas as pd
 from utils.graph_seag import chart_seasonality
 from utils.graph_line import chart_trend
-from utils.mapping import production_mapping
+import plotly.graph_objects as go
+
 
 def get_initial_data():
     df = pd.read_csv('./data/wps_gte_2015_pivot.csv', parse_dates=['period'])
@@ -55,3 +57,27 @@ def create_callbacks(app, page_id, num_graphs, idents, data_store_id):
             create_chart(raw_data, ident, toggle_chart, year_toggle, toggle_range) for ident in idents
         ]
         return figures[:num_graphs]
+
+# Helper function to create a loading graph
+def create_loading_graph(graph_id):
+    blank_graph = go.Figure()
+    blank_graph.update_layout(
+        xaxis=dict(visible=False),
+        yaxis=dict(visible=False),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+    return html.Div(
+        dcc.Graph(id=graph_id, figure=blank_graph),
+        className='graph-container'
+    )
+
+# Helper function to generate IDs
+def generate_ids(page_id):
+    return {
+        'checklist_graph': f'{page_id}-graph-toggle',
+        'checklist_id': f'{page_id}-year-toggle',
+        'toggle_id': f'{page_id}-toggle-range',
+        'checklist_div_id': f'{page_id}-checklist-div',
+        'toggle_div_id': f'{page_id}-toggle-div'
+    }
