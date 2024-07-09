@@ -97,13 +97,13 @@ def seventh_pass(df):
 def download_data():
     try:
         df = pd.read_csv('https://ir.eia.gov/wpsr/table9.csv', encoding='ISO-8859-1')
-        isAvailable = True
         print('Data downloaded from EIA')
+        isAvailable = True
     except:    
         isAvailable = False
         print('Data not available from EIA')
-        return pd.read_csv('eia_weekly_fast_download_psw09.csv')
-        
+        return pd.read_csv('eia_weekly_fast_download_psw09.csv'), isAvailable
+    
     if isAvailable:
         df = first_pass(df)
         df = second_pass(df)    
@@ -112,24 +112,28 @@ def download_data():
         df = fifth_pass(df)
         df = sixth_pass(df)
         df = seventh_pass(df)
-        df.to_csv('./data/eia_weekly_fast_download_psw09.csv', index=False)
+        df.to_csv('./data/eia_weekly_fast_download_psw09.csv', index=False)    
         
-    return df
+    return df, isAvailable
 
 def pivot_data(df):
     df = df.copy()
     df = df.pivot(index='period',columns='id',values='value').reset_index()
     return df
 
-def update_master():
-    df = download_data()
-    df = df.copy()
-    max_date = df['period'].max()
-    master = pd.read_csv('./data/wps_gte_2015.csv',parse_dates=['period'])
-    master = master[master['period'] != max_date]
-    df = pd.concat([master, df], ignore_index=True)
-    df = df.sort_values(['id', 'period'])
-    df.to_csv('./data/wps_gte_2015.csv', index=False)
-    pv = pivot_data(df)
-    pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+def main():
+    df, isAvailable = download_data()
+    
+    if isAvailable:
+        df = df.copy()
+        max_date = df['period'].max()
+        master = pd.read_csv('./data/wps_gte_2015.csv',parse_dates=['period'])
+        master = master[master['period'] != max_date]
+        df = pd.concat([master, df], ignore_index=True)
+        df = df.sort_values(['id', 'period'])
+        df.to_csv('./data/wps_gte_2015.csv', index=False)
+        pv = pivot_data(df)
+        pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+    else:
+        pv = pd.read_csv('./data/wps_gte_2015_pivot.csv',parse_dates=['period'])
     return pv

@@ -1,72 +1,85 @@
-from dash import dcc, html, Input, Output
-from utils.calculation import create_callbacks, get_initial_data
-from utils.chooser import checklist_header
-from app import app
-import pandas as pd
-import os
+#######################################################################
+### MANUAL INPUTS #####################################################
 
-
-
-def create_loading_graph(graph_id):
-    return dcc.Loading(
-        id=f'{graph_id}-loading',
-        type='dot',
-        className='custom-loading',
-        children=html.Div(
-            dcc.Graph(id=graph_id),
-            className='graph-container'
-        )
-    )
-    
-def create_layout(page_id, commodity):
-    checklist_graph = f'{page_id}-graph-toggle'
-    checklist_id = f'{page_id}-year-toggle'
-    toggle_id = f'{page_id}-toggle-range'
-    checklist_div_id = f'{page_id}-checklist-div'
-    toggle_div_id = f'{page_id}-toggle-div'
-
-    layout = html.Div([
-        checklist_header(checklist_graph, checklist_id, toggle_id, checklist_div_id, toggle_div_id),
-        html.Div(className='eia-weekly-top-spacing'),
-        html.H1(f'{commodity} Adjustment', className='eia-weekly-header-title'),
-        html.Br(),
-        html.Div([
-            create_loading_graph(f'{page_id}-graph-1'),
-        ], className='eia-weekly-graph-container'),
-        html.H1(f'{commodity} PADD9', className='eia-weekly-header-title'),
-        html.Br(),
-        html.Div([
-            create_loading_graph(f'{page_id}-graph-2'),
-            create_loading_graph(f'{page_id}-graph-3'),
-            create_loading_graph(f'{page_id}-graph-4'),
-            create_loading_graph(f'{page_id}-graph-5'),
-            create_loading_graph(f'{page_id}-graph-6'),
-        ], className='eia-weekly-graph-container'),        
-    ], className='eia-weekly-graph-page-layout')
-    return layout
-
-####################################################################################################
+commodity = 'Propane/Propylene: '
 
 idents = {
-    #Crude Adjustments
-    'crudeOriginalAdjustment' : 'Original Adjustment Factor (kbd)',
-    #PADD9 Stats
-    'crudeStocksP9' : 'P9 Crude Stocks (kb)',
-    'crudeRunsP9' : 'P9 Crude Runs (kbd)',
-    'grossRunsP9' : 'P9 Gross Runs (kbd)',
-    'feedstockRunsP9' : 'P9 Feedstock Runs (kbd)',
-    'crudeImportsP9' : 'P9 Crude Imports (kbd)',
+    #C3/C3= Stocks
+    'WPRSTUS1' : 'US C3/C3= Stocks (kb)',
+    'WPRSTP11' : 'P1 C3/C3= Stocks (kb)',
+    'WPRSTP21' : 'P2 C3/C3= Stocks (kb)',
+    'WPRSTP31' : 'P3 C3/C3= Stocks (kb)',
+    'WPRST_R4N5_1' : 'P4P5 C3/C3= Stocks (kb)',
+    #C3/C3= Imports
+    'WPRIM_NUS-Z00_2' : 'US C3/C3= Imports (kbd)',
+    'WPRIMP12' : 'P1 C3/C3= Imports (kbd)',
+    'WPRIMP22' : 'P2 C3/C3= Imports (kbd)',
+    'WPRIMP32' : 'P3 C3/C3= Imports (kbd)',
+    'W_EPLLPZ_IM0_R45-Z00_MBBLD' : 'P4P5 C3/C3= Imports (kbd)',
+    #C3/C3= Production
+    'WPRTP_NUS_2' : 'US C3/C3= Production (kbd)',
+    'WPRNPP12' : 'P1 C3/C3= Production (kbd)',
+    'WPRNPP22' : 'P2 C3/C3= Production (kbd)',
+    'WPRNPP32' : 'P3 C3/C3= Production (kbd)',
+    'W_EPLLPZ_YPT_R4N5_MBBLD' : 'P4P5 C3/C3= Production (kbd)',
+    #C3/C3= Exports
+    'W_EPLLPZ_EEX_NUS-Z00_MBBLD' : 'US C3/C3= Exports (kbd)',
 }
+    
+def graph_sections_input(page_id):
+    return [
+        # Stocks, 5 graphs
+        ('Stocks', [f'{page_id}-graph-{i}' for i in range(1, 6)]),
+        # Imports, 5 graphs
+        ('Imports', [f'{page_id}-graph-{i}' for i in range(6, 11)]),        
+        # Production, 5 graphs
+        ('Production', [f'{page_id}-graph-{i}' for i in range(11, 16)]),        
+        # Exports, 1 graph
+        ('Exports', [f'{page_id}-graph-16']),
+    ]
 
-idents = list(idents.keys())
+### END MANUAL INPUTS #################################################
+#######################################################################
+
+from dash import html, Input, Output
+from utils.calculation import create_callbacks, get_initial_data, create_loading_graph, generate_ids
+from utils.chooser import checklist_header
+from app import app
+import os
+
+def create_graph_section(title, graph_ids):
+    return html.Div([
+        html.H1(title, className='eia-weekly-header-title'),
+        html.Div([create_loading_graph(graph_id) for graph_id in graph_ids], className='eia-weekly-graph-container')
+    ])
+    
+def create_layout(page_id,commodity):
+    ids = generate_ids(page_id)    
+    graph_sections = graph_sections_input(page_id)
+    return html.Div([
+        checklist_header(ids['checklist_graph'], ids['checklist_id'], ids['toggle_id'], ids['checklist_div_id'], ids['toggle_div_id']),
+        html.Div(className='eia-weekly-top-spacing'),
+        *[create_graph_section(f'{commodity} {title}', graph_ids) for title, graph_ids in graph_sections]
+    ], className='eia-weekly-graph-page-layout')
+
+# Get the list of IDs
+idents_list = list(idents.keys())
+
+# Initial data fetching and processing
 raw_data = get_initial_data()
-raw_data = raw_data[['period'] + idents]
+raw_data = raw_data[['period'] + idents_list]
 
+# Page-specific variables
 page_id = os.path.basename(__file__).split('.')[0]
-num_graphs = len(idents)
+num_graphs = len(idents_list)
 
-layout = create_layout(page_id, 'Crude Oil')
+# Create the layout for the current page
+layout = create_layout(page_id,commodity)
 
+# Create callbacks for the app
+create_callbacks(app, page_id, num_graphs, idents_list, 'data-store')
+
+# Callback to toggle the visibility of checklist and toggle divs
 @app.callback(
     [Output(f'{page_id}-checklist-div', 'style'),
      Output(f'{page_id}-toggle-div', 'style')],
@@ -78,4 +91,3 @@ def toggle_visibility(toggle_value):
     else:
         return {'display': 'block'}, {'display': 'block'}
 
-create_callbacks(app, page_id, num_graphs, idents,raw_data)

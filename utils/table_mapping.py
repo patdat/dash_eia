@@ -215,3 +215,43 @@ propane_propylene_production = {
 propane_propylene_exports = {
     'W_EPLLPZ_EEX_NUS-Z00_MBBLD' : 'US C3/C3= Exports (kbd)',    
 }
+
+refinery_utilization = {
+    #Crude Refinery Utilizaiton
+    'WPULEUS3' : 'US Refinery Utilization (pct)',
+    'W_NA_YUP_R10_PER' : 'P1 Refinery Utilization (pct)',
+    'W_NA_YUP_R20_PER' : 'P2 Refinery Utilization (pct)',
+    'W_NA_YUP_R30_PER' : 'P3 Refinery Utilization (pct)',
+    'W_NA_YUP_R40_PER' : 'P4 Refinery Utilization (pct)',
+    'W_NA_YUP_R50_PER' : 'P5 Refinery Utilization (pct)',
+}
+
+refinery_feedstock_runs = {
+    #Feedstock Runs
+    'feedstockRunsUS' : 'US Feedstock Runs (kbd)',
+    'feddStockRunsP1' : 'P1 Feedstock Runs (kbd)',
+    'feedstockRunsP2' : 'P2 Feedstock Runs (kbd)',
+    'feedstockRunsP3' : 'P3 Feedstock Runs (kbd)',
+    'feedstockRunsP4' : 'P4 Feedstock Runs (kbd)',
+    'feedstockRunsP5' : 'P5 Feedstock Runs (kbd)',
+}
+
+refinery_gross_runs = {
+    #Gross Runs
+    'WGIRIUS2' : 'US Gross Runs (kbd)',
+    'WGIRIP12' : 'P1 Gross Runs (kbd)',
+    'WGIRIP22' : 'P2 Gross Runs (kbd)',
+    'WGIRIP32' : 'P3 Gross Runs (kbd)',
+    'WGIRIP42' : 'P4 Gross Runs (kbd)',
+    'WGIRIP52' : 'P5 Gross Runs (kbd)',    
+}
+
+refinery_operable_cdu_capacity = {
+    #Operable CDU Capacity
+    'WOCLEUS2':'US CDU Capacity (kbd)',
+    'W_NA_YRL_R10_MBBLD':'P1 CDU Capacity (kbd)',
+    'W_NA_YRL_R20_MBBLD':'P2 CDU Capacity (kbd)',
+    'W_NA_YRL_R30_MBBLD':'P3 CDU Capacity (kbd)',
+    'W_NA_YRL_R40_MBBLD':'P4 CDU Capacity (kbd)',
+    'W_NA_YRL_R50_MBBLD':'P5 CDU Capacity (kbd)',       
+}    

@@ -1,108 +1,93 @@
-###GASOLINE##
+#######################################################################
+### MANUAL INPUTS #####################################################
 
-from dash import dcc, html, Input, Output
-from utils.calculation import create_callbacks, get_initial_data
-from utils.chooser import checklist_header
-from app import app
-import pandas as pd
-import os
-
-def create_loading_graph(graph_id):
-    return dcc.Loading(
-        id=f'{graph_id}-loading',
-        type='dot',
-        className='custom-loading',
-        children=html.Div(
-            dcc.Graph(id=graph_id),
-            className='graph-container'
-        )
-    )
-    
-def create_layout(page_id, commodity):
-    checklist_graph = f'{page_id}-graph-toggle'
-    checklist_id = f'{page_id}-year-toggle'
-    toggle_id = f'{page_id}-toggle-range'
-    checklist_div_id = f'{page_id}-checklist-div'
-    toggle_div_id = f'{page_id}-toggle-div'
-
-    layout = html.Div([
-        checklist_header(checklist_graph, checklist_id, toggle_id, checklist_div_id, toggle_div_id),
-        html.Div(className='eia-weekly-top-spacing'),
-        html.H1(f'{commodity} Stocks', className='eia-weekly-header-title'),
-        html.Div([
-            create_loading_graph(f'{page_id}-graph-1'),
-            create_loading_graph(f'{page_id}-graph-2'),
-            create_loading_graph(f'{page_id}-graph-3'),
-            create_loading_graph(f'{page_id}-graph-4'),
-            create_loading_graph(f'{page_id}-graph-5'),
-            create_loading_graph(f'{page_id}-graph-6'),
-        ], className='eia-weekly-graph-container'),
-        html.H1(f'{commodity} Imports', className='eia-weekly-header-title'),
-        html.Br(),
-        html.Div([
-            create_loading_graph(f'{page_id}-graph-7'),
-            create_loading_graph(f'{page_id}-graph-8'),
-            create_loading_graph(f'{page_id}-graph-9'),
-            create_loading_graph(f'{page_id}-graph-10'),
-            create_loading_graph(f'{page_id}-graph-11'),
-            create_loading_graph(f'{page_id}-graph-12'),            
-        ], className='eia-weekly-graph-container'),
-        html.H1(f'{commodity} Production', className='eia-weekly-header-title'),
-        html.Br(),
-        html.Div([
-            create_loading_graph(f'{page_id}-graph-13'),
-            create_loading_graph(f'{page_id}-graph-14'),
-            create_loading_graph(f'{page_id}-graph-15'),
-            create_loading_graph(f'{page_id}-graph-16'),
-            create_loading_graph(f'{page_id}-graph-17'),
-            create_loading_graph(f'{page_id}-graph-18'),
-        ], className='eia-weekly-graph-container'),
-        html.H1(f'{commodity} Exports', className='eia-weekly-header-title'),
-        html.Br(),
-        html.Div([
-            create_loading_graph(f'{page_id}-graph-19'),
-        ], className='eia-weekly-graph-container'),
-    ], className='eia-weekly-graph-page-layout')
-    return layout
-
-####################################################################################################
+commodity = 'Refining: '
 
 idents = {
-    #Distillate Stocks
-    'WDISTUS1' : 'US Distillate Fuel Oil Stocks (kb)',
-    'WDISTP11' : 'P1 Distillate Fuel Oil Stocks (kb)',
-    'WDISTP21' : 'P2 Distillate Fuel Oil Stocks (kb)',
-    'WDISTP31' : 'P3 Distillate Fuel Oil Stocks (kb)',
-    'WDISTP41' : 'P4 Distillate Fuel Oil Stocks (kb)',
-    'WDISTP51' : 'P5 Distillate Fuel Oil Stocks (kb)',
-    #Distillate Imports
-    'WDIIMUS2' : 'US Distillate Fuel Oil Imports (kbd)',
-    'WDIIM_R10-Z00_2' : 'P1 Distillate Fuel Oil Imports (kbd)',
-    'WDIIM_R20-Z00_2' : 'P2 Distillate Fuel Oil Imports (kbd)',
-    'WDIIM_R30-Z00_2' : 'P3 Distillate Fuel Oil Imports (kbd)',
-    'WDIIM_R40-Z00_2' : 'P4 Distillate Fuel Oil Imports (kbd)',
-    'WDIIM_R50-Z00_2' : 'P5 Distillate Fuel Oil Imports (kbd)',
-    #Distillate Produciton
-    'WDIRPUS2' : 'US Distillate Fuel Oil Production (kbd)',
-    'WDIRPP12' : 'P1 Distillate Fuel Oil Production (kbd)',
-    'WDIRPP22' : 'P2 Distillate Fuel Oil Production (kbd)',
-    'WDIRPP32' : 'P3 Distillate Fuel Oil Production (kbd)',
-    'WDIRPP42' : 'P4 Distillate Fuel Oil Production (kbd)',
-    'WDIRPP52' : 'P5 Distillate Fuel Oil Production (kbd)',
-    #Distillate Exports
-    'WDIEXUS2' : 'US Total Distillate Exports (kbd)',  
+    #Crude Refinery Utilizaiton
+    'WPULEUS3' : 'US Refinery Utilization (pct)',
+    'W_NA_YUP_R10_PER' : 'P1 Refinery Utilization (pct)',
+    'W_NA_YUP_R20_PER' : 'P2 Refinery Utilization (pct)',
+    'W_NA_YUP_R30_PER' : 'P3 Refinery Utilization (pct)',
+    'W_NA_YUP_R40_PER' : 'P4 Refinery Utilization (pct)',
+    'W_NA_YUP_R50_PER' : 'P5 Refinery Utilization (pct)',
+    #Feedstock Runs
+    'feedstockRunsUS' : 'US Feedstock Runs (kbd)',
+    'feddStockRunsP1' : 'P1 Feedstock Runs (kbd)',
+    'feedstockRunsP2' : 'P2 Feedstock Runs (kbd)',
+    'feedstockRunsP3' : 'P3 Feedstock Runs (kbd)',
+    'feedstockRunsP4' : 'P4 Feedstock Runs (kbd)',
+    'feedstockRunsP5' : 'P5 Feedstock Runs (kbd)',
+    #Gross Runs
+    'WGIRIUS2' : 'US Gross Runs (kbd)',
+    'WGIRIP12' : 'P1 Gross Runs (kbd)',
+    'WGIRIP22' : 'P2 Gross Runs (kbd)',
+    'WGIRIP32' : 'P3 Gross Runs (kbd)',
+    'WGIRIP42' : 'P4 Gross Runs (kbd)',
+    'WGIRIP52' : 'P5 Gross Runs (kbd)',    
+    #Operable CDU Capacity
+    'WOCLEUS2':'US CDU Capacity (kbd)',
+    'W_NA_YRL_R10_MBBLD':'P1 CDU Capacity (kbd)',
+    'W_NA_YRL_R20_MBBLD':'P2 CDU Capacity (kbd)',
+    'W_NA_YRL_R30_MBBLD':'P3 CDU Capacity (kbd)',
+    'W_NA_YRL_R40_MBBLD':'P4 CDU Capacity (kbd)',
+    'W_NA_YRL_R50_MBBLD':'P5 CDU Capacity (kbd)',       
 }
+    
+def graph_sections_input(page_id):
+    return [
+        # utilization, 6 graphs
+        ('Refinery Utilization', [f'{page_id}-graph-{i}' for i in range(1, 7)]),
+        # feed, 6 graphs
+        ('Feedstock Runs', [f'{page_id}-graph-{i}' for i in range(7, 13)]),        
+        # gross, 6 graphs
+        ('Gross Runs', [f'{page_id}-graph-{i}' for i in range(13, 19)]),        
+        # capacity, 6 graphs
+        ('Operable CDU Capacity', [f'{page_id}-graph-{i}' for i in range(19, 25)]),        
+    ]
 
-idents = list(idents.keys())
+### END MANUAL INPUTS #################################################
+#######################################################################
 
+from dash import html, Input, Output
+from utils.calculation import create_callbacks, get_initial_data, create_loading_graph, generate_ids
+from utils.chooser import checklist_header
+from app import app
+import os
+
+def create_graph_section(title, graph_ids):
+    return html.Div([
+        html.H1(title, className='eia-weekly-header-title'),
+        html.Div([create_loading_graph(graph_id) for graph_id in graph_ids], className='eia-weekly-graph-container')
+    ])
+    
+def create_layout(page_id,commodity):
+    ids = generate_ids(page_id)    
+    graph_sections = graph_sections_input(page_id)
+    return html.Div([
+        checklist_header(ids['checklist_graph'], ids['checklist_id'], ids['toggle_id'], ids['checklist_div_id'], ids['toggle_div_id']),
+        html.Div(className='eia-weekly-top-spacing'),
+        *[create_graph_section(f'{commodity} {title}', graph_ids) for title, graph_ids in graph_sections]
+    ], className='eia-weekly-graph-page-layout')
+
+# Get the list of IDs
+idents_list = list(idents.keys())
+
+# Initial data fetching and processing
 raw_data = get_initial_data()
-raw_data = raw_data[['period'] + idents]
+raw_data = raw_data[['period'] + idents_list]
 
+# Page-specific variables
 page_id = os.path.basename(__file__).split('.')[0]
-num_graphs = len(idents)
+num_graphs = len(idents_list)
 
-layout = create_layout(page_id, 'Distillate Fuel Oil')
+# Create the layout for the current page
+layout = create_layout(page_id,commodity)
 
+# Create callbacks for the app
+create_callbacks(app, page_id, num_graphs, idents_list, 'data-store')
+
+# Callback to toggle the visibility of checklist and toggle divs
 @app.callback(
     [Output(f'{page_id}-checklist-div', 'style'),
      Output(f'{page_id}-toggle-div', 'style')],
@@ -114,4 +99,3 @@ def toggle_visibility(toggle_value):
     else:
         return {'display': 'block'}, {'display': 'block'}
 
-create_callbacks(app, page_id, num_graphs, idents,raw_data)

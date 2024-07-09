@@ -23,7 +23,6 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     font-size: 200px !important;
 }
 
-
 /* Optional: Add a hover effect for better user interaction */
 .nav, .nav-item, .btn, .btn-block {
     width: 100%; /* Ensures each element fills its container */
@@ -63,7 +62,7 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     background-color: #f4f5f9; /* Custom RGB background color */
     overflow-y: auto;
     z-index: 1001; /* Ensure sidebar is above other content */
-    border-right: 1px solid white; /* Thick grey border to the right */
+    border-right: 1px solid #bfbec4; /* Thick grey border to the right */
 }
 
 /* Styling for all navigation links */
@@ -200,8 +199,9 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 
 .eia_h1_header {
     text-align: left !important;
-    color: #c00000 !important;
+    color: black !important;
     font-size: 12pt !important;
+    font-weight: bold;    
 }
 
 /* assets/custom_styles.css */

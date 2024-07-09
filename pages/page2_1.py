@@ -1,12 +1,12 @@
 from utils.mapping import production_mapping
 from utils.download import main as download_raw_file
+from utils.download_csv import main as fast_download
 from utils.table_mapping import *
 import dash
 from dash import html, dash_table, Input, Output
 from app import app
 import pandas as pd
 
-initial_data = pd.read_csv('./data/wps_gte_2015_pivot.csv').to_dict('records')
 
 layout = html.Div([
     html.Button('Generate and Save Data', id='generate-data-btn'),
@@ -21,10 +21,12 @@ layout = html.Div([
 )
 def generate_data(n_clicks):
     if n_clicks is not None and n_clicks > 0:
-        df = download_raw_file()
+        df = fast_download()
+        # df = download_raw_file()
         return df.to_dict('records')
     else:
-        df = pd.DataFrame(initial_data)
+        initial_loadout = pd.read_csv('./data/wps_gte_2015_pivot.csv').to_dict('records')
+        df = pd.DataFrame(initial_loadout)
     return df.to_dict('records')
 
 def generate_main_table(df):
@@ -107,16 +109,16 @@ def generate_dash_table(df, idents, table_id):
                         'filter_query': f'{{{col_fourth}}} > 0',
                         'column_id': col_fourth
                     },
-                    'backgroundColor': '#a3d39c', # 'lightgreen'
-                    'color': 'black',
+                    'backgroundColor': 'lightgreen', # 'lightgreen'
+                    'color': 'green',
                 },
                 {
                     'if': {
                         'filter_query': f'{{{col_fourth}}} < 0',
                         'column_id': col_fourth
                     },
-                    'backgroundColor': '#e57373', # 'lightpink'
-                    'color': 'black',
+                    'backgroundColor': 'lightpink', # 'lightpink'
+                    'color': 'red',
                 }
             ]
         ),
@@ -161,7 +163,11 @@ def update_tables(data):
     propane_propylene_imports_table = generate_dash_table(main_table, propane_propylene_imports, 'Propane/Propylene Imports')
     propane_propylene_production_table = generate_dash_table(main_table, propane_propylene_production, 'Propane/Propylene Production')
     propane_propylene_exports_table = generate_dash_table(main_table, propane_propylene_exports, 'Propane/Propylene Exports')
-    
+    refinery_utilization_table = generate_dash_table(main_table, refinery_utilization, 'CDU Utilization')
+    refinery_feedstock_runs_table = generate_dash_table(main_table, refinery_feedstock_runs, 'Feedstock Runs')
+    refinery_gross_runs_table = generate_dash_table(main_table, refinery_gross_runs, 'Gross Runs')
+    refinery_operable_cdu_capacity_table = generate_dash_table(main_table, refinery_operable_cdu_capacity, 'Operable CDU Capacity')
+
     html_object = html.Div([
         html.Div([
             html.Div([
@@ -220,8 +226,17 @@ def update_tables(data):
                 propane_propylene_production_table,
                 propane_propylene_exports_table,
             ], className='eia_table_style'),  
+
+            html.Div([
+                html.H1('Refining', className='eia_h1_header'),  
+                refinery_utilization_table,
+                refinery_feedstock_runs_table,
+                refinery_gross_runs_table,
+                refinery_operable_cdu_capacity_table,
+            ], className='eia_table_style'),  
+
     
-        ], style={'display': 'flex', 'width': '2870px'}),
+        ], style={'display': 'flex', 'width': '3280px'}),
     ], style={'display': 'flex', 'justify-content': 'left'})
 
     

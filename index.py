@@ -3,23 +3,18 @@ import dash_bootstrap_components as dbc
 from app import app  # Ensure this import points to where your Dash app is initialized
 from app import initial_data
 
-import pages.page1  # Home
-import pages.page2_1  # Headline
-import pages.page2_2  # Crude Stocks
-# import pages.page2_3  # Crude Production
-# import pages.page2_4  # Crude Imports
-# import pages.page2_5  # Crude Adjstument
-# import pages.page2_6  # Crude Runs
-# import pages.page2_7  # Crude Other
-# import pages.page2_7  # Crude Exports
-# import pages.page2_8  # Other Runs
-# import pages.page2_9  # Gasoline
-# import pages.page2_10  # Distillate
-# import pages.page2_11  # Jet
-# import pages.page2_12  # Fuel Oil
-# import pages.page2_13  # C3/C3=
-# import pages.page2_14  # Product Supplied
-# import pages.page2_15  # Other Products
+import pages.page1      # Home
+import pages.page2_1    # Headline
+import pages.page2_2    # Crude
+import pages.page2_3    # Gasoline
+import pages.page2_4    # Distillate
+import pages.page2_5    # Jet
+import pages.page2_6    # Fuel Oil
+import pages.page2_7    # C3/C3=
+import pages.page2_8    # Products Supplied
+import pages.page2_9    # Refining
+
+
 
 # Layout with fixed-width sidebar
 sidebar = html.Div(
@@ -37,7 +32,8 @@ sidebar = html.Div(
                             'width': '50px',   # Adjust width to fit your design
                             'object-fit': 'contain',  # Preserve the aspect ratio
                             'display': 'block',  # Makes the image a block to take full width of the line
-                            'margin-bottom': '0px'
+                            'margin-bottom': '0px',
+                            'margin-left': '5px'
                         }
                     ),
                     href="https://www.google.com"  # Makes the image clickable
@@ -56,7 +52,7 @@ sidebar = html.Div(
                 'justify-content': 'flex-start',  # Aligns the image and text to the left
                 'align-items': 'center',  # Aligns the image and text vertically center
             }),
-        ], style={'display': 'flex', 'border-bottom': '0px solid white', 'border-top': '0px solid white'}),
+        ], style={'display': 'flex', 'border-bottom': '0px solid white', 'border-top': '0px solid white','margin-left':'12px'}),
 
         # Add a blank div to give the sidebar some height space
         html.Div(style={'height': '25px'}),
@@ -71,8 +67,16 @@ sidebar = html.Div(
                         dbc.Nav(
                             [
                                 dbc.NavLink("Headline", href="/stats/headline", active='exact', className="nav-link"),
-                                dbc.NavLink("Crude Stocks", href="/stats/crude_stocks", active='exact', className="nav-link"),
-                                dbc.NavLink("Crude Production", href="/stats/crude_production", active='exact', className="nav-link"),
+                                dbc.NavLink("Crude", href="/stats/crude", active='exact', className="nav-link"),
+                                dbc.NavLink("Gasoline", href="/stats/gasoline", active='exact', className="nav-link"),
+                                dbc.NavLink("Distillate", href="/stats/distillate", active='exact', className="nav-link"),
+                                dbc.NavLink("Jet", href="/stats/jet", active='exact', className="nav-link"),
+                                dbc.NavLink("Fuel Oil", href="/stats/fuel_oil", active='exact', className="nav-link"),
+                                dbc.NavLink("C3/C3=", href="/stats/propane_propylene", active='exact', className="nav-link"),
+                                dbc.NavLink("Products Supplied", href="/stats/products_supplied", active='exact', className="nav-link"),
+                                dbc.NavLink("Refining", href="/stats/refining", active='exact', className="nav-link"),
+                                
+                                
                             ],
                             vertical=True, pills=True
                         ),
@@ -93,9 +97,10 @@ content = html.Div(id="page-content", className="content-area")
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    dcc.Store(id='data-store', data=initial_data, storage_type='session'),
     sidebar,
-    content
+    content,
+    dcc.Store(id='data-store', data=initial_data, storage_type='session'),
+    
 ])
 
 @app.callback(
@@ -122,10 +127,22 @@ def display_page(pathname):
     # EIA Weekly
     elif pathname == '/stats/headline':
         return pages.page2_1.layout        
-    elif pathname == '/stats/crude_stocks':
+    elif pathname == '/stats/crude':
         return pages.page2_2.layout
-    elif pathname == '/stats/crude_production':
+    elif pathname == '/stats/gasoline':
+        return pages.page2_3.layout
+    elif pathname == '/stats/distillate':
+        return pages.page2_4.layout
+    elif pathname == '/stats/jet':
         return pages.page2_5.layout
+    elif pathname == '/stats/fuel_oil':
+        return pages.page2_6.layout
+    elif pathname == '/stats/propane_propylene':
+        return pages.page2_7.layout
+    elif pathname == '/stats/products_supplied':
+        return pages.page2_8.layout
+    elif pathname == '/stats/refining':
+        return pages.page2_9.layout
     else:
         return "404 Page Not Found"
 

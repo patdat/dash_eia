@@ -38,7 +38,7 @@ def checklist_header(toggle_graph, checklist_id, toggle_id, checklist_div_id, to
 
         html.Div([
             html.Div([
-                dbc.Label('1519', style={'margin-right': '10px', 'margin-top': '10px'}),
+                dbc.Label('18-23', style={'margin-right': '10px', 'margin-top': '10px'}),
                 daq.ToggleSwitch(
                     id=toggle_id,
                     value=False,
@@ -48,7 +48,7 @@ def checklist_header(toggle_graph, checklist_id, toggle_id, checklist_div_id, to
                         'display': 'inline-block',
                     },
                 ),
-                dbc.Label('1823', style={'margin-left': '10px', 'margin-top': '10px'}),
+                dbc.Label('15-19', style={'margin-left': '10px', 'margin-top': '10px'}),
             ], style={
                 'display': 'flex',
                 'align-items': 'center',

@@ -197,11 +197,11 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
         hovermode='x unified',
         template='plotly_white',
         legend=dict(
-            x=0.5,
+            x=0.85,
             y=1.1,
-            xanchor='center',
+            xanchor='left',
             yanchor='top',
-            orientation='h'
+            orientation='v'
         ),
         hoverlabel=dict(
             bgcolor="white",
@@ -210,7 +210,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
             bordercolor="#ccc"
         ),
         margin=dict(l=40, r=40, t=40, b=25),        
-        showlegend=False
+        showlegend=True
     )
 
 

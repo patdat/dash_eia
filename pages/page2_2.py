@@ -1,7 +1,7 @@
 #######################################################################
 ### MANUAL INPUTS #####################################################
 
-commodity = 'Crude'
+commodity = 'Crude: '
 
 idents = {
     #Crude Stocks
@@ -38,7 +38,16 @@ idents = {
     'WCRRIP42' : 'P4 Refinery Runs (kbd)',
     'WCRRIP52' : 'P5 Refinery Runs (kbd)',
     #Crude Exports
-    'WCREXUS2' : 'US Crude Exports (kbd)',}
+    'WCREXUS2' : 'US Crude Exports (kbd)',
+    #PADD9 Stats
+    'crudeStocksP9' : 'P9 Stocks (kb)',
+    'crudeRunsP9' : 'P9 Crude Runs (kbd)',
+    'grossRunsP9' : 'P9 Gross Runs (kbd)',
+    'feedstockRunsP9' : 'P9 Feedstock Runs (kbd)',
+    'crudeImportsP9' : 'P9 Crude Imports (kbd)',
+}
+
+
 def graph_sections_input(page_id):
     return [
         #Stocks, 6 graphs
@@ -55,6 +64,8 @@ def graph_sections_input(page_id):
         ('Runs', [f'{page_id}-graph-{i}' for i in range(22, 28)]),
         #Exports, 1 graph
         ('Exports', [f'{page_id}-graph-28']),
+        #PADD 9 Stats, 5 Graphs
+        ('PADD 9', [f'{page_id}-graph-{i}' for i in range(29, 34)]),        
     ]    
 
 ### END MANUAL INPUTS #################################################
