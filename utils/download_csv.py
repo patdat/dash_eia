@@ -99,10 +99,10 @@ def download_data():
         df = pd.read_csv('https://ir.eia.gov/wpsr/table9.csv', encoding='ISO-8859-1')
         print('Data downloaded from EIA')
         isAvailable = True
-    except:    
+    except Exception as e:    
         isAvailable = False
-        print('Data not available from EIA')
-        return pd.read_csv('eia_weekly_fast_download_psw09.csv'), isAvailable
+        print('Data not available from EIA:', e)
+        return pd.read_csv('./data/eia_weekly_fast_download_psw09.csv'), isAvailable
     
     if isAvailable:
         df = first_pass(df)
