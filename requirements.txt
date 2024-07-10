@@ -1,0 +1,5 @@
+pandas
+requirements
+numpy
+dash
+dash-bootstrap-components

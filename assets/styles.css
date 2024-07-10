@@ -10,13 +10,13 @@
 
 /* Apply the font and background globally */
 body {
-    font-family: 'Corbel', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: #f4f5f9; /* Custom RGB background color */
 }
 
 /* Ensure other text elements also inherit the font */
 h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
-    font-family: 'Corbel', sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .large-font .dash-daq-toggle-switch__label {
