@@ -59,18 +59,22 @@ def pivot_data(df):
     return df
 
 def main():
-    download_raw_file()
-    sheets = read_excel_file()
-    df = parse_all_data(sheets)
-    df = generate_additional_tickers(df)
-    df = df[df['period'] >= '2014-12-26']
-    df = filter_data(df)
-    df = map_name(df)
-    df = reorder_columns(df)
-    df.to_csv('./data/wps_gte_2015.csv',index=False)
-    pv = pivot_data(df)
-    pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+    try:
+        download_raw_file()
+        sheets = read_excel_file()
+        df = parse_all_data(sheets)
+        df = generate_additional_tickers(df)
+        df = df[df['period'] >= '2014-12-26']
+        df = filter_data(df)
+        df = map_name(df)
+        df = reorder_columns(df)
+        df.to_csv('./data/wps_gte_2015.csv',index=False)
+        pv = pivot_data(df)
+        pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+    except Exception as e:
+        print('using local file instead b/c data not available:', e)
+        pv = pd.read_csv('./data/wps_gte_2015_pivot.csv',parse_dates=['period'])
     return pv
 
 if __name__ == '__main__':
-    raw = main()
+    main()

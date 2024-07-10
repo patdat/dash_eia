@@ -138,3 +138,6 @@ def main():
     else:
         pv = pd.read_csv('./data/wps_gte_2015_pivot.csv',parse_dates=['period'])
     return pv
+
+if __name__ == '__main__':
+    main()
