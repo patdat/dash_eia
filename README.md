@@ -1,13 +1,15 @@
 # dash_eia
- 
-PCIA COLORS:
-red: #c00000
-orange: #e97132
-grey: #bfbec4
-background grey: #f4f5f9
 
-ANALYST COLORS:
-blue: #226191
-red: #C00000
-grey: #7f7f7f
-background grey: #f4f5f9
+## Colors
+
+### PCIA Colors
+- **Red:** `#c00000` (RGB: 192, 0, 0)
+- **Orange:** `#e97132` (RGB: 233, 113, 50)
+- **Grey:** `#bfbec4` (RGB: 191, 190, 196)
+- **Background Grey:** `#f4f5f9` (RGB: 244, 245, 249)
+
+### Analyst Colors
+- **Blue:** `#226191` (RGB: 34, 97, 145)
+- **Red:** `#C00000` (RGB: 192, 0, 0)
+- **Grey:** `#7f7f7f` (RGB: 127, 127, 127)
+- **Background Grey:** `#f4f5f9` (RGB: 244, 245, 249)
