@@ -136,3 +136,9 @@ WDIUPUS2,product supplied usdistillate fuel oil
 WREUPUS2,product supplied usresidual fuel oil
 WPRUP_NUS_2,product supplied uspropane/propylene
 WWOUP_NUS_2,product supplied usother oils
+WOCLEUS2,refiner inputs and utilization usoperable capacity
+W_NA_YRL_R10_MBBLD,refiner inputs and utilization p1operable capacity
+W_NA_YRL_R20_MBBLD,refiner inputs and utilization p2operable capacity
+W_NA_YRL_R30_MBBLD,refiner inputs and utilization p3operable capacity
+W_NA_YRL_R40_MBBLD,refiner inputs and utilization p4operable capacity
+W_NA_YRL_R50_MBBLD,refiner inputs and utilization p5operable capacity
