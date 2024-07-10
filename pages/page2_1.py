@@ -1,9 +1,10 @@
 from utils.mapping import production_mapping
-from utils.download import main as download_raw_file
-from utils.download_csv import main as fast_download
+from utils.download_xlsx import main as download_xlsx
+from utils.download_csv import main as download_csv
 from utils.table_mapping import *
 import dash
 from dash import html, dash_table, Input, Output
+from dash.dash_table import FormatTemplate
 from app import app
 import pandas as pd
 
@@ -21,8 +22,8 @@ layout = html.Div([
 )
 def generate_data(n_clicks):
     if n_clicks is not None and n_clicks > 0:
-        df = fast_download()
-        # df = download_raw_file()
+        df = download_xlsx()
+        # df = download_csv()
         return df.to_dict('records')
     else:
         initial_loadout = pd.read_csv('./data/wps_gte_2015_pivot.csv').to_dict('records')
@@ -73,15 +74,23 @@ def generate_dash_table(df, idents, table_id):
 
     col_first = table_id
 
+    # Define the column formatting
+    number_format = FormatTemplate.money(2)
+
+    # Assuming df is your DataFrame
+    columns = [
+        {"name": i, "id": i, "type": "numeric", "format": number_format} if i in [col_second, col_third, col_fourth] else {"name": i, "id": i}
+        for i in df.columns
+    ]
+
     return html.Div(
         dash_table.DataTable(
             id=table_id,
-            columns=[{"name": i, "id": i} for i in df.columns],
+            columns=columns,
             data=df.to_dict('records'),
             style_table={
                 'border': 'none', 
                 'borderRadius': '15px', 
-                # 'overflow': 'hidden', 
                 'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
             },
             style_cell={
@@ -109,7 +118,7 @@ def generate_dash_table(df, idents, table_id):
                         'filter_query': f'{{{col_fourth}}} > 0',
                         'column_id': col_fourth
                     },
-                    'backgroundColor': 'lightgreen', # 'lightgreen'
+                    'backgroundColor': 'lightgreen',
                     'color': 'green',
                 },
                 {
@@ -117,7 +126,7 @@ def generate_dash_table(df, idents, table_id):
                         'filter_query': f'{{{col_fourth}}} < 0',
                         'column_id': col_fourth
                     },
-                    'backgroundColor': 'lightpink', # 'lightpink'
+                    'backgroundColor': 'lightpink',
                     'color': 'red',
                 }
             ]

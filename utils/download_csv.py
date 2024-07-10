@@ -101,7 +101,7 @@ def download_data():
         isAvailable = True
     except Exception as e:    
         isAvailable = False
-        print('Data not available from EIA:', e)
+        print('using local file instead b/c data not available:', e,)
         return pd.read_csv('./data/eia_weekly_fast_download_psw09.csv'), isAvailable
     
     if isAvailable:
@@ -123,6 +123,7 @@ def pivot_data(df):
 
 def main():
     df, isAvailable = download_data()
+    print(isAvailable)
     
     if isAvailable:
         df = df.copy()
