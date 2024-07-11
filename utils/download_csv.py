@@ -97,11 +97,11 @@ def seventh_pass(df):
 def download_data():
     try:
         df = pd.read_csv('https://ir.eia.gov/wpsr/table9.csv', encoding='ISO-8859-1')
-        print('Data downloaded from EIA')
+        print('download_csv.py: data available')
         isAvailable = True
     except Exception as e:    
         isAvailable = False
-        print('using local file instead b/c data not available:', e,)
+        print('download_csv.py data: data not available')
         return pd.read_csv('./data/eia_weekly_fast_download_psw09.csv'), isAvailable
     
     if isAvailable:
@@ -123,7 +123,6 @@ def pivot_data(df):
 
 def main():
     df, isAvailable = download_data()
-    print(isAvailable)
     
     if isAvailable:
         df = df.copy()

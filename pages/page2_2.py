@@ -72,7 +72,7 @@ def graph_sections_input(page_id):
 #######################################################################
 
 from dash import html, Input, Output
-from utils.calculation import create_callbacks, get_initial_data, create_loading_graph, generate_ids
+from utils.calculation import create_callbacks, get_initial_data, create_loading_graph
 from utils.chooser import checklist_header
 from app import app
 import os
@@ -82,8 +82,18 @@ def create_graph_section(title, graph_ids):
         html.H1(title, className='eia-weekly-header-title'),
         html.Div([create_loading_graph(graph_id) for graph_id in graph_ids], className='eia-weekly-graph-container')
     ])
-    
+
 def create_layout(page_id,commodity):
+    
+    def generate_ids(page_id):
+        return {
+            'checklist_graph': f'{page_id}-graph-toggle',
+            'checklist_id': f'{page_id}-year-toggle',
+            'toggle_id': f'{page_id}-toggle-range',
+            'checklist_div_id': f'{page_id}-checklist-div',
+            'toggle_div_id': f'{page_id}-toggle-div'
+        }    
+    
     ids = generate_ids(page_id)    
     graph_sections = graph_sections_input(page_id)
     return html.Div([

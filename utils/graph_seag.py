@@ -198,7 +198,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
         template='plotly_white',
         legend=dict(
             x=0.85,
-            y=1.1,
+            y=1.0,
             xanchor='left',
             yanchor='top',
             orientation='v'
