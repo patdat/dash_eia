@@ -1,6 +1,8 @@
 import plotly.graph_objs as go
+import numpy as np
+import pandas as pd
 
-def chart_trend(df, mapping_name, stocks_in_name):
+def chart_trend(df, mapping_name, stocks_in_name, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
     df = df.copy()
     last_value = df['value'].iloc[-1]
 
@@ -9,8 +11,22 @@ def chart_trend(df, mapping_name, stocks_in_name):
     else:
         formatted_value = f"{int(round(last_value, 0))}"  # Convert to integer to avoid decimal
 
+    # Filter data based on the button selection
+    if btn_1m:
+        df = df[df['period'] >= df['period'].max() - pd.DateOffset(months=1)]
+    elif btn_6m:
+        df = df[df['period'] >= df['period'].max() - pd.DateOffset(months=6)]
+    elif btn_12m:
+        df = df[df['period'] >= df['period'].max() - pd.DateOffset(years=1)]
+    elif btn_36m:
+        df = df[df['period'] >= df['period'].max() - pd.DateOffset(years=3)]
+    elif btn_all:
+        pass
+
+    period_as_array = np.array(df['period'])  # Explicit conversion to numpy array
+
     trace = go.Scatter(
-        x=df['period'],
+        x=period_as_array,
         y=df['value'],
         mode='lines',
         line=dict(color='#c00000'),
@@ -29,18 +45,9 @@ def chart_trend(df, mapping_name, stocks_in_name):
             font=dict(
                 color='black'
             )
-        ),          
+        ),
         plot_bgcolor='white',
         xaxis=dict(
-            rangeselector=dict(
-                buttons=[
-                    {'count': 1, 'label': '1m', 'step': 'month', 'stepmode': 'backward'},
-                    {'count': 6, 'label': '6m', 'step': 'month', 'stepmode': 'backward'},
-                    {'count': 12, 'label': '1y', 'step': 'month', 'stepmode': 'backward'},
-                    {'count': 36, 'label': '3y', 'step': 'month', 'stepmode': 'backward'},
-                    {'step': 'all'}
-                ]
-            ),
             rangeslider=dict(visible=False),
             type='date',
             showline=True,
@@ -58,7 +65,9 @@ def chart_trend(df, mapping_name, stocks_in_name):
             spikedash='dot',
             spikecolor='#e97132',
             spikethickness=1,
-            showspikes=True
+            showspikes=True,
+            automargin=True,
+            autorange=True  # Automatically scale y-axis based on data values
         ),
         shapes=[
             dict(
@@ -87,7 +96,6 @@ def chart_trend(df, mapping_name, stocks_in_name):
         ],
         margin=dict(l=40, r=40, t=75, b=25),        
     )
-
 
     # Return the figure as a dictionary
     return {'data': [trace], 'layout': layout}

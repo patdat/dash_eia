@@ -66,7 +66,7 @@ sidebar = html.Div(
                     dbc.Collapse(
                         dbc.Nav(
                             [
-                                dbc.NavLink("Headline", href="/stats/headline", active='exact', className="nav-link"),
+                                dbc.NavLink("Headline", href="/stats/headline", active='exact', className="nav-link"),                                
                                 dbc.NavLink("Crude", href="/stats/crude", active='exact', className="nav-link"),
                                 dbc.NavLink("Gasoline", href="/stats/gasoline", active='exact', className="nav-link"),
                                 dbc.NavLink("Distillate", href="/stats/distillate", active='exact', className="nav-link"),
@@ -75,13 +75,11 @@ sidebar = html.Div(
                                 dbc.NavLink("C3/C3=", href="/stats/propane_propylene", active='exact', className="nav-link"),
                                 dbc.NavLink("Products Supplied", href="/stats/products_supplied", active='exact', className="nav-link"),
                                 dbc.NavLink("Refining", href="/stats/refining", active='exact', className="nav-link"),
-                                
-                                
                             ],
                             vertical=True, pills=True
                         ),
                         id="collapse-page-2",
-                        is_open=False,
+                        is_open=True,
                     ),
                 ]),                                                   
             ],
@@ -126,7 +124,7 @@ def display_page(pathname):
         return pages.page1.layout        
     # EIA Weekly
     elif pathname == '/stats/headline':
-        return pages.page2_1.layout        
+        return pages.page2_1.layout            
     elif pathname == '/stats/crude':
         return pages.page2_2.layout
     elif pathname == '/stats/gasoline':

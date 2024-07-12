@@ -214,11 +214,12 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
 
 .eia-weekly-graph-container {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(6, 1fr) !important;
     grid-gap: 20px !important;
     justify-content: space-around !important;
+    width: 3000px !important; /* Adjust this value as needed to fit your graphs */
 }
 
 .eia-weekly-graph-page-layout {
-    margin-top: 50px;
+    margin-top: -25px;
 }

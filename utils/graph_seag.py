@@ -64,7 +64,7 @@ def add_missing_seasonality_dates(df):
 tickvals = [0, 5, 9, 14, 18, 22, 27, 31, 36, 40, 45, 49]
 ticktext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggle):
+def chart_seasonality(df, mapping_name, stocks_in_name, toggle_seag_range, toggle_2022,toggle_2023,toggle_2024):
     df = df.copy()
     df = generate_seasonality_table(df)
     df = add_additional_seasonality_data(df)
@@ -82,7 +82,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
             return f"{val:,.0f}" if val >= 0 else f"({abs(val):,.0f})"
 
     traces = []
-    if range_toggle:
+    if not toggle_seag_range:
         min_rng = 'min_1519'
         max_rng = 'max_1519'
         avg_rng = 'avg_1519'
@@ -120,9 +120,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
         hoverinfo='skip'
     ))
 
-
-
-    if '2024' in year_toggle:
+    if not toggle_2024:
         traces.append(go.Scatter(
             x=df['week_of_year'],
             y=df['value_2024'],
@@ -133,7 +131,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
             line=dict(color='#c00000', dash='solid', width=2),
         ))
 
-    if '2023' in year_toggle:
+    if not toggle_2023:
         traces.append(go.Scatter(
             x=df['week_of_year'],
             y=df['value_2023'],
@@ -144,7 +142,7 @@ def chart_seasonality(df, mapping_name, stocks_in_name, year_toggle, range_toggl
             text=df.apply(lambda row: f"{format_date(row['period_2023'])}: {format_value(row['value_2023'],stocks_in_name)}", axis=1),
         ))
 
-    if '2022' in year_toggle:
+    if not toggle_2022:
         traces.append(go.Scatter(
             x=df['week_of_year'],
             y=df['value_2022'],
