@@ -9,23 +9,10 @@ from utils.graph_optionality import checklist_header
 from app import app
  
 
-# Helper function to create a loading graph
-def create_loading_graph(graph_id):
-    blank_graph = go.Figure()
-    blank_graph.update_layout(
-        xaxis=dict(visible=False),
-        yaxis=dict(visible=False),
-        plot_bgcolor='rgba(0,0,0,0)',
-        paper_bgcolor='rgba(0,0,0,0)'
-    )
-    return html.Div(
-        dcc.Graph(id=graph_id, figure=blank_graph),
-        className='graph-container'
-    )
-
 def get_initial_data():
     df = pd.read_csv('./data/wps_gte_2015_pivot.csv', parse_dates=['period'])
     df = df[df['period'] > '2015-01-01']
+    df = df.reset_index(drop=True)
     return df
 
 def get_data(df, id):
@@ -40,6 +27,20 @@ def get_data(df, id):
         mapping_name = mapping_name.replace('(kb)', '(mb)').lower().replace('thousands', 'Millions')
 
     return filtered_df, mapping_name, stocks_in_name
+
+# Helper function to create a loading graph
+def create_loading_graph(graph_id):
+    blank_graph = go.Figure()
+    blank_graph.update_layout(
+        xaxis=dict(visible=False),
+        yaxis=dict(visible=False),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+    return html.Div(
+        dcc.Graph(id=graph_id, figure=blank_graph),
+        className='graph-container'
+    )
 
 def create_callbacks(app, page_id, num_graphs, idents, data_store_id):
     def create_chart(df, id, chart_toggle, seasonality_buttons, toggle_seag_range, toggle_2022, toggle_2023, toggle_2024, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
