@@ -1,6 +1,5 @@
-from utils.mapping import production_mapping
-from utils.download_xlsx import main as download_xlsx
 from utils.download_csv import main as download_csv
+from utils.generate_seasonality_data import generate_seasonality_data
 from utils.table_mapping import *
 import dash
 from dash import html, dash_table, Input, Output
@@ -21,13 +20,11 @@ layout = html.Div([
 )
 def generate_data(n_clicks):
     if n_clicks is not None and n_clicks > 0:
-        # df = download_xlsx()
         df = download_csv()
+        generate_seasonality_data()
         return df.to_dict('records')
     else:
-        initial_loadout = pd.read_csv('./data/wps_gte_2015_pivot.csv').to_dict('records')
-        df = pd.DataFrame(initial_loadout)
-        return df.to_dict('records')
+        return pd.read_feather('./data/wps_gte_2015_pivot.feather').to_dict('records')
 
 def generate_main_table(df):
     df['period'] = pd.to_datetime(df['period']).dt.strftime('%m/%d')

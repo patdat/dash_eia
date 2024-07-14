@@ -102,7 +102,7 @@ def download_data():
     except Exception as e:    
         isAvailable = False
         print('download_csv.py data: data not available')
-        return pd.read_csv('./data/eia_weekly_fast_download_psw09.csv'), isAvailable
+        return pd.read_feather('./data/eia_weekly_fast_download_psw09.feather'), isAvailable
     
     if isAvailable:
         df = first_pass(df)
@@ -112,7 +112,8 @@ def download_data():
         df = fifth_pass(df)
         df = sixth_pass(df)
         df = seventh_pass(df)
-        df.to_csv('./data/eia_weekly_fast_download_psw09.csv', index=False)    
+        df.reset_index(drop=True, inplace=True)
+        df.to_feather('./data/eia_weekly_fast_download_psw09.feather')    
         
     return df, isAvailable
 
@@ -127,15 +128,19 @@ def main():
     if isAvailable:
         df = df.copy()
         max_date = df['period'].max()
-        master = pd.read_csv('./data/wps_gte_2015.csv',parse_dates=['period'])
+        master = pd.read_feather('./data/wps_gte_2015.feather')
+        master['period'] = pd.to_datetime(master['period'])
         master = master[master['period'] != max_date]
         df = pd.concat([master, df], ignore_index=True)
         df = df.sort_values(['id', 'period'])
-        df.to_csv('./data/wps_gte_2015.csv', index=False)
+        df.reset_index(drop=True, inplace=True)
+        df.to_feather('./data/wps_gte_2015.feather')
         pv = pivot_data(df)
-        pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+        pv.reset_index(drop=True,inplace=True)
+        pv.to_feather('./data/wps_gte_2015_pivot.feather')    
     else:
-        pv = pd.read_csv('./data/wps_gte_2015_pivot.csv',parse_dates=['period'])
+        pv = pd.read_feather('./data/wps_gte_2015_pivot.feather')
+        pv['period'] = pd.to_datetime(pv['period'])
     return pv
 
 if __name__ == '__main__':

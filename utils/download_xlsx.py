@@ -68,12 +68,16 @@ def main():
         df = filter_data(df)
         df = map_name(df)
         df = reorder_columns(df)
-        df.to_csv('./data/wps_gte_2015.csv',index=False)
+        df.reset_index(drop=True, inplace=True)
+        df.to_feather('./data/wps_gte_2015.feather')
         pv = pivot_data(df)
-        pv.to_csv('./data/wps_gte_2015_pivot.csv',index=False)    
+        pv.reset_index(drop=True,inplace=True)
+        pv.to_feather('./data/wps_gte_2015_pivot.feather')    
     except Exception as e:
         print('using local file instead b/c data not available:', e)
-        pv = pd.read_csv('./data/wps_gte_2015_pivot.csv',parse_dates=['period'])
+        pv = pd.read_feather('./data/wps_gte_2015_pivot.feather')
+        pv['period'] = pd.to_datetime(pv['period'])
+
     return pv
 
 if __name__ == '__main__':

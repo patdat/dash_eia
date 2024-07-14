@@ -163,7 +163,7 @@ def checklist_header(app, chart_toggle, seasonality_buttons, line_buttons_div, t
     )
     def toggle_chart_button(n_clicks, current_text):
         state = n_clicks % 2 == 1
-        print(f"chart_toggle clicked: {n_clicks} times, current state: {state}")
+        # print(f"chart_toggle clicked: {n_clicks} times, current state: {state}")
         if state:
             return chart_line, 'Graph: Line', {'display': 'none'}, {'display': 'block'}, False
         else:
@@ -176,7 +176,7 @@ def checklist_header(app, chart_toggle, seasonality_buttons, line_buttons_div, t
     )
     def toggle_range_button(n_clicks, current_text):
         state = n_clicks % 2 == 1
-        print(f"range_toggle clicked: {n_clicks} times, current state: {state}")
+        # print(f"range_toggle clicked: {n_clicks} times, current state: {state}")
         return (toggler_off, 'Range: 2015-2019', False) if state else (toggler_on, 'Range: 2018-2023', True)
 
     @app.callback(
@@ -186,7 +186,7 @@ def checklist_header(app, chart_toggle, seasonality_buttons, line_buttons_div, t
     )
     def toggle_2024_button(n_clicks, current_style):
         state = n_clicks % 2 == 1
-        print(f"toggle_2024 clicked: {n_clicks} times, current state: {state}")
+        # print(f"toggle_2024 clicked: {n_clicks} times, current state: {state}")
         return (off_button if state else button_2024), state
 
     @app.callback(
@@ -196,7 +196,7 @@ def checklist_header(app, chart_toggle, seasonality_buttons, line_buttons_div, t
     )
     def toggle_2023_button(n_clicks, current_style):
         state = n_clicks % 2 == 1
-        print(f"toggle_2023 clicked: {n_clicks} times, current state: {state}")
+        # print(f"toggle_2023 clicked: {n_clicks} times, current state: {state}")
         return (off_button if state else button_2023), state
 
     @app.callback(
@@ -206,7 +206,7 @@ def checklist_header(app, chart_toggle, seasonality_buttons, line_buttons_div, t
     )
     def toggle_2022_button(n_clicks, current_style):
         state = n_clicks % 2 == 1
-        print(f"toggle_2022 clicked: {n_clicks} times, current state: {state}")
+        # print(f"toggle_2022 clicked: {n_clicks} times, current state: {state}")
         return (off_button if state else button_2022), state
 
     @app.callback(
