@@ -1,5 +1,6 @@
 from utils.download_csv import main as download_csv
 from utils.generate_seasonality_data import generate_seasonality_data
+from utils.generate_line_data import generate_line_data
 from utils.table_mapping import *
 import dash
 from dash import html, dash_table, Input, Output
@@ -22,6 +23,7 @@ def generate_data(n_clicks):
     if n_clicks is not None and n_clicks > 0:
         df = download_csv()
         generate_seasonality_data()
+        generate_line_data()
         return df.to_dict('records')
     else:
         return pd.read_feather('./data/wps_gte_2015_pivot.feather').to_dict('records')

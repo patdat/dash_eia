@@ -15,15 +15,6 @@ def get_initial_data():
     df["period"] = pd.to_datetime(df["period"])
     return df[df["period"] > "2015-01-01"].reset_index(drop=True)
 
-def get_data(df, id):
-    filtered_df = df[["period", id]].rename(columns={id: "value"})
-    mapping_name = production_mapping.get(id).replace("(kbd)", "(kb/d)")
-    stocks_in_name = "stocks" in mapping_name.lower()
-    if stocks_in_name:
-        filtered_df["value"] /= 1000
-        mapping_name = mapping_name.replace("(kb)", "(mb)").lower().replace("thousands", "Millions")
-    return filtered_df, mapping_name, stocks_in_name
-
 ### graph creation functions ###########################################
 
 def create_loading_graph(graph_id):
@@ -59,8 +50,6 @@ def create_layout(page_id, commodity, graph_sections_input):
 
 def create_callbacks(app, page_id, num_graphs, idents):
 
-
-
     @app.callback(
         [Output(f"{page_id}-graph-{i}", "figure") for i in range(1, num_graphs + 1)],
         [Input(f"{page_id}-chart_toggle-state", "data"),
@@ -76,10 +65,11 @@ def create_callbacks(app, page_id, num_graphs, idents):
     )
     def update_graphs(chart_toggle, toggle_seag_range, toggle_2022, toggle_2023, toggle_2024, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
 
-        raw_data = pd.read_feather('./data/wps_gte_2015_pivot.feather')
-        raw_data = raw_data[['period'] + idents]    
         seag_data = pd.read_feather('data/seasonality_data.feather')
         seag_data = seag_data[seag_data['id'].isin(idents)]
+        line_data = pd.read_feather('./data/graph_line_data.feather')
+        line_data['period'] = pd.to_datetime(line_data['period'])
+        line_data = line_data[['period'] + idents]    
 
         # ctx = dash.callback_context
         # if not ctx.triggered:
@@ -94,12 +84,12 @@ def create_callbacks(app, page_id, num_graphs, idents):
 
             
         def create_chart(df, seag_data, id, chart_toggle, toggle_seag_range, toggle_2022, toggle_2023, toggle_2024, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
-            filtered_df, mapping_name, stocks_in_name = get_data(df, id)
+            seag_data_individual = seag_data[seag_data['id']==id]
+            line_data_individual = line_data[['period', id]]
             
             if chart_toggle:
-                # return chart_seasonality(filtered_df, mapping_name, stocks_in_name, toggle_seag_range, toggle_2022, toggle_2023, toggle_2024)
-                return chart_seasonality(seag_data, id, toggle_seag_range, toggle_2022,toggle_2023,toggle_2024)
+                return chart_seasonality(seag_data_individual, id, toggle_seag_range, toggle_2022,toggle_2023,toggle_2024)
             else:
-                return chart_trend(filtered_df, mapping_name, stocks_in_name, btn_1m, btn_6m, btn_12m, btn_36m, btn_all)
+                return chart_trend(line_data_individual, id, btn_1m, btn_6m, btn_12m, btn_36m, btn_all)
             
-        return [create_chart(raw_data, seag_data, ident, chart_toggle, toggle_seag_range, toggle_2022, toggle_2023, toggle_2024, btn_1m, btn_6m, btn_12m, btn_36m, btn_all) for ident in idents]
+        return [create_chart(line_data, seag_data, ident, chart_toggle, toggle_seag_range, toggle_2022, toggle_2023, toggle_2024, btn_1m, btn_6m, btn_12m, btn_36m, btn_all) for ident in idents]

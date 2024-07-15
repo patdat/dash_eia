@@ -16,6 +16,8 @@ def chart_seasonality(df, id, toggle_seag_range, toggle_2022,toggle_2023,toggle_
 
     mapping_name = production_mapping[id]
     if 'stocks' in mapping_name.lower():
+        mapping_name = mapping_name.replace('(kbd)', '(kb/d)')
+        mapping_name = mapping_name.replace('(mbd)', '(mb/d)')        
         mapping_name = mapping_name.replace('(kb)', '(mb)')
 
     df = df[df['id']==id]

@@ -1,11 +1,18 @@
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
+from utils.mapping import production_mapping
 
-def chart_trend(df, mapping_name, stocks_in_name, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
-    df = df.copy()
+def chart_trend(df, id, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
+    df = df.rename(columns={id: 'value'})
     last_value = df['value'].iloc[-1]
-
+    
+    mapping_name = production_mapping[id]
+    mapping_name = mapping_name.replace('(kb)', '(mb)')        
+    mapping_name = mapping_name.replace('(kbd)', '(kb/d)')
+    mapping_name = mapping_name.replace('(mbd)', '(mb/d)')                
+    
+    stocks_in_name = 'stocks' in mapping_name.lower()
     if stocks_in_name:
         formatted_value = f"{round(last_value, 1):.1f}"  # Ensure one decimal place is always shown
     else:
