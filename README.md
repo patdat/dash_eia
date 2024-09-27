@@ -1,5 +1,10 @@
 # dash_eia
 
+## Instructions
+
+- run index.py
+- full update on dataset = python -m utils.download_xlsx
+
 ## Colors
 
 ### PCIA Colors
