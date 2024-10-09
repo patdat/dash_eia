@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 from utils.mapping import production_mapping
 from utils.generate_additional_tickers import generate_additional_tickers
+from utils.generate_line_data import generate_line_data
+from utils.generate_seasonality_data import generate_seasonality_data
+
 
 def download_raw_file():
     url = "https://ir.eia.gov/wpsr/psw09.xls"
@@ -78,7 +81,12 @@ def main():
         pv = pd.read_feather('./data/wps_gte_2015_pivot.feather')
         pv['period'] = pd.to_datetime(pv['period'])
 
+    generate_seasonality_data()
+    generate_line_data()
+
     return pv
 
 if __name__ == '__main__':
     main()
+    generate_seasonality_data()
+    generate_line_data()
