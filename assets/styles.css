@@ -224,10 +224,44 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     margin-top: -25px;
 }
 
-.ag-theme-alpine .ag-cell {
-    transition: background-color 200ms ease;
+/* Custom CSS for the grid */
+.highlight-column {
+    background-color: #bfbec4 !important;
+}
+.highlight-row {
+    background-color: #bfbec4 !important;
 }
 
-.ag-theme-alpine .ag-cell:hover {
-    background-color: var(--hover-background-color);
+.ag-theme-alpine .ag-row.ag-row-selected {
+    background-color: #c00000 !important;
+    color: white; /* Optional: Change the text color for better contrast */
+}
+
+/* Target the dropdown calendar of the DatePicker */
+.custom-date-picker .DateInput_input,
+.custom-date-picker .DateInput {
+    background-color: white !important;  /* Red background for input fields */
+    color: #c00000 !important;  /* White text color */
+}
+
+.custom-date-picker .DayPicker_weekHeader {
+    color: white !important;  /* White text color for weekday headers */
+}
+
+/* Hover and selected states for days */
+.custom-date-picker td.CalendarDay__hovered {
+    background-color: #ff6666 !important;  /* Lighter red on hover */
+    color: white !important;
+}
+
+/* Style for selected day */
+.custom-date-picker td.CalendarDay__selected {
+    background-color: #c00000 !important;  /* White background when a single day is selected */
+    color: white !important;  /* Red text for selected day */
+}
+
+/* Style for the days in between the range */
+.custom-date-picker td.CalendarDay__selected_span {
+    background-color: #f0f0f0 !important;  /* Orange background for the days within the selected range */
+    color: #c00000 !important;  /* White text for better contrast */
 }

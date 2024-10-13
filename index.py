@@ -13,6 +13,7 @@ import pages.page2_6    # Fuel Oil
 import pages.page2_7    # C3/C3=
 import pages.page2_8    # Products Supplied
 import pages.page2_9    # Refining
+import pages.page2_10   # AgGrid
 
 # Layout with fixed-width sidebar
 sidebar = html.Div(
@@ -73,6 +74,7 @@ sidebar = html.Div(
                                 dbc.NavLink("C3/C3=", href="/stats/propane_propylene", active='exact', className="nav-link"),
                                 dbc.NavLink("Products Supplied", href="/stats/products_supplied", active='exact', className="nav-link"),
                                 dbc.NavLink("Refining", href="/stats/refining", active='exact', className="nav-link"),
+                                dbc.NavLink("Stats Table", href="/stats/stats_table", active='exact', className="nav-link"),
                             ],
                             vertical=True, pills=True
                         ),
@@ -138,6 +140,8 @@ def display_page(pathname):
         return pages.page2_8.layout
     elif pathname == '/stats/refining':
         return pages.page2_9.layout
+    elif pathname == '/stats/stats_table':
+        return pages.page2_10.layout
     else:
         return "404 Page Not Found"
 if __name__ == '__main__':
