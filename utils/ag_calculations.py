@@ -26,6 +26,10 @@ class DataProcessor:
         df.insert(3, 'commodity', df['id'].map(id_to_commodity_mapping))
         df.insert(4, 'type', df['id'].map(id_to_type_mapping))
         df.insert(5, 'uom', df['id'].map(id_to_uom_mapping))
+        
+        order_list = list(id_to_name_mapping.keys())        
+        df = df.set_index('id').loc[order_list].reset_index()
+        
         return df
 
     def get_columns_to_include(self, df, startDate, endDate):

@@ -43,7 +43,7 @@ ag_mapping = {
     },
     'W_EPC0_SAX_YCUOK_MBBL': {
         'name': 'Cushing Stocks (kb)',
-        'padd': 'Cushing',
+        'padd': 'CUSHING',
         'commodity': 'Crude',
         'type': 'Stocks',
         'uom': 'kb'
@@ -85,7 +85,7 @@ ag_mapping = {
     },
     'W_EPC0_FPF_R48_MBBLD': {
         'name': 'L48 Production (kbd)',
-        'padd': 'L4',
+        'padd': 'L48',
         'commodity': 'Crude',
         'type': 'Production',
         'uom': 'kbd'
@@ -141,7 +141,7 @@ ag_mapping = {
     },
     'crudeOriginalAdjustment': {
         'name': 'OG Adjustment Factor (kbd)',
-        'padd': 'OG',
+        'padd': 'US',
         'commodity': 'Crude',
         'type': 'Adjustment Factor',
         'uom': 'kbd'
