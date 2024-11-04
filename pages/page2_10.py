@@ -1,6 +1,6 @@
 from dash import html, dcc, callback, Output, Input
 import dash_ag_grid as dag
-from utils.ag_calculations import DataProcessor
+from utils_wps.ag_calculations import DataProcessor
 
 # Initialize the data processor
 processor = DataProcessor()

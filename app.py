@@ -8,7 +8,7 @@ server = app.server
 
 def load_data():
     try:
-        return pd.read_csv('./data/wps_gte_2015_pivot.csv').to_dict('records')
+        return pd.read_csv('./data/wps/wps_gte_2015_pivot.csv').to_dict('records')
     except FileNotFoundError:
         return []
 

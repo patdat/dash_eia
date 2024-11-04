@@ -46,11 +46,11 @@ def graph_sections_input(page_id):
 
 from app import app
 import os
-from utils.calculation import get_initial_data,create_callbacks,create_layout
+from utils_wps.calculation import get_initial_data,create_callbacks,create_layout
 
 from app import app
 import os
-from utils.calculation import create_callbacks,create_layout
+from utils_wps.calculation import create_callbacks,create_layout
 
 idents_list = list(idents.keys())
 

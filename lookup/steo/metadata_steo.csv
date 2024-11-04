@@ -1,0 +1,1464 @@
+id,name,uom
+ABRIPUS,aviation gasoline blend components refinery input,mbd
+ARTCPUS,asphalt and road oil product supplied,mbd
+BACHCGW_US,u.s. commercial and industrial sectors battery storage net summer generating capacity,gw
+BAEPCGW_US,u.s. electric power sector battery storage net summer generating capacity,gw
+BALIT,natural gas balancing item (consumption - supply),bcfd
+BDNIPUS,biodiesel net imports,mbd
+BDPRPUS,biodiesel production,mbd
+BDPSPUS,biodiesel inventory,mb
+BDRIPUS,biodiesel net inputs,mbd
+BDTCBUS,consumption of energy from biomass-based diesel by all sectors,qbtu
+BDTCPUS,biodiesel consumption,mbd
+BDTCPUS_PS,biodiesel product supplied,mbd
+BFACBUS,subtotal renewable energy consumption: transportation sector,qbtu
+BFLCBUS,biofuel losses and co-products,qbtu
+BFPSPUS,total biofuels inventories,mb
+BFPSPUS_DRAW,biofuel stock draw,mbd
+BFSUPPLY,total biofuels supply,mbd
+BFTCBUS,biofuel total consumption,qbtu
+BFTCPUS,total biofuels consumption,mbd
+BMCHCAP_US,comm. and indus. sectors total biomass net summer capacity,mw
+BMCHGEN_US,"industrial and commercial sector net generation from biomass (all types), united states",bkwh
+BMCMGEN_US,"commercial sector net generation from biomass, united states",bkwh
+BMEPCAP_US,electric power sector total biomass net summer capacity,mw
+BMEPGEN_CA,"electric power sector net generation from biomass, california",bkwh
+BMEPGEN_FL,"electric power sector net generation from biomass, florida (frcc)",bkwh
+BMEPGEN_HA,"electric power sector net generation from biomass, hawaii and alaska",bkwh
+BMEPGEN_MW,"electric power sector net generation from biomass, midwest (midcontinent iso)",bkwh
+BMEPGEN_NE,"electric power sector net generation from biomass, new england (iso-ne)",bkwh
+BMEPGEN_NW,"electric power sector net generation from biomass, northwest",bkwh
+BMEPGEN_NY,"electric power sector net generation from biomass, new york (nyiso)",bkwh
+BMEPGEN_PJ,"electric power sector net generation from biomass, mid-atlantic (pjm)",bkwh
+BMEPGEN_SE,"electric power sector net generation from biomass, southeast (serc)",bkwh
+BMEPGEN_SP,"electric power sector net generation from biomass, central (spp iso)",bkwh
+BMEPGEN_SW,"electric power sector net generation from biomass, southwest",bkwh
+BMEPGEN_TX,"electric power sector net generation from biomass, texas (ercot)",bkwh
+BMEPGEN_US,"electric power sector net generation from biomass, united states",bkwh
+BMINGEN_US,"industrial sector net generation from biomass, united states",bkwh
+BMTOGEN_US,"net generation from biomass, all sectors, united states",bkwh
+BREPUUS,brent crude oil spot price,usd/bbl
+BTTCBUS,"biodiesel, renewable diesel, and other",qbtu
+C3PSPP1,propane padd 1 (east coast) inventory,mb eop
+C3PSPP2,propane padd 2 (midwest) inventory,mb eop
+C3PSPP3,propane padd 3 (gulf coast) inventory,mb eop
+C3PSPP4,propane padd 4 (rocky mountain) inventory,mb eop
+C3PSPP5,propane padd 5 (west coast) inventory,mb eop
+C3PSPUS,propane us total inventory,mb eop
+C3ROPUS,propane refinery and blender net production,mbd
+C3TCPUS,propane consumption,mbd
+C4FPPUS,butanes production at natural gas processing plants,mbd
+C4NIPUS,butanes/butylenes net imports,mbd
+C4PSPUS,butanes/butylenes inventory,mb eop
+C4RIPUS,butanes refinery and blender net inputs,mbd
+C4ROPUS,butanes/butylenes refinery and blender net production,mbd
+C4TCPUS,butanes/butylenes product supplied,mbd
+CGSP_ENC,real gross state product e. n. central,b2017usd (saar)
+CGSP_ESC,real gross state product e. s. central,b2017usd (saar)
+CGSP_MAC,real gross state product middle atlantic,b2017usd (saar)
+CGSP_MTN,real gross state product mountain,b2017usd (saar)
+CGSP_NEC,real gross state product new england,b2017usd (saar)
+CGSP_PAC,real gross state product pacific,b2017usd (saar)
+CGSP_SAC,real gross state product s. atlantic,b2017usd (saar)
+CGSP_WNC,real gross state product w. n. central,b2017usd (saar)
+CGSP_WSC,real gross state product w. s. central,b2017usd (saar)
+CHEOPUS,comm. and indus. sectors total generation,bkwhd
+CHEOTWH,"total net generation of electricity from large-scale power plants, commercial and industrial sectors, united states",bkwh
+CICPIUS,consumer price index (all urban consumers),index 82-84=1.00
+CLAJPUS_TON,coal supply-demand discrepancy,mmst
+CLCEPUS,commercial sector generation from coal,bkwhd
+CLCHCGW_US,u.s. commercial and industrial sectors coal net summer generating capacity,gw
+CLCMCNS_US,"commercial sector consumption of coal, united states",kst
+CLCMGEN_US,"commercial sector net generation from coal, united states",bkwh
+CLCOPUS,industrial sector generation from coal,bkwhd
+CLEPCGW_US,u.s. electric power sector coal net summer generating capacity,gw
+CLEPCNS_CA,"electric power sector  consumption of coal, california",kst
+CLEPCNS_FL,"electric power sector  consumption of coal, florida (frcc)",kst
+CLEPCNS_HA,"electric power sector  consumption of coal, hawaii and alaska",kst
+CLEPCNS_MW,"electric power sector  consumption of coal, midwest (midcontinent iso)",kst
+CLEPCNS_NE,"electric power sector  consumption of coal, new england (iso-ne)",kst
+CLEPCNS_NW,"electric power sector  consumption of coal, northwest",kst
+CLEPCNS_NY,"electric power sector  consumption of coal, new york (nyiso)",kst
+CLEPCNS_PJ,"electric power sector  consumption of coal, mid-atlantic (pjm)",kst
+CLEPCNS_SE,"electric power sector  consumption of coal, southeast (serc)",kst
+CLEPCNS_SP,"electric power sector  consumption of coal, central (spp iso)",kst
+CLEPCNS_SW,"electric power sector  consumption of coal, southwest",kst
+CLEPCNS_TX,"electric power sector  consumption of coal, texas (ercot)",kst
+CLEPCNS_US,"electric power sector  consumption of coal, united states",kst
+CLEPCON_TON,electric power sector coal consumption,mmst
+CLEPGEN_CA,"electric power sector net generation from coal, california",bkwh
+CLEPGEN_FL,"electric power sector net generation from coal, florida (frcc)",bkwh
+CLEPGEN_HA,"electric power sector net generation from coal, hawaii and alaska",bkwh
+CLEPGEN_MW,"electric power sector net generation from coal, midwest (midcontinent iso)",bkwh
+CLEPGEN_NE,"electric power sector net generation from coal, new england (iso-ne)",bkwh
+CLEPGEN_NW,"electric power sector net generation from coal, northwest",bkwh
+CLEPGEN_NY,"electric power sector net generation from coal, new york (nyiso)",bkwh
+CLEPGEN_PJ,"electric power sector net generation from coal, mid-atlantic (pjm)",bkwh
+CLEPGEN_SE,"electric power sector net generation from coal, southeast (serc)",bkwh
+CLEPGEN_SP,"electric power sector net generation from coal, central (spp iso)",bkwh
+CLEPGEN_SW,"electric power sector net generation from coal, southwest",bkwh
+CLEPGEN_TX,"electric power sector net generation from coal, texas (ercot)",bkwh
+CLEPGEN_US,"electric power sector net generation from coal, united states",bkwh
+CLEPSHR_US,coal share of u.s. electricity generation,pct
+CLEPTOT,electric power sector generation from coal,bkwhd
+CLEUDUS,cost of coal delivered to electric generating plants,usd/mmbtu
+CLEXPMC_TON,metallurgical coal gross exports,mmst
+CLEXPSC_TON,steam coal gross exports,mmst
+CLEXPUS_TON,coal gross exports,mmst
+CLHCPUS_TON,residential and commercial coal consumption,mmst
+CLIMPUS_TON,coal gross imports,mmst
+CLINCNS_US,"industrial sector consumption of coal, united states",kst
+CLINGEN_US,"industrial sector net generation from coal, united states",bkwh
+CLKCPUS_TON,coke plants coal consumption,mmst
+CLMRHUS,coal miner productivity,tph
+CLNIPUS_TON,coal net imports,mmst
+CLNSPUS_TON,total primary coal supply,mmst
+CLOTCON_TON,coal consumed in non-power sectors,mmst
+CLPRPAR_TON,coal production appalachia region,mmst
+CLPRPIR_TON,coal production interior region,mmst
+CLPRPUS_TON,coal production total u.s.,mmst
+CLPRPWR_TON,coal production western region,mmst
+CLPS_EP,coal secondary inventories electric power sector,mmst eop
+CLPS_TOT,coal total inventories,mmst eop
+CLSDPUS,coal primary inventories,mmst eop
+CLSD_DRAW_TON,coal primary inventory withdrawals,mmst
+CLSHPUS,coal secondary inventories commercial and institutional,mmst eop
+CLSKPUS,coal secondary inventories coke plants,mmst eop
+CLSOPUS,coal secondary inventories retail and general industry,mmst eop
+CLSTPUS,coal secondary inventories,mmst eop
+CLST_DRAW_TON,coal secondary inventory withdrawals,mmst
+CLTCPUS_TON,total coal consumption ,mmst
+CLTOGEN_US,"net generation from coal, all sectors, united states",bkwh
+CLTOPUS,generation from coal by all sectors,bkwhd
+CLTSPUS_TON,total coal supply,mmst
+CLWCPUS_TON,waste coal production,mmst
+CLYCPUS_TON,other industrial coal consumption,mmst
+CLZCPUS_TON,retail and other industry coal consumption,mmst
+CMEOPUS,commercial sector total generation,bkwhd
+CMEOTWH,"total net generation of electricity from large-scale power plants, commercial and sector, united states",bkwh
+CODIPUS,refinery distillation inputs  ,mbd
+COEOPAP,"appalachia existing oil production change, one-year trend",kbd
+COEOPBK,"bakken existing oil production change, one-year trend",kbd
+COEOPEF,"eagle ford existing oil production change, one-year trend",kbd
+COEOPHA,"haynesville existing oil production change, one-year trend",kbd
+COEOPPM,"permian existing oil production change, one-year trend",kbd
+COEOPR48,"rest of lower 48 states, excluding gom existing oil production change, one-year trend",kbd
+CONIPUS,crude oil net imports,mbd
+CONSRUS,real personal consumption expenditures,b2017usd (saar)
+CONWAP,"appalachia new-wells oil production, one-year trend",kbd
+CONWBK,"bakken new-wells oil production, one-year trend",kbd
+CONWEF,"eagle ford new-wells oil production, one-year trend",kbd
+CONWHA,"haynesville new-wells oil production, one-year trend",kbd
+CONWPM,"permian new-wells oil production, one-year trend",kbd
+CONWR48,"rest of lower 48 states, excluding gom new-wells oil production, one-year trend",kbd
+CONWRAP,"appalachia new-wells oil production per rig, one-year trend",kbd
+CONWRBK,"bakken new-wells oil production per rig, one-year trend",kbd
+CONWREF,"eagle ford new-wells oil production per rig, one-year trend",kbd
+CONWRHA,"haynesville new-wells oil production per rig, one-year trend",kbd
+CONWRPM,"permian new-wells oil production per rig, one-year trend",kbd
+CONWRR48,"rest of lower 48 states, excluding gom new-wells oil production per rig, one-year trend",kbd
+COPC_AG,algeria crude oil production capacity,mbd
+COPC_CF,congo (brazzaville) crude oil production capacity,mbd
+COPC_EK,equatorial guinea crude oil production capacity,mbd
+COPC_GB,gabon crude oil production capacity,mbd
+COPC_IR,iran crude oil production capacity,mbd
+COPC_IZ,iraq crude oil production capacity,mbd
+COPC_KU,kuwait crude oil production capacity,mbd
+COPC_LY,libya crude oil production capacity,mbd
+COPC_NI,nigeria crude oil production capacity,mbd
+COPC_OPEC,opec total crude oil production capacity,mbd
+COPC_OPEC_R05,opec middle east crude oil production capacity,mbd
+COPC_OPEC_ROT,opec other crude oil production capacity,mbd
+COPC_SA,saudi arabia crude oil production capacity,mbd
+COPC_TC,united arab emirates crude oil production capacity,mbd
+COPC_VE,venezuela crude oil production capacity,mbd
+COPRAP,crude oil production: appalachia,mbd
+COPRBK,crude oil production: bakken,mbd
+COPREF,crude oil production: eagle ford,mbd
+COPRHA,crude oil production: haynesville,mbd
+COPRPM,crude oil production: permian,mbd
+COPRPUS,u.s. crude oil production,mbd
+COPRR48,crude oil production: rest of lower 48 states,mbd
+COPR_AG,"crude oil production, algeria",mbd
+COPR_AJ,"crude oil production, azerbaijan",mbd
+COPR_BA,"crude oil production, bahrain",mbd
+COPR_BX,"crude oil production, brunei",mbd
+COPR_CF,"crude oil production, congo (brazzaville)",mbd
+COPR_EK,"crude oil production, equatorial guinea",mbd
+COPR_GB,"crude oil production, gabon",mbd
+COPR_IR,"crude oil production, iran",mbd
+COPR_IZ,"crude oil production, iraq",mbd
+COPR_KU,"crude oil production, kuwait",mbd
+COPR_KZ,"crude oil production, kazakhstan",mbd
+COPR_LY,"crude oil production, libya",mbd
+COPR_MU,"crude oil production, oman",mbd
+COPR_MX,"crude oil production, mexico",mbd
+COPR_MY,"crude oil production, malaysia",mbd
+COPR_NI,"crude oil production, nigeria",mbd
+COPR_NONOPEC,non-opec crude oil production,mbd
+COPR_NONOPECPLUS_XUS,non-opec+ exluding united states crude oil production,mbd
+COPR_OD,"crude oil production, south sudan",mbd
+COPR_OPEC,"crude oil production, opec total",mbd
+COPR_OPECPLUS,opec+ total,mbd
+COPR_OPECPLUS_OPEC,opec members subject to opec+ agreements,mbd
+COPR_OPECPLUS_OTHER,opec+ other participants total,mbd
+COPR_RS,"crude oil production, russia",mbd
+COPR_SA,"crude oil production, saudi arabia",mbd
+COPR_SU,"crude oil production, sudan",mbd
+COPR_TC,"crude oil production, united arab emirates",mbd
+COPR_VE,"crude oil production, venezuela",mbd
+COPR_WORLD,total world crude oil production,mbd
+COPS_AG,algeria spare crude oil production capacity,mbd
+COPS_CF,congo (brazzaville) spare crude oil production capacity,mbd
+COPS_EK,equatorial guinea spare crude oil production capacity,mbd
+COPS_GB,gabon spare crude oil production capacity,mbd
+COPS_IR,iran spare crude oil production capacity,mbd
+COPS_IZ,iraq spare crude oil production capacity,mbd
+COPS_KU,kuwait spare crude oil production capacity,mbd
+COPS_LY,libya spare crude oil production capacity,mbd
+COPS_NI,nigeria spare crude oil production capacity,mbd
+COPS_OPEC,opec total spare crude oil production capacity,mbd
+COPS_OPEC_R05,opec middle east surplus crude oil production capacity,mbd
+COPS_OPEC_ROT,opec other spare crude oil production capacity,mbd
+COPS_SA,saudi arabia spare crude oil production capacity,mbd
+COPS_TC,united arab emirates spare crude oil production capacity,mbd
+COPS_VE,venezuela spare crude oil production capacity,mbd
+CORIPUS,crude oil refinery input,mbd
+COSQPUS,strategic petroleum reserve,mb eop
+COSQ_DRAW,crude oil net spr withdrawals,mbd
+COSXPUS,crude oil inventory (excluding spr),mb eop
+COSX_DRAW,crude oil net commercial inventory withdrawals,mbd
+COTRPUS,transfers to crude oil supply ,mbd
+COUNPUS,crude oil adjustment,mbd
+CXTCCO2,carbon dioxide emissions from coal,mmt
+CYRPIC_ENC,real personal income e. n. central,b2017usd (saar)
+CYRPIC_ESC,real personal income e. s. central,b2017usd (saar)
+CYRPIC_MAC,real personal income middle atlantic,b2017usd (saar)
+CYRPIC_MTN,real personal income mountain,b2017usd (saar)
+CYRPIC_NEC,real personal income new england,b2017usd (saar)
+CYRPIC_PAC,real personal income pacific,b2017usd (saar)
+CYRPIC_SAC,real personal income s. atlantic,b2017usd (saar)
+CYRPIC_WNC,real personal income w. n. central,b2017usd (saar)
+CYRPIC_WSC,real personal income w. s. central,b2017usd (saar)
+D2RCAUS,"heating oil retail price including taxes, u.s. average",c/gal
+D2RCAUS_$,"heating oil retail price incl taxes, u.s. average",usd/gal
+D2RCAUS_RP_$,"heating oil retail price incl taxes, u.s. average",real usd/gal
+D2WHUUS,heating oil refiner wholesale price,c/gal
+D2WHUUS_$,heating oil refiner wholesale price,usd/gal
+DAPSPUS,total distillate fuel oil inventories,mb
+DAPSPUS_DRAW,total distillate fuel stock draw,mbd
+DASUPPLY,total distillate fuel oil supply,mbd
+DATCPUS,total distillate fuel oil consumption,mbd
+DFEPDEL,distillate fuel oil delivers to power sector,mbd
+DFFPPUS,distillate fuel oil adjustment,mbd
+DFNIPUS,distillate fuel oil net imports,mbd
+DFPSPP1,distillate fuel oil padd 1 (east coast) inventory,mb eop
+DFPSPP2,distillate fuel oil padd 2 (midwest) inventory,mb eop
+DFPSPP3,distillate fuel oil padd 3 (gulf coast) inventory,mb eop
+DFPSPP4,distillate fuel oil padd 4 (rocky mountain) inventory,mb eop
+DFPSPP5,distillate fuel oil padd 5 (west coast) inventory,mb eop
+DFPSPUS,distillate fuel oil u.s. total inventory,mb eop
+DFROPUS,distillate fuel refinery output,mbd
+DFTCPUS,distillate fuel oil product supplied,mbd
+DFTCPUS_P,petroleum-based diesel consumption,mbd
+DKCEPUS,commercial sector generation from distillate fuel oil,bkwhd
+DKCOPUS,industrial sector generation from distillate fuel oil,bkwhd
+DKEPTOT,electric power sector generation from distillate fuel oil,bkwhd
+DKEUDUS,cost of distillate fuel oil delivered to electric generating plants,usd/mmbtu
+DKPS_EP,"distillate fuel oil stocks, electric power sector",mb eop
+DSRTUUS,"diesel fuel retail price including taxes, u.s. average",c/gal
+DSRTUUS_$,"diesel fuel retail price incl taxes, u.s. average",usd/gal
+DSRTUUS_RP_$,"diesel fuel retail real prrice incl taxes, u.s. average",real usd/gal
+DSWHUUS,diesel fuel refiner wholesale price,c/gal
+DSWHUUS_$,diesel fuel refiner wholesale price,usd/gal
+DUCSAP,appalachia drilled but uncompleted wells ,count
+DUCSBK,bakken drilled but uncompleted wells ,count
+DUCSEF,eagle ford drilled but uncompleted wells ,count
+DUCSHA,haynesville drilled but uncompleted wells ,count
+DUCSPM,permian drilled but uncompleted wells ,count
+DUCSR48,"rest of lower 48 states, excluding gom drilled but uncompleted wells ",count
+EE_ENC,total non-farm employment e. n. central,m
+EE_ESC,total non-farm employment e. s. central,m
+EE_MAC,total non-farm employment middle atlantic,m
+EE_MTN,total non-farm employment mountain,m
+EE_NEC,total non-farm employment new england,m
+EE_PAC,total non-farm employment pacific,m
+EE_SAC,total non-farm employment s. atlantic,m
+EE_WNC,total non-farm employment w. n. central,m
+EE_WSC,total non-farm employment w. s. central,m
+ELACP_ENC,"retail sales of electricity in transportation sector, east north central",bkwh
+ELACP_ESC,"retail sales of electricity in transportation sector, east south central",bkwh
+ELACP_HAK,"retail sales of electricity in transportation sector, alaska and hawaii",bkwh
+ELACP_MAC,"retail sales of electricity in transportation sector, middle atlantic",bkwh
+ELACP_MTN,"retail sales of electricity in transportation sector, mountain",bkwh
+ELACP_NEC,"retail sales of electricity in transportation sector, new england",bkwh
+ELACP_PAC,"retail sales of electricity in transportation sector, pacific contiguous",bkwh
+ELACP_SAC,"retail sales of electricity in transportation sector, south atlantic",bkwh
+ELACP_US,"retail sales of electricity in transportation sector, u.s. total",bkwh
+ELACP_WNC,"retail sales of electricity in transportation sector, west north central",bkwh
+ELACP_WSC,"retail sales of electricity in transportation sector, west south central",bkwh
+ELACTWH,"retail sales of electricity in transportation sector, u.s. total",bkwh
+ELCCP_ENC,"retail sales of electricity in commercial sector, east north central",bkwh
+ELCCP_ESC,"retail sales of electricity in commercial sector, east south central",bkwh
+ELCCP_HAK,"retail sales of electricity in commercial sector, alaska and hawaii",bkwh
+ELCCP_MAC,"retail sales of electricity in commercial sector, middle atlantic",bkwh
+ELCCP_MTN,"retail sales of electricity in commercial sector, mountain",bkwh
+ELCCP_NEC,"retail sales of electricity in commercial sector, new england",bkwh
+ELCCP_PAC,"retail sales of electricity in commercial sector, pacific contiguous",bkwh
+ELCCP_SAC,"retail sales of electricity in commercial sector, south atlantic",bkwh
+ELCCP_US,"retail sales of electricity in commercial sector, u.s. total",bkwh
+ELCCP_WNC,"retail sales of electricity in commercial sector, west north central",bkwh
+ELCCP_WSC,"retail sales of electricity in commercial sector, west south central",bkwh
+ELCCTWH,"retail sales of electricity in commercial sector, u.s. total",bkwh
+ELCOTWH,total consumption of electricity in united states,bkwh
+ELCUS_ENC,"number of residential customers, east north central",k customers
+ELCUS_ESC,"number of residential customers, east south central",k customers
+ELCUS_HAK,"number of residential customers, hawaii and alaska",k customers
+ELCUS_MAC,"number of residential customers, middle atlantic",k customers
+ELCUS_MTN,"number of residential customers, mountain",k customers
+ELCUS_NEC,"number of residential customers, new england",k customers
+ELCUS_PAC,"number of residential customers, pacific contiguous",k customers
+ELCUS_SAC,"number of residential customers, south atlantic",k customers
+ELCUS_US,"number of residential customers, united states",k customers
+ELCUS_WNC,"number of residential customers, west north central",k customers
+ELCUS_WSC,"number of residential customers, west south central",k customers
+ELDUPUS,direct use of electricity by commercial and industrial facilities,bkwhd
+ELDUTWH,total direct use of electricity in united states,bkwh
+ELEXPUS,gross exports of electricity from the united states,bkwhd
+ELICP_ENC,"retail sales of electricity in industrial sector, east north central",bkwh
+ELICP_ESC,"retail sales of electricity in industrial sector, east south central",bkwh
+ELICP_HAK,"retail sales of electricity in industrial sector, alaska and hawaii",bkwh
+ELICP_MAC,"retail sales of electricity in industrial sector, middle atlantic",bkwh
+ELICP_MTN,"retail sales of electricity in industrial sector, mountain",bkwh
+ELICP_NEC,"retail sales of electricity in industrial sector, new england",bkwh
+ELICP_PAC,"retail sales of electricity in industrial sector, pacific contiguous",bkwh
+ELICP_SAC,"retail sales of electricity in industrial sector, south atlantic",bkwh
+ELICP_US,"retail sales of electricity in industrial sector, u.s. total",bkwh
+ELICP_WNC,"retail sales of electricity in industrial sector, west north central",bkwh
+ELICP_WSC,"retail sales of electricity in industrial sector, west south central",bkwh
+ELICTWH,"retail sales of electricity in industrial sector, u.s. total",bkwh
+ELIMPUS,gross imports of electricity into the united states,bkwhd
+ELLOAD_CA,"net energy for electricity load, california",bkwh
+ELLOAD_FL,"net energy for electricity load, florida (frcc)",bkwh
+ELLOAD_HA,"net energy for electricity load, hawaii and alaska",bkwh
+ELLOAD_MW,"net energy for electricity load, midwest (midcontinent iso)",bkwh
+ELLOAD_NE,"net energy for electricity load, new england (iso-ne)",bkwh
+ELLOAD_NW,"net energy for electricity load, northwest",bkwh
+ELLOAD_NY,"net energy for electricity load, new york (nyiso)",bkwh
+ELLOAD_PJ,"net energy for electricity load, mid-atlantic (pjm)",bkwh
+ELLOAD_SE,"net energy for electricity load, southeast (serc)",bkwh
+ELLOAD_SP,"net energy for electricity load, central (spp iso)",bkwh
+ELLOAD_SW,"net energy for electricity load, southwest",bkwh
+ELLOAD_TX,"net energy for electricity load, texas (ercot)",bkwh
+ELLOAD_US,"net energy for electricity load, united states",bkwh
+ELNIPUS,net imports of electricity to the united states,bkwhd
+ELNITWH,net international imports of electricity into united states,bkwh
+ELRCP_ENC,"retail sales of electricity in residential sector, east north central",bkwh
+ELRCP_ESC,"retail sales of electricity in residential sector, east south central",bkwh
+ELRCP_HAK,"retail sales of electricity in residential sector, alaska and hawaii",bkwh
+ELRCP_MAC,"retail sales of electricity in residential sector, middle atlantic",bkwh
+ELRCP_MTN,"retail sales of electricity in residential sector, mountain",bkwh
+ELRCP_NEC,"retail sales of electricity in residential sector, new england",bkwh
+ELRCP_PAC,"retail sales of electricity in residential sector, pacific contiguous",bkwh
+ELRCP_SAC,"retail sales of electricity in residential sector, south atlantic",bkwh
+ELRCP_US,"retail sales of electricity in residential sector, u.s. total",bkwh
+ELRCP_WNC,"retail sales of electricity in residential sector, west north central",bkwh
+ELRCP_WSC,"retail sales of electricity in residential sector, west south central",bkwh
+ELRCTWH,"retail sales of electricity in residential sector, u.s. total",bkwh
+ELSUTWH,total supply of electricity in united states,bkwh
+ELTCP_ENC,"total retail sales of electricity in all sectors, east north central",bkwh
+ELTCP_ESC,"total retail sales of electricity in all sectors, east south central",bkwh
+ELTCP_HAK,"total retail sales of electricity in all sectors, alaska and hawaii",bkwh
+ELTCP_MAC,"total retail sales of electricity in all sectors, middle atlantic",bkwh
+ELTCP_MTN,"total retail sales of electricity in all sectors, mountain",bkwh
+ELTCP_NEC,"total retail sales of electricity in all sectors, new england",bkwh
+ELTCP_PAC,"total retail sales of electricity in all sectors, pacific contiguous",bkwh
+ELTCP_SAC,"total retail sales of electricity in all sectors, south atlantic",bkwh
+ELTCP_US,"total retail sales of electricity in all sectors, u.s. total",bkwh
+ELTCP_WNC,"total retail sales of electricity in all sectors, west north central",bkwh
+ELTCP_WSC,"total retail sales of electricity in all sectors, west south central",bkwh
+ELTCTWH,"total retail sales of electricity in all sectors, u.s. total",bkwh
+ELWHU_CA,"wholesale electricity price, caiso (california iso) sp15 zone",usd/mwh
+ELWHU_FL,"wholesale electricity price, florida index, florida reliability (frcc) hub",usd/mwh
+ELWHU_MW,"wholesale electricity price, miso (midcontinent iso) illinois hub",usd/mwh
+ELWHU_NE,"wholesale electricity price, iso-ne (new england iso) internal hub",usd/mwh
+ELWHU_NW,"wholesale electricity price, northwest index, mid-columbia hub",usd/mwh
+ELWHU_NY,"wholesale electricity price, nyiso (new york iso) hudson valley zone",usd/mwh
+ELWHU_PJ,"wholesale electricity price, pjm rto western hub",usd/mwh
+ELWHU_SE,"wholesale electricity price, southeast index, southeast reliability (serc) into southern hub",usd/mwh
+ELWHU_SP,"wholesale electricity price, spp (southwest power pool iso) south hub",usd/mwh
+ELWHU_SW,"wholesale electricity price, southwest index, palo verde hub",usd/mwh
+ELWHU_TX,"wholesale electricity price, ercot (texas) iso north hub",usd/mwh
+EMCMPUS,commercial employment,m
+EMCMPUS_PCT,commercial employment,pct yoy
+EMNFPUS,non-farm employment,m
+EOACBUS,transportation sector consumption of energy from ethanol,qbtu
+EOFPPUS,fuel ethanol adjustments,mbd
+EONIPUS,fuel ethanol net imports,mbd
+EOPRBUS,ethanol energy supply,qbtu
+EOPRPUS,fuel ethanol production,mbd
+EOPSPUS,fuel ethanol inventory,mb eop
+EORIPUS,fuel ethanol refinery and blender net inputs,mbd
+EOTCBUS,consumption of energy from ethanol by all sectors,qbtu
+EOTCPUS,fuel ethanol consumption,mbd
+EOTCSHR,ethanol share of finished gasoline consumption,frac
+EPEOPUS,electric power sector total generation,bkwhd
+EPEOTWH,"total net generation of electricity from large-scale power plants, electric power sector, united states",bkwh
+ESCMUUS,"retail price of electricity in commercial sector, u.s. average",c/kwh
+ESCMU_ENC,"retail price of electricity in commercial sector, east north central",c/kwh
+ESCMU_ESC,"retail price of electricity in commercial sector, east south central",c/kwh
+ESCMU_HAK,"retail price of electricity in commercial sector, alaska and hawaii",c/kwh
+ESCMU_MAC,"retail price of electricity in commercial sector, middle atlantic",c/kwh
+ESCMU_MTN,"retail price of electricity in commercial sector, mountain",c/kwh
+ESCMU_NEC,"retail price of electricity in commercial sector, new england",c/kwh
+ESCMU_PAC,"retail price of electricity in commercial sector, pacific contiguous",c/kwh
+ESCMU_SAC,"retail price of electricity in commercial sector, south atlantic",c/kwh
+ESCMU_US,"retail price of electricity in commercial sector, u.s. average",c/kwh
+ESCMU_WNC,"retail price of electricity in commercial sector, west north central",c/kwh
+ESCMU_WSC,"retail price of electricity in commercial sector, west south central",c/kwh
+ESICUUS,"retail price of electricity in industrial sector, u.s. average",c/kwh
+ESICU_ENC,"retail price of electricity in industrial sector, east north central",c/kwh
+ESICU_ESC,"retail price of electricity in industrial sector, east south central",c/kwh
+ESICU_HAK,"retail price of electricity in industrial sector, alaska and hawaii",c/kwh
+ESICU_MAC,"retail price of electricity in industrial sector, middle atlantic",c/kwh
+ESICU_MTN,"retail price of electricity in industrial sector, mountain",c/kwh
+ESICU_NEC,"retail price of electricity in industrial sector, new england",c/kwh
+ESICU_PAC,"retail price of electricity in industrial sector, pacific contiguous",c/kwh
+ESICU_SAC,"retail price of electricity in industrial sector, south atlantic",c/kwh
+ESICU_US,"retail price of electricity in industrial sector, u.s. average",c/kwh
+ESICU_WNC,"retail price of electricity in industrial sector, west north central",c/kwh
+ESICU_WSC,"retail price of electricity in industrial sector, west south central",c/kwh
+ESRCUUS,"retail price of electricity in residential sector, u.s. average",c/kwh
+ESRCUUS_RP,"real retail price of electricity in residential sector, u.s. average",c/kwh
+ESRCU_ENC,"retail price of electricity in residential sector, east north central",c/kwh
+ESRCU_ESC,"retail price of electricity in residential sector, east south central",c/kwh
+ESRCU_HAK,"retail price of electricity in residential sector, alaska and hawaii",c/kwh
+ESRCU_MAC,"retail price of electricity in residential sector, middle atlantic",c/kwh
+ESRCU_MTN,"retail price of electricity in residential sector, mountain",c/kwh
+ESRCU_NEC,"retail price of electricity in residential sector, new england",c/kwh
+ESRCU_PAC,"retail price of electricity in residential sector, pacific contiguous",c/kwh
+ESRCU_SAC,"retail price of electricity in residential sector, south atlantic",c/kwh
+ESRCU_US,"retail price of electricity in residential sector, u.s. average",c/kwh
+ESRCU_WNC,"retail price of electricity in residential sector, west north central",c/kwh
+ESRCU_WSC,"retail price of electricity in residential sector, west south central",c/kwh
+ESTCU_ENC,"retail price of electricity for all sectors, east north central",c/kwh
+ESTCU_ESC,"retail price of electricity for all sectors, east south central",c/kwh
+ESTCU_HAK,"retail price of electricity for all sectors, alaska and hawaii",c/kwh
+ESTCU_MAC,"retail price of electricity for all sectors, middle atlantic",c/kwh
+ESTCU_MTN,"retail price of electricity for all sectors, mountain",c/kwh
+ESTCU_NEC,"retail price of electricity for all sectors, new england",c/kwh
+ESTCU_PAC,"retail price of electricity for all sectors, pacific contiguous",c/kwh
+ESTCU_SAC,"retail price of electricity for all sectors, south atlantic",c/kwh
+ESTCU_US,"retail price of electricity for all sectors, u.s. total",c/kwh
+ESTCU_WNC,"retail price of electricity for all sectors, west north central",c/kwh
+ESTCU_WSC,"retail price of electricity for all sectors, west south central",c/kwh
+ESTXPUS,total consumption of electricity in united states,bkwhd
+ETFPPUS,ethane production at natural gas processing plants,mbd
+ETNIPUS,ethane net imports,mbd
+ETPSPUS,ethane/ethylene u.s. inventory,mb eop
+ETROPUS,ethane/ethylene refinery and blender net production,mbd
+ETTCPUS,ethane/ethylene product supplied,mbd
+ETXXSUP,total supply of electricity in united states,bkwhd
+EXACPUS,"retail sales of electricity in transportation sector, u.s. total",bkwhd
+EXACP_ENC,"retail sales of electricity in transportation sector, east north central",mkwhd
+EXACP_ESC,"retail sales of electricity in transportation sector, east south central",mkwhd
+EXACP_HAK,"retail sales of electricity in transportation sector, alaska and hawaii",mkwhd
+EXACP_MAC,"retail sales of electricity in transportation sector, middle atlantic",mkwhd
+EXACP_MTN,"retail sales of electricity in transportation sector, mountain",mkwhd
+EXACP_NEC,"retail sales of electricity in transportation sector, new england",mkwhd
+EXACP_PAC,"retail sales of electricity in transportation sector, pacific contiguous",mkwhd
+EXACP_SAC,"retail sales of electricity in transportation sector, south atlantic",mkwhd
+EXACP_US,"retail sales of electricity in transportation sector, u.s. total",mkwhd
+EXACP_WNC,"retail sales of electricity in transportation sector, west north central",mkwhd
+EXACP_WSC,"retail sales of electricity in transportation sector, west south central",mkwhd
+EXCCPUS,"retail sales of electricity in commercial sector, u.s. total",bkwhd
+EXCCP_ENC,"retail sales of electricity in commercial sector, east north central",mkwhd
+EXCCP_ESC,"retail sales of electricity in commercial sector, east south central",mkwhd
+EXCCP_HAK,"retail sales of electricity in commercial sector, alaska and hawaii",mkwhd
+EXCCP_MAC,"retail sales of electricity in commercial sector, middle atlantic",mkwhd
+EXCCP_MTN,"retail sales of electricity in commercial sector, mountain",mkwhd
+EXCCP_NEC,"retail sales of electricity in commercial sector, new england",mkwhd
+EXCCP_PAC,"retail sales of electricity in commercial sector, pacific contiguous",mkwhd
+EXCCP_SAC,"retail sales of electricity in commercial sector, south atlantic",mkwhd
+EXCCP_US,"retail sales of electricity in commercial sector, u.s. total",mkwhd
+EXCCP_WNC,"retail sales of electricity in commercial sector, west north central",mkwhd
+EXCCP_WSC,"retail sales of electricity in commercial sector, west south central",mkwhd
+EXICPUS,"retail sales of electricity in industrial sector, u.s. total",bkwhd
+EXICP_ENC,"retail sales of electricity in industrial sector, east north central",mkwhd
+EXICP_ESC,"retail sales of electricity in industrial sector, east south central",mkwhd
+EXICP_HAK,"retail sales of electricity in industrial sector, alaska and hawaii",mkwhd
+EXICP_MAC,"retail sales of electricity in industrial sector, middle atlantic",mkwhd
+EXICP_MTN,"retail sales of electricity in industrial sector, mountain",mkwhd
+EXICP_NEC,"retail sales of electricity in industrial sector, new england",mkwhd
+EXICP_PAC,"retail sales of electricity in industrial sector, pacific contiguous",mkwhd
+EXICP_SAC,"retail sales of electricity in industrial sector, south atlantic",mkwhd
+EXICP_US,"retail sales of electricity in industrial sector, u.s. total",mkwhd
+EXICP_WNC,"retail sales of electricity in industrial sector, west north central",mkwhd
+EXICP_WSC,"retail sales of electricity in industrial sector, west south central",mkwhd
+EXRCH_ENC,"average residential electricity usage per customer, east north central",kwh
+EXRCH_ESC,"average residential electricity usage per customer, east south central",kwh
+EXRCH_HAK,"average residential electricity usage per customer, hawaii and alaska",kwh
+EXRCH_MAC,"average residential electricity usage per customer, middle atlantic",kwh
+EXRCH_MTN,"average residential electricity usage per customer, mountain",kwh
+EXRCH_NEC,"average residential electricity usage per customer, new england",kwh
+EXRCH_PAC,"average residential electricity usage per customer, pacific contiguous",kwh
+EXRCH_SAC,"average residential electricity usage per customer, south atlantic",kwh
+EXRCH_US,"average residential electricity usage per customer, united states",kwh
+EXRCH_WNC,"average residential electricity usage per customer, west north central",kwh
+EXRCH_WSC,"average residential electricity usage per customer, west south central",kwh
+EXRCPUS,"retail sales of electricity in residential sector, u.s. total",bkwhd
+EXRCP_ENC,"retail sales of electricity in residential sector, east north central",mkwhd
+EXRCP_ESC,"retail sales of electricity in residential sector, east south central",mkwhd
+EXRCP_HAK,"retail sales of electricity in residential sector, alaska and hawaii",mkwhd
+EXRCP_MAC,"retail sales of electricity in residential sector, middle atlantic",mkwhd
+EXRCP_MTN,"retail sales of electricity in residential sector, mountain",mkwhd
+EXRCP_NEC,"retail sales of electricity in residential sector, new england",mkwhd
+EXRCP_PAC,"retail sales of electricity in residential sector, pacific contiguous",mkwhd
+EXRCP_SAC,"retail sales of electricity in residential sector, south atlantic",mkwhd
+EXRCP_US,"retail sales of electricity in residential sector, u.s. total",mkwhd
+EXRCP_WNC,"retail sales of electricity in residential sector, west north central",mkwhd
+EXRCP_WSC,"retail sales of electricity in residential sector, west south central",mkwhd
+EXTCPUS,"retail sales of electricity in all sectors, u.s. total",bkwhd
+EXTCP_ENC,"retail sales of electricity in all sectors, east north central",mkwhd
+EXTCP_ESC,"retail sales of electricity in all sectors, east south central",mkwhd
+EXTCP_HAK,"retail sales of electricity in all sectors, alaska and hawaii",mkwhd
+EXTCP_MAC,"retail sales of electricity in all sectors, middle atlantic",mkwhd
+EXTCP_MTN,"retail sales of electricity in all sectors, mountain",mkwhd
+EXTCP_NEC,"retail sales of electricity in all sectors, new england",mkwhd
+EXTCP_PAC,"retail sales of electricity in all sectors, pacific contiguous",mkwhd
+EXTCP_SAC,"retail sales of electricity in all sectors, south atlantic",mkwhd
+EXTCP_US,"retail sales of electricity in all sectors, u.s. total",mkwhd
+EXTCP_WNC,"retail sales of electricity in all sectors, west north central",mkwhd
+EXTCP_WSC,"retail sales of electricity in all sectors, west south central",mkwhd
+FETCPUS,petrochemical feedstocks product supplied,mbd
+FFTCCO2,carbon dioxide emissions from fossil fuels,mmt
+GDPDIUS,gdp implicit price deflator,index 2017=100
+GDPDIUS_PCT,gdp implicit price deflator,pct yoy
+GDPQXUS,real gross domestic product,b2017usd (saar)
+GDPQXUS_PCT,real gross domestic product,pct yoy
+GECCBUS,commercial sector consumption of geothermal energy,qbtu
+GECHCGW_US,u.s. commercial and industrial sectors geothermal net summer generating capacity,gw
+GECMGEN_US,"commercial sector net generation from geothermal, united states",bkwh
+GEECBUS,electric power sector consumption of geothermal energy,qbtu
+GEEPCAP_US,electric power sector geothermal net summer capacity,mw
+GEEPCGW_US,u.s. electric power sector geothermal net summer generating capacity,gw
+GEEPGEN_CA,"electric power sector net generation from geothermal, california",bkwh
+GEEPGEN_FL,"electric power sector net generation from geothermal, florida (frcc)",bkwh
+GEEPGEN_HA,"electric power sector net generation from geothermal, hawaii and alaska",bkwh
+GEEPGEN_MW,"electric power sector net generation from geothermal, midwest (midcontinent iso)",bkwh
+GEEPGEN_NE,"electric power sector net generation from geothermal, new england (iso-ne)",bkwh
+GEEPGEN_NW,"electric power sector net generation from geothermal, northwest",bkwh
+GEEPGEN_NY,"electric power sector net generation from geothermal, new york (nyiso)",bkwh
+GEEPGEN_PJ,"electric power sector net generation from geothermal, mid-atlantic (pjm)",bkwh
+GEEPGEN_SE,"electric power sector net generation from geothermal, southeast (serc)",bkwh
+GEEPGEN_SP,"electric power sector net generation from geothermal, central (spp iso)",bkwh
+GEEPGEN_SW,"electric power sector net generation from geothermal, southwest",bkwh
+GEEPGEN_TX,"electric power sector net generation from geothermal, texas (ercot)",bkwh
+GEEPGEN_US,"electric power sector net generation from geothermal, united states",bkwh
+GEEPTOT,electric power sector generation from geothermal,bkwhd
+GEICBUS,industrial sector consumption of geothermal energy,qbtu
+GEINGEN_US,"industrial sector net generation from geothermal, united states",bkwh
+GERCBUS,residential sector consumption of geothermal energy,qbtu
+GETCBUS,consumption of geothermal energy by all sectors,qbtu
+GETOGEN_US,"net generation from geothermal, all sectors, united states",bkwh
+GETOPUS,generation from geothermal by all sectors,bkwhd
+GOVXRUS,real u.s. government expenditures,b2017usd (saar)
+HGPRPUS,hydrocarbon gas liquids total production,mbd
+HOFPPUS,hydrogen and other hydrocarbons adjustments,mbd
+HONIPUS,hydrogen and other hydrocarbons net imports,mbd
+HORIPUS,hydrogen and other hydrocarbons refinery and blender net inputs,mbd
+HPCMGEN_US,"commercial sector net generation from pumped storage hydropower, united states",bkwh
+HPEPCGW_US,u.s. electric power sector pumped-storage hydropower net summer generating capacity,gw
+HPEPGEN_CA,"electric power sector net generation from pumped storage hydropower, california",bkwh
+HPEPGEN_FL,"electric power sector net generation from pumped storage hydropower, florida (frcc)",bkwh
+HPEPGEN_HA,"electric power sector net generation from pumped storage hydropower, hawaii and alaska",bkwh
+HPEPGEN_MW,"electric power sector net generation from pumped storage hydropower, midwest (midcontinent iso)",bkwh
+HPEPGEN_NE,"electric power sector net generation from pumped storage hydropower, new england (iso-ne)",bkwh
+HPEPGEN_NW,"electric power sector net generation from pumped storage hydropower, northwest",bkwh
+HPEPGEN_NY,"electric power sector net generation from pumped storage hydropower, new york (nyiso)",bkwh
+HPEPGEN_PJ,"electric power sector net generation from pumped storage hydropower, mid-atlantic (pjm)",bkwh
+HPEPGEN_SE,"electric power sector net generation from pumped storage hydropower, southeast (serc)",bkwh
+HPEPGEN_SP,"electric power sector net generation from pumped storage hydropower, central (spp iso)",bkwh
+HPEPGEN_SW,"electric power sector net generation from pumped storage hydropower, southwest",bkwh
+HPEPGEN_TX,"electric power sector net generation from pumped storage hydropower, texas (ercot)",bkwh
+HPEPGEN_US,"electric power sector net generation from pumped storage hydropower, united states",bkwh
+HPEPTOT,electric power sector generation from pumped storage hydroelectric,bkwhd
+HPINGEN_US,"industrial sector net generation from pumped storage hydropower, united states",bkwh
+HPTOGEN_US,"net generation from pumped storage hydropower, all sectors, united states",bkwh
+HPTOPUS,generation from pumped storage hydropower by all sectors,bkwhd
+HSTCXUS,housing starts,m (saar)
+HVCCBUS,commercial sector consumption of conventional hydroelectric energy,qbtu
+HVCEPUS,commercial sector generation from conventional hydropower,bkwhd
+HVCHCAP_US,comm. and indus. sectors conventional hydroelectric net summer capacity,mw
+HVCHCGW_US,u.s. commercial and industrial sectors conventional hydropower net summer generating capacity,gw
+HVCHGEN_US,"industrial and commercial sector net generation from conventional hydropower, united states",bkwh
+HVCMGEN_US,"commercial sector net generation from conventional hydropower, united states",bkwh
+HVCOPUS,industrial sector generation from conventional hydroelectric,bkwhd
+HVECBUS,electric power sector consumption of conventional hydroelectric energy,qbtu
+HVEPCAP_US,electric power sector conventional hydroelectric net summer capacity,mw
+HVEPCGW_US,u.s. electric power sector conventional hydropower net summer generating capacity,gw
+HVEPGEN_CA,"electric power sector net generation from conventional hydropower, california",bkwh
+HVEPGEN_FL,"electric power sector net generation from conventional hydropower, florida (frcc)",bkwh
+HVEPGEN_HA,"electric power sector net generation from conventional hydropower, hawaii and alaska",bkwh
+HVEPGEN_MW,"electric power sector net generation from conventional hydropower, midwest (midcontinent iso)",bkwh
+HVEPGEN_NE,"electric power sector net generation from conventional hydropower, new england (iso-ne)",bkwh
+HVEPGEN_NW,"electric power sector net generation from conventional hydropower, northwest",bkwh
+HVEPGEN_NY,"electric power sector net generation from conventional hydropower, new york (nyiso)",bkwh
+HVEPGEN_PJ,"electric power sector net generation from conventional hydropower, mid-atlantic (pjm)",bkwh
+HVEPGEN_SE,"electric power sector net generation from conventional hydropower, southeast (serc)",bkwh
+HVEPGEN_SP,"electric power sector net generation from conventional hydropower, central (spp iso)",bkwh
+HVEPGEN_SW,"electric power sector net generation from conventional hydropower, southwest",bkwh
+HVEPGEN_TX,"electric power sector net generation from conventional hydropower, texas (ercot)",bkwh
+HVEPGEN_US,"electric power sector net generation from conventional hydropower, united states",bkwh
+HVEPTOT,electric power sector generation from conventional hydroelectric,bkwhd
+HVICBUS,industrial sector consumption of conventional hydroelectric energy,qbtu
+HVINGEN_US,"industrial sector net generation from conventional hydropower, united states",bkwh
+HVTCBUS,consumption of conventional hydroelectric power energy by all sectors,qbtu
+HVTOGEN_US,"net generation from conventional hydropower, all sectors, united states",bkwh
+HVTOPUS,generation from conventional hydropower by all sectors,bkwhd
+I87RXUS,real private fixed investment,b2017usd (saar)
+INEOPUS,industrial sector total generation,bkwhd
+INEOTWH,"total net generation of electricity from large-scale power plants, industrial sector, united states",bkwh
+IPMFG_ENC,"industrial output, manufacturing, e. n. central",index 2017=100
+IPMFG_ESC,"industrial output, manufacturing, e. s. central",index 2017=100
+IPMFG_MAC,"industrial output, manufacturing, middle atlantic",index 2017=100
+IPMFG_MTN,"industrial output, manufacturing, mountain",index 2017=100
+IPMFG_NEC,"industrial output, manufacturing, new england",index 2017=100
+IPMFG_PAC,"industrial output, manufacturing, pacific",index 2017=100
+IPMFG_SAC,"industrial output, manufacturing, s. atlantic",index 2017=100
+IPMFG_WNC,"industrial output, manufacturing, w. n. central",index 2017=100
+IPMFG_WSC,"industrial output, manufacturing, w. s. central",index 2017=100
+JFNIPUS,jet fuel net imports,mbd
+JFPSPUS,jet fuel inventory,mb eop
+JFROPUS,jet fuel refinery output,mbd
+JFTCPUS,jet fuel product supplied,mbd
+JKTCUUS,jet fuel refiner price to end users,c/gal
+JKTCUUS_$,jet fuel refiner price to end users,usd/gal
+KQHMPUS,"housing stock, including mobile homes",m
+KRDRXUS,business inventory change,b2017usd (saar)
+LGFPPUS,liquefied petroleum gas field production,mbd
+LGNIPUS,liquefied petroleum gas net imports,mbd
+LGPSPUS,liquefied petroleum gas inventory,mb eop
+LGRIPUS,liquefied petroleum gas refinery input,mbd
+LGROPUS,liquefied petroleum gas refinery output,mbd
+LGTCPUS,liquefied petroleum gas product supplied,mbd
+LXTCPUS,propane and heavier liquefied petroleum gas product supplied,mbd
+MBFPPUSX,motor gasoline blend comp. adjustment,mbd
+MBRIPUS,motor gasoline blend components refinery input,mbd
+MGEIAUS,gasoline all grades retail price including taxes u.s. average,c/gal
+MGEIAUS_$,gasoline all grades retail price including taxes u.s. average,usd/gal
+MGFPPUSX,finished motor gasoline adjustment,mbd
+MGRARP1,"gasoline regular grade retail price incl taxes, padd 1 (east coast)",c/gal
+MGRARP1_$,"gasoline regular grade retail price incl taxes, padd 1 (east coast)",usd/gal
+MGRARP2,"gasoline regular grade retail price incl taxes, padd 2 (midwest)",c/gal
+MGRARP2_$,"gasoline regular grade retail price incl taxes, padd 2 (midwest)",usd/gal
+MGRARP3,"gasoline regular grade retail price incl taxes, padd 3 (gulf coast)",c/gal
+MGRARP3_$,"gasoline regular grade retail price incl taxes, padd 3 (gulf coast)",usd/gal
+MGRARP4,"gasoline regular grade retail price incl taxes, padd 4 (rocky mountain)",c/gal
+MGRARP4_$,"gasoline regular grade retail price incl taxes, padd 4 (rocky mountain)",usd/gal
+MGRARP5,"gasoline regular grade retail price incl taxes, padd 5 (west coast)",c/gal
+MGRARP5_$,"gasoline regular grade retail price incl taxes, padd 5 (west coast)",usd/gal
+MGRARUS,"gasoline regular grade retail price incl taxes, u.s. average",c/gal
+MGRARUS_$,"gasoline retail price incl taxes, u.s. average",usd/gal
+MGRARUS_RP_$,"gasoline regular grade retail real price incl taxes, u.s. average,",real usd/gal
+MGROPUS,finished motor gasoline refinery output,mbd
+MGTCPUSX,motor gasoline product supplied,mbd
+MGTCPUSX_P,petroleum-based gasoline consumption,mbd
+MGTNIPUS,total motor gasoline net imports,mbd
+MGTSPP1,total motor gasoline padd 1 (east coast) inventory,mb eop
+MGTSPP2,total motor gasoline padd 2 (midwest) inventory,mb eop
+MGTSPP3,total motor gasoline padd 3 (gulf coast) inventory,mb eop
+MGTSPP4,total motor gasoline padd 4 (rocky mountain) inventory,mb eop
+MGTSPP5,total motor gasoline padd 5 (west coast) inventory,mb eop
+MGTSPUS,total motor gasoline u.s. total inventory,mb eop
+MGWHUUS,refiner wholesale gasoline price,c/gal
+MGWHUUS_$,refiner wholesale gasoline price,usd/gal
+MVVMPUS,vehicle miles traveled,m mi/d
+MZTCPUS,other liquid fuels product supplied,mbd
+NGACPUS,natural gas pipeline and distribution use,bcfd
+NGBGPUS,natural gas base gas inventory,bcf eop
+NGCCPUS,"natural gas consumption commercial sector, u.s. total",bcfd
+NGCCP_ENC,"natural gas consumption commercial sector, e. n. central",bcfd
+NGCCP_ESC,"natural gas consumption commercial sector, e. s. central",bcfd
+NGCCP_MAC,"natural gas consumption commercial sector, middle atlantic",bcfd
+NGCCP_MTN,"natural gas consumption commercial sector, mountain",bcfd
+NGCCP_NEC,"natural gas consumption commercial sector, new england",bcfd
+NGCCP_PAC,"natural gas consumption commercial sector, pacific",bcfd
+NGCCP_SAC,"natural gas consumption commercial sector, s. atlantic",bcfd
+NGCCP_WNC,"natural gas consumption commercial sector, w. n. central",bcfd
+NGCCP_WSC,"natural gas consumption commercial sector, w. s. central",bcfd
+NGCCUUS,"retail price of natural gas in commercial sector, u.s. average",usd/mcf
+NGCCU_ENC,"retail price of natural gas in commercial sector, e. n. central",usd/mcf
+NGCCU_ESC,"retail price of natural gas in commercial sector, e. s. central",usd/mcf
+NGCCU_MAC,"retail price of natural gas in commercial sector, middle atlantic",usd/mcf
+NGCCU_MTN,"retail price of natural gas in commercial sector, mountain",usd/mcf
+NGCCU_NEC,"retail price of natural gas in commercial sector, new england",usd/mcf
+NGCCU_PAC,"retail price of natural gas in commercial sector, pacific",usd/mcf
+NGCCU_SAC,"retail price of natural gas in commercial sector, s. atlantic",usd/mcf
+NGCCU_WNC,"retail price of natural gas in commercial sector, w. n. central",usd/mcf
+NGCCU_WSC,"retail price of natural gas in commercial sector, w. s. central",usd/mcf
+NGCEPUS,commercial sector generation from natural gas,bkwhd
+NGCHCGW_US,u.s. commercial and industrial sectors natural gas net summer generating capacity,gw
+NGCMCNS_US,"commercial sector consumption of natural gas, united states",bcf
+NGCMGEN_US,"commercial sector net generation from natural gas, united states",bkwh
+NGCOPUS,industrial sector generation from natural gas,bkwhd
+NGEOPAP,"appalachia existing gas production change, one-year trend",mmcfd
+NGEOPBK,"bakken existing gas production change, one-year trend",mmcfd
+NGEOPEF,"eagle ford existing gas production change, one-year trend",mmcfd
+NGEOPHA,"haynesville existing gas production change, one-year trend",mmcfd
+NGEOPPM,"permian existing gas production change, one-year trend",mmcfd
+NGEOPR48,"rest of lower 48 states, excluding gom existing gas production change, one-year trend",mmcfd
+NGEPCGW_US,u.s. electric power sector natural gas net summer generating capacity,gw
+NGEPCNS_CA,"electric power sector  consumption of natural gas, california",bcf
+NGEPCNS_FL,"electric power sector  consumption of natural gas, florida (frcc)",bcf
+NGEPCNS_HA,"electric power sector  consumption of natural gas, hawaii and alaska",bcf
+NGEPCNS_MW,"electric power sector  consumption of natural gas, midwest (midcontinent iso)",bcf
+NGEPCNS_NE,"electric power sector  consumption of natural gas, new england (iso-ne)",bcf
+NGEPCNS_NW,"electric power sector  consumption of natural gas, northwest",bcf
+NGEPCNS_NY,"electric power sector  consumption of natural gas, new york (nyiso)",bcf
+NGEPCNS_PJ,"electric power sector  consumption of natural gas, mid-atlantic (pjm)",bcf
+NGEPCNS_SE,"electric power sector  consumption of natural gas, southeast (serc)",bcf
+NGEPCNS_SP,"electric power sector  consumption of natural gas, central (spp iso)",bcf
+NGEPCNS_SW,"electric power sector  consumption of natural gas, southwest",bcf
+NGEPCNS_TX,"electric power sector  consumption of natural gas, texas (ercot)",bcf
+NGEPCNS_US,"electric power sector  consumption of natural gas, united states",bcf
+NGEPCON,"natural gas consumption electric power sector, u.s. total",bcfd
+NGEPGEN_CA,"electric power sector net generation from natural gas, california",bkwh
+NGEPGEN_FL,"electric power sector net generation from natural gas, florida (frcc)",bkwh
+NGEPGEN_HA,"electric power sector net generation from natural gas, hawaii and alaska",bkwh
+NGEPGEN_MW,"electric power sector net generation from natural gas, midwest (midcontinent iso)",bkwh
+NGEPGEN_NE,"electric power sector net generation from natural gas, new england (iso-ne)",bkwh
+NGEPGEN_NW,"electric power sector net generation from natural gas, northwest",bkwh
+NGEPGEN_NY,"electric power sector net generation from natural gas, new york (nyiso)",bkwh
+NGEPGEN_PJ,"electric power sector net generation from natural gas, mid-atlantic (pjm)",bkwh
+NGEPGEN_SE,"electric power sector net generation from natural gas, southeast (serc)",bkwh
+NGEPGEN_SP,"electric power sector net generation from natural gas, central (spp iso)",bkwh
+NGEPGEN_SW,"electric power sector net generation from natural gas, southwest",bkwh
+NGEPGEN_TX,"electric power sector net generation from natural gas, texas (ercot)",bkwh
+NGEPGEN_US,"electric power sector net generation from natural gas, united states",bkwh
+NGEPSHR_US,natural gas share of u.s. electricity generation,pct
+NGEPTOT,electric power sector generation from natural gas,bkwhd
+NGEUDUS,cost of natural gas delivered to electric generating plants,usd/mmbtu
+NGEXPUS,natural gas total gross exports,bcfd
+NGEXPUS_LNG,natural gas lng gross exports,bcfd
+NGEXPUS_PIPE,natural gas pipeline gross exports,bcfd
+NGHHMCF,natural gas henry hub spot price ($/mcf),usd/mcf
+NGHHUUS,natural gas henry hub spot price ($/mmbtu),usd/mmbtu
+NGICUUS,"retail price of natural gas in industrial sector, u.s. average",usd/mcf
+NGICU_ENC,"retail price of natural gas in industrial sector, e. n. central",usd/mcf
+NGICU_ESC,"retail price of natural gas in industrial sector, e. s. central",usd/mcf
+NGICU_MAC,"retail price of natural gas in industrial sector, middle atlantic",usd/mcf
+NGICU_MTN,"retail price of natural gas in industrial sector, mountain",usd/mcf
+NGICU_NEC,"retail price of natural gas in industrial sector, new england",usd/mcf
+NGICU_PAC,"retail price of natural gas in industrial sector, pacific",usd/mcf
+NGICU_SAC,"retail price of natural gas in industrial sector, s. atlantic",usd/mcf
+NGICU_WNC,"retail price of natural gas in industrial sector, w. n. central",usd/mcf
+NGICU_WSC,"retail price of natural gas in industrial sector, w. s. central",usd/mcf
+NGIMPUS,natural gas total gross imports,bcfd
+NGIMPUS_LNG,natural gas lng gross imports,bcfd
+NGIMPUS_PIPE,natural gas pipeline gross imports,bcfd
+NGINCNS_US,"industrial sector consumption of natural gas, united states",bcf
+NGINGEN_US,"industrial sector net generation from natural gas, united states",bkwh
+NGINX,"natural gas consumption industrial sector, u.s. total",bcfd
+NGINX_ENC,"natural gas consumption industrial sector, e. n. central",bcfd
+NGINX_ESC,"natural gas consumption industrial sector, e. s. central",bcfd
+NGINX_MAC,"natural gas consumption industrial sector, middle atlantic",bcfd
+NGINX_MTN,"natural gas consumption industrial sector, mountain",bcfd
+NGINX_NEC,"natural gas consumption industrial sector, new england",bcfd
+NGINX_PAC,"natural gas consumption industrial sector, pacific",bcfd
+NGINX_SAC,"natural gas consumption industrial sector, s. atlantic",bcfd
+NGINX_US,u.s. natural gas industrial consumption,bcfd
+NGINX_WNC,"natural gas consumption industrial sector, w. n. central",bcfd
+NGINX_WSC,"natural gas consumption industrial sector, w. s. central",bcfd
+NGLPPUS,natural gas lease and plant fuel,bcfd
+NGMP48NGOM,natural gas lower 48 states (excl gom) marketed production,bcfd
+NGMPAP,natural gas appalachia marketed production,bcfd
+NGMPBK,natural gas bakken marketed production,bcfd
+NGMPEF,natural gas eagle ford marketed production,bcfd
+NGMPHA,natural gas haynesville marketed production,bcfd
+NGMPPAK,natural gas alaska marketed production,bcfd
+NGMPPGLF,natural gas marketed production federal gulf of mexico,bcfd
+NGMPPM,natural gas permian marketed production,bcfd
+NGMPPUS,natural gas total marketed production,bcfd
+NGMPR48,natural gas rest of u.s. marketed production,bcfd
+NGNIPUS,natural gas net imports,bcfd
+NGNWAP,"appalachia new-wells gas production, one-year trend",mmcfd
+NGNWBK,"bakken new-wells gas production, one-year trend",mmcfd
+NGNWEF,"eagle ford new-wells gas production, one-year trend",mmcfd
+NGNWHA,"haynesville new-wells gas production, one-year trend",mmcfd
+NGNWPM,"permian new-wells gas production, one-year trend",mmcfd
+NGNWPUS,natural gas net withdrawals from inventory,bcfd
+NGNWR48,"rest of lower 48 states, excluding gom new-wells gas production, one-year trend",mmcfd
+NGNWRAP,"appalachia new-wells gas production per rig, one-year trend",mmcfd
+NGNWRBK,"bakken new-wells gas production per rig, one-year trend",mmcfd
+NGNWREF,"eagle ford new-wells gas production per rig, one-year trend",mmcfd
+NGNWRHA,"haynesville new-wells gas production per rig, one-year trend",mmcfd
+NGNWRPM,"permian new-wells gas production per rig, one-year trend",mmcfd
+NGNWRR48,"rest of lower 48 states, excluding gom new-wells gas production per rig, one-year trend",mmcfd
+NGPRPUS,natural gas total dry production,bcfd
+NGPSUPP,total natural gas supply,bcfd
+NGRCPUS,"natural gas consumption residential sector, u.s. total",bcfd
+NGRCP_ENC,"natural gas consumption residential sector, e. n. central",bcfd
+NGRCP_ESC,"natural gas consumption residential sector, e. s. central",bcfd
+NGRCP_MAC,"natural gas consumption residential sector, middle atlantic",bcfd
+NGRCP_MTN,"natural gas consumption residential sector, mountain",bcfd
+NGRCP_NEC,"natural gas consumption residential sector, new england",bcfd
+NGRCP_PAC,"natural gas consumption residential sector, pacific",bcfd
+NGRCP_SAC,"natural gas consumption residential sector, s. atlantic",bcfd
+NGRCP_WNC,"natural gas consumption residential sector, w. n. central",bcfd
+NGRCP_WSC,"natural gas consumption residential sector, w. s. central",bcfd
+NGRCUUS,"retail price of natural gas in the residential sector, u.s. average",usd/mcf
+NGRCUUS_RP,"real natural gas price residential sector, u.s. average",usd/mcf
+NGRCU_ENC,"retail price of natural gas in residential sector, e. n. central",usd/mcf
+NGRCU_ESC,"retail price of natural gas in residential sector, e. s. central",usd/mcf
+NGRCU_MAC,"retail price of natural gas in residential sector, middle atlantic",usd/mcf
+NGRCU_MTN,"retail price of natural gas in price residential sector, mountain",usd/mcf
+NGRCU_NEC,"retail price of natural gas in residential sector, new england",usd/mcf
+NGRCU_PAC,"retail price of natural gas in residential sector, pacific",usd/mcf
+NGRCU_SAC,"retail price of natural gas in residential sector, s. atlantic",usd/mcf
+NGRCU_WNC,"retail price of natural gas in residential sector, w. n. central",usd/mcf
+NGRCU_WSC,"retail price of natural gas in residential sector, w. s. central",usd/mcf
+NGSFPUS,supplemental gaseous fuels supply,bcfd
+NGSUPP,total natural gas primary supply,bcfd
+NGTCCO2,carbon dioxide emissions from natural gas,mmt
+NGTCPUS,us natural gas consumption,bcfd
+NGTOGEN_US,"net generation from natural gas, all sectors, united states",bkwh
+NGTOPUS,generation from natural gas by all sectors,bkwhd
+NGUSPUS,natural gas total inventory,bcf eop
+NGVHPUS,natural gas vehicle use,bcfd
+NGWGPUS,natural gas working inventory u.s. total,bcf eop
+NGWG_AK,natural gas working inventory alaska,bcf eop
+NGWG_EAST,natural gas working inventory east region,bcf eop
+NGWG_MTN,natural gas working inventory mountain region,bcf eop
+NGWG_MW,natural gas working inventory midwest region,bcf eop
+NGWG_PAC,natural gas working inventory pacific region,bcf eop
+NGWG_SC,natural gas working inventory south central consuming region,bcf eop
+NLNIPUS,hydrocarbon gas liquids net imports,mbd
+NLPRPUS,natural gas processing plant total liquids production,mbd
+NLPSPUS,hydrocarbon gas liquids inventory,mb eop
+NLRIPUS,hydrocarbon gas liquids refinery and blender net inputs,mbd
+NLROPUS,hydrocarbon gas liquids refinery and blender net production,mbd
+NLTCPUS,hydrocarbon gas liquids total consumption ,mbd
+NONOPEC_NC,non-opec non-crude oil liquids production,mbd
+NUCMGEN_US,"commercial sector net generation from nuclear, united states",bkwh
+NUEPCGW_US,u.s. electric power sector nuclear net summer generating capacity,gw
+NUEPGEN_CA,"electric power sector net generation from nuclear, california",bkwh
+NUEPGEN_FL,"electric power sector net generation from nuclear, florida (frcc)",bkwh
+NUEPGEN_HA,"electric power sector net generation from nuclear, hawaii and alaska",bkwh
+NUEPGEN_MW,"electric power sector net generation from nuclear, midwest (midcontinent iso)",bkwh
+NUEPGEN_NE,"electric power sector net generation from nuclear, new england (iso-ne)",bkwh
+NUEPGEN_NW,"electric power sector net generation from nuclear, northwest",bkwh
+NUEPGEN_NY,"electric power sector net generation from nuclear, new york (nyiso)",bkwh
+NUEPGEN_PJ,"electric power sector net generation from nuclear, mid-atlantic (pjm)",bkwh
+NUEPGEN_SE,"electric power sector net generation from nuclear, southeast (serc)",bkwh
+NUEPGEN_SP,"electric power sector net generation from nuclear, central (spp iso)",bkwh
+NUEPGEN_SW,"electric power sector net generation from nuclear, southwest",bkwh
+NUEPGEN_TX,"electric power sector net generation from nuclear, texas (ercot)",bkwh
+NUEPGEN_US,"electric power sector net generation from nuclear, united states",bkwh
+NUEPSHR_US,nuclear share of u.s. electricity generation,pct
+NUEPTOT,electric power sector generation from nuclear,bkwhd
+NUINGEN_US,"industrial sector net generation from nuclear, united states",bkwh
+NUTOGEN_US,"net generation from nuclear, all sectors, united states",bkwh
+NUTOPUS,generation from nuclear by all sectors,bkwhd
+NWCAP,appalachia new wells completed,count
+NWCBK,bakken new wells completed,count
+NWCEF,eagle ford new wells completed,count
+NWCHA,haynesville new wells completed,count
+NWCPM,permian new wells completed,count
+NWCR48,"rest of lower 48 states, excluding gom new wells completed",count
+NWDAP,appalachia new wells drilled,count
+NWDBK,bakken new wells drilled,count
+NWDEF,eagle ford new wells drilled,count
+NWDHA,haynesville new wells drilled,count
+NWDPM,permian new wells drilled,count
+NWDR48,"rest of lower 48 states, excluding gom new wells drilled",count
+NWRAP,appalachia  new wells drilled per rig,count
+NWRBK,bakken  new wells drilled per rig,count
+NWREF,eagle ford  new wells drilled per rig,count
+NWRHA,haynesville new wells drilled per rig,count
+NWRPM,permian new wells drilled per rig,count
+NWRR48,"rest of lower 48 states, excluding gom  new wells drilled per rig",count
+OBCMGEN_US,"commercial sector net generation from other nonrenewable fuels, united states",bkwh
+OBEPGEN_CA,"electric power sector  net generation from other nonrenewable fuels, california",bkwh
+OBEPGEN_FL,"electric power sector  net generation from other nonrenewable fuels, florida (frcc)",bkwh
+OBEPGEN_HA,"electric power sector  net generation from other nonrenewable fuels, hawaii and alaska",bkwh
+OBEPGEN_MW,"electric power sector  net generation from other nonrenewable fuels, midwest (midcontinent iso)",bkwh
+OBEPGEN_NE,"electric power sector  net generation from other nonrenewable fuels, new england (iso-ne)",bkwh
+OBEPGEN_NW,"electric power sector  net generation from other nonrenewable fuels, northwest",bkwh
+OBEPGEN_NY,"electric power sector  net generation from other nonrenewable fuels, new york (nyiso)",bkwh
+OBEPGEN_PJ,"electric power sector  net generation from other nonrenewable fuels, mid-atlantic (pjm)",bkwh
+OBEPGEN_SE,"electric power sector  net generation from other nonrenewable fuels, southeast (serc)",bkwh
+OBEPGEN_SP,"electric power sector  net generation from other nonrenewable fuels, central (spp iso)",bkwh
+OBEPGEN_SW,"electric power sector  net generation from other nonrenewable fuels, southwest",bkwh
+OBEPGEN_TX,"electric power sector  net generation from other nonrenewable fuels, texas (ercot)",bkwh
+OBEPGEN_US,"electric power sector net generation from other nonrenewable fuels, united states",bkwh
+OBINGEN_US,"industrial sector net generation from other nonrenewable fuels, united states",bkwh
+OBNIPUS,other biofuels net imports,mbd
+OBPRPUS,other biofuels production,mbd
+OBPSPUS,other biofuels inventory,mb
+OBTCPUS,other biofuels consumption,mbd
+OBTOGEN_US,"net generation from other nonrenewable fuels, all sectors, united states",bkwh
+OGCEPUS,commercial sector generation from other gases,bkwhd
+OGCHCGW_US,u.s. commercial and industrial sectors other gases net summer generating capacity,gw
+OGCMGEN_US,"commercial sector net generation from other gases, united states",bkwh
+OGCOPUS,industrial sector generation from other gases,bkwhd
+OGEPCGW_US,u.s. electric power sector other gases net summer generating capacity,gw
+OGEPGEN_CA,"electric power sector net generation from other gases, california",bkwh
+OGEPGEN_FL,"electric power sector net generation from other gases, florida (frcc)",bkwh
+OGEPGEN_HA,"electric power sector net generation from other gases, hawaii and alaska",bkwh
+OGEPGEN_MW,"electric power sector net generation from other gases, midwest (midcontinent iso)",bkwh
+OGEPGEN_NE,"electric power sector net generation from other gases, new england (iso-ne)",bkwh
+OGEPGEN_NW,"electric power sector net generation from other gases, northwest",bkwh
+OGEPGEN_NY,"electric power sector net generation from other gases, new york (nyiso)",bkwh
+OGEPGEN_PJ,"electric power sector net generation from other gases, mid-atlantic (pjm)",bkwh
+OGEPGEN_SE,"electric power sector net generation from other gases, southeast (serc)",bkwh
+OGEPGEN_SP,"electric power sector net generation from other gases, central (spp iso)",bkwh
+OGEPGEN_SW,"electric power sector net generation from other gases, southwest",bkwh
+OGEPGEN_TX,"electric power sector net generation from other gases, texas (ercot)",bkwh
+OGEPGEN_US,"electric power sector net generation from other gases, united states",bkwh
+OGEPTOT,electric power sector generation from other gases,bkwhd
+OGINGEN_US,"industrial sector net generation from other gases, united states",bkwh
+OGTOGEN_US,"net generation from other gases, all sectors, united states",bkwh
+OGTOPUS,generation from other gases by all sectors,bkwhd
+OHNIPUS,other hc/oxygenates net imports,mbd
+OHPRPUS,other hc/oxygenates production,mbd
+OHPSPUS,other hc/oxygenates inventory,mb eop
+OHRIPUS,other hc/oxygenates adjustment,mbd
+OHTCPUS,other hc/oxygenates consumption,mbd
+OPCEPUS,commercial sector generation from other petroleum,bkwhd
+OPCOPUS,industrial sector generation from other petroleum,bkwhd
+OPEC_NC,opec non-crude oil liquids production,mbd
+OPEPTOT,electric power sector generation from other petroleum,bkwhd
+ORCAPUS,refinery operable distillation capacity  ,mbd
+OREPTOT,electric power sector generation from other renewables,bkwhd
+ORUTCUS,refinery distillation utilization factor ,op factor
+OTCEPUS,commercial sector generation from other nonrenewable fuels,bkwhd
+OTCHCGW_US,u.s. commercial and industrial sectors other non-renewable sources net summer generating capacity,gw
+OTCOPUS,industrial sector generation from other nonrenewable fuels,bkwhd
+OTEPCGW_US,u.s. electric power sector other non-renewable sources net summer generating capacity,gw
+OTEPTOT,electric power sector generation from other nonrenewable fuels,bkwhd
+OTTOPUS,generation from other nonrenewable fuels by all sectors,bkwhd
+OWCCBUS,commercial sector consumption of non-wood waste biomass energy,qbtu
+OWCHCAP_US,comm. and indus. sectors waste biomass net summer capacity,mw
+OWCHCGW_US,u.s. commercial and industrial sectors waste biomass net summer generating capacity,gw
+OWCHGEN_US,"industrial and commercial sector net generation from waste biomass, united states",bkwh
+OWEPCAP_US,electric power sector waste biomass net summer capacity,mw
+OWEPCGW_US,u.s. electric power sector waste biomass net summer generating capacity,gw
+OWEPCONB,electric power sector consumption of non-wood waste biomass energy,qbtu
+OWEPGEN_US,"electric power sector net generation from waste biomass, united states",bkwh
+OWICBUS,industrial sector consumption of non-wood waste biomass energy,qbtu
+OWTCBUS,consumption of non-wood waste biomass energy by all sectors,qbtu
+OWTOPUS,generation from other renewable sources by all sectors,bkwhd
+OXFPPUS,oxygenates (excluding fuel ethanol) adjustments,mbd
+OXNIPUS,oxygenates (excluding fuel ethanol) net imports,mbd
+OXPRPUS,oxygenates (excluding fuel ethanol) plant net production,mbd
+OXRIPUS,oxygenates (excluding fuel ethanol) refinery input,mbd
+P3IMPUS,propylene (refinery-grade) gross imports,mbd
+P3PSPP1,propylene (refinery-grade) padd 1 (east coast) inventory,mb eop
+P3PSPP2,propylene (refinery-grade) padd 2 (midwest) inventory,mb eop
+P3PSPP3,propylene (refinery-grade) padd 3 (gulf coast) inventory,mb eop
+P3PSPUS,propylene (refinery-grade) us total inventory,mb eop
+P3ROPUS,propylene refinery and blender net production,mbd
+P3TCPUS,propylene (refinery-grade) consumption,mbd
+PACEPUS,commercial sector generation from petroleum (all types),bkwhd
+PACHCGW_US,u.s. commercial and industrial sectors petroleum net summer generating capacity,gw
+PACMCNS_US,"commercial sector consumption of petroleum, united states",kb
+PACMGEN_US,"commercial sector net generation from petroleum, united states",bkwh
+PACOPUS,industrial sector generation from petroleum (all types),bkwhd
+PADI_AJ,"unplanned liquid fuel production disruptions, azerbaijan",mbd
+PADI_AR,"unplanned liquid fuel production disruptions, argentina",mbd
+PADI_AS,"unplanned liquid fuel production disruptions, australia",mbd
+PADI_BR,"unplanned liquid fuel production disruptions, brazil",mbd
+PADI_CA,"unplanned liquid fuel production disruptions, canada",mbd
+PADI_CD,"unplanned liquid fuel production disruptions, chad",mbd
+PADI_CH,"unplanned liquid fuel production disruptions, china",mbd
+PADI_CO,"unplanned liquid fuel production disruptions, colombia",mbd
+PADI_GB,"unplanned liquid fuel production disruptions, gabon",mbd
+PADI_GH,"unplanned liquid fuel production disruptions, ghana",mbd
+PADI_ID,"unplanned liquid fuel production disruptions, indonesia",mbd
+PADI_IR,"unplanned crude oil production disruptions, iran",mbd
+PADI_IZ,"unplanned crude oil production disruptions, iraq",mbd
+PADI_KU,"unplanned crude oil production disruptions, kuwait",mbd
+PADI_LY,"unplanned crude oil production disruptions, libya",mbd
+PADI_MX,"unplanned liquid fuel production disruptions, mexico",mbd
+PADI_NI,"unplanned crude oil production disruptions, nigeria",mbd
+PADI_NO,"unplanned crude oil production disruptions, norway",mbd
+PADI_NONOPEC,"unplanned liquid fuel production disruptions, countries outside of the organization of the petroleum exporting countries",mbd
+PADI_OPEC,"unplanned crude oil production disruptions, organization of the petroleum exporting countries",mbd
+PADI_PE,"unplanned liquid fuel production disruptions, peru",mbd
+PADI_RS,"unplanned liquid fuel production disruptions, russia",mbd
+PADI_SA,"unplanned liquid fuel production disruptions, saudi arabia",mbd
+PADI_SU,"unplanned liquid fuel production disruptions, sudan and south sudan",mbd
+PADI_SY,"unplanned liquid fuel production disruptions, syria",mbd
+PADI_UK,"unplanned liquid fuel production disruptions, united kingdom",mbd
+PADI_US,"unplanned liquid fuel production disruptions, united states",mbd
+PADI_VE,"unplanned liquid fuel production disruptions, venezuela",mbd
+PADI_YM,"unplanned liquid fuel production disruptions, yemen",mbd
+PAEPCGW_US,u.s. electric power sector petroleum net summer generating capacity,gw
+PAEPCNS_CA,"electric power sector  consumption of petroleum, california",kb
+PAEPCNS_FL,"electric power sector  consumption of petroleum, florida (frcc)",kb
+PAEPCNS_HA,"electric power sector  consumption of petroleum, hawaii and alaska",kb
+PAEPCNS_MW,"electric power sector  consumption of petroleum, midwest (midcontinent iso)",kb
+PAEPCNS_NE,"electric power sector  consumption of petroleum, new england (iso-ne)",kb
+PAEPCNS_NW,"electric power sector  consumption of petroleum, northwest",kb
+PAEPCNS_NY,"electric power sector  consumption of petroleum, new york (nyiso)",kb
+PAEPCNS_PJ,"electric power sector  consumption of petroleum, mid-atlantic (pjm)",kb
+PAEPCNS_SE,"electric power sector  consumption of petroleum, southeast (serc)",kb
+PAEPCNS_SP,"electric power sector  consumption of petroleum, central (spp iso)",kb
+PAEPCNS_SW,"electric power sector  consumption of petroleum, southwest",kb
+PAEPCNS_TX,"electric power sector  consumption of petroleum, texas (ercot)",kb
+PAEPCNS_US,"electric power sector  consumption of petroleum, united states",kb
+PAEPGEN_CA,"electric power sector net generation from petroleum, california",bkwh
+PAEPGEN_FL,"electric power sector net generation from petroleum, florida (frcc)",bkwh
+PAEPGEN_HA,"electric power sector net generation from petroleum, hawaii and alaska",bkwh
+PAEPGEN_MW,"electric power sector net generation from petroleum, midwest (midcontinent iso)",bkwh
+PAEPGEN_NE,"electric power sector net generation from petroleum, new england (iso-ne)",bkwh
+PAEPGEN_NW,"electric power sector net generation from petroleum, northwest",bkwh
+PAEPGEN_NY,"electric power sector net generation from petroleum, new york (nyiso)",bkwh
+PAEPGEN_PJ,"electric power sector net generation from petroleum, mid-atlantic (pjm)",bkwh
+PAEPGEN_SE,"electric power sector net generation from petroleum, southeast (serc)",bkwh
+PAEPGEN_SP,"electric power sector net generation from petroleum, central (spp iso)",bkwh
+PAEPGEN_SW,"electric power sector net generation from petroleum, southwest",bkwh
+PAEPGEN_TX,"electric power sector net generation from petroleum, texas (ercot)",bkwh
+PAEPGEN_US,"electric power sector net generation from petroleum, united states",bkwh
+PAEPTOT,electric power sector generation from petroleum (all types),bkwhd
+PAFPPUS,petroleum products adjustment,mbd
+PAGLPUS,refinery processing gain,mbd
+PAIMPORT,total petroleum net imports,mbd
+PAINCNS_US,"industrial sector consumption of petroleum, united states",kb
+PAINGEN_US,"industrial sector net generation from petroleum, united states",bkwh
+PANIPUS,petroleum product net imports,mbd
+PAPR48NGOM,lower 48 states (excl gom) crude oil production,mbd
+PAPRPAK,alaska crude oil production,mbd
+PAPRPGLF,crude oil production federal gulf of mexico,mbd
+PAPR_AG,"crude oil and liquid fuels supply, algeria",mbd
+PAPR_AJ,"crude oil and liquid fuels supply, azerbaijan",mbd
+PAPR_AO,"crude oil and liquid fuels supply, angola",mbd
+PAPR_AR,"crude oil and liquid fuels supply, argentina",mbd
+PAPR_AS,"crude oil and liquid fuels supply, australia",mbd
+PAPR_BA,"crude oil and liquid fuels supply, bahrain",mbd
+PAPR_BR,"crude oil and liquid fuels supply, brazil",mbd
+PAPR_BX,"crude oil and liquid fuels supply, brunei",mbd
+PAPR_CA,"crude oil and liquid fuels supply, canada",mbd
+PAPR_CF,"crude oil and liquid fuels supply, equatorial guinea",mbd
+PAPR_CH,"crude oil and liquid fuels supply, china",mbd
+PAPR_CO,"crude oil and liquid fuels supply, colombia",mbd
+PAPR_EC,"crude oil and liquid fuels supply, ecuador",mbd
+PAPR_EG,"crude oil and liquid fuels supply, egypt",mbd
+PAPR_EK,"crude oil and liquid fuels supply, equatorial guinea",mbd
+PAPR_FSU,eurasia petroleum production,mbd
+PAPR_GB,"crude oil and liquid fuels supply, gabon",mbd
+PAPR_GY,"crude oil and liquid fuels supply, guyana",mbd
+PAPR_ID,"crude oil and liquid fuels supply, indonesia",mbd
+PAPR_IN,"crude oil and liquid fuels supply, india",mbd
+PAPR_IR,"crude oil and liquid fuels supply, iran",mbd
+PAPR_IZ,"crude oil and liquid fuels supply, iraq",mbd
+PAPR_KU,"crude oil and liquid fuels supply, kuwait",mbd
+PAPR_KZ,"crude oil and liquid fuels supply, kazakhstan",mbd
+PAPR_LY,"crude oil and liquid fuels supply, libya",mbd
+PAPR_MU,"crude oil and liquid fuels supply, oman",mbd
+PAPR_MX,"crude oil and liquid fuels supply, mexico",mbd
+PAPR_MY,"crude oil and liquid fuels supply, malaysia",mbd
+PAPR_NI,"crude oil and liquid fuels supply, nigeria",mbd
+PAPR_NO,"crude oil and liquid fuels supply, norway",mbd
+PAPR_NONOECD,"crude oil and liquid fuels supply, total non-oecd",mbd
+PAPR_NONOPEC,total non-opec liquids petroleum production,mbd
+PAPR_NONOPECPLUS,non-opec liquids petroleum production from non-opec+,mbd
+PAPR_NONOPECPLUS_XUS,non-opec liquids petroleum production from non-opec+ excluding the us,mbd
+PAPR_NONOPEC_I_OPECNC,non- opec + opec non-crude production,mbd
+PAPR_OD,"crude oil and liquid fuels supply, south sudan",mbd
+PAPR_OECD,oecd petroleum production,mbd
+PAPR_OFSU,"crude oil and liquid fuels supply, other eurasia",mbd
+PAPR_OLA,"crude oil and liquid fuels supply, other central and s. america",mbd
+PAPR_OPEC,total opec petroleum supply,mbd
+PAPR_OPECPLUS,total opec+ petroleum supply,mbd
+PAPR_OPECPLUS_OPEC,opec+ liquids petroleum production from opec members subject to opec+ agreements,mbd
+PAPR_OPECPLUS_OTHER,opec+ liquids from other opec+ participants,mbd
+PAPR_OTHEROECD,other oecd petroleum production,mbd
+PAPR_OTHER_NONOECD,other non-oecd petroleum production,mbd
+PAPR_QA,"crude oil and liquid fuels supply, qatar",mbd
+PAPR_RS,"crude oil and liquid fuels supply, russia",mbd
+PAPR_SA,"crude oil and liquid fuels supply, saudi arabia",mbd
+PAPR_SU,"crude oil and liquid fuels supply, sudan",mbd
+PAPR_SY,"crude oil and liquid fuels supply, syria",mbd
+PAPR_TC,"crude oil and liquid fuels supply, united arab emirates",mbd
+PAPR_TX,"crude oil and liquid fuels supply, turkmenistan",mbd
+PAPR_UK,"crude oil and liquid fuels supply, united kingdom",mbd
+PAPR_US,"crude oil and liquid fuels supply, united states",mbd
+PAPR_VE,"crude oil and liquid fuels supply, venezuela",mbd
+PAPR_VM,"crude oil and liquid fuels supply, vietnam",mbd
+PAPR_WORLD,total world petroleum production,mbd
+PAPR_YM,"crude oil and liquid fuels supply, yemen",mbd
+PARIPUS,total refinery input,mbd
+PARNPUS,renewables and oxygenate production,mbd
+PAROPUS,total refinery output,mbd
+PASC_OECD_T3,oecd end-of-period commercial crude oil and other liquids inventory,mb eop
+PASC_OOECD_T3,other oecd end-of-period commercial crude oil and other liquids inventory,mb eop
+PASC_US,u.s. end-of-period commercial crude oil and other liquids inventory,mb
+PASUPPLY,total petroleum product supply,mbd
+PASXPUS,total end-of-period commercial crude oil and other liquids inventory,mb eop
+PATCCO2,carbon dioxide emissions from petroleum and other liquid fuels,mmt
+PATCPUSX,total petroleum and other liquids product supplied,mbd
+PATC_BR,"liquid fuels consumption, brazil",mbd
+PATC_CA,"liquid fuels consumption, canada",mbd
+PATC_CH,"liquid fuels consumption, china",mbd
+PATC_FSU,"liquid fuels consumption, non-oecd eurasia",mbd
+PATC_IN,"liquid fuels consumption, india",mbd
+PATC_JA,"liquid fuels consumption, japan",mbd
+PATC_MX,"liquid fuels consumption, mexico",mbd
+PATC_NONOECD_EUROPE,"liquid fuels consumption, europe non-oecd",mbd
+PATC_NON_OECD,"liquid fuels consumption, total non-oecd",mbd
+PATC_OECD,"liquid fuels consumption, total oecd",mbd
+PATC_OECD_EUROPE,"liquid fuels consumption, europe oecd",mbd
+PATC_OTHER_ASIA,"liquid fuels consumption, other asia",mbd
+PATC_OTHER_NONOECD,"liquid fuels consumption, other non-oecd",mbd
+PATC_OTHER_OECD,"liquid fuels consumption, other oecd",mbd
+PATC_R01,"liquid fuels consumption, total north america",mbd
+PATC_R02,"liquid fuels consumption, total central and south america",mbd
+PATC_R03,"liquid fuels consumption, total europe",mbd
+PATC_R04,"liquid fuels consumption, total eurasia",mbd
+PATC_R05,"liquid fuels consumption, total middle east",mbd
+PATC_R06,"liquid fuels consumption, total africa",mbd
+PATC_R07,"liquid fuels consumption, total asia and oceania",mbd
+PATC_RS,"liquid fuels consumption, russia",mbd
+PATC_US,"liquid fuels consumption, united states",mbd
+PATC_UST,"liquid fuels consumption, u.s. territories",mbd
+PATC_WORLD,"liquid fuels consumption, total world",mbd
+PATOGEN_US,"net generation from petroleum, all sectors, united states",bkwh
+PATOPUS,generation from petroleum by all sectors,bkwhd
+PATRPUS,petroleum products transfers to crude oil supply ,mbd
+PCCEPUS,commercial sector generation from petroleum coke,bkwhd
+PCCOPUS,industrial sector generation from petroleum coke,bkwhd
+PCEPTOT,electric power sector generation from petroleum coke,bkwhd
+PCPS_EP,"petroleum coke stocks, electric power sector",mb eop
+PCTCPUS,petroleum coke product supplied,mbd
+PPFPPUS,natural gasoline (pentanes plus) production at natural gas processing plants,mbd
+PPNIPUS,natural gasoline (pentanes plus)net imports,mbd
+PPPRPUS,natural gasoline (pentanes plus) renewable fuels and oxygenanted plant net production,mbd
+PPPSPUS,natural gasoline (pentanes plus)inventory,mb eop
+PPRIPUS,natural gasoline (pentanes plus) refinery and blender net  input,mbd
+PPTCPUS,natural gasoline (pentanes plus) product supplied,mbd
+PRFPPUS,propane production at natural gas processing plants,mbd
+PRIMEUS,u.s. prime lending rate,pct
+PRMBUUS,mont belvieu propane spot price,c/gal
+PRMBUUS_$,mont belvieu propane spot price,usd/gal
+PRNIPUS,propane/propylene net imports,mbd
+PROD_DRAW,petroleum product net inventory withdrawals,mbd
+PRPSPP1,propane/propylene padd 1 (east coast) inventory,mb eop
+PRPSPP2,propane/propylene padd 2 (midwest) inventory,mb eop
+PRPSPP3,propane/propylene padd 3 (gulf coast) inventory,mb eop
+PRPSPP4,propane/propylene padd 4 (rocky mountain) inventory,mb eop
+PRPSPP5,propane/propylene padd 5 (west coast) inventory,mb eop
+PRPSPUS,propane/propylene oil u.s. total inventory,mb eop
+PRRCAMW,propane retail price incl taxes midwest,c/gal
+PRRCANE,propane retail price incl taxes northeast,c/gal
+PRRCASO,propane retail price incl taxes south,c/gal
+PRRCAUS,propane retail price incl taxes  u.s. average,usd/gal
+PRROPUS,propane/propylene refinery and blender net production,mbd
+PRTCPUS,propane/propylene product supplied,mbd
+PSNIPUS,other oils net imports,mbd
+PSPSPUS,other oils inventory,mb eop
+PSROPUS,other oils refinery output,mbd
+PSTCPUS,other oils product supplied,mbd
+QHALLC_ENC,households e. n. central,k
+QHALLC_ESC,households e. s. central,k
+QHALLC_MAC,households middle atlantic,k
+QHALLC_MTN,households mountain,k
+QHALLC_NEC,households new england,k
+QHALLC_PAC,households pacific,k
+QHALLC_SAC,households s. atlantic,k
+QHALLC_US_PCT,u.s. households,pct yoy
+QHALLC_WNC,households w. n. central,k
+QHALLC_WSC,households w. s. central,k
+QSIC_CL,coal-weighted industrial production index,index 2017=100
+QSIC_DF,distillate-weighted industrial production index,index 2017=100
+QSIC_DF_PCT,distillate-weighted industrial production index,pct yoy
+QSIC_EL,electricity-weighted industrial production index,index 2017=100
+QSIC_NG,natural gas-weighted industrial production index,index 2017=100
+QSIC_NG_PCT,natural gas-weighted industrial production index,pct yoy
+RACPUUS,refiner average crude oil acquisition cost,usd/bbl
+RACPUUS_$,refiner average crude oil acquisition cost,usd/gal
+RAIMUUS,imported  crude oil price,usd/bbl
+RAIMUUS_RP,imported  crude oil real price,real usd/bbl
+RDNIPUS,renwable diesel net imports,mbd
+RDPRPUS,renewable diesel production,mbd
+RDPSPUS,renewable diesel inventory,mb
+RDRIPUS,renewable diesel net inputs,mbd
+RDTCPUS,renewable diesel consumption,mbd
+RDTCPUS_PS,renewable diesel product supplied,mbd
+REACBUS,transportation sector total consumption of renewable energy,qbtu
+RECCBUS,commercial sector total consumption of renewable energy,qbtu
+REECBUS,electric power sector total consumption of renewable energy,qbtu
+REICBUS,industrial sector total consumption of renewable energy,qbtu
+RERCBUS,residential sector total consumption of renewable energy,qbtu
+RETCBUS,total consumption of renewable energy by all sectors,qbtu
+REXCBUS,total consumption of renewable energy for electricity and heat generation,qbtu
+RFCEPUS,commercial sector generation from residual fuel oil,bkwhd
+RFCOPUS,industrial sector generation from residual fuel oil,bkwhd
+RFEPTOT,electric power sector generation from residual fuel oil,bkwhd
+RFEUDUS,cost of residual fuel oil delivered to electric generating plants,usd/mmbtu
+RFNIPUS,residual fuel oil net imports,mbd
+RFPSPUS,residual fuel oil inventory,mb eop
+RFPS_EP,"residual fuel oil stocks, electric power sector",mb eop
+RFROPUS,residual fuel refinery output,mbd
+RFTCPUS,residual fuel oil product supplied,mbd
+RFTCUUS,no. 6 residual fuel oil price,c/gal
+RFTCUUS_$,no. 6 residual fuel oil price,usd/gal
+RIGSAP,appalachia active rigs,count
+RIGSBK,bakken active rigs,count
+RIGSEF,eagle ford active rigs,count
+RIGSHA,haynesville active rigs,count
+RIGSPM,permian active rigs,count
+RIGSR48,"rest of lower 48 states, excluding gom active rigs",count
+RNCMGEN_US,"commercial sector net generation from renewables excluding hydropower, united states",bkwh
+RNEPGEN_CA,"electric power sector net generation from renewables excluding hydropower, california",bkwh
+RNEPGEN_FL,"electric power sector net generation from renewables excluding hydropower, florida (frcc)",bkwh
+RNEPGEN_HA,"electric power sector net generation from renewables excluding hydropower, hawaii and alaska",bkwh
+RNEPGEN_MW,"electric power sector net generation from renewables excluding hydropower, midwest (midcontinent iso)",bkwh
+RNEPGEN_NE,"electric power sector net generation from renewables excluding hydropower, new england (iso-ne)",bkwh
+RNEPGEN_NW,"electric power sector net generation from renewables excluding hydropower, northwest",bkwh
+RNEPGEN_NY,"electric power sector net generation from renewables excluding hydropower, new york (nyiso)",bkwh
+RNEPGEN_PJ,"electric power sector net generation from renewables excluding hydropower, mid-atlantic (pjm)",bkwh
+RNEPGEN_SE,"electric power sector net generation from renewables excluding hydropower, southeast (serc)",bkwh
+RNEPGEN_SP,"electric power sector net generation from renewables excluding hydropower, central (spp iso)",bkwh
+RNEPGEN_SW,"electric power sector net generation from renewables excluding hydropower, southwest",bkwh
+RNEPGEN_TX,"electric power sector net generation from renewables excluding hydropower, texas (ercot)",bkwh
+RNEPGEN_US,"electric power sector net generation from renewables excluding hydropower, united states",bkwh
+RNFPPUS,renewable fuels except fuel ethanol adjustments,mbd
+RNINGEN_US,"industrial sector net generation from renewables excluding hydropower, united states",bkwh
+RNNIPUS,renewable fuels except fuel ethanol net imports,mbd
+RNPRPUS,renewable fuels except fuel ethanol production,mbd
+RNRIPUS,renewable fuels except fuel ethanol refinery and blender net inputs,mbd
+RNTOGEN_US,"net generation from renewables excluding hydropower, all sectors, united states",bkwh
+RNTOPUS,generation from renewables (excluding hydro) by all sectors,bkwhd
+RSPRPUS,total raw steel production,mmst
+RTEPGEN_CA,"electric power sector net generation from renewable energy (all types), california",bkwh
+RTEPGEN_FL,"electric power sector net generation from renewable energy (all types), florida (frcc)",bkwh
+RTEPGEN_HA,"electric power sector net generation from renewable energy (all types), hawaii and alaska",bkwh
+RTEPGEN_MW,"electric power sector net generation from renewable energy (all types), midwest (midcontinent iso)",bkwh
+RTEPGEN_NE,"electric power sector net generation from renewable energy (all types), new england (iso-ne)",bkwh
+RTEPGEN_NW,"electric power sector net generation from renewable energy (all types), northwest",bkwh
+RTEPGEN_NY,"electric power sector net generation from renewable energy (all types), new york (nyiso)",bkwh
+RTEPGEN_PJ,"electric power sector net generation from renewable energy (all types), mid-atlantic (pjm)",bkwh
+RTEPGEN_SE,"electric power sector net generation from renewable energy (all types), southeast (serc)",bkwh
+RTEPGEN_SP,"electric power sector net generation from renewable energy (all types), central (spp iso)",bkwh
+RTEPGEN_SW,"electric power sector net generation from renewable energy (all types), southwest",bkwh
+RTEPGEN_TX,"electric power sector net generation from renewable energy (all types), texas (ercot)",bkwh
+RTEPGEN_US,"electric power sector net generation from renewable energy (all types), united states",bkwh
+RTEPSHR_US,renewables share of u.s. electricity generation,pct
+SGTCPUS,still gas product supplied,mbd
+SNGPRBK,shale natural gas production from bakken formation,bcfd
+SNGPRBN,shale natural gas production from barnett formation,bcfd
+SNGPREF,shale natural gas production from eagle ford formation,bcfd
+SNGPRFY,shale natural gas production from fayetteville formation,bcfd
+SNGPRHA,shale natural gas production from haynesville formation,bcfd
+SNGPRL48,shale dry natural gas production,bcfd
+SNGPRMC,shale natural gas production from marcellus formation,bcfd
+SNGPRMP,shale natural gas production from mississippian formation,bcfd
+SNGPRNI,shale natural gas production from niobrara codell formation,bcfd
+SNGPRPM,shale natural gas production from permian formations,bcfd
+SNGPRR48,shale natural gas production from other u.s. formations,bcfd
+SNGPRUA,shale natural gas production from utica formation,bcfd
+SNGPRWF,shale natural gas production from woodford formation,bcfd
+SOCCBUS,commercial sector consumption of solar energy,qbtu
+SOCHCAP_US,comm. and indus. sectors large-scale solar net summer capacity,mw
+SOCHCGW_US,u.s. commercial and industrial sectors solar net summer generating capacity,gw
+SOCHGEN_US,"industrial and commercial sector net generation from utility-scale solar, united states",bkwh
+SOCMGEN_US,"commercial sector net generation from utility-scale solar, united states",bkwh
+SODCC_US,commercial sector small-scale solar photovoltaic capacity,mw
+SODCG_US,"u.s. small-scale photovoltaic solar net summer capacity, commercial sector",gw
+SODCP_US,"commercial sector generation from small-scale solar photovoltaic, united states",bkwh
+SODIC_US,industrial sector small-scale solar photovoltaic capacity,mw
+SODIG_US,"u.s. small-scale photovoltaic solar net summer capacity, industrial sector",gw
+SODIP_US,"industrial sector generation from small-scale solar photovoltaic, united states",bkwh
+SODRC_US,residential sector small-scale solar photovoltaic capacity,mw
+SODRG_US,"u.s. small-scale photovoltaic solar net summer capacity, residendential sector",gw
+SODRP_US,"residential sector generation from small-scale solar photovoltaic, united states",bkwh
+SODTC_US,total small-scale solar photovoltaic capacity,mw
+SODTG_US,"u.s. small-scale photovoltaic solar net summer capacity, all sectors total",gw
+SODTP_US,"total generation from small-scale solar photovoltaic, united states",bkwh
+SOECBUS,electric power sector consumption of solar energy,qbtu
+SOEPCAPX_US,electric power sector large-scale solar net summer capacity,mw
+SOEPCGWX_US,u.s. electric power sector solar net summer generating capacity,gw
+SOEPGEN_CA,"electric power sector net generation from utility-scale solar, california",bkwh
+SOEPGEN_FL,"electric power sector net generation from utility-scale solar, florida (frcc)",bkwh
+SOEPGEN_HA,"electric power sector net generation from utility-scale solar, hawaii and alaska",bkwh
+SOEPGEN_MW,"electric power sector net generation from utility-scale solar, midwest (midcontinent iso)",bkwh
+SOEPGEN_NE,"electric power sector net generation from utility-scale solar, new england (iso-ne)",bkwh
+SOEPGEN_NW,"electric power sector net generation from utility-scale solar, northwest",bkwh
+SOEPGEN_NY,"electric power sector net generation from utility-scale solar, new york (nyiso)",bkwh
+SOEPGEN_PJ,"electric power sector net generation from utility-scale solar, mid-atlantic (pjm)",bkwh
+SOEPGEN_SE,"electric power sector net generation from utility-scale solar, southeast (serc)",bkwh
+SOEPGEN_SP,"electric power sector net generation from utility-scale solar, central (spp iso)",bkwh
+SOEPGEN_SW,"electric power sector net generation from utility-scale solar, southwest",bkwh
+SOEPGEN_TX,"electric power sector net generation from utility-scale solar, texas (ercot)",bkwh
+SOEPGEN_US,"electric power sector net generation from utility-scale solar, united states",bkwh
+SOEPTOT,electric power sector generation from large-scale solar,bkwhd
+SOICBUS,industrial sector consumption of solar energy,qbtu
+SOINGEN_US,"industrial sector net generation from utility-scale solar, united states",bkwh
+SORCBUS,residential sector consumption of solar energy,qbtu
+SOTCBUS,consumption of solar energy by all sectors,qbtu
+SOTOGEN_US,"net generation from utility-scale solar, all sectors, united states",bkwh
+SOTOPUS,generation from large-scale solar by all sectors,bkwhd
+SPEPCGWX_US,u.s. electric power sector solar photovoltaic net summer generating capacity,gw
+STEPCGW_US,u.s. electric power sector solar thermal net summer generating capacity,gw
+T3B_PAPR_R01,"crude oil and liquid fuels supply, total north america",mbd
+T3B_PAPR_R02,"crude oil and liquid fuels supply, total central and south america",mbd
+T3B_PAPR_R03,"crude oil and liquid fuels supply, total europe",mbd
+T3B_PAPR_R04,"crude oil and liquid fuels supply, total fsu and eastern europe",mbd
+T3B_PAPR_R05,"crude oil and liquid fuels supply, total middle east ",mbd
+T3B_PAPR_R06,"crude oil and liquid fuels supply, total africa ",mbd
+T3B_PAPR_R07,"crude oil and liquid fuels supply, total asia and oceania  ",mbd
+T3_STCHANGE_NOECD,"net inventory withdrawals, total non-oecd crude oil and other liquids",mbd
+T3_STCHANGE_OOECD,"net inventory withdrawals, total other oecd crude oil and other liquids",mbd
+T3_STCHANGE_US,"net inventory withdrawals, total u.s. (50 states) crude oil and other liquids",mbd
+T3_STCHANGE_WORLD,"net inventory withdrawals, total world crude oil and other liquids",mbd
+TDLOPUS,transmission & distribution losses and unaccounted for,bkwhd
+TDLOTWH,total transmission and distribution losses in united states,bkwh
+TETCCO2,total energy co2 emissions,mmt
+TETCFUEL,u.s. total energy consumption,qbtu
+TOCMGEN_US,"total commercial sector net generation by all energy sources, united states",bkwh
+TOEPGEN_CA,"electric power sector total net generation from all types of energy sources, california",bkwh
+TOEPGEN_FL,"electric power sector total net generation from all types of energy sources, florida (frcc)",bkwh
+TOEPGEN_HA,"electric power sector total net generation from all types of energy sources, hawaii and alaska",bkwh
+TOEPGEN_MW,"electric power sector total net generation from all types of energy sources, midwest (midcontinent iso)",bkwh
+TOEPGEN_NE,"electric power sector total net generation from all types of energy sources, new england (iso-ne)",bkwh
+TOEPGEN_NW,"electric power sector total net generation from all types of energy sources, northwest",bkwh
+TOEPGEN_NY,"electric power sector total net generation from all types of energy sources, new york (nyiso)",bkwh
+TOEPGEN_PJ,"electric power sector total net generation from all types of energy sources, mid-atlantic (pjm)",bkwh
+TOEPGEN_SE,"electric power sector total net generation from all types of energy sources, southeast (serc)",bkwh
+TOEPGEN_SP,"electric power sector total net generation from all types of energy sources, central (spp iso)",bkwh
+TOEPGEN_SW,"electric power sector total net generation from all types of energy sources, southwest",bkwh
+TOEPGEN_TX,"electric power sector total net generation from all types of energy sources, texas (ercot)",bkwh
+TOEPGEN_US,"total electric power sector net generation by all energy sources, united states",bkwh
+TOINGEN_US,"total industrial sector net generation by all energy sources, united states",bkwh
+TOPRAC,tight oil production from austin chalk formation,mbd
+TOPRBK,tight oil production from bakken formation,mbd
+TOPREF,tight oil production from eagle ford formation,mbd
+TOPRL48,tight oil production,mbd
+TOPRMP,tight oil production from mississippian formation,mbd
+TOPRNI,tight oil production from niobrara codell formation,mbd
+TOPRPM,tight oil production from permian formations,mbd
+TOPRR48,tight oil production from other u.s. formations,mbd
+TOPRWF,tight oil production from woodford formation,mbd
+TOTOGEN_US,"total net generation by all energy sources, all sectors, united states",bkwh
+TREXRUS,real exports of goods and services,b2017usd (saar)
+TRIMRUS,real imports of goods and services,b2017usd (saar)
+TSEOPUS,total generation by all sectors,bkwhd
+TSEOTWH,"total net generation of electricity from large-scale power plants, all sectors, united states",bkwh
+UONIPUS,unfinished oils net imports,mbd
+UOPSPUS,unfinished oils inventory,mb eop
+UORIPUS,unfinished oils refinery input,mbd
+UOTCPUS,unfinished oils product supplied,mbd
+WNCHCAP_US,comm. and indus. sectors wind net summer capacity,mw
+WNCHCGW_US,u.s. commercial and industrial sectors wind net summer generating capacity,gw
+WNCHGEN_US,"industrial and commercial sector net generation from wind, united states",bkwh
+WNCMGEN_US,"commercial sector net generation from wind, united states",bkwh
+WNECBUS,electric power sector consumption of wind energy,qbtu
+WNEPCAPX_US,electric power sector wind net summer capacity,mw
+WNEPCGW_US,u.s. electric power sector wind net summer generating capacity,gw
+WNEPGEN_CA,"electric power sector net generation from wind, california",bkwh
+WNEPGEN_FL,"electric power sector net generation from wind, florida (frcc)",bkwh
+WNEPGEN_HA,"electric power sector net generation from wind, hawaii and alaska",bkwh
+WNEPGEN_MW,"electric power sector net generation from wind, midwest (midcontinent iso)",bkwh
+WNEPGEN_NE,"electric power sector net generation from wind, new england (iso-ne)",bkwh
+WNEPGEN_NW,"electric power sector net generation from wind, northwest",bkwh
+WNEPGEN_NY,"electric power sector net generation from wind, new york (nyiso)",bkwh
+WNEPGEN_PJ,"electric power sector net generation from wind, mid-atlantic (pjm)",bkwh
+WNEPGEN_SE,"electric power sector net generation from wind, southeast (serc)",bkwh
+WNEPGEN_SP,"electric power sector net generation from wind, central (spp iso)",bkwh
+WNEPGEN_SW,"electric power sector net generation from wind, southwest",bkwh
+WNEPGEN_TX,"electric power sector net generation from wind, texas (ercot)",bkwh
+WNEPGEN_US,"electric power sector net generation from wind, united states",bkwh
+WNINGEN_US,"industrial sector net generation from wind, united states",bkwh
+WNTCBUS,consumption of wind energy by all sectors,qbtu
+WNTOGEN_US,"net generation from wind, all sectors, united states",bkwh
+WORLD_NC,world non-crude oil liquids production,mbd
+WP57IUS,producer price index: petroleum,index 82=1.00
+WPCPIUS,producer price index: all commodities,index 82=1.00
+WTIPUUS,west texas intermediate crude oil price,usd/bbl
+WWCCBUS,commercial sector consumption of wood and wood waste biomass energy,qbtu
+WWCEPUS,commercial sector generation from wood biomass,bkwhd
+WWCHCAP_US,comm. and indus. sectors wood biomass net summer capacity,mw
+WWCHCGW_US,u.s. commercial and industrial sectors wood biomass net summer generating capacity,gw
+WWCHGEN_US,"industrial and commercial sector net generation from wood biomass, united states",bkwh
+WWCOPUS,industrial sector generation from wood biomass,bkwhd
+WWEPCAP_US,electric power sector wood biomass net summer capacity,mw
+WWEPCGW_US,u.s. electric power sector wood biomass net summer generating capacity,gw
+WWEPCONB,electric power sector consumption of wood and wood waste biomass energy,qbtu
+WWEPGEN_US,"electric power sector net generation from wood biomass, united states",bkwh
+WWEPTOT,electric power sector generation from wood biomass,bkwhd
+WWICBUS,industrial sector consumption of wood and wood waste biomass energy,qbtu
+WWRCBUS,residential sector consumption of wood and wood waste biomass energy,qbtu
+WWTCBUS,consumption of wood and wood waste biomass energy by all sectors,qbtu
+WWTOPUS,generation from wood biomass by all sectors,bkwhd
+XRUNR,civilian unemployment rate,pct
+XXEPGEN_CA,"electric power sector net generation from other energy sources, california",bkwh
+XXEPGEN_FL,"electric power sector net generation from other energy sources, florida (frcc)",bkwh
+XXEPGEN_HA,"electric power sector net generation from other energy sources, hawaii and alaska",bkwh
+XXEPGEN_MW,"electric power sector net generation from other energy sources, midwest (midcontinent iso)",bkwh
+XXEPGEN_NE,"electric power sector net generation from other energy sources, new england (iso-ne)",bkwh
+XXEPGEN_NW,"electric power sector net generation from other energy sources, northwest",bkwh
+XXEPGEN_NY,"electric power sector net generation from other energy sources, new york (nyiso)",bkwh
+XXEPGEN_PJ,"electric power sector net generation from other energy sources, mid-atlantic (pjm)",bkwh
+XXEPGEN_SE,"electric power sector net generation from other energy sources, southeast (serc)",bkwh
+XXEPGEN_SP,"electric power sector net generation from other energy sources, central (spp iso)",bkwh
+XXEPGEN_SW,"electric power sector net generation from other energy sources, southwest",bkwh
+XXEPGEN_TX,"electric power sector net generation from other energy sources, texas (ercot)",bkwh
+YD87OUS,real disposable personal income,b2017usd (saar)
+YD87OUS_PCT,real disposable personal income,pct yoy
+ZO311IUS,food and kindred products production index,index 2017=100 (sa)
+ZO321IUS,wood products production index,index 2017=100 (sa)
+ZO322IUS,paper and allied products production index,index 2017=100 (sa)
+ZO324IUS,petroleum and coal products production index,index 2017=100 (sa)
+ZO3252IUS,resins and synthetic rubber production index,index 2017=100 (sa)
+ZO3253IUS,agricultural chemicals production index,index 2017=100 (sa)
+ZO325IUS,basic chemical manufacturing production index,index 2017=100 (sa)
+ZO326IUS,plastics and rubber products production index,index 2017=100 (sa)
+ZO327IUS,"stone, clay, glass, and concrete products production index",index 2017=100 (sa)
+ZO331IUS,primary metals production index,index 2017=100 (sa)
+ZOMNIUS,manufacturing production index,index 2017=100 (sa)
+ZOMNIUS_PCT,manufacturing production index,pct yoy
+ZOTOIUS,total industrial production index,index 2017=100 (sa)
+ZWCDPUS,cooling degree days u.s. average,tdd
+ZWCDPUS_PCT,cooling degree days u.s. average,pct yoy
+ZWCD_ENC,cooling degree days e. n. central,tdd
+ZWCD_ENC_10YR,"cooling degree days e. n. central, prior 10-year average",tdd
+ZWCD_ESC,cooling degree days e. s. central,tdd
+ZWCD_ESC_10YR,"cooling degree days e. s. central, prior 10-year average",tdd
+ZWCD_MAC,cooling degree days middle atlantic,tdd
+ZWCD_MAC_10YR,"cooling degree days middle atlantic, prior 10-year average",tdd
+ZWCD_MTN,cooling degree days mountain,tdd
+ZWCD_MTN_10YR,"cooling degree days mountain, prior 10-year average",tdd
+ZWCD_NEC,cooling degree days new england,tdd
+ZWCD_NEC_10YR,"cooling degree days new england, prior 10-year average",tdd
+ZWCD_PAC,cooling degree days pacific,tdd
+ZWCD_PAC_10YR,"cooling degree days pacific, prior 10-year average",tdd
+ZWCD_SAC,cooling degree days south atlantic,tdd
+ZWCD_SAC_10YR,"cooling degree days south atlantic, prior 10-year average",tdd
+ZWCD_US_10YR,"cooling degree days u.s. average , prior 10-year average",tdd
+ZWCD_WNC,cooling degree days w. n. central,tdd
+ZWCD_WNC_10YR,"cooling degree days w. n. central, prior 10-year average",tdd
+ZWCD_WSC,cooling degree days w. s. central,tdd
+ZWCD_WSC_10YR,"cooling degree days w. s. central, prior 10-year average",tdd
+ZWHDPUS,heating degree days u.s. average ,tdd
+ZWHDPUS_PCT,heating degree days u.s. average ,pct yoy
+ZWHD_ENC,heating degree days e. n. central,tdd
+ZWHD_ENC_10YR,"heating degree days e. n. central, prior 10-year average",tdd
+ZWHD_ESC,heating degree days e. s. central,tdd
+ZWHD_ESC_10YR,"heating degree days e. s. central, prior 10-year average",tdd
+ZWHD_MAC,heating degree days middle atlantic,tdd
+ZWHD_MAC_10YR,"heating degree days middle atlantic, prior 10-year average",tdd
+ZWHD_MTN,heating degree days mountain,tdd
+ZWHD_MTN_10YR,"heating degree days mountain, prior 10-year average",tdd
+ZWHD_NEC,heating degree days new england,tdd
+ZWHD_NEC_10YR,"heating degree days new england, prior 10-year average",tdd
+ZWHD_PAC,heating degree days pacific,tdd
+ZWHD_PAC_10YR,"heating degree days pacific, prior 10-year average",tdd
+ZWHD_SAC,heating degree days south atlantic,tdd
+ZWHD_SAC_10YR,"heating degree days south atlantic, prior 10-year average",tdd
+ZWHD_US_10YR,"heating degree days u.s. average , prior 10-year average",tdd
+ZWHD_WNC,heating degree days w. n. central,tdd
+ZWHD_WNC_10YR,"heating degree days w. n. central, prior 10-year average",tdd
+ZWHD_WSC,heating degree days w. s. central,tdd
+ZWHD_WSC_10YR,"heating degree days w. s. central, prior 10-year average",tdd

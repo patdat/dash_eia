@@ -1,7 +1,7 @@
-from utils.download_csv import main as download_csv
-from utils.generate_seasonality_data import generate_seasonality_data
-from utils.generate_line_data import generate_line_data
-from utils.table_mapping import *
+from utils_wps.download_csv import main as download_csv
+from utils_wps.generate_seasonality_data import generate_seasonality_data
+from utils_wps.generate_line_data import generate_line_data
+from utils_wps.table_mapping import *
 import dash
 from dash import html, dash_table, Input, Output
 from dash.dash_table.Format import Format, Group, Sign, Symbol
@@ -26,7 +26,7 @@ def generate_data(n_clicks):
         generate_line_data()
         return df.to_dict('records')
     else:
-        return pd.read_feather('./data/wps_gte_2015_pivot.feather').to_dict('records')
+        return pd.read_feather('./data/wps/wps_gte_2015_pivot.feather').to_dict('records')
 
 def generate_main_table(df):
     df['period'] = pd.to_datetime(df['period']).dt.strftime('%m/%d')

@@ -1,5 +1,5 @@
-from utils.mapping import production_mapping
-from utils.calculation import get_initial_data 
+from utils_wps.mapping import production_mapping
+from utils_wps.calculation import get_initial_data 
 import pandas as pd
 
 def format_value(val, column_name):
@@ -19,7 +19,7 @@ def generate_line_data():
     df = df.apply(pd.to_numeric, errors='coerce')
     df = df.round(1)
     df.reset_index(inplace=True)
-    df.to_feather('data/graph_line_data.feather')
+    df.to_feather('./data/wps/graph_line_data.feather')
     
 if __name__ == "__main__":
     generate_line_data()    

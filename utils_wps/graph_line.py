@@ -1,7 +1,7 @@
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
-from utils.mapping import production_mapping
+from utils_wps.mapping import production_mapping
 
 def chart_trend(df, id, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
     df = df.rename(columns={id: 'value'})

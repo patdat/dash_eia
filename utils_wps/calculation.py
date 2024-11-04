@@ -1,17 +1,17 @@
-from utils.mapping import production_mapping
+from utils_wps.mapping import production_mapping
 import dash
 from dash import Output, Input, dcc, html
 import pandas as pd
-from utils.graph_seag import chart_seasonality
-from utils.graph_line import chart_trend
+from utils_wps.graph_seag import chart_seasonality
+from utils_wps.graph_line import chart_trend
 import plotly.graph_objects as go
-from utils.graph_optionality import checklist_header
+from utils_wps.graph_optionality import checklist_header
 from app import app
 
 ### data retrieval functions ############################################
 
 def get_initial_data():
-    df = pd.read_feather("./data/wps_gte_2015_pivot.feather")
+    df = pd.read_feather("./data/wps/wps_gte_2015_pivot.feather")
     df["period"] = pd.to_datetime(df["period"])
     return df[df["period"] > "2015-01-01"].reset_index(drop=True)
 
@@ -65,9 +65,9 @@ def create_callbacks(app, page_id, num_graphs, idents):
     )
     def update_graphs(chart_toggle, toggle_seag_range, toggle_2022, toggle_2023, toggle_2024, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
 
-        seag_data = pd.read_feather('data/seasonality_data.feather')
+        seag_data = pd.read_feather('./data/wps/seasonality_data.feather')
         seag_data = seag_data[seag_data['id'].isin(idents)]
-        line_data = pd.read_feather('./data/graph_line_data.feather')
+        line_data = pd.read_feather('./data/wps/graph_line_data.feather')
         line_data['period'] = pd.to_datetime(line_data['period'])
         line_data = line_data[['period'] + idents]    
 

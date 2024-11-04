@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from utils.mapping import production_mapping
-from utils.generate_additional_tickers import generate_additional_tickers
+from utils_wps.mapping import production_mapping
+from utils_wps.generate_additional_tickers import generate_additional_tickers
 
 def first_pass(df):    
     df = df.copy()
@@ -57,7 +57,7 @@ def second_pass(df):
 
 def third_pass(df):
     df = df.copy()
-    mapping = pd.read_csv('./lookup/09_csv_mapping.csv')
+    mapping = pd.read_csv('./lookup/wps/09_csv_mapping.csv')
     df['lookup'] = df['aspect'] + df['location'] + df['category']
     df = mapping.merge(df, left_on='lookup', right_on='lookup', how='left')
     return df
@@ -113,7 +113,7 @@ def download_data():
         df = sixth_pass(df)
         df = seventh_pass(df)
         df.reset_index(drop=True, inplace=True)
-        df.to_feather('./data/eia_weekly_fast_download_psw09.feather')    
+        df.to_feather('./data/wps/eia_weekly_fast_download_psw09.feather')    
         
     return df, isAvailable
 
@@ -128,18 +128,18 @@ def main():
     if isAvailable:
         df = df.copy()
         max_date = df['period'].max()
-        master = pd.read_feather('./data/wps_gte_2015.feather')
+        master = pd.read_feather('./data/wps/wps_gte_2015.feather')
         master['period'] = pd.to_datetime(master['period'])
         master = master[master['period'] != max_date]
         df = pd.concat([master, df], ignore_index=True)
         df = df.sort_values(['id', 'period'])
         df.reset_index(drop=True, inplace=True)
-        df.to_feather('./data/wps_gte_2015.feather')
+        df.to_feather('./data/wps/wps_gte_2015.feather')
         pv = pivot_data(df)
         pv.reset_index(drop=True,inplace=True)
-        pv.to_feather('./data/wps_gte_2015_pivot.feather')    
+        pv.to_feather('./data/wps/wps_gte_2015_pivot.feather')    
     else:
-        pv = pd.read_feather('./data/wps_gte_2015_pivot.feather')
+        pv = pd.read_feather('./data/wps/wps_gte_2015_pivot.feather')
         pv['period'] = pd.to_datetime(pv['period'])
     return pv
 

@@ -1,6 +1,6 @@
 from app import app
 import os
-from utils.calculation import create_callbacks, create_layout
+from utils_wps.calculation import create_callbacks, create_layout
 
 # Manual inputs
 commodity = 'Distillate: '

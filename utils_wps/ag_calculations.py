@@ -1,8 +1,8 @@
 import pandas as pd
-from utils.ag_mapping import ag_mapping
+from utils_wps.ag_mapping import ag_mapping
 
 class DataProcessor:
-    def __init__(self, file_path='./data/wps_gte_2015_pivot.feather'):
+    def __init__(self, file_path='./data/wps/wps_gte_2015_pivot.feather'):
         self.file_path = file_path
 
     def get_initial_data(self):

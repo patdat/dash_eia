@@ -1,20 +1,20 @@
 import requests
 import pandas as pd
 import numpy as np
-from utils.mapping import production_mapping
-from utils.generate_additional_tickers import generate_additional_tickers
-from utils.generate_line_data import generate_line_data
-from utils.generate_seasonality_data import generate_seasonality_data
+from utils_wps.mapping import production_mapping
+from utils_wps.generate_additional_tickers import generate_additional_tickers
+from utils_wps.generate_line_data import generate_line_data
+from utils_wps.generate_seasonality_data import generate_seasonality_data
 
 def download_raw_file():
     url = "https://ir.eia.gov/wpsr/psw09.xls"
     response = requests.get(url)
-    file_path = "./data/eia_weekly_psw09.xls"
+    file_path = "./data/wps/eia_weekly_psw09.xls"
     with open(file_path, "wb") as file:
         file.write(response.content)
 
 def read_excel_file():
-    file_path = './data/eia_weekly_psw09.xls'
+    file_path = './data/wps/eia_weekly_psw09.xls'
     sheets = pd.read_excel(file_path, sheet_name=None)
     contents = sheets.pop('Contents')
     return sheets
@@ -71,13 +71,13 @@ def main():
         df = map_name(df)
         df = reorder_columns(df)
         df.reset_index(drop=True, inplace=True)
-        df.to_feather('./data/wps_gte_2015.feather')
+        df.to_feather('./data/wps/wps_gte_2015.feather')
         pv = pivot_data(df)
         pv.reset_index(drop=True,inplace=True)
-        pv.to_feather('./data/wps_gte_2015_pivot.feather')    
+        pv.to_feather('./data/wps/wps_gte_2015_pivot.feather')    
     except Exception as e:
         print('using local file instead b/c data not available:', e)
-        pv = pd.read_feather('./data/wps_gte_2015_pivot.feather')
+        pv = pd.read_feather('./data/wps/wps_gte_2015_pivot.feather')
         pv['period'] = pd.to_datetime(pv['period'])
 
     generate_line_data()
