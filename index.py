@@ -14,6 +14,12 @@ import pages.page2_7    # C3/C3=
 import pages.page2_8    # Products Supplied
 import pages.page2_9    # Refining
 import pages.page2_10   # AgGrid
+import pages.page3_1    # appalachia
+import pages.page3_2    # bakken
+import pages.page3_3    # eagleford
+import pages.page3_4    # haynesville
+import pages.page3_5    # permian
+import pages.page3_6    # other
 
 # Layout with fixed-width sidebar
 sidebar = html.Div(
@@ -58,8 +64,10 @@ sidebar = html.Div(
 
         dbc.Nav(
             [
+                # Home
                 dbc.NavLink("Home", href="/home", active="exact", className="nav-link"),
                 
+                # EIA Weekly
                 dbc.NavItem([
                     dbc.Button("EIA Weekly", id="toggle-page-2", className="sidebar-button page-button closed", n_clicks=0),
                     dbc.Collapse(
@@ -81,7 +89,29 @@ sidebar = html.Div(
                         id="collapse-page-2",
                         is_open=True,
                     ),
+                ]),  
+                
+                # EIA StEO
+                dbc.NavItem([
+                    dbc.Button("EIA DPR", id="toggle-page-3", className="sidebar-button page-button closed", n_clicks=0),
+                    dbc.Collapse(
+                        dbc.Nav(
+                            [
+                                dbc.NavLink("Appalachia", href="/dpr/appalachia", active='exact', className="nav-link"),  
+                                dbc.NavLink("Bakken", href="/dpr/bakken", active='exact', className="nav-link"),
+                                dbc.NavLink("Eagle Ford", href="/dpr/eagleford", active='exact', className="nav-link"),
+                                dbc.NavLink("Haynesville", href="/dpr/haynesville", active='exact', className="nav-link"),
+                                dbc.NavLink("Permian", href="/dpr/permian", active='exact', className="nav-link"),
+                                dbc.NavLink("Other", href="/dpr/other", active='exact', className="nav-link"),                              
+                                
+                            ],
+                            vertical=True, pills=True
+                        ),
+                        id="collapse-page-3",
+                        is_open=True,
+                    ),
                 ]),                                                   
+                                                                 
             ],
             vertical=True,
             pills=True,
@@ -110,11 +140,28 @@ def toggle_collapse_page_2(n, is_open, current_class):
     if n:
         is_open = not is_open
         if is_open:
-            new_class = current_class.replace("closed", "open")
+            new_class = current_class.replace("closed", "open") if "closed" in current_class else current_class
         else:
-            new_class = current_class.replace("open", "closed")
+            new_class = current_class.replace("open", "closed") if "open" in current_class else current_class
         return is_open, new_class
     return is_open, current_class
+
+@app.callback(
+    Output("collapse-page-3", "is_open"),
+    Output("toggle-page-3", "className"),
+    [Input("toggle-page-3", "n_clicks")],
+    [State("collapse-page-3", "is_open"), State("toggle-page-3", "className")]
+)
+def toggle_collapse_page_3(n, is_open, current_class):
+    if n:
+        is_open = not is_open
+        if is_open:
+            new_class = current_class.replace("closed", "open") if "closed" in current_class else current_class
+        else:
+            new_class = current_class.replace("open", "closed") if "open" in current_class else current_class
+        return is_open, new_class
+    return is_open, current_class
+
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
@@ -142,6 +189,19 @@ def display_page(pathname):
         return pages.page2_9.layout
     elif pathname == '/stats/stats_table':
         return pages.page2_10.layout
+    elif pathname == '/dpr/appalachia':
+        return pages.page3_1.layout
+    elif pathname == '/dpr/bakken':
+        return pages.page3_2.layout
+    elif pathname == '/dpr/eagleford':
+        return pages.page3_3.layout
+    elif pathname == '/dpr/haynesville':
+        return pages.page3_4.layout
+    elif pathname == '/dpr/permian':
+        return pages.page3_5.layout
+    elif pathname == '/dpr/other':
+        return pages.page3_6.layout
+    
     else:
         return "404 Page Not Found"
 if __name__ == '__main__':

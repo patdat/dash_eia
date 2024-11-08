@@ -144,4 +144,4 @@ def melt_pivot():
     return df
 
 if __name__ == "__main__":
-    df = main()
+    df = main(5)
