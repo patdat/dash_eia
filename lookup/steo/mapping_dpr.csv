@@ -1,10 +1,10 @@
 id,region,name,uom
-COPRAP,Appalachia,Crude oil production,mb
-COPRBK,Bakken,Crude oil production,mb
-COPREF,Eagle Ford,Crude oil production,mb
-COPRHA,Haynesville,Crude oil production,mb
-COPRPM,Permian,Crude oil production,mb
-COPRR48,Rest of L48 ex GOM,Crude oil production,mb
+COPRAP,Appalachia,Crude oil production,mbd
+COPRBK,Bakken,Crude oil production,mbd
+COPREF,Eagle Ford,Crude oil production,mbd
+COPRHA,Haynesville,Crude oil production,mbd
+COPRPM,Permian,Crude oil production,mbd
+COPRR48,Rest of L48 ex GOM,Crude oil production,mbd
 RIGSAP,Appalachia,Active rigs,count
 RIGSBK,Bakken,Active rigs,count
 RIGSEF,Eagle Ford,Active rigs,count

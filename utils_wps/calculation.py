@@ -133,17 +133,6 @@ def create_callbacks(app, page_id, num_graphs, idents):
         line_data["period"] = pd.to_datetime(line_data["period"])
         line_data = line_data[["period"] + idents]
 
-        # ctx = dash.callback_context
-        # if not ctx.triggered:
-        #     print("No changes triggered the callback.")
-        #     return [dash.no_update] * num_graphs
-
-        # triggered_input = ctx.triggered[0]['prop_id'].split('.')[0]
-        # print(f"Callback triggered by: {triggered_input}")
-
-        # if triggered_input == 'data-store':
-        #     print("Data store got updated.")
-
         def create_chart(
             df,
             seag_data,

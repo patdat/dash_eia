@@ -52,23 +52,29 @@ def make_data_dicts(source, metasource, region_lookup=None):
 
         if region_lookup is not None and region_lookup in region.lower():
             dct[id] = {"name": name, "region": region, "uom": uom, "data": dff}
+        elif region_lookup is None:
+            dct[id] = {"name": name, "region": region, "uom": uom, "data": dff}
+            
+            
     return dct
 
 
 def chart_dpr(
     id,
     dct,
-    btn_2020=True,
-    btn_2021=False,
-    btn_2022=False,
-    btn_2023=False,
-    btn_2024=False,
-    btn_2025=False,
+    btn_2020,
+    btn_2021,
+    btn_2022,
+    btn_2023,
+    btn_2024,
+    btn_2025,
 ):
     df = dct[id]["data"]
+    df = df.round(2)
     graph_region = dct[id]["region"]
     graph_name = dct[id]["name"]
     graph_uom = dct[id]["uom"]
+    del dct
 
     cols = df.columns.astype(str)
 
@@ -145,9 +151,15 @@ def chart_dpr(
         )
     )
 
+    if graph_uom == 'mbd' or graph_uom == 'bcfd':
+        yaxis_tick_format = ".2f"
+    else:
+        yaxis_tick_format = ".0f"
+
     layout = go.Layout(
         title=f"{graph_region}: {graph_name} ({graph_uom})",
         plot_bgcolor="rgba(0,0,0,0)",
+        height=600,
         legend=dict(orientation="h", x=0, y=1.1),
         xaxis=dict(
             showline=True,
@@ -157,7 +169,7 @@ def chart_dpr(
             zeroline=False,
         ),
         yaxis=dict(
-            tickformat=",.0fK",
+            tickformat=yaxis_tick_format,
             showgrid=False,
             showline=True,
             linecolor="black",
@@ -172,8 +184,24 @@ def chart_dpr(
 ### PARAMETERS ##########################################################
 
 
-def get_regional_dict_data(region_lookup):
+def get_regional_dict_data(region_lookup=None):
     source = "./data/steo/steo_pivot_dpr.feather"
     meta = "./lookup/steo/mapping_dpr.csv"
     dct_to_search = make_data_dicts(source, meta, region_lookup)
     return dct_to_search
+
+
+if __name__ == "__main__":
+    region_lookup = None
+    dct = get_regional_dict_data(region_lookup)
+    fig = chart_dpr(
+        "COPRAP",
+        dct,
+        False,
+        False,
+        True,
+        False,
+        False,
+        False,
+    )
+    fig.show()

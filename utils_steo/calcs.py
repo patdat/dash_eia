@@ -2,13 +2,10 @@ import dash
 from dash import html, Input, Output, dcc
 import plotly.graph_objects as go
 import pandas as pd
-
-
 from utils_steo.graph_optionality import checklist_header
 from utils_steo.chart_dpr import chart_dpr
+from app import app
 
-
-app = dash.Dash(__name__)
 
 
 def create_loading_graph(graph_id):
@@ -43,7 +40,7 @@ def create_layout(page_id, commodity, graph_sections_input):
                 html.H1(title, className="eia-weekly-header-title"),
                 html.Div(
                     [create_loading_graph(graph_id) for graph_id in graph_ids],
-                    className="eia-weekly-graph-container",
+                    className="eia-dpr-graph-container",
                 ),
             ]
         )
@@ -54,12 +51,13 @@ def create_layout(page_id, commodity, graph_sections_input):
                 html.H1(title, className="eia-weekly-header-title"),
                 html.Div(
                     [create_loading_graph(graph_id) for graph_id in graph_ids],
-                    className="eia-weekly-graph-container",
+                    className="eia-dpr-graph-container",
                 ),
             ]
         )
 
     ids = generate_ids(page_id)
+
     return html.Div(
         [
             checklist_header(
@@ -115,3 +113,7 @@ def create_callbacks(app, page_id, num_graphs, idents, region_dct):
             )
             for ident in idents
         ]
+        
+if __name__ == "__main__":
+    app.layout = create_layout("page3_1", "commodity", [("title", ["graph-1"])])
+    app.run_server(debug=True, port=8051)        

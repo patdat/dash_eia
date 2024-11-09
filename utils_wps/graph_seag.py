@@ -108,7 +108,7 @@ def chart_seasonality(df, id, toggle_seag_range, toggle_2022,toggle_2023,toggle_
                 color='black'
             )
         ),   
-
+        height=600,
         xaxis=dict(
             range=[0, len(df['week_of_year']) - 1],
             tickmode='array',

@@ -1,5 +1,19 @@
+.ag-theme-alpine-dark {
+    --ag-foreground-color: rgb(126, 46, 132);
+    --ag-background-color: white;
+    --ag-header-foreground-color: red;
+    --ag-header-background-color: grey;
+    --ag-odd-row-background-color: white;
+    --ag-header-column-resize-handle-color: rgb(126, 46, 132);
+
+    --ag-font-size: 17px;
+    --ag-font-family: monospace;
+}
+
 /* Import the font */
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+
 
 /* CSS for main content area */
 .content-area {
@@ -217,8 +231,20 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     grid-template-columns: repeat(6, 1fr) !important;
     grid-gap: 20px !important;
     justify-content: space-around !important;
-    width: 3000px !important; /* Adjust this value as needed to fit your graphs */
+    width: 4000px !important; /* Adjust this value as needed to fit your graphs */
+    height: 610px !important; /* Adjust this value as needed to fit your graphs */
 }
+
+.eia-dpr-graph-container {
+    display: grid !important;
+    grid-template-columns: repeat(13, 1fr) !important;
+    grid-gap: 20px !important;
+    justify-content: space-around !important;
+    width: 9500px !important; /* Adjust this value as needed to fit your graphs */
+    height: 610px !important; /* Adjust this value as needed to fit your graphs */
+}
+
+
 
 .eia-weekly-graph-page-layout {
     margin-top: -25px;
@@ -265,3 +291,6 @@ h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
     background-color: #f0f0f0 !important;  /* Orange background for the days within the selected range */
     color: #c00000 !important;  /* White text for better contrast */
 }
+
+
+

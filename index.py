@@ -14,7 +14,7 @@ import pages.page2_7    # C3/C3=
 import pages.page2_8    # Products Supplied
 import pages.page2_9    # Refining
 import pages.page2_10   # AgGrid
-import pages.page3_1    # appalachia
+import pages.page3_1    # regional_charts
 import pages.page3_2    # bakken
 import pages.page3_3    # eagleford
 import pages.page3_4    # haynesville
@@ -97,13 +97,8 @@ sidebar = html.Div(
                     dbc.Collapse(
                         dbc.Nav(
                             [
-                                dbc.NavLink("Appalachia", href="/dpr/appalachia", active='exact', className="nav-link"),  
-                                dbc.NavLink("Bakken", href="/dpr/bakken", active='exact', className="nav-link"),
-                                dbc.NavLink("Eagle Ford", href="/dpr/eagleford", active='exact', className="nav-link"),
-                                dbc.NavLink("Haynesville", href="/dpr/haynesville", active='exact', className="nav-link"),
-                                dbc.NavLink("Permian", href="/dpr/permian", active='exact', className="nav-link"),
-                                dbc.NavLink("Other", href="/dpr/other", active='exact', className="nav-link"),                              
-                                
+                                dbc.NavLink("DPR Charts", href="/dpr/dpr_charts", active='exact', className="nav-link"),  
+                                dbc.NavLink("DPR Table", href="/dpr/dpr_table", active='exact', className="nav-link"),                                
                             ],
                             vertical=True, pills=True
                         ),
@@ -189,18 +184,10 @@ def display_page(pathname):
         return pages.page2_9.layout
     elif pathname == '/stats/stats_table':
         return pages.page2_10.layout
-    elif pathname == '/dpr/appalachia':
+    elif pathname == '/dpr/dpr_charts':
         return pages.page3_1.layout
-    elif pathname == '/dpr/bakken':
+    elif pathname == '/dpr/dpr_table':
         return pages.page3_2.layout
-    elif pathname == '/dpr/eagleford':
-        return pages.page3_3.layout
-    elif pathname == '/dpr/haynesville':
-        return pages.page3_4.layout
-    elif pathname == '/dpr/permian':
-        return pages.page3_5.layout
-    elif pathname == '/dpr/other':
-        return pages.page3_6.layout
     
     else:
         return "404 Page Not Found"

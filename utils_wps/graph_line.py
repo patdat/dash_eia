@@ -53,6 +53,7 @@ def chart_trend(df, id, btn_1m, btn_6m, btn_12m, btn_36m, btn_all):
                 color='black'
             )
         ),
+        height=600,
         plot_bgcolor='white',
         xaxis=dict(
             rangeslider=dict(visible=False),
