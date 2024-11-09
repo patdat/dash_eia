@@ -1,0 +1,79 @@
+id,region,name,uom
+COPRAP,Appalachia,Crude oil production,mb
+COPRBK,Bakken,Crude oil production,mb
+COPREF,Eagle Ford,Crude oil production,mb
+COPRHA,Haynesville,Crude oil production,mb
+COPRPM,Permian,Crude oil production,mb
+COPRR48,Rest of L48 ex GOM,Crude oil production,mb
+RIGSAP,Appalachia,Active rigs,count
+RIGSBK,Bakken,Active rigs,count
+RIGSEF,Eagle Ford,Active rigs,count
+RIGSHA,Haynesville,Active rigs,count
+RIGSPM,Permian,Active rigs,count
+RIGSR48,Rest of L48 ex GOM,Active rigs,count
+NWDAP,Appalachia,New wells drilled,count
+NWDBK,Bakken,New wells drilled,count
+NWDEF,Eagle Ford,New wells drilled,count
+NWDHA,Haynesville,New wells drilled,count
+NWDPM,Permian,New wells drilled,count
+NWDR48,Rest of L48 ex GOM,New wells drilled,count
+NWRAP,Appalachia,New wells drilled per rig,count
+NWRBK,Bakken,New wells drilled per rig,count
+NWREF,Eagle Ford,New wells drilled per rig,count
+NWRHA,Haynesville,New wells drilled per rig,count
+NWRPM,Permian,New wells drilled per rig,count
+NWRR48,Rest of L48 ex GOM,New wells drilled per rig,count
+NWCAP,Appalachia,New wells completed,count
+NWCBK,Bakken,New wells completed,count
+NWCEF,Eagle Ford,New wells completed,count
+NWCHA,Haynesville,New wells completed,count
+NWCPM,Permian,New wells completed,count
+NWCR48,Rest of L48 ex GOM,New wells completed,count
+DUCSAP,Appalachia,Cumulative drilled but uncompleted wells,count
+DUCSBK,Bakken,Cumulative drilled but uncompleted wells,count
+DUCSEF,Eagle Ford,Cumulative drilled but uncompleted wells,count
+DUCSHA,Haynesville,Cumulative drilled but uncompleted wells,count
+DUCSPM,Permian,Cumulative drilled but uncompleted wells,count
+DUCSR48,Rest of L48 ex GOM,Cumulative drilled but uncompleted wells,count
+CONWAP,Appalachia,"Crude oil production from newly completed wells, one-year trend",kbd
+CONWBK,Bakken,"Crude oil production from newly completed wells, one-year trend",kbd
+CONWEF,Eagle Ford,"Crude oil production from newly completed wells, one-year trend",kbd
+CONWHA,Haynesville,"Crude oil production from newly completed wells, one-year trend",kbd
+CONWPM,Permian,"Crude oil production from newly completed wells, one-year trend",kbd
+CONWR48,Rest of L48 ex GOM,"Crude oil production from newly completed wells, one-year trend",kbd
+CONWRAP,Appalachia,"Crude oil production from newly completed wells per rig, one-year trend",kbd
+CONWRBK,Bakken,"Crude oil production from newly completed wells per rig, one-year trend",kbd
+CONWREF,Eagle Ford,"Crude oil production from newly completed wells per rig, one-year trend",kbd
+CONWRHA,Haynesville,"Crude oil production from newly completed wells per rig, one-year trend",kbd
+CONWRPM,Permian,"Crude oil production from newly completed wells per rig, one-year trend",kbd
+CONWRR48,Rest of L48 ex GOM,"Crude oil production from newly completed wells per rig, one-year trend",kbd
+COEOPAP,Appalachia,"Existing crude oil production change, one-year trend",kbd
+COEOPBK,Bakken,"Existing crude oil production change, one-year trend",kbd
+COEOPEF,Eagle Ford,"Existing crude oil production change, one-year trend",kbd
+COEOPHA,Haynesville,"Existing crude oil production change, one-year trend",kbd
+COEOPPM,Permian,"Existing crude oil production change, one-year trend",kbd
+COEOPR48,Rest of L48 ex GOM,"Existing crude oil production change, one-year trend",kbd
+NGMPAP,Appalachia,natural gas production,bcfd
+NGMPBK,Bakken,natural gas production,bcfd
+NGMPEF,Eagle Ford,natural gas production,bcfd
+NGMPHA,Haynesville,natural gas production,bcfd
+NGMPPM,Permian,natural gas production,bcfd
+NGMPR48,Rest of L48 ex GOM,natural gas production,bcfd
+NGNWAP,Appalachia,"Natural gas production from newly completed wells, one-year trend",mcfd
+NGNWBK,Bakken,"Natural gas production from newly completed wells, one-year trend",mcfd
+NGNWEF,Eagle Ford,"Natural gas production from newly completed wells, one-year trend",mcfd
+NGNWHA,Haynesville,"Natural gas production from newly completed wells, one-year trend",mcfd
+NGNWPM,Permian,"Natural gas production from newly completed wells, one-year trend",mcfd
+NGNWR48,Rest of L48 ex GOM,"Natural gas production from newly completed wells, one-year trend",mcfd
+NGNWRAP,Appalachia,"Natural gas production from newly completed wells per rig, one-year trend",mcfd
+NGNWRBK,Bakken,"Natural gas production from newly completed wells per rig, one-year trend",mcfd
+NGNWREF,Eagle Ford,"Natural gas production from newly completed wells per rig, one-year trend",mcfd
+NGNWRHA,Haynesville,"Natural gas production from newly completed wells per rig, one-year trend",mcfd
+NGNWRPM,Permian,"Natural gas production from newly completed wells per rig, one-year trend",mcfd
+NGNWRR48,Rest of L48 ex GOM,"Natural gas production from newly completed wells per rig, one-year trend",mcfd
+NGEOPAP,Appalachia,"Existing natural gas production change, one-year trend",mcfd
+NGEOPBK,Bakken,"Existing natural gas production change, one-year trend",mcfd
+NGEOPEF,Eagle Ford,"Existing natural gas production change, one-year trend",mcfd
+NGEOPHA,Haynesville,"Existing natural gas production change, one-year trend",mcfd
+NGEOPPM,Permian,"Existing natural gas production change, one-year trend",mcfd
+NGEOPR48,Rest of L48 ex GOM,"Existing natural gas production change, one-year trend",mcfd

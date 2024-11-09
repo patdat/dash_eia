@@ -47,6 +47,7 @@ idents = {
     "crudeImportsP9": "P9 Crude Imports (kbd)",
 }
 
+
 def graph_sections_input(page_id):
     return [
         ("Stocks", [f"{page_id}-graph-{i}" for i in range(1, 7)]),
@@ -65,7 +66,7 @@ def graph_sections_input(page_id):
 
 from app import app
 import os
-from utils_wps.calculation import create_callbacks,create_layout
+from utils_wps.calculation import create_callbacks, create_layout
 
 idents_list = list(idents.keys())
 

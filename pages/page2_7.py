@@ -1,49 +1,51 @@
 #######################################################################
 ### MANUAL INPUTS #####################################################
 
-commodity = 'Propane/Propylene: '
+commodity = "Propane/Propylene: "
 
 idents = {
-    #C3/C3= Stocks
-    'WPRSTUS1' : 'US C3/C3= Stocks (kb)',
-    'WPRSTP11' : 'P1 C3/C3= Stocks (kb)',
-    'WPRSTP21' : 'P2 C3/C3= Stocks (kb)',
-    'WPRSTP31' : 'P3 C3/C3= Stocks (kb)',
-    'WPRST_R4N5_1' : 'P4P5 C3/C3= Stocks (kb)',
-    #C3/C3= Imports
-    'WPRIM_NUS-Z00_2' : 'US C3/C3= Imports (kbd)',
-    'WPRIMP12' : 'P1 C3/C3= Imports (kbd)',
-    'WPRIMP22' : 'P2 C3/C3= Imports (kbd)',
-    'WPRIMP32' : 'P3 C3/C3= Imports (kbd)',
-    'W_EPLLPZ_IM0_R45-Z00_MBBLD' : 'P4P5 C3/C3= Imports (kbd)',
-    #C3/C3= Production
-    'WPRTP_NUS_2' : 'US C3/C3= Production (kbd)',
-    'WPRNPP12' : 'P1 C3/C3= Production (kbd)',
-    'WPRNPP22' : 'P2 C3/C3= Production (kbd)',
-    'WPRNPP32' : 'P3 C3/C3= Production (kbd)',
-    'W_EPLLPZ_YPT_R4N5_MBBLD' : 'P4P5 C3/C3= Production (kbd)',
-    #C3/C3= Exports
-    'W_EPLLPZ_EEX_NUS-Z00_MBBLD' : 'US C3/C3= Exports (kbd)',
+    # C3/C3= Stocks
+    "WPRSTUS1": "US C3/C3= Stocks (kb)",
+    "WPRSTP11": "P1 C3/C3= Stocks (kb)",
+    "WPRSTP21": "P2 C3/C3= Stocks (kb)",
+    "WPRSTP31": "P3 C3/C3= Stocks (kb)",
+    "WPRST_R4N5_1": "P4P5 C3/C3= Stocks (kb)",
+    # C3/C3= Imports
+    "WPRIM_NUS-Z00_2": "US C3/C3= Imports (kbd)",
+    "WPRIMP12": "P1 C3/C3= Imports (kbd)",
+    "WPRIMP22": "P2 C3/C3= Imports (kbd)",
+    "WPRIMP32": "P3 C3/C3= Imports (kbd)",
+    "W_EPLLPZ_IM0_R45-Z00_MBBLD": "P4P5 C3/C3= Imports (kbd)",
+    # C3/C3= Production
+    "WPRTP_NUS_2": "US C3/C3= Production (kbd)",
+    "WPRNPP12": "P1 C3/C3= Production (kbd)",
+    "WPRNPP22": "P2 C3/C3= Production (kbd)",
+    "WPRNPP32": "P3 C3/C3= Production (kbd)",
+    "W_EPLLPZ_YPT_R4N5_MBBLD": "P4P5 C3/C3= Production (kbd)",
+    # C3/C3= Exports
+    "W_EPLLPZ_EEX_NUS-Z00_MBBLD": "US C3/C3= Exports (kbd)",
 }
-    
+
+
 def graph_sections_input(page_id):
     return [
         # Stocks, 5 graphs
-        ('Stocks', [f'{page_id}-graph-{i}' for i in range(1, 6)]),
+        ("Stocks", [f"{page_id}-graph-{i}" for i in range(1, 6)]),
         # Imports, 5 graphs
-        ('Imports', [f'{page_id}-graph-{i}' for i in range(6, 11)]),        
+        ("Imports", [f"{page_id}-graph-{i}" for i in range(6, 11)]),
         # Production, 5 graphs
-        ('Production', [f'{page_id}-graph-{i}' for i in range(11, 16)]),        
+        ("Production", [f"{page_id}-graph-{i}" for i in range(11, 16)]),
         # Exports, 1 graph
-        ('Exports', [f'{page_id}-graph-16']),
+        ("Exports", [f"{page_id}-graph-16"]),
     ]
+
 
 ### END MANUAL INPUTS #################################################
 #######################################################################
 
 from app import app
 import os
-from utils_wps.calculation import create_callbacks,create_layout
+from utils_wps.calculation import create_callbacks, create_layout
 
 idents_list = list(idents.keys())
 

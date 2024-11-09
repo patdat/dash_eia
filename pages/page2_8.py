@@ -1,30 +1,32 @@
 #######################################################################
 ### MANUAL INPUTS #####################################################
 
-commodity = 'Demand: '
+commodity = "Demand: "
 
 idents = {
-    'WRPUPUS2' : 'Products Supplied (kbd)',
-    'WGFUPUS2' : 'Gasoline Supplied (kbd)',
-    'WDIUPUS2' : 'Distillate Supplied (kbd)',
-    'WKJUPUS2' : 'Jet Supplied (kbd)',
-    'WREUPUS2' : 'Fuel Oil Supplied (kbd)',
-    'WPRUP_NUS_2' : ' C3/C3= Supplied (kbd)',
-    'WWOUP_NUS_2' : 'Other Oils Supplied (kbd)',
+    "WRPUPUS2": "Products Supplied (kbd)",
+    "WGFUPUS2": "Gasoline Supplied (kbd)",
+    "WDIUPUS2": "Distillate Supplied (kbd)",
+    "WKJUPUS2": "Jet Supplied (kbd)",
+    "WREUPUS2": "Fuel Oil Supplied (kbd)",
+    "WPRUP_NUS_2": " C3/C3= Supplied (kbd)",
+    "WWOUP_NUS_2": "Other Oils Supplied (kbd)",
 }
-    
+
+
 def graph_sections_input(page_id):
     return [
         # Products Supplied, 7 graphs
-        ('Products Supplied', [f'{page_id}-graph-{i}' for i in range(1, 8)]),
+        ("Products Supplied", [f"{page_id}-graph-{i}" for i in range(1, 8)]),
     ]
+
 
 ### END MANUAL INPUTS #################################################
 #######################################################################
 
 from app import app
 import os
-from utils_wps.calculation import create_callbacks,create_layout
+from utils_wps.calculation import create_callbacks, create_layout
 
 idents_list = list(idents.keys())
 
