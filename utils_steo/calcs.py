@@ -4,7 +4,9 @@ import plotly.graph_objects as go
 import pandas as pd
 from utils_steo.graph_optionality import checklist_header
 from utils_steo.chart_dpr import chart_dpr
+from utils_steo.evolution_counter import evolution_counter
 from app import app
+
 
 
 
@@ -60,6 +62,7 @@ def create_layout(page_id, commodity, graph_sections_input):
 
     return html.Div(
         [
+            evolution_counter(app),
             checklist_header(
                 app,
                 ids["btn_2020"],
@@ -90,6 +93,7 @@ def create_callbacks(app, page_id, num_graphs, idents, region_dct):
             Input(f"{page_id}-btn_2023-state", "data"),
             Input(f"{page_id}-btn_2024-state", "data"),
             Input(f"{page_id}-btn_2025-state", "data"),
+            Input(f"evolution-store", "data"),
         ],
     )
     def update_graphs(
@@ -99,6 +103,7 @@ def create_callbacks(app, page_id, num_graphs, idents, region_dct):
         btn_2023,
         btn_2024,
         btn_2025,
+        evolution_counter,
     ):
         return [
             chart_dpr(
@@ -110,6 +115,7 @@ def create_callbacks(app, page_id, num_graphs, idents, region_dct):
                 btn_2023,
                 btn_2024,
                 btn_2025,
+                evolution_counter,
             )
             for ident in idents
         ]

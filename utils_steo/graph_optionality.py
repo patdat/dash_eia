@@ -51,10 +51,7 @@ def checklist_header(
             html.Div(
                 [
                     html.Button(
-                        id=btn_2020,
-                        children="2020",
-                        n_clicks=0,
-                        style=active_line_button,
+                        id=btn_2020,children="2020",n_clicks=0,style=active_line_button,
                     ),
                     html.Button(
                         id=btn_2021, children="2021", n_clicks=0, style=line_buttons

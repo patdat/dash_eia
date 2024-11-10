@@ -68,6 +68,7 @@ def chart_dpr(
     btn_2023,
     btn_2024,
     btn_2025,
+    evolution_counter=5
 ):
     df = dct[id]["data"]
     df = df.round(2)
@@ -96,60 +97,65 @@ def chart_dpr(
     traces = []
 
     # first trace
-    traces.append(
-        go.Scatter(
-            x=period_as_array,
-            y=df.iloc[:, 0],
-            mode="lines",
-            name=cols[0],
-            line=dict(color="#c00000"),
-            line_width=2,
+    if evolution_counter > 0:
+        traces.append(
+            go.Scatter(
+                x=period_as_array,
+                y=df.iloc[:, 0],
+                mode="lines",
+                name=cols[0],
+                line=dict(color="#c00000"),
+                line_width=3,
+            )
         )
-    )
 
     # second trace
-    traces.append(
-        go.Scatter(
-            x=period_as_array,
-            y=df.iloc[:, 1],
-            mode="lines",
-            name=cols[1],
-            line=dict(color="#e97132"),
+    if evolution_counter > 1:
+        traces.append(
+            go.Scatter(
+                x=period_as_array,
+                y=df.iloc[:, 1],
+                mode="lines",
+                name=cols[1],
+                line=dict(color="#e97132"),
+            )
         )
-    )
 
     # third trace
-    traces.append(
-        go.Scatter(
-            x=period_as_array,
-            y=df.iloc[:, 2],
-            mode="lines",
-            name=cols[2],
-            line=dict(color="#bfbec4"),
+    if evolution_counter > 2:
+        traces.append(
+            go.Scatter(
+                x=period_as_array,
+                y=df.iloc[:, 2],
+                mode="lines",
+                name=cols[2],
+                line=dict(color="#bfbec4"),
+            )
         )
-    )
 
     # fourth trace
-    traces.append(
-        go.Scatter(
-            x=period_as_array,
-            y=df.iloc[:, 3],
-            mode="lines",
-            name=cols[3],
-            line=dict(color="#0073c0"),
+    if evolution_counter > 3:
+        traces.append(
+            go.Scatter(
+                x=period_as_array,
+                y=df.iloc[:, 3],
+                mode="lines",
+                name=cols[3],
+                line=dict(color="#0073c0"),
+            )
         )
-    )
 
     # fifth trace
-    traces.append(
-        go.Scatter(
-            x=period_as_array,
-            y=df.iloc[:, 4],
-            mode="lines",
-            name=cols[4],
-            line=dict(color="#4CAF50"),
+    if evolution_counter > 4:
+        traces.append(
+            go.Scatter(
+                x=period_as_array,
+                y=df.iloc[:, 4],
+                mode="lines",
+                name=cols[4],
+                line=dict(color="#4CAF50"),
+            )
         )
-    )
 
     if graph_uom == 'mbd' or graph_uom == 'bcfd':
         yaxis_tick_format = ".2f"
