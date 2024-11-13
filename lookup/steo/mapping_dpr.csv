@@ -1,4 +1,8 @@
 id,region,name,uom
+COPRPUS,United States,Crude oil production,mbd
+PAPRPAK,Aalaska,Crude oil production,mbd
+PAPRPGLF,Gulf of Mexico,Crude oil production,mbd
+PAPR48NGOM,L48 ex GOM,Crude oil production,mbd
 COPRAP,Appalachia,Crude oil production,mbd
 COPRBK,Bakken,Crude oil production,mbd
 COPREF,Eagle Ford,Crude oil production,mbd

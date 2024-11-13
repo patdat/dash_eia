@@ -1,0 +1,21 @@
+id,region,name,uom
+TOPRAC,Austin Chalk,Crude oil production,mbd
+TOPRBK,Bakken,Crude oil production,mbd
+TOPREF,Eagle Ford,Crude oil production,mbd
+TOPRMP,Mississippian,Crude oil production,mbd
+TOPRNI,Niobrara Codell,Crude oil production,mbd
+TOPRPM,Permians,Crude oil production,mbd
+TOPRWF,Woodford,Crude oil production,mbd
+TOPRR48,Other,Crude oil production,mbd
+SNGPRBK,Bakken,Natural Gas Production,bcfd
+SNGPRBN,Barnett,Natural Gas Production,bcfd
+SNGPREF,Eagle Ford,Natural Gas Production,bcfd
+SNGPRFY,Fayetteville,Natural Gas Production,bcfd
+SNGPRHA,Haynesville,Natural Gas Production,bcfd
+SNGPRMC,Marcellus,Natural Gas Production,bcfd
+SNGPRMP,Mississippian,Natural Gas Production,bcfd
+SNGPRNI,Niobrara Codell,Natural Gas Production,bcfd
+SNGPRPM,Permians,Natural Gas Production,bcfd
+SNGPRUA,Utica,Natural Gas Production,bcfd
+SNGPRWF,Woodford,Natural Gas Production,bcfd
+SNGPRR48,Other,Natural Gas Production,bcfd

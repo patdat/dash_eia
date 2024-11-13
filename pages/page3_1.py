@@ -2,6 +2,11 @@
 ### MANUAL INPUTS #####################################################
 
 idents = [
+# Main    
+    'COPRPUS',
+    'PAPRPGLF',    
+    'PAPR48NGOM',        
+    'PAPRPAK',    
     # Permian
     'COPRPM',
     'RIGSPM',
@@ -90,15 +95,15 @@ idents = [
 
 def graph_sections_input(page_id):
     return [
-        ("Permian", [f"{page_id}-graph-{i}" for i in range(1, 14)]),
-        ("Bakken", [f"{page_id}-graph-{i}" for i in range(14, 27)]),
-        ("Eagle Ford", [f"{page_id}-graph-{i}" for i in range(27, 40)]),
-        ("Appalachia", [f"{page_id}-graph-{i}" for i in range(40, 53)]),
-        ("Rest of L48 ex GOM", [f"{page_id}-graph-{i}" for i in range(53, 66)]),
-        ("Haynesville", [f"{page_id}-graph-{i}" for i in range(66, 79)]),        
+        ("Totals by Crude Production", [f"{page_id}-graph-{i}" for i in range(1, 5)]),
+        ("Permian", [f"{page_id}-graph-{i}" for i in range(5, 18)]),
+        ("Bakken", [f"{page_id}-graph-{i}" for i in range(18, 31)]),
+        ("Eagle Ford", [f"{page_id}-graph-{i}" for i in range(31, 44)]),
+        ("Appalachia", [f"{page_id}-graph-{i}" for i in range(44, 57)]),
+        ("Rest of L48 ex GOM", [f"{page_id}-graph-{i}" for i in range(57, 70)]),
+        ("Haynesville", [f"{page_id}-graph-{i}" for i in range(70, 83)]),        
     ]
-
-
+    
 ### END MANUAL INPUTS #################################################
 #######################################################################
 
