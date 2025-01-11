@@ -3,7 +3,7 @@
 ## Instructions
 
 - run index.py
-- full update on dataset = python -m utils.download_xlsx
+- full update on dataset = python -m utils_wps.download_xlsx
 
 ## Colors
 
