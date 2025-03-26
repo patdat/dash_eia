@@ -1,6 +1,8 @@
 import dash
 from dash import html, dcc, Input, Output, State
 
+from utils.variables import year_1_string, year_2_string, year_3_string, full_year_range_normal_string, full_year_range_last_five_years_string
+
 app = dash.Dash(__name__)
 
 # Define button styles
@@ -25,9 +27,9 @@ chart_seag = create_button_style(30, 365, "black", "white")
 chart_line = create_button_style(30, 365, "black", "white")
 toggler_on = create_button_style(30, 200, "black", "white")
 toggler_off = create_button_style(30, 200, "black", "white")
-button_2024 = create_button_style(30, 50, "#c00000", "white")
-button_2023 = create_button_style(30, 50, "#e97132", "white")
-button_2022 = create_button_style(30, 50, "#bfbec4", "white")
+button_year_3 = create_button_style(30, 50, "#c00000", "white")
+button_year_2 = create_button_style(30, 50, "#e97132", "white")
+button_year_1 = create_button_style(30, 50, "#bfbec4", "white")
 off_button = create_button_style(30, 50, "white", "grey")
 line_buttons = create_button_style(30, 69, "white", "grey")
 active_line_button = create_button_style(30, 69, "#c00000", "white")
@@ -39,9 +41,9 @@ def checklist_header(
     seasonality_buttons,
     line_buttons_div,
     toggle_seag_range,
-    toggle_2022,
-    toggle_2023,
-    toggle_2024,
+    toggle_year_1,
+    toggle_year_2,
+    toggle_year_3,
     btn_1m,
     btn_6m,
     btn_12m,
@@ -53,7 +55,7 @@ def checklist_header(
             # State storage for button states
             *[dcc.Store(id=f"{id}-state", data=(id == btn_all)) for id in [
                 chart_toggle, seasonality_buttons, line_buttons_div,
-                toggle_seag_range, toggle_2022, toggle_2023, toggle_2024,
+                toggle_seag_range, toggle_year_1, toggle_year_2, toggle_year_3,
                 btn_1m, btn_6m, btn_12m, btn_36m, btn_all]
             ],
             
@@ -64,10 +66,10 @@ def checklist_header(
             ),
             html.Div(
                 [
-                    html.Button("Range: 2018-2023", id=toggle_seag_range, n_clicks=0, style=toggler_on),
-                    html.Button("2022", id=toggle_2022, n_clicks=0, style=button_2022),
-                    html.Button("2023", id=toggle_2023, n_clicks=0, style=button_2023),
-                    html.Button("2024", id=toggle_2024, n_clicks=0, style=button_2024),
+                    html.Button(f"Range: {full_year_range_last_five_years_string}", id=toggle_seag_range, n_clicks=0, style=toggler_on),
+                    html.Button(year_1_string, id=toggle_year_1, n_clicks=0, style=button_year_1),
+                    html.Button(year_2_string, id=toggle_year_2, n_clicks=0, style=button_year_2),
+                    html.Button(year_3_string, id=toggle_year_3, n_clicks=0, style=button_year_3),
                 ],
                 id=seasonality_buttons, style={"display": "block"},
             ),
@@ -112,7 +114,7 @@ def checklist_header(
         state = n_clicks % 2 == 1
         return (
             toggler_off if state else toggler_on,
-            "Range: 2015-2019" if state else "Range: 2018-2023",
+            f"Range: {full_year_range_normal_string}" if state else f"Range: {full_year_range_last_five_years_string}",
             state,
         )
 
@@ -127,9 +129,9 @@ def checklist_header(
         return toggle_year_button
 
     # Create callbacks for year toggle buttons
-    create_year_toggle_callback(toggle_2024, button_2024)
-    create_year_toggle_callback(toggle_2023, button_2023)
-    create_year_toggle_callback(toggle_2022, button_2022)
+    create_year_toggle_callback(toggle_year_3, button_year_1)
+    create_year_toggle_callback(toggle_year_2, button_year_2)
+    create_year_toggle_callback(toggle_year_1, button_year_3)
 
     @app.callback(
         [Output(btn_id, "style") for btn_id in [btn_1m, btn_6m, btn_12m, btn_36m, btn_all]] +
@@ -152,7 +154,7 @@ if __name__ == "__main__":
     app.layout = html.Div(
         checklist_header(
             app, "chart_toggle", "seasonality_buttons", "line_buttons_div",
-            "toggle_seag_range", "toggle_2022", "toggle_2023", "toggle_2024",
+            "toggle_seag_range", f"toggle_{year_1_string}", f"toggle_{year_2_string}", f"toggle_{year_3_string}",
             "btn_1m", "btn_6m", "btn_12m", "btn_36m", "btn_all"
         )
     )

@@ -1,11 +1,12 @@
 from utils_wps.mapping import production_mapping
 import plotly.graph_objects as go
 
+from utils.variables import range_selector_normal, range_selector_last_five_years, year_1_string, year_2_string, year_3_string
 
 tickvals = [0, 5, 9, 14, 18, 22, 27, 31, 36, 40, 45, 49]
 ticktext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
-def chart_seasonality(df, id, toggle_seag_range, toggle_2022,toggle_2023,toggle_2024):
+def chart_seasonality(df, id, toggle_seag_range, toggle_year_1,toggle_year_2,toggle_year_3):
 
     def format_value(val, column_name):
         if "stocks" in column_name.lower():
@@ -23,13 +24,13 @@ def chart_seasonality(df, id, toggle_seag_range, toggle_2022,toggle_2023,toggle_
     df = df[df['id']==id]
 
     if not toggle_seag_range:
-        min_rng = df['min_1519']
-        max_rng = df['max_1519']
-        avg_rng = df['average_1519']
+        min_rng = df[f'min_{range_selector_normal}']
+        max_rng = df[f'max_{range_selector_normal}']
+        avg_rng = df[f'average_{range_selector_normal}']
     else:
-        min_rng = df['min_1823']
-        max_rng = df['max_1823']
-        avg_rng = df['average_1823']    
+        min_rng = df[f'min_{range_selector_last_five_years}']
+        max_rng = df[f'max_{range_selector_last_five_years}']
+        avg_rng = df[f'average_{range_selector_last_five_years}']    
 
 
     traces = []
@@ -63,37 +64,37 @@ def chart_seasonality(df, id, toggle_seag_range, toggle_2022,toggle_2023,toggle_
         hoverinfo='skip'
     ))
 
-    if not toggle_2024:
+    if not toggle_year_3:
         traces.append(go.Scatter(
             x=df['week_of_year'],
-            y=df['actual_2024'],
+            y=df[f'actual_{year_3_string}'],
             mode='lines',
-            name='2024',
+            name=year_3_string,
             hoverinfo='text',
-            text=[f"{date}: {format_value(value, mapping_name)}" for date, value in zip(df['dates_actual_2024'], df['actual_2024'])],
+            text=[f"{date}: {format_value(value, mapping_name)}" for date, value in zip(df[f'dates_actual_{year_3_string}'], df[f'actual_{year_3_string}'])],
             line=dict(color='#c00000', dash='solid', width=2),
         ))
 
-    if not toggle_2023:
+    if not toggle_year_2:
         traces.append(go.Scatter(
             x=df['week_of_year'],
-            y=df['actual_2023'],
+            y=df[f'actual_{year_2_string}'],
             mode='lines',
-            name='2023',
+            name=year_2_string,
             hoverinfo='text',
             line=dict(color='#e97132', dash='solid', width=2),
-            text=[f"{date}: {format_value(value, mapping_name)}" for date, value in zip(df['dates_actual_2023'], df['actual_2023'])],
+            text=[f"{date}: {format_value(value, mapping_name)}" for date, value in zip(df[f'dates_actual_{year_2_string}'], df[f'actual_{year_2_string}'])],
         ))
 
-    if not toggle_2022:
+    if not toggle_year_1:
         traces.append(go.Scatter(
             x=df['week_of_year'],
-            y=df['actual_2022'],
+            y=df[f'actual_{year_1_string}'],
             mode='lines',
-            name='2022',
+            name=year_1_string,
             hoverinfo='text',
             line=dict(color='#bfbec4', dash='solid', width=2),
-            text=[f"{date}: {format_value(value, mapping_name)}" for date, value in zip(df['dates_actual_2022'], df['actual_2022'])],
+            text=[f"{date}: {format_value(value, mapping_name)}" for date, value in zip(df[f'dates_actual_{year_1_string}'], df[f'actual_{year_1_string}'])],
         ))
 
     layout = go.Layout(

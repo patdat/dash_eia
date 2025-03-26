@@ -8,6 +8,9 @@ import plotly.graph_objects as go
 from utils_wps.graph_optionality import checklist_header
 from app import app
 
+from utils.variables import year_1_string, year_2_string, year_3_string, full_year_range_normal_string, full_year_range_last_five_years_string
+
+
 ### data retrieval functions ############################################
 
 
@@ -44,9 +47,9 @@ def create_layout(page_id, commodity, graph_sections_input):
                 "seasonality_buttons",
                 "line_buttons_div",
                 "toggle_seag_range",
-                "toggle_2022",
-                "toggle_2023",
-                "toggle_2024",
+                f"toggle_{year_1_string}",
+                f"toggle_{year_2_string}",
+                f"toggle_{year_3_string}",
                 "btn_1m",
                 "btn_6m",
                 "btn_12m",
@@ -75,9 +78,9 @@ def create_layout(page_id, commodity, graph_sections_input):
                 ids["seasonality_buttons"],
                 ids["line_buttons_div"],
                 ids["toggle_seag_range"],
-                ids["toggle_2022"],
-                ids["toggle_2023"],
-                ids["toggle_2024"],
+                ids[f"toggle_{year_1_string}"],
+                ids[f"toggle_{year_2_string}"],
+                ids[f"toggle_{year_3_string}"],
                 ids["btn_1m"],
                 ids["btn_6m"],
                 ids["btn_12m"],
@@ -104,9 +107,9 @@ def create_callbacks(app, page_id, num_graphs, idents):
         [
             Input(f"{page_id}-chart_toggle-state", "data"),
             Input(f"{page_id}-toggle_seag_range-state", "data"),
-            Input(f"{page_id}-toggle_2022-state", "data"),
-            Input(f"{page_id}-toggle_2023-state", "data"),
-            Input(f"{page_id}-toggle_2024-state", "data"),
+            Input(f"{page_id}-toggle_{year_1_string}-state", "data"),
+            Input(f"{page_id}-toggle_{year_2_string}-state", "data"),
+            Input(f"{page_id}-toggle_{year_3_string}-state", "data"),
             Input(f"{page_id}-btn_1m-state", "data"),
             Input(f"{page_id}-btn_6m-state", "data"),
             Input(f"{page_id}-btn_12m-state", "data"),
@@ -117,9 +120,9 @@ def create_callbacks(app, page_id, num_graphs, idents):
     def update_graphs(
         chart_toggle,
         toggle_seag_range,
-        toggle_2022,
-        toggle_2023,
-        toggle_2024,
+        toggle_year_1,
+        toggle_year_2,
+        toggle_year_3,
         btn_1m,
         btn_6m,
         btn_12m,
@@ -139,9 +142,9 @@ def create_callbacks(app, page_id, num_graphs, idents):
             id,
             chart_toggle,
             toggle_seag_range,
-            toggle_2022,
-            toggle_2023,
-            toggle_2024,
+            toggle_year_1,
+            toggle_year_2,
+            toggle_year_3,
             btn_1m,
             btn_6m,
             btn_12m,
@@ -156,9 +159,9 @@ def create_callbacks(app, page_id, num_graphs, idents):
                     seag_data_individual,
                     id,
                     toggle_seag_range,
-                    toggle_2022,
-                    toggle_2023,
-                    toggle_2024,
+                    toggle_year_1,
+                    toggle_year_2,
+                    toggle_year_3,
                 )
             else:
                 return chart_trend(
@@ -172,9 +175,9 @@ def create_callbacks(app, page_id, num_graphs, idents):
                 ident,
                 chart_toggle,
                 toggle_seag_range,
-                toggle_2022,
-                toggle_2023,
-                toggle_2024,
+                toggle_year_1,
+                toggle_year_2,
+                toggle_year_3,
                 btn_1m,
                 btn_6m,
                 btn_12m,

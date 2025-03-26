@@ -2,6 +2,8 @@ from utils_wps.mapping import production_mapping
 from utils_wps.calculation import get_initial_data 
 import pandas as pd
 
+from utils.variables import range_selector_normal, range_selector_last_five_years, years_normal_range, years_last_five_years_range, type_to_remove
+
 def add_weekOfYear_Year(df):
     df = df.copy()
     df.insert(0,'week_of_year',df['period'].dt.isocalendar().week)
@@ -12,10 +14,10 @@ def add_weekOfYear_Year(df):
 def select_seasonality_range(df, range_selector):
     df = df.copy()
     
-    if range_selector == '1519':
-        years = [2015, 2016, 2017, 2018, 2019]
-    elif range_selector == '1823':
-        years = [2018, 2019, 2021, 2022, 2023]
+    if range_selector == range_selector_normal:
+        years = years_normal_range
+    elif range_selector == range_selector_last_five_years:
+        years = years_last_five_years_range
     
     def get_min_max(df, min_or_max, years):
         df = df.copy()
@@ -97,7 +99,6 @@ def pivot_individual_data(df,id):
         cols = ['type','week_of_year','period', id] 
         df = df[cols]
         df = df.rename(columns={id: 'value'})
-        type_to_remove = ['actual_2015', 'actual_2016', 'actual_2017', 'actual_2018', 'actual_2019','actual_2020','actual_2021']
         df = df[~df['type'].isin(type_to_remove)]        
         return df    
     

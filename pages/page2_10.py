@@ -1,13 +1,14 @@
 from dash import html, dcc, callback, Output, Input
 import dash_ag_grid as dag
 from utils_wps.ag_calculations import DataProcessor
+from utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
 
 # Initialize the data processor
 processor = DataProcessor()
 
 # Default date range
-default_start_date = '2024-01-05'
-default_end_date = '2024-12-27'
+default_start_date = default_start_date_eia_wps_table
+default_end_date = default_end_date_eia_wps_table
 
 # Process data and column definitions
 df, columnDefinitions = processor.get_data(default_start_date, default_end_date)
