@@ -95,8 +95,10 @@ def update_tables(data):
     main_table = generate_main_table(df)
 
     table_ids = {
+        #headline: 0 & 1
         'Headline': headline,
         'Products Supplied': products_supplied,
+        #crude: 2 to 9
         'Crude Stocks': crude_stocks,
         'Crude Other Stocks': crude_other_stocks,
         'Crude Production': crude_production,
@@ -104,30 +106,35 @@ def update_tables(data):
         'Crude Adjustment': crude_adjustment,
         'Crude Runs': crude_runs,
         'Crude Exports': crude_exports,
-        'Gasoline Stocks': gasoline_stocks,
-        'Gasoline Imports': gasoline_imports,
-        'Gasoline Production': gasoline_production,
-        'Gasoline Exports': gasoline_exports,
-        'Distillate Stocks': distillate_stocks,
-        'Distillate Imports': distillate_imports,
-        'Distillate Production': distillate_production,
-        'Distillate Exports': distillate_exports,
-        'Jet Stocks': jet_stocks,
-        'Jet Imports': jet_imports,
-        'Jet Production': jet_production,
-        'Jet Exports': jet_exports,
-        'Fuel Oil Stocks': fueloil_stocks,
-        'Fuel Oil Imports': fueloil_imports,
-        'Fuel Oil Production': fueloil_production,
-        'Fuel Oil Exports': fueloil_exports,
-        'Propane/Propylene Stocks': propane_propylene_stocks,
-        'Propane/Propylene Imports': propane_propylene_imports,
-        'Propane/Propylene Production': propane_propylene_production,
-        'Propane/Propylene Exports': propane_propylene_exports,
+        #refining: 9 to 13
         'CDU Utilization': refinery_utilization,
         'Feedstock Runs': refinery_feedstock_runs,
         'Gross Runs': refinery_gross_runs,
-        'Operable CDU Capacity': refinery_operable_cdu_capacity
+        'Operable CDU Capacity': refinery_operable_cdu_capacity,        
+        #product stocks: 13 to 18
+        'Gasoline Stocks': gasoline_stocks,
+        'Distillate Stocks': distillate_stocks,
+        'Jet Stocks': jet_stocks,
+        'Fuel Oil Stocks': fueloil_stocks,
+        'Propane/Propylene Stocks': propane_propylene_stocks,
+        #product imports: 18 to 23
+        'Gasoline Imports': gasoline_imports,
+        'Distillate Imports': distillate_imports,
+        'Jet Imports': jet_imports,
+        'Fuel Oil Imports': fueloil_imports,
+        'Propane/Propylene Imports': propane_propylene_imports,
+        #product production: 23 to 28           
+        'Gasoline Production': gasoline_production,
+        'Distillate Production': distillate_production,
+        'Jet Production': jet_production,
+        'Fuel Oil Production': fueloil_production,
+        'Propane/Propylene Production': propane_propylene_production,
+        #product exports: 28 to 33
+        'Gasoline Exports': gasoline_exports,
+        'Distillate Exports': distillate_exports,
+        'Jet Exports': jet_exports,
+        'Fuel Oil Exports': fueloil_exports,
+        'Propane/Propylene Exports': propane_propylene_exports,
     }
 
     tables = []
@@ -148,34 +155,30 @@ def update_tables(data):
             ], className='eia_table_style'),  
             
             html.Div([
-                html.H1('Gasoline', className='eia_h1_header'),  
+                html.H1('Refining', className='eia_h1_header'),  
                 *tables[9:13],
             ], className='eia_table_style'),
             
             html.Div([
-                html.H1('Distillate', className='eia_h1_header'),  
-                *tables[13:17],
+                html.H1('Product Stocks', className='eia_h1_header'),  
+                *tables[13:18],
             ], className='eia_table_style'),
             
             html.Div([
-                html.H1('Jet', className='eia_h1_header'),  
-                *tables[17:21],
+                html.H1('Product Imports', className='eia_h1_header'),  
+                *tables[18:23],
             ], className='eia_table_style'),
             
             html.Div([
-                html.H1('Fuel Oil', className='eia_h1_header'),  
-                *tables[21:25],
+                html.H1('Product Production', className='eia_h1_header'),  
+                *tables[23:28],
             ], className='eia_table_style'),
             
             html.Div([
-                html.H1('Propane/Propylene', className='eia_h1_header'),  
-                *tables[25:29],
+                html.H1('Product Exports', className='eia_h1_header'),  
+                *tables[28:33],
             ], className='eia_table_style'),  
 
-            html.Div([
-                html.H1('Refining', className='eia_h1_header'),  
-                *tables[29:33],
-            ], className='eia_table_style'),  
         ], style={'display': 'flex', 'width': '3280px'}),
         style={'display': 'flex', 'justify-content': 'left'}
     )
