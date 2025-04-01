@@ -3,7 +3,12 @@
 ## Instructions
 
 - run index.py
-- full update on dataset = python -m utils_wps.download_xlsx
+
+## dealing with stale data...
+
+- weekly: full update on dataset = python -m utils_wps.download_xlsx
+- steo:  full update on dataset = python -m utils_steo.download
+
 
 ## Colors
 

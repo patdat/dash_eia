@@ -2,6 +2,8 @@ from utils_wps.mapping import production_mapping
 from utils_wps.calculation import get_initial_data 
 import pandas as pd
 
+from utils.variables import range_selector_normal, range_selector_last_five_years
+
 from utils.variables import range_selector_normal, range_selector_last_five_years, years_normal_range, years_last_five_years_range, type_to_remove
 
 def add_weekOfYear_Year(df):
@@ -54,14 +56,14 @@ def get_seasonality_data(df):
     # df = extend_df(df)
     df = add_weekOfYear_Year(df)
 
-    df_1519 = select_seasonality_range(df, '1519')
-    df_1823 = select_seasonality_range(df, '1823')    
+    df_range_old = select_seasonality_range(df, range_selector_normal)
+    df_range_new = select_seasonality_range(df, range_selector_last_five_years)    
 
     df.insert(0, 'type', 'actual')
     df['type'] = df['type'] + '_' + df['year'].astype(str)
     df.drop(columns=['year'], inplace=True)
 
-    df = pd.concat([df,df_1519, df_1823])    
+    df = pd.concat([df,df_range_old, df_range_new])    
     df['week_of_year'] = df['week_of_year'].astype(int)
     
     df['period'] = pd.to_datetime(df['period'])
