@@ -1,4 +1,5 @@
 from utils_wps.download_csv import main as download_csv
+from utils_wps.download_xlsx import main as download_xlsx
 from utils_wps.generate_seasonality_data import generate_seasonality_data
 from utils_wps.generate_line_data import generate_line_data
 from utils_wps.table_mapping import *
@@ -21,7 +22,7 @@ layout = html.Div([
 )
 def generate_data(n_clicks):
     if n_clicks is not None and n_clicks > 0:
-        df = download_csv()
+        df = download_xlsx()
         generate_seasonality_data()
         generate_line_data()
         return df.to_dict('records')

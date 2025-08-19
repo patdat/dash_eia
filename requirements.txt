@@ -3,3 +3,4 @@ dash-bootstrap-components
 pandas
 pyarrow
 dash-ag-grid
+watchdog  # Optional: for automatic data file monitoring

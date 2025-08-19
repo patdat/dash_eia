@@ -1,13 +1,14 @@
 import pandas as pd
 from utils_wps.ag_mapping import ag_mapping
+from utils.data_loader import cached_loader
 
 class DataProcessor:
     def __init__(self, file_path='./data/wps/wps_gte_2015_pivot.feather'):
         self.file_path = file_path
 
     def get_initial_data(self):
-        df = pd.read_feather(self.file_path)
-        df['period'] = pd.to_datetime(df['period'])
+        """Load data using cached loader for better performance"""
+        df = cached_loader.load_wps_pivot_data()
         df['period'] = df['period'].dt.strftime('%m/%d/%y')
         df.set_index('period', inplace=True)
         df = df.T
@@ -15,11 +16,14 @@ class DataProcessor:
         return df
 
     def get_ag_mapping(self, df):
-        id_to_name_mapping = {key: value['name'] for key, value in ag_mapping.items()}
-        id_to_padd_mapping = {key: value['padd'] for key, value in ag_mapping.items()}
-        id_to_commodity_mapping = {key: value['commodity'] for key, value in ag_mapping.items()}
-        id_to_type_mapping = {key: value['type'] for key, value in ag_mapping.items()}
-        id_to_uom_mapping = {key: value['uom'] for key, value in ag_mapping.items()}
+        """Use cached mapping data for better performance"""
+        ag_mapping_data = cached_loader.load_ag_mapping()
+        
+        id_to_name_mapping = {key: value['name'] for key, value in ag_mapping_data.items()}
+        id_to_padd_mapping = {key: value['padd'] for key, value in ag_mapping_data.items()}
+        id_to_commodity_mapping = {key: value['commodity'] for key, value in ag_mapping_data.items()}
+        id_to_type_mapping = {key: value['type'] for key, value in ag_mapping_data.items()}
+        id_to_uom_mapping = {key: value['uom'] for key, value in ag_mapping_data.items()}
 
         df.insert(1, 'name', df['id'].map(id_to_name_mapping))
         df.insert(2, 'padd', df['id'].map(id_to_padd_mapping))

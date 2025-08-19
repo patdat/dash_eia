@@ -10,14 +10,16 @@ from app import app
 
 from utils.variables import year_1_string, year_2_string, year_3_string, full_year_range_normal_string, full_year_range_last_five_years_string
 
+# Import cached data utilities
+from utils.data_loader import cached_loader, get_seasonality_data_for_ids, get_line_data_for_ids
+
 
 ### data retrieval functions ############################################
 
 
 def get_initial_data():
-    df = pd.read_feather("./data/wps/wps_gte_2015_pivot.feather")
-    df["period"] = pd.to_datetime(df["period"])
-    return df[df["period"] > "2015-01-01"].reset_index(drop=True)
+    """Load initial data using cached loader"""
+    return cached_loader.get_filtered_data("wps_pivot", "2015-01-01")
 
 
 ### graph creation functions ###########################################
@@ -129,12 +131,9 @@ def create_callbacks(app, page_id, num_graphs, idents):
         btn_36m,
         btn_all,
     ):
-
-        seag_data = pd.read_feather("./data/wps/seasonality_data.feather")
-        seag_data = seag_data[seag_data["id"].isin(idents)]
-        line_data = pd.read_feather("./data/wps/graph_line_data.feather")
-        line_data["period"] = pd.to_datetime(line_data["period"])
-        line_data = line_data[["period"] + idents]
+        # Use cached data loading
+        seag_data = get_seasonality_data_for_ids(tuple(idents))
+        line_data = get_line_data_for_ids(tuple(idents))
 
         def create_chart(
             df,
