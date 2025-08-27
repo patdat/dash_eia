@@ -4,7 +4,7 @@ Add these to your Flask server if needed
 """
 from flask import jsonify
 from app import server
-from utils.data_loader import (
+from src.utils.data_loader import (
     refresh_data_and_cache, 
     invalidate_data_cache, 
     get_cache_stats,

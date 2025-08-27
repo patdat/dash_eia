@@ -110,8 +110,8 @@ def graph_sections_input(page_id):
 
 from app import app
 import os
-from utils_steo.calcs import create_callbacks, create_layout
-from utils_steo.chart_dpr import get_regional_dict_data
+from src.steo.calcs import create_callbacks, create_layout
+from src.steo.chart_dpr import get_regional_dict_data
 
 region_dct = get_regional_dict_data(None)
 
