@@ -130,7 +130,9 @@ def create_arima_forecast(padd_filter='US'):
     y_max = np.nanmax(all_values) * 1.05
     
     # Add a vertical line at the forecast start
-    fig.add_vline(x=monthly.index[-1], 
+    # Keep as timestamp for plotly compatibility
+    forecast_start = monthly.index[-1]
+    fig.add_vline(x=forecast_start, 
                   line_dash="dash", 
                   line_color="gray", 
                   opacity=0.5,

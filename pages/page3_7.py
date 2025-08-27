@@ -6,10 +6,11 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from src.utils.data_loader import cached_loader
 
 # Load data and mapping
-df = pd.read_feather('data/steo/steo_pivot_dpr.feather')
-mapping_df = pd.read_csv('lookup/steo/mapping_dpr.csv')
+df = cached_loader.load_steo_dpr_data()
+mapping_df = cached_loader.load_dpr_mapping()
 
 # Get date columns (all columns that are not metadata)
 metadata_cols = ['id', 'name', 'release_date', 'uom']

@@ -99,17 +99,23 @@ def file_based_cache(file_path: str, ttl_seconds: int = 3600):
     return decorator
 
 
-def memory_cache(ttl_seconds: int = 3600):
+def memory_cache(ttl_seconds: int = None, file_dependency: str = None):
     """
-    Decorator for caching function results in memory
+    Decorator for caching function results in memory.
+    If file_dependency is provided, cache invalidates when file changes.
+    Otherwise uses TTL (defaults to forever if not specified).
     """
     def decorator(func):
         cache_key_base = func.__name__
         
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            # Create unique cache key
-            cache_key = f"{cache_key_base}_{hashlib.md5(str(args + tuple(kwargs.items())).encode()).hexdigest()}"
+            # Include file modification time in cache key if file_dependency provided
+            if file_dependency and os.path.exists(file_dependency):
+                file_mtime = os.path.getmtime(file_dependency)
+                cache_key = f"{cache_key_base}_{file_mtime}_{hashlib.md5(str(args + tuple(kwargs.items())).encode()).hexdigest()}"
+            else:
+                cache_key = f"{cache_key_base}_{hashlib.md5(str(args + tuple(kwargs.items())).encode()).hexdigest()}"
             
             # Try to get from cache
             cached_result = app_cache.get(cache_key)
@@ -118,7 +124,9 @@ def memory_cache(ttl_seconds: int = 3600):
             
             # Execute function and cache result
             result = func(*args, **kwargs)
-            app_cache.set(cache_key, result, ttl_seconds)
+            # Use provided TTL or default to forever (1 year)
+            actual_ttl = ttl_seconds if ttl_seconds is not None else 31536000
+            app_cache.set(cache_key, result, actual_ttl)
             
             return result
         return wrapper

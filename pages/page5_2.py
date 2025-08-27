@@ -69,8 +69,8 @@ def generate_top_importers_table(padd_filter='US'):
         columns=[
             {"name": "Company", "id": "Company"},
             {"name": "Volume (kbd)", "id": "Volume (kbd)", "type": "numeric", 
-             "format": Format(precision=1)},
-            {"name": "Sources", "id": "Sources"},
+             "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Sources", "id": "Sources", "type": "numeric", "format": Format(precision=0)},
             {"name": "Primary Source", "id": "Primary Source"},
             {"name": "Avg API", "id": "Avg API", "type": "numeric", 
              "format": Format(precision=1)},
@@ -80,7 +80,7 @@ def generate_top_importers_table(padd_filter='US'):
              "format": Format(precision=1)},
             {"name": "YoY Change %", "id": "YoY Change %", "type": "numeric", 
              "format": Format(precision=1, sign=Sign.positive)},
-            {"name": "Dependency Index", "id": "Dependency Index", "type": "numeric"}
+            {"name": "Dependency Index", "id": "Dependency Index", "type": "numeric", "format": Format(precision=0, group=Group.yes, group_delimiter=',')}
         ],
         style_table={'border': 'none', 'borderRadius': '15px', 
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)', 

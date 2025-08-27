@@ -326,7 +326,10 @@ def toggle_collapse_page_6(n, is_open, current_class):
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    if pathname == '/home':
+    # Default to home page if root path or None
+    if pathname == '/' or pathname is None:
+        return pages.page1.layout
+    elif pathname == '/home':
         return pages.page1.layout        
     # EIA Weekly
     elif pathname == '/stats/headline':
@@ -422,6 +425,7 @@ def display_page(pathname):
         return pages.page6_6.layout
     
     else:
-        return "404 Page Not Found"
+        # Default to home page for any unrecognized path
+        return pages.page1.layout
 if __name__ == '__main__':
     app.run_server(debug=False)

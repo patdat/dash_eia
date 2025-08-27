@@ -126,6 +126,15 @@ class steo:
 
 def main(offset_months=3):
     df = steo().get_all(offset_months)
+    
+    # Clear cache after updating data
+    try:
+        from src.utils.data_loader import invalidate_data_cache
+        print("Clearing cache after STEO data update...")
+        invalidate_data_cache()
+    except Exception as e:
+        print(f"Cache invalidation notice: {e}")
+    
     return df
 
 def read_pivot():

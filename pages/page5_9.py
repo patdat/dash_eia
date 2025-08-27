@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from dash import html, dash_table, dcc, Input, Output, callback
-from dash.dash_table.Format import Format
+from dash.dash_table.Format import Format, Group
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
@@ -284,10 +284,10 @@ def generate_trade_balance_table(padd_filter='US'):
         data=stats_df.to_dict('records'),
         columns=[
             {"name": "Country", "id": "Country"},
-            {"name": "Volume (kbd)", "id": "Volume (kbd)", "type": "numeric", "format": Format(precision=1)},
-            {"name": "Companies", "id": "Companies"},
-            {"name": "Ports", "id": "Ports"},
-            {"name": "PADDs", "id": "PADDs"},
+            {"name": "Volume (kbd)", "id": "Volume (kbd)", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Companies", "id": "Companies", "type": "numeric", "format": Format(precision=0)},
+            {"name": "Ports", "id": "Ports", "type": "numeric", "format": Format(precision=0)},
+            {"name": "PADDs", "id": "PADDs", "type": "numeric", "format": Format(precision=0)},
             {"name": "Avg API", "id": "Avg API", "type": "numeric", "format": Format(precision=1)},
             {"name": "Avg Sulfur %", "id": "Avg Sulfur %", "type": "numeric", "format": Format(precision=2)},
             {"name": "Stability (CV%)", "id": "Stability", "type": "numeric", "format": Format(precision=1)}

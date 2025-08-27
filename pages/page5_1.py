@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from dash import html, dash_table, dcc, Input, Output, callback
-from dash.dash_table.Format import Format, Group, Sign, Symbol
+from dash.dash_table.Format import Format, Group, Sign, Symbol, Scheme
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
@@ -20,18 +20,24 @@ def generate_market_summary_table(padd_filter='US'):
     summary = filtered_processor.get_market_summary(period_months=1)
     
     data = [
-        {'Metric': 'Total Import Volume (kbd)', 'Current': f"{summary['total_volume_current']:,.1f}", 
-         'Previous': f"{summary['total_volume_previous']:,.1f}", 
-         'Change %': f"{summary['volume_change_pct']:+.1f}%"},
-        {'Metric': 'Active Importers', 'Current': summary['active_importers'], 
-         'Previous': '-', 'Change %': '-'},
-        {'Metric': 'Source Countries', 'Current': summary['source_countries'], 
-         'Previous': '-', 'Change %': '-'},
-        {'Metric': 'Avg API Gravity', 'Current': f"{summary['avg_api']:.1f}", 
-         'Previous': '-', 'Change %': '-'},
-        {'Metric': 'Avg Sulfur Content (%)', 'Current': f"{summary['avg_sulfur']:.2f}", 
-         'Previous': '-', 'Change %': '-'},
-        {'Metric': 'Top PADD', 'Current': f"PADD {int(summary['top_padd'])}", 
+        {'Metric': 'Total Import Volume (kbd)', 
+         'Current': summary['total_volume_current'], 
+         'Previous': summary['total_volume_previous'], 
+         'Change %': summary['volume_change_pct']},
+        {'Metric': 'Active Importers', 
+         'Current': summary['active_importers'], 
+         'Previous': None, 'Change %': None},
+        {'Metric': 'Source Countries', 
+         'Current': summary['source_countries'], 
+         'Previous': None, 'Change %': None},
+        {'Metric': 'Avg API Gravity', 
+         'Current': summary['avg_api'], 
+         'Previous': None, 'Change %': None},
+        {'Metric': 'Avg Sulfur Content (%)', 
+         'Current': summary['avg_sulfur'], 
+         'Previous': None, 'Change %': None},
+        {'Metric': 'Top PADD', 
+         'Current': f"PADD {int(summary['top_padd'])}", 
          'Previous': '-', 'Change %': '-'},
     ]
     
@@ -39,9 +45,12 @@ def generate_market_summary_table(padd_filter='US'):
         data=data,
         columns=[
             {"name": "Metric", "id": "Metric"},
-            {"name": "Current Month", "id": "Current"},
-            {"name": "Previous Month", "id": "Previous"},
-            {"name": "Change", "id": "Change %"}
+            {"name": "Current Month", "id": "Current", "type": "any",
+             "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Previous Month", "id": "Previous", "type": "any",
+             "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Change", "id": "Change %", "type": "numeric",
+             "format": Format(precision=1, sign=Sign.positive)}
         ],
         style_table={'border': 'none', 'borderRadius': '15px', 
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
@@ -51,14 +60,30 @@ def generate_market_summary_table(padd_filter='US'):
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
-                'if': {'column_id': 'Change %', 'filter_query': '{Change %} contains "+"'},
+                'if': {'column_id': 'Change %', 'filter_query': '{Change %} > 0'},
                 'backgroundColor': 'lightgreen',
                 'color': 'green',
             },
             {
-                'if': {'column_id': 'Change %', 'filter_query': '{Change %} contains "-"'},
+                'if': {'column_id': 'Change %', 'filter_query': '{Change %} < 0'},
                 'backgroundColor': 'lightpink',
                 'color': '#c00000',
+            },
+            {
+                'if': {'row_index': 0, 'column_id': 'Current'},
+                'format': Format(precision=1, group=Group.yes, group_delimiter=',')
+            },
+            {
+                'if': {'row_index': 0, 'column_id': 'Previous'},
+                'format': Format(precision=1, group=Group.yes, group_delimiter=',')
+            },
+            {
+                'if': {'row_index': 3, 'column_id': 'Current'},
+                'format': Format(precision=1)
+            },
+            {
+                'if': {'row_index': 4, 'column_id': 'Current'},
+                'format': Format(precision=2)
             }
         ]
     )
@@ -80,10 +105,14 @@ def generate_disruption_alerts_table(padd_filter='US'):
         data=alerts.to_dict('records'),
         columns=[
             {"name": "Country", "id": "Country"},
-            {"name": "Change %", "id": "Change %", "type": "numeric", "format": Format(precision=1, sign=Sign.positive)},
-            {"name": "Volume Impact (MB)", "id": "Volume Impact (MB)", "type": "numeric", "format": Format(precision=0, scheme=Scheme.fixed)},
-            {"name": "Current kbd", "id": "Current kbd", "type": "numeric", "format": Format(precision=1)},
-            {"name": "Affected Companies", "id": "Affected Companies"},
+            {"name": "Change %", "id": "Change %", "type": "numeric", 
+             "format": Format(precision=1, sign=Sign.positive)},
+            {"name": "Volume Impact (MB)", "id": "Volume Impact (MB)", "type": "numeric", 
+             "format": Format(precision=0, scheme=Scheme.fixed, group=Group.yes, group_delimiter=',')},
+            {"name": "Current kbd", "id": "Current kbd", "type": "numeric", 
+             "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Affected Companies", "id": "Affected Companies", "type": "numeric",
+             "format": Format(precision=0)},
             {"name": "Signal", "id": "Signal"}
         ],
         style_table={'border': 'none', 'borderRadius': '15px', 

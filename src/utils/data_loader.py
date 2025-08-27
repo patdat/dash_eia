@@ -6,76 +6,152 @@ from src.utils.cache_storage import memory_cache, smart_file_cache, app_cache
 import os
 from functools import lru_cache
 from datetime import datetime
+import time
+import logging
+from src.utils.cache_settings import CACHE_CONFIG
+
+# Set up logging for cache performance monitoring
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class CachedDataLoader:
-    """Centralized data loader with built-in caching"""
+    """Centralized data loader with built-in caching and performance monitoring"""
     
     def __init__(self):
         self.data_dir = "./data"
         self.lookup_dir = "./lookup"
+        self.cache_hits = 0
+        self.cache_misses = 0
+        self.load_times = {}
     
-    @memory_cache(ttl_seconds=3600)  # Cache for 1 hour
+    @memory_cache(file_dependency="./data/wps/wps_gte_2015_pivot.feather")
     def load_wps_pivot_data(self) -> pd.DataFrame:
-        """Load main WPS pivot data with caching"""
+        """Load main WPS pivot data with file-based cache invalidation"""
         file_path = f"{self.data_dir}/wps/wps_gte_2015_pivot.feather"
         df = pd.read_feather(file_path)
         df["period"] = pd.to_datetime(df["period"])
         return df
     
-    @memory_cache(ttl_seconds=3600)
+    @memory_cache(file_dependency="./data/wps/wps_gte_2015.feather")
     def load_wps_data(self) -> pd.DataFrame:
-        """Load WPS data with caching"""
+        """Load WPS data with file-based cache invalidation"""
         file_path = f"{self.data_dir}/wps/wps_gte_2015.feather"
         df = pd.read_feather(file_path)
         df["period"] = pd.to_datetime(df["period"])
         return df
     
-    @memory_cache(ttl_seconds=3600)
+    @memory_cache(file_dependency="./data/wps/seasonality_data.feather")
     def load_seasonality_data(self) -> pd.DataFrame:
-        """Load seasonality data with caching"""
+        """Load seasonality data with file-based cache invalidation"""
         file_path = f"{self.data_dir}/wps/seasonality_data.feather"
         return pd.read_feather(file_path)
     
-    @memory_cache(ttl_seconds=3600)
+    @memory_cache(file_dependency="./data/wps/graph_line_data.feather")
     def load_line_data(self) -> pd.DataFrame:
-        """Load line graph data with caching"""
+        """Load line graph data with file-based cache invalidation"""
         file_path = f"{self.data_dir}/wps/graph_line_data.feather"
         df = pd.read_feather(file_path)
         df["period"] = pd.to_datetime(df["period"])
         return df
     
-    @memory_cache(ttl_seconds=3600)
+    @memory_cache(file_dependency="./data/steo/steo_pivot.feather")
     def load_steo_pivot_data(self) -> pd.DataFrame:
-        """Load STEO pivot data with caching"""
+        """Load STEO pivot data with file-based cache invalidation"""
         file_path = f"{self.data_dir}/steo/steo_pivot.feather"
         return pd.read_feather(file_path)
     
-    @memory_cache(ttl_seconds=3600)
+    @memory_cache(file_dependency="./data/steo/steo_pivot_dpr.feather")
     def load_steo_dpr_data(self) -> pd.DataFrame:
-        """Load STEO DPR data with caching"""
+        """Load STEO DPR data with file-based cache invalidation"""
         file_path = f"{self.data_dir}/steo/steo_pivot_dpr.feather"
         return pd.read_feather(file_path)
     
+    @memory_cache(file_dependency="./data/steo/steo_pivot_dpr_other.feather")
+    def load_steo_dpr_other_data(self) -> pd.DataFrame:
+        """Load STEO DPR Other data with file-based cache invalidation"""
+        file_path = f"{self.data_dir}/steo/steo_pivot_dpr_other.feather"
+        return pd.read_feather(file_path)
+    
+    @memory_cache(file_dependency="./data/cli/companylevelimports.parquet")
+    def load_cli_data(self) -> pd.DataFrame:
+        """Load Company Level Imports data with file-based cache invalidation"""
+        file_path = f"{self.data_dir}/cli/companylevelimports.parquet"
+        if os.path.exists(file_path):
+            return pd.read_parquet(file_path)
+        return pd.DataFrame()
+    
+    @memory_cache(file_dependency="./data/cli/companylevelimports_crude.parquet")
+    def load_cli_crude_data(self) -> pd.DataFrame:
+        """Load Company Level Crude Imports data with file-based cache invalidation"""
+        file_path = f"{self.data_dir}/cli/companylevelimports_crude.parquet"
+        if os.path.exists(file_path):
+            return pd.read_parquet(file_path)
+        return pd.DataFrame()
+    
     @smart_file_cache(
         file_dependencies=["./lookup/steo/mapping_dpr.csv"], 
-        ttl_seconds=3600
+        ttl_seconds=31536000  # Cache forever until file changes
     )
     def load_dpr_mapping(self) -> pd.DataFrame:
         """Load DPR mapping with smart cache invalidation"""
         return pd.read_csv(f"{self.lookup_dir}/steo/mapping_dpr.csv")
     
-    @memory_cache(ttl_seconds=7200)  # Cache for 2 hours (mapping data changes less frequently)
+    @smart_file_cache(
+        file_dependencies=["./lookup/steo/mapping_dpr_other.csv"], 
+        ttl_seconds=31536000  # Cache forever until file changes
+    )
+    def load_dpr_other_mapping(self) -> pd.DataFrame:
+        """Load DPR Other mapping with file-based cache invalidation"""
+        return pd.read_csv(f"{self.lookup_dir}/steo/mapping_dpr_other.csv")
+    
+    @memory_cache()  # Mappings rarely change, cache forever
     def load_production_mapping(self) -> dict:
-        """Load production mapping with caching"""
+        """Load production mapping with persistent caching"""
         from src.wps.mapping import production_mapping
         return production_mapping
     
-    @memory_cache(ttl_seconds=7200)
+    @memory_cache()  # Mappings rarely change, cache forever
     def load_ag_mapping(self) -> dict:
-        """Load AG grid mapping with caching"""
+        """Load AG grid mapping with persistent caching"""
         from src.wps.ag_mapping import ag_mapping
         return ag_mapping
+    
+    @memory_cache(file_dependency="./data/steo/steo_pivot_dpr.feather")
+    def load_processed_dpr_data(self, region: str = None) -> pd.DataFrame:
+        """Load and process DPR data with file-based cache invalidation for specific region"""
+        start_time = time.time()
+        
+        # Load base data
+        df = self.load_steo_dpr_data()
+        mapping_df = self.load_dpr_mapping()
+        
+        # Get actual metadata columns from the dataframe
+        metadata_cols = ['id', 'name', 'release_date', 'uom']
+        date_columns = [col for col in df.columns if col not in metadata_cols]
+        
+        # Melt the dataframe
+        df_melted = pd.melt(df, 
+                           id_vars=metadata_cols,
+                           value_vars=date_columns,
+                           var_name='delivery_month',
+                           value_name='value')
+        
+        # Convert to datetime
+        df_melted['delivery_month'] = pd.to_datetime(df_melted['delivery_month'])
+        
+        # Merge with mapping
+        df_melted = df_melted.merge(mapping_df[['id', 'region']], on='id', how='left')
+        
+        # Filter by region if specified
+        if region:
+            df_melted = df_melted[df_melted['region'] == region]
+        
+        load_time = time.time() - start_time
+        if CACHE_CONFIG.get('ENABLE_CACHE_METRICS'):
+            logger.info(f"Processed DPR data for region={region} in {load_time:.3f}s")
+        
+        return df_melted
     
     def get_filtered_data(self, data_type: str, start_date: str = "2015-01-01") -> pd.DataFrame:
         """Get filtered data with caching"""
@@ -95,8 +171,8 @@ class CachedDataLoader:
         # Apply filtering
         df_filtered = df[df["period"] > start_date].reset_index(drop=True)
         
-        # Cache the result
-        app_cache.set(cache_key, df_filtered, ttl_seconds=3600)
+        # Cache the result forever (until data changes)
+        app_cache.set(cache_key, df_filtered, ttl_seconds=31536000)  # 1 year
         
         return df_filtered
     
@@ -121,36 +197,64 @@ def get_initial_data_cached():
     return cached_loader.get_filtered_data("wps_pivot", "2015-01-01")
 
 
-@memory_cache(ttl_seconds=1800)  # 30 minutes cache
+@memory_cache(file_dependency="./data/wps/seasonality_data.feather")
 def get_seasonality_data_for_ids(id_list: tuple) -> pd.DataFrame:
-    """Get seasonality data for specific IDs with caching"""
+    """Get seasonality data for specific IDs with file-based cache invalidation"""
     df = cached_loader.load_seasonality_data()
     return df[df["id"].isin(list(id_list))]
 
 
-@memory_cache(ttl_seconds=1800)
+@memory_cache(file_dependency="./data/wps/graph_line_data.feather")
 def get_line_data_for_ids(id_list: tuple) -> pd.DataFrame:
-    """Get line data for specific IDs with caching"""
+    """Get line data for specific IDs with file-based cache invalidation"""
     df = cached_loader.load_line_data()
     return df[["period"] + list(id_list)]
 
 
 def preload_common_data():
-    """Preload commonly used data into cache"""
+    """Preload commonly used data into cache with performance tracking"""
     print("Preloading data into cache...")
+    start_time = time.time()
     
-    # Load main datasets
-    cached_loader.load_wps_pivot_data()
-    cached_loader.load_seasonality_data()
-    cached_loader.load_line_data()
-    cached_loader.load_production_mapping()
-    cached_loader.load_ag_mapping()
-    
-    # Load filtered datasets
-    cached_loader.get_filtered_data("wps_pivot")
-    cached_loader.get_filtered_data("line_data")
-    
-    print("Data preloading complete.")
+    try:
+        # Load WPS datasets
+        cached_loader.load_wps_pivot_data()
+        cached_loader.load_wps_data()
+        cached_loader.load_seasonality_data()
+        cached_loader.load_line_data()
+        
+        # Load STEO datasets
+        cached_loader.load_steo_pivot_data()
+        cached_loader.load_steo_dpr_data()
+        cached_loader.load_steo_dpr_other_data()
+        
+        # Load CLI datasets if available
+        cached_loader.load_cli_data()
+        cached_loader.load_cli_crude_data()
+        
+        # Load mappings
+        cached_loader.load_production_mapping()
+        cached_loader.load_ag_mapping()
+        cached_loader.load_dpr_mapping()
+        cached_loader.load_dpr_other_mapping()
+        
+        # Load filtered datasets
+        cached_loader.get_filtered_data("wps_pivot")
+        cached_loader.get_filtered_data("line_data")
+        
+        # Preload processed data for common regions
+        for region in ['Bakken', 'Eagle Ford', 'Permian', 'Haynesville']:
+            cached_loader.load_processed_dpr_data(region)
+        
+        total_time = time.time() - start_time
+        print(f"Data preloading complete in {total_time:.2f} seconds.")
+        
+        if CACHE_CONFIG.get('ENABLE_CACHE_METRICS'):
+            logger.info(f"Preloaded cache in {total_time:.2f}s")
+            
+    except Exception as e:
+        print(f"Error during preloading: {e}")
+        logger.error(f"Preload failed: {e}")
 
 
 def invalidate_data_cache():
@@ -229,11 +333,27 @@ def get_cache_stats():
     cache_keys = app_cache.keys()
     file_info = check_data_freshness()
     
-    return {
+    stats = {
         "total_cached_items": len(cache_keys),
         "cache_keys": cache_keys,
-        "data_files": file_info
+        "data_files": file_info,
+        "cache_performance": {
+            "hits": cached_loader.cache_hits,
+            "misses": cached_loader.cache_misses,
+            "hit_rate": cached_loader.cache_hits / max(1, cached_loader.cache_hits + cached_loader.cache_misses),
+            "load_times": cached_loader.load_times
+        },
+        "cache_config": {
+            "memory_cache_enabled": CACHE_CONFIG.get('ENABLE_MEMORY_CACHE'),
+            "file_cache_enabled": CACHE_CONFIG.get('ENABLE_FILE_CACHE'),
+            "max_items": CACHE_CONFIG.get('MAX_CACHE_ITEMS')
+        }
     }
+    
+    if CACHE_CONFIG.get('ENABLE_CACHE_METRICS'):
+        logger.info(f"Cache stats: Hit rate={stats['cache_performance']['hit_rate']:.2%}, Total items={stats['total_cached_items']}")
+    
+    return stats
 
 
 # Optional: Preload data when module is imported

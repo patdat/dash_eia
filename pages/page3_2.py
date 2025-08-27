@@ -4,27 +4,18 @@ import dash_daq as daq
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
+from src.utils.data_loader import cached_loader
 
-# Load data and mapping
-df = pd.read_feather('data/steo/steo_pivot_dpr.feather')
-mapping_df = pd.read_csv('lookup/steo/mapping_dpr.csv')
+# Load data using cached loader for better performance
+df = cached_loader.load_steo_dpr_data()
+mapping_df = cached_loader.load_dpr_mapping()
 
 # Get date columns (all columns that are not metadata)
 metadata_cols = ['id', 'name', 'release_date', 'uom']
 date_columns = [col for col in df.columns if col not in metadata_cols]
 
-# Melt the dataframe to have delivery_month as a column
-df_melted = pd.melt(df, 
-                    id_vars=metadata_cols,
-                    value_vars=date_columns,
-                    var_name='delivery_month',
-                    value_name='value')
-
-# Convert delivery_month to datetime
-df_melted['delivery_month'] = pd.to_datetime(df_melted['delivery_month'])
-
-# Merge with mapping to get region information
-df_melted = df_melted.merge(mapping_df[['id', 'region']], on='id', how='left')
+# Load ALL regions data (not just Bakken)
+df_melted = cached_loader.load_processed_dpr_data(region=None)
 
 # Get unique release dates sorted (most recent first)
 release_dates = sorted(df_melted['release_date'].unique(), reverse=True)

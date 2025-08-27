@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from dash import html, dash_table, dcc, Input, Output, callback
-from dash.dash_table.Format import Format
+from dash.dash_table.Format import Format, Scheme, Group
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
@@ -41,11 +41,11 @@ def generate_supply_disruption_alerts(padd_filter='US'):
         columns=[
             {"name": "Country", "id": "Country"},
             {"name": "Change %", "id": "Change %", "type": "numeric", "format": Format(precision=1)},
-            {"name": "Volume Impact (MB)", "id": "Volume Impact (MB)", "type": "numeric", "format": Format(precision=0, scheme=Scheme.fixed)},
-            {"name": "Current kbd", "id": "Current kbd", "type": "numeric", "format": Format(precision=1)},
+            {"name": "Volume Impact (MB)", "id": "Volume Impact (MB)", "type": "numeric", "format": Format(precision=0, scheme=Scheme.fixed, group=Group.yes, group_delimiter=',')},
+            {"name": "Current kbd", "id": "Current kbd", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
             {"name": "Signal", "id": "Signal"},
             {"name": "Severity", "id": "Severity"},
-            {"name": "Affected Companies", "id": "Affected Companies"}
+            {"name": "Affected Companies", "id": "Affected Companies", "type": "numeric", "format": Format(precision=0)}
         ],
         style_table={'border': 'none', 'borderRadius': '15px',
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)',

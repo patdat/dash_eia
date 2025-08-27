@@ -23,7 +23,10 @@ def generate_padd_summary_table():
         data=padd_summary.reset_index().to_dict('records'),
         columns=[
             {"name": col, "id": col, "type": "numeric" if col != "index" else "text",
-             "format": Format(precision=1) if col not in ["index", "MoM Change %"] else None}
+             "format": Format(precision=1, group=Group.yes, group_delimiter=',') if col == "Avg kbd" 
+                      else Format(precision=1) if col not in ["index", "Companies", "Countries"] 
+                      else Format(precision=0) if col in ["Companies", "Countries"]
+                      else None}
             for col in padd_summary.reset_index().columns
         ],
         style_table={'border': 'none', 'borderRadius': '15px',
@@ -51,7 +54,14 @@ def generate_port_analysis_table():
     
     return dash_table.DataTable(
         data=port_analysis.to_dict('records'),
-        columns=[{"name": col, "id": col} for col in port_analysis.columns],
+        columns=[
+            {"name": col, "id": col, "type": "numeric" if col not in ["Port", "PADD"] else "text",
+             "format": Format(precision=1, group=Group.yes, group_delimiter=',') if col == "Total Volume"
+                      else Format(precision=1) if col == "Market Share %"
+                      else Format(precision=0) if col in ["Companies", "Countries", "PADD"]
+                      else None}
+            for col in port_analysis.columns
+        ],
         style_table={'border': 'none', 'borderRadius': '15px',
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)',
                     'overflowX': 'auto'},

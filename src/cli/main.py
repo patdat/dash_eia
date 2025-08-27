@@ -32,7 +32,15 @@ def main():
             # cloud(df, 'regulatory/eia/companylevel', 'companylevelimports_crude.csv',df_index=False)
 
             releaseFile = pd.DataFrame({'category': ['wps'], 'release_date': [release_date]})
-            releaseFile.to_csv('./lookup/release_dates.csv', index=False)        
+            releaseFile.to_csv('./lookup/release_dates.csv', index=False)
+            
+            # Clear cache after updating data
+            try:
+                from src.utils.data_loader import invalidate_data_cache
+                print("Clearing cache after CLI data update...")
+                invalidate_data_cache()
+            except Exception as e:
+                print(f"Cache invalidation notice: {e}")        
             
         except:
             print('Error updating data.')

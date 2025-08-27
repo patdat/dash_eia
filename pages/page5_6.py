@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from dash import html, dash_table, dcc, Input, Output, callback
-from dash.dash_table.Format import Format
+from dash.dash_table.Format import Format, Group, Sign
 import plotly.graph_objects as go
 from src.cli.cli_data_processor import CLIDataProcessor
 from app import app
@@ -22,9 +22,9 @@ def generate_seasonality_table(padd_filter='US'):
         data=seasonality.to_dict('records'),
         columns=[
             {"name": "Month", "id": "Month Name"},
-            {"name": "Avg Volume (Mbbl)", "id": "Avg Volume", "type": "numeric", "format": Format(precision=1)},
-            {"name": "Seasonal Factor", "id": "Seasonal Factor", "type": "numeric", "format": Format(precision=1)},
-            {"name": "Deviation %", "id": "Deviation from Mean", "type": "numeric", "format": Format(precision=1)}
+            {"name": "Avg Volume (Mbbl)", "id": "Avg Volume", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Seasonal Factor", "id": "Seasonal Factor", "type": "numeric", "format": Format(precision=3)},
+            {"name": "Deviation %", "id": "Deviation from Mean", "type": "numeric", "format": Format(precision=1, sign=Sign.positive)}
         ],
         style_table={'border': 'none', 'borderRadius': '15px',
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
