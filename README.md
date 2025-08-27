@@ -120,12 +120,6 @@ dash_eia/
 4. **Store** - Optimized file formats for fast access
 5. **Cache** - Multi-level caching for performance
 
-## API Endpoints
-
-The application provides REST API endpoints for cache management:
-- `/api/cache/status` - Cache statistics
-- `/api/cache/clear` - Clear cache
-- `/api/cache/preload` - Preload common datasets
 
 ## Development
 
@@ -177,7 +171,7 @@ See `requirements.txt` for complete list.
 - Run `python main.py` for full refresh
 
 **Cache Issues**
-- Clear cache via API: `curl http://localhost:8050/api/cache/clear`
+- Cache is managed automatically on data updates
 
 ## Contributing
 

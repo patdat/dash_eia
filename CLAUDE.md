@@ -58,7 +58,6 @@ Multi-level caching implemented in `src/utils/cache_*`:
 - **Memory cache** with TTL expiration
 - **File-based cache** that invalidates on data updates
 - **Preload system** for common datasets at startup
-- Cache can be managed via API endpoints at `/api/cache/*`
 
 ### Page Routing Structure
 
