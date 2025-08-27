@@ -428,4 +428,4 @@ def display_page(pathname):
         # Default to home page for any unrecognized path
         return pages.page1.layout
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run(debug=False)
