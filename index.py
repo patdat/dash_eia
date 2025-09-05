@@ -74,7 +74,7 @@ sidebar = html.Div(
             html.Div([
                 html.A(
                     html.Img(
-                        src="/assets/best.jpg",  # Ensure this path is correct
+                        src="/assets/best.png",  # Ensure this path is correct
                         style={
                             'height': 'auto',  # Adjust height to maintain aspect ratio
                             'width': '50px',   # Adjust width to fit your design
@@ -86,7 +86,7 @@ sidebar = html.Div(
                     ),
                     href="https://www.google.com"  # Makes the image clickable
                 ),
-                html.A("PCIA", href="https://www.google.com", style={
+                html.A("Socar", href="https://www.google.com", style={
                     'text-decoration': 'none',
                     'color': 'black',
                     'font-size': '40px',
