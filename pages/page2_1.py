@@ -39,24 +39,28 @@ def generate_main_table(df):
 def generate_dash_table(df, idents, table_id):
     df = df.copy()
     df[df.columns[1:]] = df[df.columns[1:]].apply(pd.to_numeric, errors='coerce').round(1)
-    
+
     idents_ids = list(idents.keys())
     idents_names = list(idents.values())
     df = df[df['name'].isin(idents_ids)].set_index('name').reindex(idents_ids).reset_index()
     df['name'] = df['name'].replace(idents_ids, idents_names)
     df.rename(columns={'name': table_id}, inplace=True)
-    
+
+    # Check if this is a yield table (contains percentages)
+    is_yield_table = 'Yield' in table_id
+
     number_format = Format(
-        symbol=Symbol.yes, 
+        symbol=Symbol.yes,
         symbol_suffix='',
         groups=3,
         group=Group.yes,
         group_delimiter=',',
         decimal_delimiter='.',
         nully='N/A',
-        sign=Sign.parantheses
+        sign=Sign.parantheses,
+        precision=1 if is_yield_table else None  # Force 1 decimal for yields
     )
-    
+
     columns = [
         {"name": i, "id": i, "type": "numeric", "format": number_format} if i in df.columns[1:] else {"name": i, "id": i}
         for i in df.columns
@@ -109,22 +113,28 @@ def update_tables(data):
         'Gasoline Imports': gasoline_imports,
         'Gasoline Production': gasoline_production,
         'Gasoline Exports': gasoline_exports,
+        'Gasoline Yields': gasoline_yields,
+        'Gasoline Blended Yields': gasoline_blended_yields,
         'Distillate Stocks': distillate_stocks,
         'Distillate Imports': distillate_imports,
         'Distillate Production': distillate_production,
         'Distillate Exports': distillate_exports,
+        'Distillate Yields': distillate_yields,
         'Jet Stocks': jet_stocks,
         'Jet Imports': jet_imports,
         'Jet Production': jet_production,
         'Jet Exports': jet_exports,
+        'Jet Yields': jet_yields,
         'Fuel Oil Stocks': fueloil_stocks,
         'Fuel Oil Imports': fueloil_imports,
         'Fuel Oil Production': fueloil_production,
         'Fuel Oil Exports': fueloil_exports,
+        'Fuel Oil Yields': fueloil_yields,
         'Propane/Propylene Stocks': propane_propylene_stocks,
         'Propane/Propylene Imports': propane_propylene_imports,
         'Propane/Propylene Production': propane_propylene_production,
         'Propane/Propylene Exports': propane_propylene_exports,
+        'Propane/Propylene Yields': propane_yields,
         'CDU Utilization': refinery_utilization,
         'Feedstock Runs': refinery_feedstock_runs,
         'Gross Runs': refinery_gross_runs,
@@ -138,45 +148,45 @@ def update_tables(data):
     return html.Div(
         html.Div([
             html.Div([
-                html.H1('Headline', className='eia_h1_header'),                
+                html.H1('Headline', className='eia_h1_header'),
                 tables[0],
                 tables[1],
             ], className='eia_table_style'),
 
             html.Div([
-                html.H1('Crude', className='eia_h1_header'),  
+                html.H1('Crude', className='eia_h1_header'),
                 *tables[2:9],
-            ], className='eia_table_style'),  
-            
-            html.Div([
-                html.H1('Gasoline', className='eia_h1_header'),  
-                *tables[9:13],
             ], className='eia_table_style'),
-            
-            html.Div([
-                html.H1('Distillate', className='eia_h1_header'),  
-                *tables[13:17],
-            ], className='eia_table_style'),
-            
-            html.Div([
-                html.H1('Jet', className='eia_h1_header'),  
-                *tables[17:21],
-            ], className='eia_table_style'),
-            
-            html.Div([
-                html.H1('Fuel Oil', className='eia_h1_header'),  
-                *tables[21:25],
-            ], className='eia_table_style'),
-            
-            html.Div([
-                html.H1('Propane/Propylene', className='eia_h1_header'),  
-                *tables[25:29],
-            ], className='eia_table_style'),  
 
             html.Div([
-                html.H1('Refining', className='eia_h1_header'),  
-                *tables[29:33],
-            ], className='eia_table_style'),  
+                html.H1('Gasoline', className='eia_h1_header'),
+                *tables[9:15],  # Now includes 2 yield tables (indices 13-14)
+            ], className='eia_table_style'),
+
+            html.Div([
+                html.H1('Distillate', className='eia_h1_header'),
+                *tables[15:20],  # Shifted by 2, includes 1 yield table (index 19)
+            ], className='eia_table_style'),
+
+            html.Div([
+                html.H1('Jet', className='eia_h1_header'),
+                *tables[20:25],  # Shifted by 3, includes 1 yield table (index 24)
+            ], className='eia_table_style'),
+
+            html.Div([
+                html.H1('Fuel Oil', className='eia_h1_header'),
+                *tables[25:30],  # Shifted by 4, includes 1 yield table (index 29)
+            ], className='eia_table_style'),
+
+            html.Div([
+                html.H1('Propane/Propylene', className='eia_h1_header'),
+                *tables[30:35],  # Shifted by 5, includes 1 yield table (index 34)
+            ], className='eia_table_style'),
+
+            html.Div([
+                html.H1('Refining', className='eia_h1_header'),
+                *tables[35:39],  # Shifted by 6
+            ], className='eia_table_style'),
         ], style={'display': 'flex', 'width': '3280px'}),
         style={'display': 'flex', 'justify-content': 'left'}
     )

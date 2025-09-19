@@ -1090,5 +1090,366 @@ ag_mapping = {
         'commodity': 'Crude',
         'type': 'Cdu Capacity',
         'uom': 'kbd'
+    },
+
+    # Refinery Yields - TRUE Gasoline (excluding ethanol)
+    'gasolineYieldUS': {
+        'name': 'US Gasoline Yield (pct)',
+        'padd': 'US',
+        'commodity': 'Gasoline',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'gasolineYieldP1': {
+        'name': 'P1 Gasoline Yield (pct)',
+        'padd': 'P1',
+        'commodity': 'Gasoline',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'gasolineYieldP2': {
+        'name': 'P2 Gasoline Yield (pct)',
+        'padd': 'P2',
+        'commodity': 'Gasoline',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'gasolineYieldP3': {
+        'name': 'P3 Gasoline Yield (pct)',
+        'padd': 'P3',
+        'commodity': 'Gasoline',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'gasolineYieldP4': {
+        'name': 'P4 Gasoline Yield (pct)',
+        'padd': 'P4',
+        'commodity': 'Gasoline',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'gasolineYieldP5': {
+        'name': 'P5 Gasoline Yield (pct)',
+        'padd': 'P5',
+        'commodity': 'Gasoline',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'gasolineYieldP9': {
+        'name': 'P9 Gasoline Yield (pct)',
+        'padd': 'P9',
+        'commodity': 'Gasoline',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+
+    # Refinery Yields - Blended Gasoline (including ethanol)
+    'gasolineBlendedYieldUS': {
+        'name': 'US Gasoline Blended Yield (pct)',
+        'padd': 'US',
+        'commodity': 'Gasoline',
+        'type': 'Blended Yield',
+        'uom': 'pct'
+    },
+    'gasolineBlendedYieldP1': {
+        'name': 'P1 Gasoline Blended Yield (pct)',
+        'padd': 'P1',
+        'commodity': 'Gasoline',
+        'type': 'Blended Yield',
+        'uom': 'pct'
+    },
+    'gasolineBlendedYieldP2': {
+        'name': 'P2 Gasoline Blended Yield (pct)',
+        'padd': 'P2',
+        'commodity': 'Gasoline',
+        'type': 'Blended Yield',
+        'uom': 'pct'
+    },
+    'gasolineBlendedYieldP3': {
+        'name': 'P3 Gasoline Blended Yield (pct)',
+        'padd': 'P3',
+        'commodity': 'Gasoline',
+        'type': 'Blended Yield',
+        'uom': 'pct'
+    },
+    'gasolineBlendedYieldP4': {
+        'name': 'P4 Gasoline Blended Yield (pct)',
+        'padd': 'P4',
+        'commodity': 'Gasoline',
+        'type': 'Blended Yield',
+        'uom': 'pct'
+    },
+    'gasolineBlendedYieldP5': {
+        'name': 'P5 Gasoline Blended Yield (pct)',
+        'padd': 'P5',
+        'commodity': 'Gasoline',
+        'type': 'Blended Yield',
+        'uom': 'pct'
+    },
+    'gasolineBlendedYieldP9': {
+        'name': 'P9 Gasoline Blended Yield (pct)',
+        'padd': 'P9',
+        'commodity': 'Gasoline',
+        'type': 'Blended Yield',
+        'uom': 'pct'
+    },
+
+    # Refinery Yields - Distillate
+    'distillateYieldUS': {
+        'name': 'US Distillate Yield (pct)',
+        'padd': 'US',
+        'commodity': 'Distillate',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'distillateYieldP1': {
+        'name': 'P1 Distillate Yield (pct)',
+        'padd': 'P1',
+        'commodity': 'Distillate',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'distillateYieldP2': {
+        'name': 'P2 Distillate Yield (pct)',
+        'padd': 'P2',
+        'commodity': 'Distillate',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'distillateYieldP3': {
+        'name': 'P3 Distillate Yield (pct)',
+        'padd': 'P3',
+        'commodity': 'Distillate',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'distillateYieldP4': {
+        'name': 'P4 Distillate Yield (pct)',
+        'padd': 'P4',
+        'commodity': 'Distillate',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'distillateYieldP5': {
+        'name': 'P5 Distillate Yield (pct)',
+        'padd': 'P5',
+        'commodity': 'Distillate',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'distillateYieldP9': {
+        'name': 'P9 Distillate Yield (pct)',
+        'padd': 'P9',
+        'commodity': 'Distillate',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+
+    # Refinery Yields - Jet Fuel
+    'jetYieldUS': {
+        'name': 'US Jet Yield (pct)',
+        'padd': 'US',
+        'commodity': 'Jet',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'jetYieldP1': {
+        'name': 'P1 Jet Yield (pct)',
+        'padd': 'P1',
+        'commodity': 'Jet',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'jetYieldP2': {
+        'name': 'P2 Jet Yield (pct)',
+        'padd': 'P2',
+        'commodity': 'Jet',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'jetYieldP3': {
+        'name': 'P3 Jet Yield (pct)',
+        'padd': 'P3',
+        'commodity': 'Jet',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'jetYieldP4': {
+        'name': 'P4 Jet Yield (pct)',
+        'padd': 'P4',
+        'commodity': 'Jet',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'jetYieldP5': {
+        'name': 'P5 Jet Yield (pct)',
+        'padd': 'P5',
+        'commodity': 'Jet',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'jetYieldP9': {
+        'name': 'P9 Jet Yield (pct)',
+        'padd': 'P9',
+        'commodity': 'Jet',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+
+    # Refinery Yields - Fuel Oil
+    'fueloilYieldUS': {
+        'name': 'US Fuel Oil Yield (pct)',
+        'padd': 'US',
+        'commodity': 'Fuel Oil',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'fueloilYieldP1': {
+        'name': 'P1 Fuel Oil Yield (pct)',
+        'padd': 'P1',
+        'commodity': 'Fuel Oil',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'fueloilYieldP2': {
+        'name': 'P2 Fuel Oil Yield (pct)',
+        'padd': 'P2',
+        'commodity': 'Fuel Oil',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'fueloilYieldP3': {
+        'name': 'P3 Fuel Oil Yield (pct)',
+        'padd': 'P3',
+        'commodity': 'Fuel Oil',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'fueloilYieldP4': {
+        'name': 'P4 Fuel Oil Yield (pct)',
+        'padd': 'P4',
+        'commodity': 'Fuel Oil',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'fueloilYieldP5': {
+        'name': 'P5 Fuel Oil Yield (pct)',
+        'padd': 'P5',
+        'commodity': 'Fuel Oil',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'fueloilYieldP9': {
+        'name': 'P9 Fuel Oil Yield (pct)',
+        'padd': 'P9',
+        'commodity': 'Fuel Oil',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+
+    # Refinery Yields - Propane/Propylene
+    'propaneYieldUS': {
+        'name': 'US Propane Yield (pct)',
+        'padd': 'US',
+        'commodity': 'C3/C3=',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'propaneYieldP1': {
+        'name': 'P1 Propane Yield (pct)',
+        'padd': 'P1',
+        'commodity': 'C3/C3=',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'propaneYieldP2': {
+        'name': 'P2 Propane Yield (pct)',
+        'padd': 'P2',
+        'commodity': 'C3/C3=',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'propaneYieldP3': {
+        'name': 'P3 Propane Yield (pct)',
+        'padd': 'P3',
+        'commodity': 'C3/C3=',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
+    },
+    'propaneYieldP4P5': {
+        'name': 'P4P5 Propane Yield (pct)',
+        'padd': 'P4P5',
+        'commodity': 'C3/C3=',
+        'type': 'Refinery Yield',
+        'uom': 'pct'
     }
+}
+
+# Thematic yield dictionaries for easy access
+gasoline_yields = {
+    'gasolineYieldUS': 'US Gasoline Yield (pct)',
+    'gasolineYieldP1': 'P1 Gasoline Yield (pct)',
+    'gasolineYieldP2': 'P2 Gasoline Yield (pct)',
+    'gasolineYieldP3': 'P3 Gasoline Yield (pct)',
+    'gasolineYieldP4': 'P4 Gasoline Yield (pct)',
+    'gasolineYieldP5': 'P5 Gasoline Yield (pct)',
+    'gasolineYieldP9': 'P9 Gasoline Yield (pct)'
+}
+
+gasoline_blended_yields = {
+    'gasolineBlendedYieldUS': 'US Gasoline Blended Yield (pct)',
+    'gasolineBlendedYieldP1': 'P1 Gasoline Blended Yield (pct)',
+    'gasolineBlendedYieldP2': 'P2 Gasoline Blended Yield (pct)',
+    'gasolineBlendedYieldP3': 'P3 Gasoline Blended Yield (pct)',
+    'gasolineBlendedYieldP4': 'P4 Gasoline Blended Yield (pct)',
+    'gasolineBlendedYieldP5': 'P5 Gasoline Blended Yield (pct)',
+    'gasolineBlendedYieldP9': 'P9 Gasoline Blended Yield (pct)'
+}
+
+distillate_yields = {
+    'distillateYieldUS': 'US Distillate Yield (pct)',
+    'distillateYieldP1': 'P1 Distillate Yield (pct)',
+    'distillateYieldP2': 'P2 Distillate Yield (pct)',
+    'distillateYieldP3': 'P3 Distillate Yield (pct)',
+    'distillateYieldP4': 'P4 Distillate Yield (pct)',
+    'distillateYieldP5': 'P5 Distillate Yield (pct)',
+    'distillateYieldP9': 'P9 Distillate Yield (pct)'
+}
+
+jet_yields = {
+    'jetYieldUS': 'US Jet Yield (pct)',
+    'jetYieldP1': 'P1 Jet Yield (pct)',
+    'jetYieldP2': 'P2 Jet Yield (pct)',
+    'jetYieldP3': 'P3 Jet Yield (pct)',
+    'jetYieldP4': 'P4 Jet Yield (pct)',
+    'jetYieldP5': 'P5 Jet Yield (pct)',
+    'jetYieldP9': 'P9 Jet Yield (pct)'
+}
+
+fueloil_yields = {
+    'fueloilYieldUS': 'US Fuel Oil Yield (pct)',
+    'fueloilYieldP1': 'P1 Fuel Oil Yield (pct)',
+    'fueloilYieldP2': 'P2 Fuel Oil Yield (pct)',
+    'fueloilYieldP3': 'P3 Fuel Oil Yield (pct)',
+    'fueloilYieldP4': 'P4 Fuel Oil Yield (pct)',
+    'fueloilYieldP5': 'P5 Fuel Oil Yield (pct)',
+    'fueloilYieldP9': 'P9 Fuel Oil Yield (pct)'
+}
+
+propane_yields = {
+    'propaneYieldUS': 'US Propane Yield (pct)',
+    'propaneYieldP1': 'P1 Propane Yield (pct)',
+    'propaneYieldP2': 'P2 Propane Yield (pct)',
+    'propaneYieldP3': 'P3 Propane Yield (pct)',
+    'propaneYieldP4P5': 'P4P5 Propane Yield (pct)'
+}
+
+# Combined yields dictionary for all products
+all_refinery_yields = {
+    **gasoline_yields,
+    **gasoline_blended_yields,
+    **distillate_yields,
+    **jet_yields,
+    **fueloil_yields,
+    **propane_yields
 }

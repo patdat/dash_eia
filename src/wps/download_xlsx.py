@@ -75,18 +75,12 @@ def main():
         pv = pivot_data(df)
         pv.reset_index(drop=True,inplace=True)
         pv.to_feather('./data/wps/wps_gte_2015_pivot.feather')
-        
-        # Clear cache to ensure fresh data is loaded
-        from src.utils.cache_storage import app_cache
-        from src.utils.data_loader import invalidate_data_cache
-        print("Clearing cache after data update...")
-        invalidate_data_cache()
-        
+
         # Generate derived data after successful download
         print("Generating line data...")
-        generate_line_data(use_fresh_data=True)
+        generate_line_data()
         print("Generating seasonality data...")
-        generate_seasonality_data(use_fresh_data=True)
+        generate_seasonality_data()
         print("Data update complete!")
     except Exception as e:
         print(f'Error during download/processing: {e}')

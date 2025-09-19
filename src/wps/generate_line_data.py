@@ -7,13 +7,10 @@ def format_value(val, column_name):
         val = val/1000
     return val
 
-def generate_line_data(use_fresh_data=False):
-    # When called from download_xlsx, read fresh data directly
-    if use_fresh_data:
-        df = pd.read_feather('./data/wps/wps_gte_2015_pivot.feather')
-        df['period'] = pd.to_datetime(df['period'])
-    else:
-        df = get_initial_data()
+def generate_line_data():
+    # Always read fresh data directly
+    df = pd.read_feather('./data/wps/wps_gte_2015_pivot.feather')
+    df['period'] = pd.to_datetime(df['period'])
     
     df.set_index('period', inplace=True)
     cols = df.columns

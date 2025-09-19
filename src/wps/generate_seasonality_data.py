@@ -116,16 +116,12 @@ def pivot_individual_data(df,id):
     df.insert(0, 'id', id)
     return df
 
-def generate_seasonality_data(use_fresh_data=False):
+def generate_seasonality_data():
     ids = list(production_mapping.keys())
-    
-    # When called from download_xlsx, read fresh data directly
-    if use_fresh_data:
-        import pandas as pd
-        data = pd.read_feather('./data/wps/wps_gte_2015_pivot.feather')
-        data['period'] = pd.to_datetime(data['period'])
-    else:
-        data = get_initial_data()
+
+    # Always read fresh data directly
+    data = pd.read_feather('./data/wps/wps_gte_2015_pivot.feather')
+    data['period'] = pd.to_datetime(data['period'])
     
     df = get_seasonality_data(data)
     dfs = pd.DataFrame()
