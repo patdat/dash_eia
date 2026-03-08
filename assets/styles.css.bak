@@ -1,0 +1,340 @@
+.ag-theme-alpine-dark {
+    --ag-foreground-color: rgb(126, 46, 132);
+    --ag-background-color: white;
+    --ag-header-foreground-color: red;
+    --ag-header-background-color: grey;
+    --ag-odd-row-background-color: white;
+    --ag-header-column-resize-handle-color: rgb(126, 46, 132);
+
+    --ag-font-size: 17px;
+    --ag-font-family: monospace;
+}
+
+/* Import multiple fonts for font selector */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+
+
+/* CSS for main content area */
+.content-area {
+    margin-left: 18rem;    /* Space for sidebar */
+    margin-right: 2rem;    /* Right margin for padding */
+    padding: 2rem;         /* Padding inside the content area */
+}
+
+/* Apply the font and background globally */
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: #f4f5f9; /* Custom RGB background color */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em; /* Tighter tracking like Goldman Sans */
+}
+
+/* Ensure other text elements also inherit the font */
+h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Optional: Adjust font weights for better hierarchy */
+h1, h2, h3 {
+    font-weight: 600;
+}
+
+h4, h5, h6 {
+    font-weight: 500;
+}
+
+/* Data tables and numbers benefit from tabular nums */
+.ag-theme-alpine-dark, table, .data-value {
+    font-feature-settings: 'tnum' on;
+}
+
+.large-font .dash-daq-toggle-switch__label {
+    font-size: 200px !important;
+}
+
+/* Optional: Add a hover effect for better user interaction */
+.nav, .nav-item, .btn, .btn-block {
+    width: 100%; /* Ensures each element fills its container */
+    margin: 0; /* Removes margin */
+    padding: 0; /* Eliminates padding inside nav elements */
+    border-radius: 10px; /* Rounder corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shaded effect for floating appearance */
+    transition: box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
+
+/* Optional: Add a hover effect for better user interaction */
+.btn:hover, .btn-block:hover {
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
+
+
+/* Default style for the sidebar button */
+.sidebar-button.page-button {
+    padding: 0.75rem 1.25rem;
+    /* Additional styles can be added here if needed */
+}
+
+/* Default style for the sidebar button */
+.sidebar-button.subpage-button {
+    padding: 0.75rem 1.25rem;
+    /* Additional styles can be added here if needed */
+}
+
+/* General sidebar styles */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 18rem;
+    padding: 0;
+    background-color: #f4f5f9; /* Custom RGB background color */
+    overflow-y: auto;
+    z-index: 1001; /* Ensure sidebar is above other content */
+    border-right: 1px solid #bfbec4; /* Thick grey border to the right */
+}
+
+/* Styling for all navigation links */
+.nav-link {
+    color: black; /* Black text for readability */
+    background-color: #f4f5f9; /* Custom RGB background color */
+    padding: 0.75rem 1.25rem; /* Consistent padding */
+    margin: 0; /* No margin for a flush look */
+    text-decoration: none; /* No underline */
+    display: block; /* Block display to fill the container */
+    width: 100%; /* Ensure full width coverage */
+    text-align: left; /* Align text to the left */
+}
+
+.nav-link:hover {
+    background-color: #f4f5f9; /* Red background on hover */
+    color: black; /* Light grey text on hover */
+    box-shadow: 0px 0px 8px 3px rgba(255,255,255,0.6); /* White glow effect */
+    text-shadow: 0px 0px 5px rgba(255,255,255,0.5); /* Soft white text shadow */
+    transition: all 0.3s ease; /* Smooth transition for all effects */
+    font-weight: bold;
+}
+
+.nav-link.active {
+    background-color: #f4f5f9 !important; /* Orange background when active */
+    color:black !important; /* Keep text white when active */
+    border-left: 10px solid #e97132; /* Red left border */
+    font-weight: bold;
+}
+
+.subpage-button {
+    font-weight: bold;
+    background-color:  #f4f5f9; /* Red background */
+    color: black; /* White text */
+    display: block;
+    width: 100%; /* Full width */
+    text-align: left;
+    border: none;
+    padding: 0.75rem 1.25rem; /* Corrected padding */
+    margin: 0; /* No margin */
+}
+
+.subpage-button:hover, .subpage-button:focus {
+    background-color: #f4f5f9; /* Slightly darker red on hover */
+    color: black;
+    box-shadow: 0px 0px 8px 3px rgba(255,255,255,0.6); /* White glow effect */
+    text-shadow: 0px 0px 5px rgba(255,255,255,0.5); /* Soft white text shadow */
+    transition: all 0.3s ease; /* Smooth transition for all effects */
+    font-weight: bold;
+}
+
+.page-button {
+    font-weight: bold;
+    background-color: #c00000; /* Red background */
+    color: white; /* White text */
+    display: block;
+    width: 100%; /* Full width */
+    text-align: left;
+    border: none;
+    padding: 0.75rem 1.25rem; /* Corrected padding */
+    margin: 0; /* No margin */
+    position: relative; /* Required for pseudo-element positioning */
+    overflow: hidden; /* Keeps the pseudo-element within the button bounds */
+}
+
+.page-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%; /* Start from the left */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2); /* Light white overlay */
+    transition: all 0.3s ease; /* Smooth transition for the effect */
+    pointer-events: none; /* Prevent mouse events on the pseudo-element */
+}
+
+.page-button::after {
+    content: '\25BC' !important; /* Down arrow */
+    position: absolute;
+    right: 1rem;
+    font-size: 1rem;
+    transition: transform 0.3s ease; /* Smooth transition for the rotation */
+}
+
+.page-button.open::after {
+    content: '\25B2' !important; /* Up arrow */
+}
+
+.page-button.closed::after {
+    content: '\25BC' !important; /* Down arrow */
+}
+
+.page-button:hover::before {
+    animation: flash 0.5s forwards; /* Animation named 'flash', run forwards */
+}
+
+@keyframes flash {
+    0% {
+        left: -100%; /* Start off the left side of the button */
+    }
+    100% {
+        left: 100%; /* Move to the right side of the button */
+    }
+}
+
+.page-button:hover,
+.page-button:focus {
+    background-color: #c00000; /* Keep the background color on hover/focus */
+    color: white;
+    box-shadow: none; /* Optional: Remove box shadow if you want no pop effect */
+    text-shadow: none; /* Optional: Remove text shadow if you want no pop effect */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Ensure smooth color transition */
+    font-weight: bold;
+}
+
+
+/* assets/styles.css */
+
+.eia-weekly-top-spacing {
+    height: 15px;
+}
+
+.eia-weekly-header-title {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.eia_table_style {
+    margin-bottom: 20px !important;
+    width: 700px !important;
+    margin-right: 20px !important;
+}
+
+.eia_h1_header {
+    text-align: left !important;
+    color: black !important;
+    font-size: 12pt !important;
+    font-weight: bold;    
+}
+
+/* assets/custom_styles.css */
+.graph-container {
+    border-radius: 15px !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    background-color: white !important;  /* Optional: ensures the background color of the graph container is white */
+    padding: 10px !important;
+}
+
+.eia-weekly-graph-container {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    grid-gap: 20px !important;
+    justify-content: space-around !important;
+    width: 4000px !important; /* Adjust this value as needed to fit your graphs */
+    height: 610px !important; /* Adjust this value as needed to fit your graphs */
+}
+
+.eia-dpr-graph-container {
+    display: grid !important;
+    grid-template-columns: repeat(13, 1fr) !important;
+    grid-gap: 20px !important;
+    justify-content: space-around !important;
+    width: 9500px !important; /* Adjust this value as needed to fit your graphs */
+    height: 610px !important; /* Adjust this value as needed to fit your graphs */
+}
+
+/* Homepage Specific Styles */
+.metric-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12) !important;
+}
+
+.section-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+}
+
+.section-explore-btn:hover {
+    transform: translateX(5px);
+    transition: transform 0.2s ease;
+}
+
+/* FontAwesome Icons Loading */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+
+
+.eia-weekly-graph-page-layout {
+    margin-top: -25px;
+}
+
+/* Custom CSS for the grid */
+.highlight-column {
+    background-color: #bfbec4 !important;
+}
+.highlight-row {
+    background-color: #bfbec4 !important;
+}
+
+.ag-theme-alpine .ag-row.ag-row-selected {
+    background-color: #c00000 !important;
+    color: white; /* Optional: Change the text color for better contrast */
+}
+
+/* Target the dropdown calendar of the DatePicker */
+.custom-date-picker .DateInput_input,
+.custom-date-picker .DateInput {
+    background-color: white !important;  /* Red background for input fields */
+    color: #c00000 !important;  /* White text color */
+}
+
+.custom-date-picker .DayPicker_weekHeader {
+    color: white !important;  /* White text color for weekday headers */
+}
+
+/* Hover and selected states for days */
+.custom-date-picker td.CalendarDay__hovered {
+    background-color: #ff6666 !important;  /* Lighter red on hover */
+    color: white !important;
+}
+
+/* Style for selected day */
+.custom-date-picker td.CalendarDay__selected {
+    background-color: #c00000 !important;  /* White background when a single day is selected */
+    color: white !important;  /* Red text for selected day */
+}
+
+/* Style for the days in between the range */
+.custom-date-picker td.CalendarDay__selected_span {
+    background-color: #f0f0f0 !important;  /* Orange background for the days within the selected range */
+    color: #c00000 !important;  /* White text for better contrast */
+}
+
+
+

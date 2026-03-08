@@ -5,7 +5,7 @@ import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import random
-from src.utils.data_loader import cached_loader
+from src.utils.data_loader import loader
 
 def create_metric_card(title, value, change, icon, color):
     return dbc.Card([
@@ -428,8 +428,7 @@ clientside_callback(
 )
 def update_metrics(n):
     try:
-        # Load the latest data using cached loader
-        df = cached_loader.load_wps_pivot_data()
+        df = loader.load_wps_pivot_data()
         
         # Get the latest two periods for comparison
         df['period'] = pd.to_datetime(df['period'])

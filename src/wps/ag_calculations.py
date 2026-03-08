@@ -1,14 +1,14 @@
 import pandas as pd
 from src.wps.ag_mapping import ag_mapping
-from src.utils.data_loader import cached_loader
+from src.utils.data_loader import loader
 
 class DataProcessor:
     def __init__(self, file_path='./data/wps/wps_gte_2015_pivot.feather'):
         self.file_path = file_path
 
     def get_initial_data(self):
-        """Load data using cached loader for better performance"""
-        df = cached_loader.load_wps_pivot_data()
+        """Load data for AG Grid"""
+        df = loader.load_wps_pivot_data()
         
         # Ensure period column exists and is datetime
         if 'period' not in df.columns:
@@ -39,8 +39,8 @@ class DataProcessor:
         return df
 
     def get_ag_mapping(self, df):
-        """Use cached mapping data for better performance"""
-        ag_mapping_data = cached_loader.load_ag_mapping()
+        """Load mapping data"""
+        ag_mapping_data = loader.load_ag_mapping()
         
         id_to_name_mapping = {key: value['name'] for key, value in ag_mapping_data.items()}
         id_to_padd_mapping = {key: value['padd'] for key, value in ag_mapping_data.items()}

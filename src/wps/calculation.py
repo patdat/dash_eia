@@ -10,16 +10,15 @@ from app import app
 
 from src.utils.variables import year_1_string, year_2_string, year_3_string, full_year_range_normal_string, full_year_range_last_five_years_string
 
-# Import cached data utilities
-from src.utils.data_loader import cached_loader, get_seasonality_data_for_ids, get_line_data_for_ids
+from src.utils.data_loader import loader, get_seasonality_data_for_ids, get_line_data_for_ids
 
 
 ### data retrieval functions ############################################
 
 
 def get_initial_data():
-    """Load initial data using cached loader"""
-    return cached_loader.get_filtered_data("wps_pivot", "2015-01-01")
+    """Load initial data"""
+    return loader.get_filtered_data("wps_pivot", "2015-01-01")
 
 
 ### graph creation functions ###########################################
@@ -131,7 +130,6 @@ def create_callbacks(app, page_id, num_graphs, idents):
         btn_36m,
         btn_all,
     ):
-        # Use cached data loading
         seag_data = get_seasonality_data_for_ids(tuple(idents))
         line_data = get_line_data_for_ids(tuple(idents))
 

@@ -3,18 +3,6 @@ import dash_bootstrap_components as dbc
 from app import app  # Ensure this import points to where your Dash app is initialized
 from app import initial_data
 
-# Preload cache for faster performance
-from src.utils.data_loader import preload_common_data
-import os
-
-# Preload cache only in production or when explicitly enabled
-if os.getenv("PRELOAD_CACHE", "true").lower() == "true":
-    try:
-        preload_common_data()
-        print("Cache preloaded successfully!")
-    except Exception as e:
-        print(f"Cache preloading failed: {e}")
-
 import pages.page1      # Home
 import pages.page2_1    # Headline
 import pages.page2_2    # Crude
@@ -428,4 +416,4 @@ def display_page(pathname):
         # Default to home page for any unrecognized path
         return pages.page1.layout
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True, port=8051)

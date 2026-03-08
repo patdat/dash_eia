@@ -4,11 +4,10 @@ import dash_daq as daq
 import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
-from src.utils.data_loader import cached_loader
+from src.utils.data_loader import loader
 
-# Load data and mapping
-df = cached_loader.load_steo_dpr_other_data()
-mapping_df = cached_loader.load_dpr_other_mapping()
+df = loader.load_steo_dpr_other_data()
+mapping_df = loader.load_dpr_other_mapping()
 
 # Get date columns (all columns that are not metadata)
 metadata_cols = ['id', 'name', 'release_date', 'uom']

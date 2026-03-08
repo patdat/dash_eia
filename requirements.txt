@@ -16,3 +16,5 @@ flask==3.1.2
 xlrd==2.0.1  # For reading .xls Excel files
 openpyxl==3.1.5  # For reading .xlsx Excel files
 watchdog==6.0.0  # Optional: for automatic data file monitoring
+jupyterlab
+jupyterlab-dash

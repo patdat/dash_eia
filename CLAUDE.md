@@ -6,98 +6,105 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Running the Application
 ```bash
-# Main dashboard application
-python index.py
+python index.py                     # Dashboard at http://localhost:8050
+python main.py                      # Full data refresh (all modules)
+```
 
-# Full data refresh - updates all modules
-python main.py
-
-# Module-specific data updates
-python -m src.steo.download_xlsx    # Weekly petroleum data
-python -m src.steo.download         # STEO forecast data  
+### Module-Specific Data Updates
+```bash
+python -m src.wps.download_xlsx     # Weekly petroleum data (WPS)
+python -m src.steo.download         # STEO forecast data
 python -m src.cli.main              # Company-level import data
+python -m src.cli.download          # CLI raw download
 ```
 
 ### Dependencies
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt     # Python 3.11.5
 ```
 
 ## Architecture Overview
 
-This is a multi-module Dash application for energy market analysis using EIA data. The architecture consists of three main data processing pipelines that feed into a unified dashboard interface.
+Multi-module Dash application for energy market analysis using EIA data. Five data modules feed into 50+ dashboard pages via a single-page app with manual URL routing.
+
+### Entry Points
+
+- **`app.py`** — Dash app initialization, loads initial WPS pivot data into `initial_data` dict. Exports `app` and `initial_data`.
+- **`index.py`** — Main entry point. Imports all page modules (registering their callbacks), defines the sidebar navigation, URL routing (`display_page` callback), and sidebar collapse callbacks.
 
 ### Data Processing Modules
 
-**WPS (Weekly Petroleum Status)** - `src/wps/`
-- Downloads weekly petroleum data from EIA
-- Processes stocks, production, imports data
-- Generates derived datasets for line charts and seasonality analysis
-- Uses mapping dictionaries to translate EIA series IDs to readable names
+**WPS (Weekly Petroleum Status)** — `src/wps/`
+- Downloads `psw09.xls` from EIA, parses all sheets, pivots by series ID
+- `download_xlsx.py` → `generate_additional_tickers.py` → `generate_line_data.py` + `generate_seasonality_data.py`
+- `mapping.py` contains the master `production_mapping` dict (EIA series ID → human name)
+- `ag_mapping.py` defines AG Grid column configurations
+- `table_mapping.py` defines table groupings used by page2_1 headline page
 
-**STEO (Short-Term Energy Outlook)** - `src/steo/`
-- Processes EIA forecast data with historical tracking
-- Creates pivot tables for time series analysis
-- Tracks forecast evolution over release dates
+**STEO (Short-Term Energy Outlook)** — `src/steo/`
+- Downloads monthly STEO Excel archives, tracks forecast evolution across release dates
+- `chart_dpr.py` handles DPR (Drilling Productivity Report) chart generation with melted pivot data
+- Metadata/mappings in `lookup/steo/` CSV files
 
-**CLI (Company Level Imports)** - `src/cli/`
-- Processes company-level crude oil import data
-- Categorizes by API gravity and sulfur content
-- Provides quality arbitrage and refinery dependency analysis
+**CLI (Company Level Imports)** — `src/cli/`
+- `cli_data_processor.py` contains `CLIDataProcessor` class — loads parquet, categorizes by API gravity (Heavy/Medium/Light) and sulfur content (Sweet/Medium/Sour), converts monthly totals to kbd
+- Data stored as zstd-compressed Parquet
 
-### Data Storage Pattern
+**MSG** — `src/msg/`
+- Parallel structure to WPS (same download/parse pattern) but for a separate data source
+- Has its own `mapping.py`, `generate_line_data.py`, `generate_seasonality_data.py`
 
-All processed data is stored in optimized formats:
-- **Feather format** (`.feather`) for fast DataFrame loading
-- **Parquet format** (`.parquet`) for compressed storage
-- Located in `data/{module}/` directories
+### WPS Page Pattern (page2_*.py)
 
-### Caching System
+Pages 2_2 through 2_9 follow a shared pattern using `src/wps/calculation.py`:
 
-Multi-level caching implemented in `src/utils/cache_*`:
-- **Memory cache** with TTL expiration
-- **File-based cache** that invalidates on data updates
-- **Preload system** for common datasets at startup
+1. Define `idents` dict at top (EIA series IDs → display names for that commodity)
+2. Define `graph_sections_input()` grouping graph IDs into named sections
+3. Call `create_layout(page_id, commodity, graph_sections_input)` to generate the layout
+4. Callbacks are created by `create_callbacks()` in `calculation.py`, which wires up:
+   - Chart toggle (seasonality vs line view)
+   - Year range toggles via `src/utils/variables.py` constants
+   - Time range buttons (1m, 6m, 12m, 36m, all)
+   - Graph rendering via `graph_line.py` (trend charts) and `graph_seag.py` (seasonality charts)
 
-### Page Routing Structure
+### URL Routing
 
-Pages follow a hierarchical numbering system:
-- `page1.py` - Home dashboard
-- `page2_*.py` - EIA Weekly (WPS) analysis pages (15 pages)
-- `page3_*.py` - EIA DPR drilling productivity pages (10 pages)
-- `page4_*.py` - EIA STEO forecast pages (6 pages)
-- `page5_*.py` - EIA CLI import analysis pages (10 pages)
-- `page6_*.py` - Placeholder for future modules
+Routes are defined in `index.py:display_page()` as a manual if/elif chain:
+- `/home` → page1, `/stats/*` → page2_*, `/dpr/*` → page3_*
+- `/steo/*` → page4_*, `/cli/*` → page5_*, `/psm/*` → page6_*
 
-Each page module must:
-1. Define a `layout` variable or function
-2. Include Dash callbacks for interactivity
-3. Be imported in `index.py` to register routes
+### Data Flow
 
-### Key Data Mappings
+1. `app.py` loads WPS pivot data into `initial_data` → stored in `dcc.Store(id='data-store', storage_type='session')`
+2. page2_1 (Headline) has a "Generate and Save Data" button that triggers full WPS download + regeneration
+3. Other pages load data directly via `src/utils/data_loader.py` → `simple_loader.py`
 
-The application relies heavily on mapping dictionaries:
-- `src/wps/mapping.py` - Maps EIA series IDs to descriptions
-- `src/wps/ag_mapping.py` - AG Grid column definitions
-- `lookup/` directory - Contains reference data files
+### Key Configuration
 
-### Adding New Features
+**`src/utils/variables.py`** — Year constants used across all WPS pages:
+- `year_1_string`, `year_2_string`, `year_3_string` — the three comparison years
+- `range_selector_normal` / `range_selector_last_five_years` — seasonality range keys
+- `type_to_remove` — historical year types to filter out
+- These need periodic manual updates as years roll forward
 
-When adding new analysis pages:
-1. Create page file in `pages/` following naming convention
-2. Import in `index.py` with descriptive comment
-3. Add navigation entry in sidebar structure
-4. Use `src/utils/data_loader.py` for data access with caching
+### Data Storage
 
-When adding new data sources:
+- `data/wps/` — Feather files (`.feather`) for fast pandas loading
+- `data/steo/` — Feather files for STEO pivot tables
+- `data/cli/` — Parquet files (`.parquet`) with zstd compression
+- `lookup/` — CSV reference data (STEO metadata, WPS mappings, release dates)
+
+### Adding New Pages
+
+1. Create `pages/pageN_X.py` following the naming convention
+2. For WPS-style pages: define `idents` dict + `graph_sections_input()`, use `create_layout`/`create_callbacks`
+3. Import in `index.py` with a descriptive comment
+4. Add URL route in the `display_page()` callback chain
+5. Add sidebar navigation entry in the appropriate `dbc.Collapse` section
+
+### Adding New Data Sources
+
 1. Create module in `src/` with download and processing scripts
-2. Store processed data in `data/{module}/` 
-3. Add update command to `main.py`
-4. Document data refresh command in README.md
-
-### Performance Considerations
-
-- Always use cached data loading via `data_loader.py`
-- Process data to Feather/Parquet format for production
-- Implement callbacks efficiently with minimal data transfer
-- Use AG Grid for large tabular displays
+2. Store processed data in `data/{module}/` as Feather or Parquet
+3. Add loader methods to `SimpleDataLoader` in `src/utils/simple_loader.py`
+4. Add update command to `main.py`

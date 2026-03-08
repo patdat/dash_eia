@@ -1,7 +1,4 @@
-"""
-Simple data loading utilities without caching for EIA Dash application
-Direct file loading for local development - no caching overhead
-"""
+"""Data loading utilities for EIA Dash application"""
 import pandas as pd
 import os
 from datetime import datetime
@@ -11,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class SimpleDataLoader:
-    """Direct data loader without caching - perfect for local development"""
+    """Data loader for reading processed EIA data files"""
 
     def __init__(self):
         self.data_dir = "./data"
@@ -146,20 +143,16 @@ class SimpleDataLoader:
 
 
 # Create a single instance to use throughout the app
-simple_loader = SimpleDataLoader()
-
-# For backward compatibility - apps can import either name
-cached_loader = simple_loader
+loader = SimpleDataLoader()
 
 
-# Standalone functions for specific data filtering
 def get_seasonality_data_for_ids(id_list: tuple) -> pd.DataFrame:
     """Get seasonality data for specific IDs"""
-    df = simple_loader.load_seasonality_data()
+    df = loader.load_seasonality_data()
     return df[df["id"].isin(list(id_list))]
 
 
 def get_line_data_for_ids(id_list: tuple) -> pd.DataFrame:
     """Get line data for specific IDs"""
-    df = simple_loader.load_line_data()
+    df = loader.load_line_data()
     return df[["period"] + list(id_list)]

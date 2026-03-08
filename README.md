@@ -1,3 +1,14 @@
+# main color palet for socar
+
+| Color     | Hex       | Swatch                                                        |
+|-----------|-----------|-------------------------------------------------------------- |
+| Black     | `#000000` | ![#000000](https://placehold.co/15x15/000000/000000.png)      |
+| Cyan/Blue | `#00ADEF` | ![#00ADEF](https://placehold.co/15x15/00ADEF/00ADEF.png)      |
+| Red       | `#EC002B` | ![#EC002B](https://placehold.co/15x15/EC002B/EC002B.png)      |
+| Green     | `#4AB04D` | ![#4AB04D](https://placehold.co/15x15/4AB04D/4AB04D.png)      |
+| Orange    | `#F68E2F` | ![#F68E2F](https://placehold.co/15x15/F68E2F/F68E2F.png)      |
+| Purple    | `#6A1B9A` | ![#6A1B9A](https://placehold.co/15x15/6A1B9A/6A1B9A.png)      |
+
 # EIA Energy Dashboard
 
 A comprehensive energy data analytics dashboard for tracking petroleum markets, drilling productivity, and energy forecasts using EIA (Energy Information Administration) data.
@@ -22,7 +33,6 @@ This dashboard provides real-time analysis of energy markets by processing multi
 - **Quality Arbitrage Analysis** - Track API gravity and sulfur content for trading opportunities
 - **PADD Regional Analytics** - Supply/demand imbalances across US petroleum districts
 - **Interactive Visualizations** - Dynamic charts with customizable time series analysis
-- **Advanced Caching System** - Multi-level caching for instant data access
 
 ## Quick Start
 
@@ -92,7 +102,7 @@ dash_eia/
 │   ├── wps/              # Weekly petroleum processing
 │   ├── steo/             # Forecast data processing
 │   ├── cli/              # Import data processing
-│   └── utils/            # Shared utilities & caching
+│   └── utils/            # Shared utilities
 ├── data/                  # Processed data storage
 └── lookup/                # Reference tables
 ```
@@ -102,9 +112,6 @@ dash_eia/
 ### Performance Optimization
 - **Feather Format** - Ultra-fast DataFrame serialization
 - **Parquet Compression** - Efficient storage for large datasets
-- **LRU Memory Cache** - In-memory caching with TTL
-- **Smart File Cache** - Automatic invalidation on data updates
-- **Preload System** - Common datasets loaded at startup
 
 ### Trading & Analysis Tools
 - **Supply Disruption Detection** - Automated alerts for import anomalies
@@ -118,7 +125,6 @@ dash_eia/
 2. **Transform** - Data cleaning and standardization
 3. **Enrich** - Calculated fields and derived metrics
 4. **Store** - Optimized file formats for fast access
-5. **Cache** - Multi-level caching for performance
 
 
 ## Development
@@ -127,7 +133,7 @@ dash_eia/
 1. Create page file in `pages/` following naming convention
 2. Import in `index.py` with descriptive comment
 3. Add navigation entry in sidebar
-4. Use `src/utils/data_loader.py` for cached data access
+4. Use `src/utils/data_loader.py` for data access
 
 ### Adding Data Sources
 1. Create module in `src/` with download scripts
@@ -156,7 +162,6 @@ See `requirements.txt` for complete list.
 
 - Keep browser cache enabled for static assets
 - Use AG Grid for tables with >100 rows
-- Preload cache on startup in production
 - Update data during off-peak hours
 - Monitor `app.log` for performance metrics
 
@@ -164,14 +169,8 @@ See `requirements.txt` for complete list.
 
 ### Common Issues
 
-**Slow Initial Load**
-- Run `python -c "from src.utils.data_loader import preload_common_data; preload_common_data()"`
-
 **Missing Data**
 - Run `python main.py` for full refresh
-
-**Cache Issues**
-- Cache is managed automatically on data updates
 
 ## Contributing
 
