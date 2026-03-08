@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from src.utils.data_loader import loader
+from src.utils.colors import BLUE, RED, GREEN
 
 df = loader.load_steo_dpr_data()
 mapping_df = loader.load_dpr_mapping()
@@ -99,7 +100,7 @@ def create_duc_waterfall_chart(waterfall_df, region):
         name='Wells Drilled',
         x=waterfall_df['month'],
         y=waterfall_df['wells_drilled'],
-        marker_color='lightblue',
+        marker_color=BLUE,
         hovertemplate='<b>Wells Drilled</b><br>' +
                      'Month: %{x}<br>' +
                      'Count: %{y}<br>' +
@@ -111,7 +112,7 @@ def create_duc_waterfall_chart(waterfall_df, region):
         name='Wells Completed',
         x=waterfall_df['month'],
         y=-waterfall_df['wells_completed'],
-        marker_color='lightcoral',
+        marker_color=RED,
         hovertemplate='<b>Wells Completed</b><br>' +
                      'Month: %{x}<br>' +
                      'Count: %{y}<br>' +
@@ -124,7 +125,7 @@ def create_duc_waterfall_chart(waterfall_df, region):
         x=waterfall_df['month'],
         y=waterfall_df['ducs_inventory'],
         mode='lines+markers',
-        line=dict(color='darkgreen', width=3),
+        line=dict(color=GREEN, width=3),
         marker=dict(size=8),
         yaxis='y2',
         hovertemplate='<b>DUC Inventory</b><br>' +
@@ -209,21 +210,21 @@ def create_regional_duc_comparison(df_melted, release_date, month):
         name='Wells Drilled',
         x=comparison_df['region'],
         y=comparison_df['wells_drilled'],
-        marker_color='lightblue'
+        marker_color=BLUE
     ))
     
     fig.add_trace(go.Bar(
         name='Wells Completed',
         x=comparison_df['region'],
         y=comparison_df['wells_completed'],
-        marker_color='lightcoral'
+        marker_color=RED
     ))
     
     fig.add_trace(go.Bar(
         name='DUC Inventory',
         x=comparison_df['region'],
         y=comparison_df['ducs_inventory'],
-        marker_color='darkgreen'
+        marker_color=GREEN
     ))
     
     fig.update_layout(

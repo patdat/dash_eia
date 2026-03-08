@@ -8,6 +8,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from sklearn.preprocessing import MinMaxScaler
 from src.utils.data_loader import loader
+from src.utils.colors import RED, COLORSCALE_SEQUENTIAL
 
 df = loader.load_steo_dpr_data()
 mapping_df = loader.load_dpr_mapping()
@@ -131,7 +132,7 @@ def create_productivity_scatter(productivity_df, x_metric, y_metric, size_metric
             marker=dict(
                 size=region_sizes,
                 color=region_data[color_metric],
-                colorscale='Viridis',
+                colorscale=COLORSCALE_SEQUENTIAL,
                 showscale=True if region == regions[0] else False,
                 colorbar=dict(title=color_metric.replace('_', ' ').title()) if region == regions[0] else None,
                 opacity=0.7,
@@ -202,7 +203,7 @@ def create_efficiency_frontier(productivity_df):
             y=frontier_data['production_per_rig'],
             mode='lines',
             name='Efficiency Frontier',
-            line=dict(color='red', width=3, dash='dash'),
+            line=dict(color=RED, width=3, dash='dash'),
             hoverinfo='skip'
         ))
     

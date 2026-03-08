@@ -7,6 +7,7 @@ import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
 from app import app
+from src.utils.colors import BLUE, PURPLE, GRAY_300
 
 processor = CLIDataProcessor()
 
@@ -52,7 +53,7 @@ def generate_supply_disruption_alerts(padd_filter='US'):
                     'overflowX': 'auto'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '11px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -112,7 +113,7 @@ def create_alert_timeline(padd_filter='US'):
         y=monthly.values,
         mode='lines',
         name='Monthly Volume',
-        line=dict(color='#2E86AB', width=2),
+        line=dict(color=BLUE, width=2),
         yaxis='y'
     ))
     
@@ -122,7 +123,7 @@ def create_alert_timeline(padd_filter='US'):
         y=pct_change.values,
         mode='lines',
         name='Month-over-Month Change',
-        line=dict(color='#A23B72', width=1),
+        line=dict(color=PURPLE, width=1),
         yaxis='y2'
     ))
     
@@ -278,7 +279,7 @@ def create_anomaly_detection_chart(padd_filter='US'):
         y=monthly.values,
         mode='lines+markers',
         name='Monthly Volume',
-        line=dict(color='#2E86AB', width=2),
+        line=dict(color=BLUE, width=2),
         marker=dict(size=6)
     ))
     
@@ -435,7 +436,7 @@ def generate_key_metrics_cards(padd_filter='US'):
         {
             'title': 'Total Volume',
             'value': f'{total_volume:,.0f} kbd',
-            'color': '#2E86AB',
+            'color': BLUE,
             'icon': '📊'
         },
         {
@@ -447,7 +448,7 @@ def generate_key_metrics_cards(padd_filter='US'):
         {
             'title': 'Source Countries',
             'value': str(num_countries),
-            'color': '#A23B72',
+            'color': PURPLE,
             'icon': '🌍'
         },
         {
@@ -517,7 +518,7 @@ layout = html.Div([
         html.Div([
             html.Div(id='alert-timeline-chart',
                     style={'width': '48%', 'display': 'inline-block'}),
-            html.Div(id='anomaly-detection-chart',
+            html.Div(id='market-alerts-anomaly-detection-chart',
                     style={'width': '48%', 'display': 'inline-block', 'float': 'right'})
         ], style={'marginBottom': '30px'}),
         
@@ -536,7 +537,7 @@ layout = html.Div([
     [Output('key-metrics-cards', 'children'),
      Output('alerts-table', 'children'),
      Output('alert-timeline-chart', 'children'),
-     Output('anomaly-detection-chart', 'children'),
+     Output('market-alerts-anomaly-detection-chart', 'children'),
      Output('concentration-risk-gauge', 'children'),
      Output('risk-heatmap', 'children')],
     Input('padd-filter-alerts', 'value')

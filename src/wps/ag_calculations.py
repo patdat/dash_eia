@@ -59,6 +59,26 @@ class DataProcessor:
         
         return df
 
+    def convert_kb_rows_to_mb(self, df):
+        """Convert stock rows from kb to mb for display and downstream graph use."""
+        metadata_cols = ['id', 'name', 'padd', 'commodity', 'type', 'uom']
+        value_cols = [col for col in df.columns if col not in metadata_cols]
+        kb_mask = df['uom'].eq('kb')
+
+        if not kb_mask.any():
+            return df
+
+        df = df.copy()
+        df.loc[kb_mask, value_cols] = (
+            df.loc[kb_mask, value_cols]
+            .apply(pd.to_numeric, errors='coerce')
+            .div(1000)
+            .round(1)
+        )
+        df.loc[kb_mask, 'uom'] = 'mb'
+        df.loc[kb_mask, 'name'] = df.loc[kb_mask, 'name'].str.replace('(kb)', '(mb)', regex=False)
+        return df
+
     def get_columns_to_include(self, df, startDate, endDate):
         cols = df.columns.tolist()
         remove_cols_for_evaluation = ['id', 'name', 'padd', 'commodity', 'type', 'uom']
@@ -75,6 +95,7 @@ class DataProcessor:
     def get_table(self, start='1900-01-01', end='2030-12-31'):
         df = self.get_initial_data()
         df = self.get_ag_mapping(df)
+        df = self.convert_kb_rows_to_mb(df)
         df = self.get_columns_to_include(df, start, end)
         return df
 
@@ -113,7 +134,7 @@ class DataProcessor:
                     if (params.value == null || params.value === 0 || Number(params.value) === 0) {
                         return '-';
                     }
-                    return dagfuncs.numberFormatter(params.value);
+                    return dagfuncs.numberFormatterByUnit(params.value, params.data?.uom);
                 }'''
             }
             columnDefs[i]['cellStyle'] = {'textAlign': 'right'}
@@ -125,8 +146,6 @@ class DataProcessor:
             columnDefs[col]['floatingFilter'] = True  
 
         columnDefs[1]['hide'] = True
-        columnDefs[5]['hide'] = True
-
         return columnDefs
 
     def get_columns(self, df):

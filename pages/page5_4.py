@@ -5,6 +5,7 @@ from dash.dash_table.Format import Format, Group, Sign, Symbol
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
+from src.utils.colors import GRAY_300, NEGATIVE
 
 processor = CLIDataProcessor()
 
@@ -33,7 +34,7 @@ def generate_padd_summary_table():
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '12px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -44,7 +45,7 @@ def generate_padd_summary_table():
             {
                 'if': {'column_id': 'MoM Change %', 'filter_query': '{MoM Change %} < 0'},
                 'backgroundColor': 'lightpink',
-                'color': '#c00000'
+                'color': NEGATIVE
             }
         ]
     )
@@ -67,7 +68,7 @@ def generate_port_analysis_table():
                     'overflowX': 'auto'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '11px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         page_size=15,
         sort_action="native"

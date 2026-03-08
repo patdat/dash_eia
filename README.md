@@ -163,7 +163,6 @@ See `requirements.txt` for complete list.
 - Keep browser cache enabled for static assets
 - Use AG Grid for tables with >100 rows
 - Update data during off-peak hours
-- Monitor `app.log` for performance metrics
 
 ## Troubleshooting
 

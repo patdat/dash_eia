@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from src.utils.data_loader import loader
+from src.utils.colors import RED
 
 df = loader.load_steo_dpr_other_data()
 mapping_df = loader.load_dpr_other_mapping()
@@ -165,27 +166,27 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("STEO DPR Other Data Table", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("STEO DPR Other Data Table", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
         
         html.Div([
             html.Button("◄", id="prev-release-btn-other", n_clicks=0, 
                        style={"fontSize": "1.5em", "padding": "5px 15px", "margin": "0 5px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer", "borderRadius": "4px"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer", "borderRadius": "4px"}),
             html.Div(id="release-date-display-other", 
                     children=f"Release: {release_dates[0].strftime('%B %Y')}",
                     style={"fontSize": "1.3em", "padding": "0 20px", "color": "#333"}),
             html.Button("►", id="next-release-btn-other", n_clicks=0,
                        style={"fontSize": "1.5em", "padding": "5px 15px", "margin": "0 5px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer", "borderRadius": "4px"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer", "borderRadius": "4px"}),
             html.Div([
                 html.Label("Evolution: ", style={"marginLeft": "30px", "marginRight": "10px", "fontSize": "1.1em"}),
                 daq.BooleanSwitch(
                     id="evolution-switch-other",
                     on=False,
-                    color="#c00000",
+                    color=RED,
                     disabled=False
                 )
             ], style={"display": "flex", "alignItems": "center", "marginLeft": "20px"})
@@ -194,12 +195,12 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Graphs", id="graph-view-btn-other", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
             html.Button("Download CSV", id="csv-button-dpr-other", n_clicks=0, 
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0",
                               "backgroundColor": "white", "border": "2px solid #f0f0f0",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -232,7 +233,7 @@ layout = html.Div([
         # Graph panel (initially hidden)
         html.Div([
             html.Div([
-                html.H3("Data Visualization", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Data Visualization", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Button("✕", id="close-graph-btn-other", n_clicks=0,
                            style={"position": "absolute", "top": "10px", "right": "10px",
                                   "background": "transparent", "border": "none",
@@ -282,7 +283,8 @@ def export_data_as_csv(n_clicks):
     [Input("prev-release-btn-other", "n_clicks"),
      Input("next-release-btn-other", "n_clicks"),
      Input("evolution-switch-other", "on")],
-    [State("current-release-index-other", "data")]
+    [State("current-release-index-other", "data")],
+    prevent_initial_call=True,
 )
 def update_release_date(prev_clicks, next_clicks, evolution_on, current_index):
     # Determine which button was clicked

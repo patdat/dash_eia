@@ -5,6 +5,7 @@ from dash.dash_table.Format import Format, Group, Sign
 import plotly.graph_objects as go
 from src.cli.cli_data_processor import CLIDataProcessor
 from app import app
+from src.utils.colors import GRAY_300, NEGATIVE
 
 processor = CLIDataProcessor()
 
@@ -30,7 +31,7 @@ def generate_seasonality_table(padd_filter='US'):
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '12px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -41,7 +42,7 @@ def generate_seasonality_table(padd_filter='US'):
             {
                 'if': {'column_id': 'Deviation from Mean', 'filter_query': '{Deviation from Mean} < -5'},
                 'backgroundColor': 'lightpink',
-                'color': '#c00000'
+                'color': NEGATIVE
             }
         ]
     )

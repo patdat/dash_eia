@@ -3,21 +3,23 @@ from src.wps.download_xlsx import main as download_xlsx
 from src.wps.generate_seasonality_data import generate_seasonality_data
 from src.wps.generate_line_data import generate_line_data
 from src.wps.table_mapping import *
+from src.utils.colors import RED, GRAY_300, POSITIVE, NEGATIVE
 import dash
-from dash import html, dash_table, Input, Output
+from dash import html, dash_table, dcc, Input, Output
 from dash.dash_table.Format import Format, Group, Sign, Symbol
-from app import app
+from app import app, initial_data
 import pandas as pd
 
 layout = html.Div([
-    html.Button('Generate and Save Data', id='generate-data-btn'),
+    dcc.Store(id='headline-data-store', data=initial_data),
+    html.Button('Generate and Save Data', id='headline-generate-data-btn'),
     html.Div(style={'height': '20px'}),  # Buffer separator
-    html.Div(id='tables-container')  # Container to hold the tables
+    html.Div(id='headline-tables-container')  # Container to hold the tables
 ])
 
 @app.callback(
-    Output('data-store', 'data'),
-    Input('generate-data-btn', 'n_clicks'),
+    Output('headline-data-store', 'data'),
+    Input('headline-generate-data-btn', 'n_clicks'),
     prevent_initial_call=True
 )
 def generate_data(n_clicks):
@@ -73,7 +75,7 @@ def generate_dash_table(df, idents, table_id):
             data=df.to_dict('records'),
             style_table={'border': 'none', 'borderRadius': '15px', 'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'},
             style_cell={'textAlign': 'left', 'padding': '5px', 'fontFamily': 'Arial', 'fontSize': '12px', 'border': '1px solid lightgrey', 'borderRadius': '10px'},
-            style_header={'backgroundColor': '#bfbec4', 'color': 'black', 'fontWeight': 'bold'},
+            style_header={'backgroundColor': GRAY_300, 'color': 'black', 'fontWeight': 'bold'},
             style_cell_conditional=[
                 {'if': {'column_id': table_id}, 'width': '200px'},
                 {'if': {'column_id': df.columns[1]}, 'width': '70px', 'textAlign': 'right'},
@@ -82,15 +84,15 @@ def generate_dash_table(df, idents, table_id):
             ],
             style_data_conditional=[
                 {'if': {'filter_query': f'{{{df.columns[3]}}} > 0', 'column_id': df.columns[3]}, 'backgroundColor': 'lightgreen', 'color': 'green'},
-                {'if': {'filter_query': f'{{{df.columns[3]}}} < 0', 'column_id': df.columns[3]}, 'backgroundColor': 'lightpink', 'color': '#c00000'}
+                {'if': {'filter_query': f'{{{df.columns[3]}}} < 0', 'column_id': df.columns[3]}, 'backgroundColor': 'lightpink', 'color': NEGATIVE}
             ]
         ),
         style={'margin-bottom': '20px'}
     )
 
 @app.callback(
-    Output('tables-container', 'children'),
-    Input('data-store', 'data')
+    Output('headline-tables-container', 'children'),
+    Input('headline-data-store', 'data')
 )
 def update_tables(data):
     if data is None:

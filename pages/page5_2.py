@@ -7,6 +7,7 @@ import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
 from app import app
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, PURPLE, GRAY_300, NEGATIVE
 
 processor = CLIDataProcessor()
 
@@ -87,7 +88,7 @@ def generate_top_importers_table(padd_filter='US'):
                     'overflowX': 'auto'},
         style_cell={'textAlign': 'left', 'padding': '10px', 
                    'fontFamily': 'Arial', 'fontSize': '11px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black', 
+        style_header={'backgroundColor': GRAY_300, 'color': 'black', 
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -98,7 +99,7 @@ def generate_top_importers_table(padd_filter='US'):
             {
                 'if': {'column_id': 'YoY Change %', 'filter_query': '{YoY Change %} < 0'},
                 'backgroundColor': 'lightpink',
-                'color': '#c00000',
+                'color': NEGATIVE,
             },
             {
                 'if': {'column_id': 'Dependency Index', 'filter_query': '{Dependency Index} > 5000'},
@@ -136,7 +137,7 @@ def generate_dependency_matrix(padd_filter='US'):
                     'overflowX': 'auto'},
         style_cell={'textAlign': 'center', 'padding': '8px',
                    'fontFamily': 'Arial', 'fontSize': '11px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -315,7 +316,7 @@ def create_quality_profile_chart(padd_filter='US'):
         name='API Gravity',
         x=top_10.index,
         y=top_10['Avg API'],
-        marker_color='#2E86AB',
+        marker_color=BLUE,
         yaxis='y',
         text=top_10['Avg API'].apply(lambda x: f'{x:.1f}'),
         textposition='outside'
@@ -325,7 +326,7 @@ def create_quality_profile_chart(padd_filter='US'):
         name='Sulfur %',
         x=top_10.index,
         y=top_10['Avg Sulfur'],
-        marker_color='#A23B72',
+        marker_color=PURPLE,
         yaxis='y2',
         text=top_10['Avg Sulfur'].apply(lambda x: f'{x:.1f}'),
         textposition='outside'
@@ -421,12 +422,12 @@ def create_padd_distribution_chart(padd_filter='US'):
     
     fig = px.bar(dist_df, x='Company', y='Percentage', color='PADD',
                  color_discrete_map={
-                     'PADD 1': '#2E86AB',
-                     'PADD 2': '#A23B72', 
-                     'PADD 3': '#F18F01',
-                     'PADD 4': '#C73E1D',
-                     'PADD 5': '#6A994E',
-                     'PADD 6': '#BC4B51'
+                     'PADD 1': BLUE,
+                     'PADD 2': PURPLE,
+                     'PADD 3': ORANGE,
+                     'PADD 4': RED,
+                     'PADD 5': GREEN,
+                     'PADD 6': RED
                  })
     
     fig.update_layout(

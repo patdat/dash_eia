@@ -7,6 +7,7 @@ import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
 from app import app
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, PURPLE, GRAY_300
 
 processor = CLIDataProcessor()
 
@@ -73,7 +74,7 @@ def create_sankey_diagram(padd_filter='US'):
             thickness=20,
             line=dict(color="black", width=0.5),
             label=labels,
-            color=["#2E86AB"] * len(top_countries) + ["#A23B72"] * len(top_companies) + ["#F18F01"] * len(top_padds)
+            color=[BLUE] * len(top_countries) + [PURPLE] * len(top_companies) + [ORANGE] * len(top_padds)
         ),
         link=dict(
             source=sources,
@@ -156,7 +157,7 @@ def create_route_analysis_chart(padd_filter='US'):
         x=top_routes['Volume'],
         y=top_routes['Route'],
         orientation='h',
-        marker_color='#2E86AB',
+        marker_color=BLUE,
         text=top_routes['Volume'].apply(lambda x: f'{x:.0f}'),
         textposition='outside'
     ))
@@ -218,7 +219,7 @@ def create_diversification_analysis(padd_filter='US'):
         mode='markers+text',
         marker=dict(
             size=div_df['Companies'] * 2,
-            color='#2E86AB',
+            color=BLUE,
             line=dict(width=2, color='white')
         ),
         text=div_df['PADD'],
@@ -297,7 +298,7 @@ def generate_trade_balance_table(padd_filter='US'):
                     'overflowX': 'auto'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '11px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {

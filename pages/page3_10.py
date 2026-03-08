@@ -8,6 +8,7 @@ import numpy as np
 from datetime import datetime, timedelta
 import math
 from src.utils.data_loader import loader
+from src.utils.colors import BLUE, CHART_SEQUENCE
 
 df = loader.load_steo_dpr_data()
 mapping_df = loader.load_dpr_mapping()
@@ -149,7 +150,7 @@ def create_radar_chart(radar_df):
     fig = go.Figure()
     
     # Color palette for regions
-    colors = px.colors.qualitative.Set3
+    colors = CHART_SEQUENCE
     
     for i, region in enumerate(regions):
         if region not in normalized_df['region'].values:
@@ -219,7 +220,7 @@ def create_performance_ranking_chart(radar_df):
         x=sorted_df['composite_score'],
         y=sorted_df['region'],
         orientation='h',
-        marker_color='lightblue',
+        marker_color=BLUE,
         text=sorted_df['composite_score'].round(1),
         textposition='outside',
         hovertemplate='<b>%{y}</b><br>' +

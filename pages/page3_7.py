@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 from src.utils.data_loader import loader
+from src.utils.colors import COLORSCALE_HEATMAP
 
 df = loader.load_steo_dpr_data()
 mapping_df = loader.load_dpr_mapping()
@@ -111,7 +112,7 @@ def create_efficiency_heatmap(efficiency_df, metric='production_per_rig'):
         z=heatmap_data.values,
         x=[d.strftime('%Y-%m') for d in heatmap_data.columns],
         y=heatmap_data.index,
-        colorscale='RdYlGn',
+        colorscale=COLORSCALE_HEATMAP,
         hoverongaps=False,
         hovertemplate='<b>%{y}</b><br>' +
                      'Month: %{x}<br>' +

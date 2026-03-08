@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from src.wps.ag_calculations import DataProcessor
 from src.utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, PURPLE, POSITIVE, NEGATIVE, CHART_SEQUENCE, COLORSCALE_HEATMAP
 
 # Initialize the data processor
 processor = DataProcessor()
@@ -28,7 +29,7 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("Refinery Utilization & Crack Spread Analytics", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("Refinery Utilization & Crack Spread Analytics", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
 
         html.Div([
@@ -48,8 +49,8 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Export Analytics", id="export-analytics-btn-p13", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -59,12 +60,12 @@ layout = html.Div([
         # Top row - Utilization charts
         html.Div([
             html.Div([
-                html.H3("Refinery Utilization by PADD Region", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Refinery Utilization by PADD Region", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="refinery-utilization-gauge", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Crude Runs vs Production Capacity", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Crude Runs vs Production Capacity", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="crude-runs-capacity-chart", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -72,12 +73,12 @@ layout = html.Div([
         # Middle row - Crack spread analysis
         html.Div([
             html.Div([
-                html.H3("3-2-1 Crack Spread Proxy", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("3-2-1 Crack Spread Proxy", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="crack-spread-proxy", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Product Yield Analysis", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Product Yield Analysis", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="product-yield-analysis", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -85,17 +86,17 @@ layout = html.Div([
         # Bottom row - Advanced analytics
         html.Div([
             html.Div([
-                html.H3("Refinery Margin Indicator", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Refinery Margin Indicator", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="refinery-margin-indicator", style={"height": "350px"})
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Capacity Utilization Heatmap", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Capacity Utilization Heatmap", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="utilization-heatmap", style={"height": "350px"})
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Refinery Performance Metrics", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Refinery Performance Metrics", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div(id="refinery-performance-table", style={"height": "350px", "padding": "10px", "backgroundColor": "#f8f8f8", "border": "1px solid #ddd"})
             ], style={"width": "32%"}),
         ], style={"display": "flex"}),
@@ -261,7 +262,7 @@ def update_refinery_utilization_gauge(data):
         delta = {'reference': 85, 'position': "top"},  # 85% is typical target
         gauge = {
             'axis': {'range': [None, 100]},
-            'bar': {'color': "#c00000"},
+            'bar': {'color': RED},
             'steps': [
                 {'range': [0, 70], 'color': "#ffcccc"},
                 {'range': [70, 85], 'color': "#ffeecc"},
@@ -312,7 +313,7 @@ def update_crude_runs_capacity(data):
     
     # Plot crude runs for each PADD over time
     padds = ['P1', 'P2', 'P3', 'P4', 'P5']
-    colors = ['#c00000', '#1f77b4', '#ff7f0e', '#2ca02c', '#9467bd']
+    colors = CHART_SEQUENCE[:5]
     
     for i, padd in enumerate(padds):
         if padd in refinery_data['crude_runs']:
@@ -434,7 +435,7 @@ def update_crack_spread_proxy(data):
                     y=spread_values_sampled,
                     mode='lines+markers',
                     name='3-2-1 Spread Proxy',
-                    line=dict(color='#c00000', width=2),
+                    line=dict(color=RED, width=2),
                     marker=dict(size=3)
                 ))
                 
@@ -517,7 +518,7 @@ def update_product_yield_analysis(data):
                         hole=0.4,
                         textinfo='label+percent+value',
                         texttemplate='%{label}<br>%{value:.1f}%',
-                        marker_colors=['#c00000', '#1f77b4', '#ff7f0e', '#2ca02c']
+                        marker_colors=[RED, BLUE, ORANGE, GREEN]
                     ))
     
     fig.update_layout(
@@ -564,7 +565,7 @@ def update_refinery_margin_indicator(data):
         delta = {'reference': 80, 'position': "top"},
         gauge = {
             'axis': {'range': [None, 100]},
-            'bar': {'color': "#c00000"},
+            'bar': {'color': RED},
             'steps': [
                 {'range': [0, 60], 'color': "#ffcccc"},
                 {'range': [60, 75], 'color': "#ffeecc"},
@@ -621,7 +622,7 @@ def update_utilization_heatmap(data):
         z=z_data,
         x=months,
         y=padds,
-        colorscale='RdYlGn',
+        colorscale=COLORSCALE_HEATMAP,
         text=z_data.round(1),
         texttemplate="%{text}%",
         textfont={"size": 10},
@@ -702,7 +703,7 @@ def update_refinery_performance_table(data):
     
     table_rows = []
     for metric, value in metrics:
-        color = "#2ca02c" if "+" in value else "#c00000" if "-" in value else "black"
+        color = POSITIVE if "+" in value else NEGATIVE if "-" in value else "black"
         table_rows.append(
             html.Tr([
                 html.Td(metric, style={"padding": "5px"}),
@@ -717,13 +718,3 @@ def update_refinery_performance_table(data):
         ])
     ] + table_rows, style={"width": "100%", "border": "1px solid #ddd", "borderCollapse": "collapse"})
 
-# Export callback
-@callback(
-    Output("export-analytics-btn-p13", "n_clicks"),
-    [Input("export-analytics-btn-p13", "n_clicks")],
-    prevent_initial_call=True
-)
-def handle_export_analytics(n_clicks):
-    if n_clicks > 0:
-        print("Export analytics functionality would be implemented here")
-    return 0

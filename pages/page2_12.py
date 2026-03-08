@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from src.wps.ag_calculations import DataProcessor
 from src.utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, POSITIVE, NEGATIVE, CHART_SEQUENCE
 
 # Initialize the data processor
 processor = DataProcessor()
@@ -28,7 +29,7 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("Cushing Hub vs Commercial Stocks Analysis", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("Cushing Hub vs Commercial Stocks Analysis", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
 
         html.Div([
@@ -48,8 +49,8 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Export Analysis", id="export-analysis-btn-p12", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -59,12 +60,12 @@ layout = html.Div([
         # Top row - Primary comparison charts
         html.Div([
             html.Div([
-                html.H3("Cushing vs US Commercial Crude Stocks", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Cushing vs US Commercial Crude Stocks", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="cushing-vs-commercial-time-series", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Cushing as % of US Commercial & PADD 3 Stocks", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Cushing as % of US Commercial & PADD 3 Stocks", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="cushing-percentage-chart", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -72,12 +73,12 @@ layout = html.Div([
         # Middle row - Analysis charts  
         html.Div([
             html.Div([
-                html.H3("Weekly Changes: Cushing vs Commercial", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Weekly Changes: Cushing vs Commercial", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="weekly-changes-comparison", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Cushing-Commercial Spread Analysis", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Cushing-Commercial Spread Analysis", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="cushing-spread-analysis", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -85,17 +86,17 @@ layout = html.Div([
         # Bottom row - Advanced analytics
         html.Div([
             html.Div([
-                html.H3("Cushing Inventory Level Gauge", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Cushing Inventory Level Gauge", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="cushing-inventory-gauge", style={"height": "350px"})
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Seasonal Pattern Analysis", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Seasonal Pattern Analysis", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="seasonal-pattern-radar", style={"height": "350px"})
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Key Statistics", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Key Statistics", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div(id="key-statistics-table", style={"height": "350px", "padding": "10px", "backgroundColor": "#f8f8f8", "border": "1px solid #ddd"})
             ], style={"width": "32%"}),
         ], style={"display": "flex"}),
@@ -192,10 +193,10 @@ def update_cushing_vs_commercial(data):
                 y=values,
                 mode='lines+markers',
                 name='Cushing Hub',
-                line=dict(color='#c00000', width=2),
+                line=dict(color=RED, width=2),
                 marker=dict(size=4)
             ))
-    
+
     # Add Commercial data (normalized to same scale as Cushing for better visualization)
     if commercial_data is not None:
         dates_comm, values_comm = extract_time_series(commercial_data)
@@ -207,7 +208,7 @@ def update_cushing_vs_commercial(data):
                 y=scaled_values,
                 mode='lines+markers',
                 name='US Commercial (÷20)',
-                line=dict(color='#1f77b4', width=2),
+                line=dict(color=BLUE, width=2),
                 marker=dict(size=4)
             ))
     
@@ -273,16 +274,16 @@ def update_cushing_percentage(data):
                 y=us_percentages,
                 mode='lines+markers',
                 name='% of US Commercial',
-                line=dict(color='#1f77b4', width=2),
+                line=dict(color=BLUE, width=2),
                 marker=dict(size=4)
             ))
-            
+
             # Add US average line
             us_avg = np.mean(us_percentages)
             fig.add_hline(
                 y=us_avg,
                 line_dash="dash",
-                line_color="#1f77b4",
+                line_color=BLUE,
                 annotation_text=f"US Avg: {us_avg:.1f}%",
                 annotation_position="top left"
             )
@@ -316,16 +317,16 @@ def update_cushing_percentage(data):
                 y=p3_percentages,
                 mode='lines+markers',
                 name='% of PADD 3',
-                line=dict(color='#ff7f0e', width=2),
+                line=dict(color=ORANGE, width=2),
                 marker=dict(size=4)
             ))
-            
+
             # Add PADD 3 average line
             p3_avg = np.mean(p3_percentages)
             fig.add_hline(
                 y=p3_avg,
                 line_dash="dash",
-                line_color="#ff7f0e",
+                line_color=ORANGE,
                 annotation_text=f"P3 Avg: {p3_avg:.1f}%",
                 annotation_position="bottom right"
             )
@@ -382,7 +383,7 @@ def update_weekly_changes_comparison(data):
             x=cushing_change_dates,
             y=cushing_changes,
             name='Cushing Weekly Change',
-            marker_color=['#2ca02c' if x >= 0 else '#c00000' for x in cushing_changes],
+            marker_color=[POSITIVE if x >= 0 else NEGATIVE for x in cushing_changes],
             opacity=0.7
         ))
     
@@ -394,7 +395,7 @@ def update_weekly_changes_comparison(data):
             y=scaled_commercial,
             mode='lines+markers',
             name='Commercial Weekly Change (÷50)',
-            line=dict(color='#1f77b4', width=2),
+            line=dict(color=BLUE, width=2),
             marker=dict(size=4),
             yaxis='y2'
         ))
@@ -466,7 +467,7 @@ def update_cushing_spread_analysis(data):
     fig = go.Figure()
     
     # Color bars based on positive/negative spread
-    colors = ['#2ca02c' if x >= 0 else '#c00000' for x in spreads]
+    colors = [POSITIVE if x >= 0 else NEGATIVE for x in spreads]
     
     fig.add_trace(go.Bar(
         x=spread_dates,
@@ -524,7 +525,7 @@ def update_cushing_inventory_gauge(data):
         delta = {'reference': avg_level, 'position': "top"},
         gauge = {
             'axis': {'range': [None, max_level * 1.1]},
-            'bar': {'color': "#c00000"},
+            'bar': {'color': RED},
             'steps': [
                 {'range': [0, min_level], 'color': "#ffcccc"},
                 {'range': [min_level, avg_level], 'color': "#ffeecc"},
@@ -594,7 +595,7 @@ def update_seasonal_pattern_radar(data):
         theta=months,
         fill='toself',
         name='Cushing Seasonal Pattern',
-        line_color='#c00000'
+        line_color=RED
     ))
     
     fig.update_layout(
@@ -655,7 +656,7 @@ def update_key_statistics(data):
             html.Tr([html.Td("Current Cushing", style={"padding": "5px"}), 
                     html.Td(f"{current_cushing:,.0f} kb", style={"padding": "5px"})]),
             html.Tr([html.Td("Weekly Change", style={"padding": "5px"}), 
-                    html.Td(f"{cushing_change:+.0f} kb", style={"padding": "5px", "color": "#2ca02c" if cushing_change >= 0 else "#c00000"})]),
+                    html.Td(f"{cushing_change:+.0f} kb", style={"padding": "5px", "color": POSITIVE if cushing_change >= 0 else NEGATIVE})]),
             html.Tr([html.Td("% of Commercial", style={"padding": "5px"}), 
                     html.Td(f"{current_ratio:.1f}%", style={"padding": "5px"})]),
             html.Tr([html.Td("Historical Avg", style={"padding": "5px"}), 
@@ -671,14 +672,3 @@ def update_key_statistics(data):
     
     return stats_html
 
-# Export callback
-@callback(
-    Output("export-analysis-btn-p12", "n_clicks"),
-    [Input("export-analysis-btn-p12", "n_clicks")],
-    prevent_initial_call=True
-)
-def handle_export_analysis(n_clicks):
-    if n_clicks > 0:
-        # In a real implementation, this would trigger a download
-        print("Export analysis functionality would be implemented here")
-    return 0

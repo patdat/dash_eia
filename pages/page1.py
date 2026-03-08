@@ -1,11 +1,11 @@
 import pandas as pd
-import numpy as np
-from dash import dcc, html, callback, Input, Output, State, clientside_callback
+from dash import dcc, html, callback, Input, Output
 import dash_bootstrap_components as dbc
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import random
 from src.utils.data_loader import loader
+from src.utils.colors import RED, ORANGE, BLUE, GREEN, PURPLE, POSITIVE, NEGATIVE, GRAY_50, GRAY_500, GRAY_800, GRAY_200
 
 def create_metric_card(title, value, change, icon, color):
     return dbc.Card([
@@ -21,12 +21,12 @@ def create_metric_card(title, value, change, icon, color):
                         html.Span(
                             f"{change}",
                             style={
-                                "color": "#10b759" if "+" in change else "#dc3545",
+                                "color": POSITIVE if "+" in change else NEGATIVE,
                                 "fontSize": "0.9rem",
                                 "fontWeight": "600"
                             }
                         ),
-                        html.Span(" vs last week", style={"fontSize": "0.8rem", "color": "#6c757d", "marginLeft": "4px"})
+                        html.Span(" vs last week", style={"fontSize": "0.8rem", "color": GRAY_500, "marginLeft": "4px"})
                     ])
                 ], width=9)
             ])
@@ -48,7 +48,7 @@ def create_section_card(title, description, icon, link, color):
                     html.I(className=f"fas {icon} fa-3x", style={"color": color, "marginBottom": "1rem"}),
                 ], style={"textAlign": "center"}),
                 html.H5(title, style={"fontWeight": "700", "marginBottom": "0.75rem", "minHeight": "32px"}),
-                html.P(description, style={"fontSize": "0.9rem", "color": "#6c757d", "marginBottom": "1.25rem", "lineHeight": "1.6", "minHeight": "72px"}),
+                html.P(description, style={"fontSize": "0.9rem", "color": GRAY_500, "marginBottom": "1.25rem", "lineHeight": "1.6", "minHeight": "72px"}),
                 dbc.Button(
                     "Explore",
                     href=link,
@@ -84,7 +84,7 @@ def create_mini_chart():
         x=dates,
         y=values,
         mode='lines',
-        line=dict(color='#e97132', width=2),
+        line=dict(color=ORANGE, width=2),
         fill='tozeroy',
         fillcolor='rgba(233, 113, 50, 0.1)',
         showlegend=False
@@ -102,22 +102,133 @@ def create_mini_chart():
     
     return fig
 
+PAGE_STYLE = {
+    "padding": "2rem",
+    "backgroundColor": GRAY_50,
+    "minHeight": "100vh"
+}
+
+
+def build_metric_cards():
+    try:
+        df = loader.load_wps_pivot_data()
+
+        # Get the latest two periods for comparison
+        df['period'] = pd.to_datetime(df['period'])
+        df_sorted = df.sort_values('period')
+        latest = df_sorted.iloc[-1]
+        previous = df_sorted.iloc[-2]
+
+        metrics = {
+            'crude': {
+                'current': latest.get('WCESTUS1', 0) / 1000,
+                'previous': previous.get('WCESTUS1', 0) / 1000,
+                'title': 'CRUDE OIL STOCKS',
+                'icon': 'fa-oil-can',
+                'color': ORANGE
+            },
+            'gasoline': {
+                'current': latest.get('WGTSTUS1', 0) / 1000,
+                'previous': previous.get('WGTSTUS1', 0) / 1000,
+                'title': 'GASOLINE STOCKS',
+                'icon': 'fa-gas-pump',
+                'color': BLUE
+            },
+            'distillate': {
+                'current': latest.get('WDISTUS1', 0) / 1000,
+                'previous': previous.get('WDISTUS1', 0) / 1000,
+                'title': 'DISTILLATE FUEL',
+                'icon': 'fa-truck',
+                'color': GREEN
+            },
+            'refinery': {
+                'current': latest.get('WPULEUS3', 0),
+                'previous': previous.get('WPULEUS3', 0),
+                'title': 'REFINERY UTIL.',
+                'icon': 'fa-industry',
+                'color': PURPLE
+            }
+        }
+
+        cards = []
+        for key, data in metrics.items():
+            change = data['current'] - data['previous']
+
+            if key == 'refinery':
+                value_str = f"{data['current']:.1f}%"
+                change_str = f"{'+' if change >= 0 else ''}{change:.1f}%"
+            else:
+                value_str = f"{data['current']:.1f}M"
+                change_str = f"{'+' if change >= 0 else ''}{change:.1f}M"
+
+            cards.append(
+                dbc.Col([
+                    create_metric_card(
+                        data['title'],
+                        value_str,
+                        change_str,
+                        data['icon'],
+                        data['color']
+                    )
+                ], lg=3, md=6)
+            )
+
+        return cards
+
+    except Exception as e:
+        print(f"Error loading metrics: {e}")
+        return [
+            dbc.Col([
+                create_metric_card(
+                    "CRUDE OIL STOCKS",
+                    "Loading...",
+                    "--",
+                    "fa-oil-can",
+                    ORANGE
+                )
+            ], lg=3, md=6),
+            dbc.Col([
+                create_metric_card(
+                    "GASOLINE STOCKS",
+                    "Loading...",
+                    "--",
+                    "fa-gas-pump",
+                    BLUE
+                )
+            ], lg=3, md=6),
+            dbc.Col([
+                create_metric_card(
+                    "DISTILLATE FUEL",
+                    "Loading...",
+                    "--",
+                    "fa-truck",
+                    GREEN
+                )
+            ], lg=3, md=6),
+            dbc.Col([
+                create_metric_card(
+                    "REFINERY UTIL.",
+                    "Loading...",
+                    "--",
+                    "fa-industry",
+                    PURPLE
+                )
+            ], lg=3, md=6),
+        ]
+
+
 layout = html.Div([
     dcc.Interval(id='interval-component', interval=5000, n_intervals=0),
-    dcc.Store(id='metrics-data-store'),
-    
-    # Div to inject dynamic CSS (not hidden so CSS takes effect)
-    html.Div(id='font-css', children=[]),
-    
+
     # Font Selector at top of page
     html.Div([
         dbc.Card([
             dbc.CardBody([
                 dbc.Row([
                     dbc.Col([
-                        html.Label("Typography Settings", style={"fontWeight": "700", "marginBottom": "0.5rem", "fontSize": "0.9rem", "color": "#2c3e50"}),
+                        html.Label("Typography Settings", style={"fontWeight": "700", "marginBottom": "0.5rem", "fontSize": "0.9rem", "color": GRAY_800}),
                         html.Div([
-                            html.Label("Select Font: ", style={"marginRight": "10px", "fontSize": "0.85rem", "color": "#6c757d"}),
+                            html.Label("Select Font: ", style={"marginRight": "10px", "fontSize": "0.85rem", "color": GRAY_500}),
                             dcc.Dropdown(
                                 id='font-selector',
                                 options=[
@@ -140,9 +251,17 @@ layout = html.Div([
                     ], width=6),
                     dbc.Col([
                         html.Div([
-                            html.P("Preview: ", style={"fontSize": "0.85rem", "color": "#6c757d", "marginBottom": "0.25rem"}),
+                            html.P("Preview: ", style={"fontSize": "0.85rem", "color": GRAY_500, "marginBottom": "0.25rem"}),
                             html.Div([
-                                html.Span("Aa Bb Cc 123", id="font-preview", style={"fontSize": "1.5rem", "fontWeight": "500"}),
+                                html.Span(
+                                    "Aa Bb Cc 123",
+                                    id="font-preview",
+                                    style={
+                                        "fontSize": "1.5rem",
+                                        "fontWeight": "500",
+                                        "fontFamily": "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                                    },
+                                ),
                             ])
                         ])
                     ], width=6, style={"textAlign": "right"})
@@ -164,7 +283,7 @@ layout = html.Div([
                 style={
                     "fontSize": "3rem",
                     "fontWeight": "800",
-                    "color": "#2c3e50",
+                    "color": GRAY_800,
                     "marginBottom": "0.5rem",
                     "letterSpacing": "-1px"
                 }
@@ -173,7 +292,7 @@ layout = html.Div([
                 "Real-time analysis and visualization of U.S. energy markets",
                 style={
                     "fontSize": "1.25rem",
-                    "color": "#6c757d",
+                    "color": GRAY_500,
                     "fontWeight": "400",
                     "marginBottom": "2rem"
                 }
@@ -189,7 +308,7 @@ layout = html.Div([
                         "fontWeight": "600",
                         "padding": "0.75rem 2rem",
                         "boxShadow": "0 4px 15px rgba(192, 0, 0, 0.3)",
-                        "backgroundColor": "#c00000",
+                        "backgroundColor": RED,
                         "border": "none"
                     }
                 ),
@@ -202,7 +321,7 @@ layout = html.Div([
                         "fontWeight": "600",
                         "padding": "0.75rem 2rem",
                         "marginLeft": "1rem",
-                        "border": "1px solid #dee2e6"
+                        "border": f"1px solid {GRAY_200}"
                     }
                 ),
             ])
@@ -219,10 +338,10 @@ layout = html.Div([
         html.H3("Key Metrics", style={
             "fontWeight": "700",
             "marginBottom": "1.5rem",
-            "color": "#2c3e50",
+            "color": GRAY_800,
             "fontSize": "1.75rem"
         }),
-        dbc.Row(id='metrics-row'),
+        dbc.Row(build_metric_cards(), id='metrics-row'),
     ], style={"marginBottom": "3rem"}),
     
     # Dashboard Sections
@@ -230,7 +349,7 @@ layout = html.Div([
         html.H3("Dashboard Sections", style={
             "fontWeight": "700",
             "marginBottom": "1.5rem",
-            "color": "#2c3e50",
+            "color": GRAY_800,
             "fontSize": "1.75rem"
         }),
         dbc.Row([
@@ -240,7 +359,7 @@ layout = html.Div([
                     "Comprehensive analysis of weekly petroleum supply data including stocks, production, and imports.",
                     "fa-chart-line",
                     "/stats/headline",
-                    "#e97132"
+                    ORANGE
                 )
             ], lg=3, md=6, className="mb-4"),
             dbc.Col([
@@ -249,7 +368,7 @@ layout = html.Div([
                     "Regional drilling productivity reports, efficiency metrics, and DUC inventory analysis.",
                     "fa-hard-hat",
                     "/dpr/dpr_charts",
-                    "#3498db"
+                    BLUE
                 )
             ], lg=3, md=6, className="mb-4"),
             dbc.Col([
@@ -258,7 +377,7 @@ layout = html.Div([
                     "Short-term energy outlook with forecasts, market trends, and supply/demand projections.",
                     "fa-chart-area",
                     "/steo/steo_1",
-                    "#27ae60"
+                    GREEN
                 )
             ], lg=3, md=6, className="mb-4"),
             dbc.Col([
@@ -267,7 +386,7 @@ layout = html.Div([
                     "Company-level crude oil imports data, analysis tools, and historical trends.",
                     "fa-ship",
                     "/cli/cli_overview",
-                    "#8e44ad"
+                    PURPLE
                 )
             ], lg=3, md=6, className="mb-4"),
         ])
@@ -283,13 +402,14 @@ layout = html.Div([
                         html.Div([
                             dcc.Graph(
                                 id='mini-chart',
+                                figure=create_mini_chart(),
                                 config={'displayModeBar': False},
                                 style={"marginBottom": "1rem"}
                             ),
                             html.Div([
-                                html.Span("Crude Oil Price Trend", style={"fontSize": "0.9rem", "color": "#6c757d"}),
-                                html.Span(" | ", style={"margin": "0 0.5rem", "color": "#dee2e6"}),
-                                html.Span("Last 30 Days", style={"fontSize": "0.85rem", "color": "#6c757d"})
+                                html.Span("Crude Oil Price Trend", style={"fontSize": "0.9rem", "color": GRAY_500}),
+                                html.Span(" | ", style={"margin": "0 0.5rem", "color": GRAY_200}),
+                                html.Span("Last 30 Days", style={"fontSize": "0.85rem", "color": GRAY_500})
                             ])
                         ])
                     ])
@@ -308,19 +428,19 @@ layout = html.Div([
                             html.A([
                                 html.I(className="fas fa-external-link-alt me-2"),
                                 "EIA Weekly Report"
-                            ], href="#", className="d-block mb-3", style={"color": "#e97132", "textDecoration": "none", "fontSize": "0.95rem"}),
+                            ], href="#", className="d-block mb-3", style={"color": ORANGE, "textDecoration": "none", "fontSize": "0.95rem"}),
                             html.A([
                                 html.I(className="fas fa-external-link-alt me-2"),
                                 "STEO Full Report"
-                            ], href="#", className="d-block mb-3", style={"color": "#e97132", "textDecoration": "none", "fontSize": "0.95rem"}),
+                            ], href="#", className="d-block mb-3", style={"color": ORANGE, "textDecoration": "none", "fontSize": "0.95rem"}),
                             html.A([
                                 html.I(className="fas fa-external-link-alt me-2"),
                                 "API Documentation"
-                            ], href="#", className="d-block mb-3", style={"color": "#e97132", "textDecoration": "none", "fontSize": "0.95rem"}),
+                            ], href="#", className="d-block mb-3", style={"color": ORANGE, "textDecoration": "none", "fontSize": "0.95rem"}),
                             html.A([
                                 html.I(className="fas fa-external-link-alt me-2"),
                                 "Data Sources"
-                            ], href="#", className="d-block", style={"color": "#e97132", "textDecoration": "none", "fontSize": "0.95rem"}),
+                            ], href="#", className="d-block", style={"color": ORANGE, "textDecoration": "none", "fontSize": "0.95rem"}),
                         ])
                     ])
                 ], style={
@@ -335,206 +455,54 @@ layout = html.Div([
     
     # Status Bar
     html.Div([
-        html.Hr(style={"borderColor": "#dee2e6", "opacity": "0.3"}),
+        html.Hr(style={"borderColor": GRAY_200, "opacity": "0.3"}),
         html.Div([
             html.Span([
-                html.I(className="fas fa-circle me-2", style={"color": "#10b759", "fontSize": "0.5rem"}),
+                html.I(className="fas fa-circle me-2", style={"color": POSITIVE, "fontSize": "0.5rem"}),
                 "All Systems Operational"
-            ], style={"color": "#6c757d", "fontSize": "0.9rem"}),
-            html.Span(" | ", style={"margin": "0 1rem", "color": "#dee2e6"}),
+            ], style={"color": GRAY_500, "fontSize": "0.9rem"}),
+            html.Span(" | ", style={"margin": "0 1rem", "color": GRAY_200}),
             html.Span([
                 "Last Updated: ",
                 html.Span(id="last-updated", children=datetime.now().strftime("%B %d, %Y at %I:%M %p"))
-            ], style={"color": "#6c757d", "fontSize": "0.9rem"})
+            ], style={"color": GRAY_500, "fontSize": "0.9rem"})
         ], style={"textAlign": "center", "padding": "1rem 0"})
     ])
-], style={
-    "padding": "2rem",
-    "backgroundColor": "#f4f5f9",
-    "minHeight": "100vh"
-})
+], id='page1-root', style=PAGE_STYLE)
 
 @callback(
     Output('last-updated', 'children'),
     Output('mini-chart', 'figure'),
-    Input('interval-component', 'n_intervals')
+    Input('interval-component', 'n_intervals'),
+    prevent_initial_call=True,
 )
 def update_dashboard_data(n):
     timestamp = datetime.now().strftime("%B %d, %Y at %I:%M %p")
     chart_figure = create_mini_chart()
     return timestamp, chart_figure
 
-# Clientside callback for font switching
-clientside_callback(
-    """
-    function(selectedFont) {
-        if (!selectedFont) {
-            return [{}, ''];
-        }
-        
-        // Remove existing style if any
-        var existingStyle = document.getElementById('dynamic-font-style');
-        if (existingStyle) {
-            existingStyle.remove();
-        }
-        
-        // Create new style element
-        var style = document.createElement('style');
-        style.id = 'dynamic-font-style';
-        style.innerHTML = `
-            * {
-                font-family: '${selectedFont}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-            }
-            
-            body {
-                font-family: '${selectedFont}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-            }
-            
-            h1, h2, h3, h4, h5, h6, p, a, div, span, button, input, textarea, td, th, li {
-                font-family: '${selectedFont}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-            }
-            
-            .nav-link, .btn, .card, .sidebar {
-                font-family: '${selectedFont}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Update preview style
-        var previewStyle = {
-            'fontSize': '1.5rem',
-            'fontWeight': '500',
-            'fontFamily': `'${selectedFont}', sans-serif`
-        };
-        
-        // Store preference
-        localStorage.setItem('selectedFont', selectedFont);
-        
-        console.log('Font changed to:', selectedFont);
-        
-        return [previewStyle, ''];
-    }
-    """,
-    [Output('font-preview', 'style'),
-     Output('font-css', 'children')],
-    Input('font-selector', 'value')
+@callback(
+    Output('font-preview', 'style'),
+    Output('page1-root', 'style'),
+    Input('font-selector', 'value'),
+    prevent_initial_call=True,
 )
+def update_font_preview(selected_font):
+    selected_font = selected_font or 'Montserrat'
+    font_stack = f"'{selected_font}', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    preview_style = {
+        'fontSize': '1.5rem',
+        'fontWeight': '500',
+        'fontFamily': font_stack
+    }
+    page_style = {**PAGE_STYLE, 'fontFamily': font_stack}
+    return preview_style, page_style
 
 # Callback to load and display real metrics data
 @callback(
     Output('metrics-row', 'children'),
-    Output('metrics-data-store', 'data'),
-    Input('interval-component', 'n_intervals')
+    Input('interval-component', 'n_intervals'),
+    prevent_initial_call=True,
 )
 def update_metrics(n):
-    try:
-        df = loader.load_wps_pivot_data()
-        
-        # Get the latest two periods for comparison
-        df['period'] = pd.to_datetime(df['period'])
-        df_sorted = df.sort_values('period')
-        latest = df_sorted.iloc[-1]
-        previous = df_sorted.iloc[-2]
-        
-        # Extract key metrics (converting from kb to Mb)
-        metrics = {
-            'crude': {
-                'current': latest.get('WCESTUS1', 0) / 1000,  # Convert kb to Mb
-                'previous': previous.get('WCESTUS1', 0) / 1000,
-                'title': 'CRUDE OIL STOCKS',
-                'icon': 'fa-oil-can',
-                'color': '#e97132'
-            },
-            'gasoline': {
-                'current': latest.get('WGTSTUS1', 0) / 1000,
-                'previous': previous.get('WGTSTUS1', 0) / 1000,
-                'title': 'GASOLINE STOCKS', 
-                'icon': 'fa-gas-pump',
-                'color': '#3498db'
-            },
-            'distillate': {
-                'current': latest.get('WDISTUS1', 0) / 1000,
-                'previous': previous.get('WDISTUS1', 0) / 1000,
-                'title': 'DISTILLATE FUEL',
-                'icon': 'fa-truck',
-                'color': '#27ae60'
-            },
-            'refinery': {
-                'current': latest.get('WPULEUS3', 0),  # Refinery utilization %
-                'previous': previous.get('WPULEUS3', 0),
-                'title': 'REFINERY UTIL.',
-                'icon': 'fa-industry',
-                'color': '#8e44ad'
-            }
-        }
-        
-        # Create metric cards with real data
-        cards = []
-        for key, data in metrics.items():
-            change = data['current'] - data['previous']
-            
-            if key == 'refinery':
-                # Format as percentage
-                value_str = f"{data['current']:.1f}%"
-                change_str = f"{'+' if change >= 0 else ''}{change:.1f}%"
-            else:
-                # Format as Mb
-                value_str = f"{data['current']:.1f}M"
-                change_str = f"{'+' if change >= 0 else ''}{change:.1f}M"
-            
-            cards.append(
-                dbc.Col([
-                    create_metric_card(
-                        data['title'],
-                        value_str,
-                        change_str,
-                        data['icon'],
-                        data['color']
-                    )
-                ], lg=3, md=6)
-            )
-        
-        return cards, metrics
-        
-    except Exception as e:
-        # Fallback to placeholder data if there's an error
-        print(f"Error loading metrics: {e}")
-        default_cards = [
-            dbc.Col([
-                create_metric_card(
-                    "CRUDE OIL STOCKS",
-                    "Loading...",
-                    "--",
-                    "fa-oil-can",
-                    "#e97132"
-                )
-            ], lg=3, md=6),
-            dbc.Col([
-                create_metric_card(
-                    "GASOLINE STOCKS",
-                    "Loading...",
-                    "--",
-                    "fa-gas-pump",
-                    "#3498db"
-                )
-            ], lg=3, md=6),
-            dbc.Col([
-                create_metric_card(
-                    "DISTILLATE FUEL",
-                    "Loading...",
-                    "--",
-                    "fa-truck",
-                    "#27ae60"
-                )
-            ], lg=3, md=6),
-            dbc.Col([
-                create_metric_card(
-                    "REFINERY UTIL.",
-                    "Loading...",
-                    "--",
-                    "fa-industry",
-                    "#8e44ad"
-                )
-            ], lg=3, md=6),
-        ]
-        return default_cards, {}
+    return build_metric_cards()

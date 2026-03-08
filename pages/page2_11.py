@@ -6,6 +6,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from src.wps.ag_calculations import DataProcessor
 from src.utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, PURPLE, POSITIVE, NEGATIVE, COLORSCALE_HEATMAP, CHART_SEQUENCE
 
 # Initialize the data processor
 processor = DataProcessor()
@@ -31,7 +32,7 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("PADD Regional Stock Analysis", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("PADD Regional Stock Analysis", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
 
         html.Div([
@@ -51,8 +52,8 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Export Data", id="export-data-btn-p11", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -62,12 +63,12 @@ layout = html.Div([
         # Top row - Current Stock Levels by PADD
         html.Div([
             html.Div([
-                html.H3("Current Stock Levels by PADD Region", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Current Stock Levels by PADD Region", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="padd-stocks-bar-chart", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Days of Supply by Product & PADD", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Days of Supply by Product & PADD", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="days-supply-heatmap", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -75,12 +76,12 @@ layout = html.Div([
         # Middle row - Stock Changes Analysis
         html.Div([
             html.Div([
-                html.H3("Weekly Stock Changes (Builds/Draws)", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Weekly Stock Changes (Builds/Draws)", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="stock-changes-waterfall", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Regional Stock Distribution", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Regional Stock Distribution", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="regional-stock-pie", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -88,7 +89,7 @@ layout = html.Div([
         # Bottom row - Time Series Analysis
         html.Div([
             html.Div([
-                html.H3("Stock Levels Over Time by PADD", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Stock Levels Over Time by PADD", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div([
                     html.Label("Select Product:", style={"marginRight": "10px"}),
                     dcc.Dropdown(
@@ -211,7 +212,7 @@ def update_padd_stocks_bar(data):
     
     # Add bars for each product type
     commodities = ['crude', 'gasoline', 'distillate', 'jet']
-    colors = ['#c00000', '#1f77b4', '#ff7f0e', '#2ca02c']
+    colors = [RED, BLUE, ORANGE, GREEN]
     
     for i, commodity in enumerate(commodities):
         stock_data = get_stock_data_by_padd(df, commodity)
@@ -291,7 +292,7 @@ def update_days_supply_heatmap(data):
         z=z_data,
         x=padds,
         y=commodities,
-        colorscale='RdYlGn',
+        colorscale=COLORSCALE_HEATMAP,
         text=z_data,
         texttemplate="%{text} days",
         textfont={"size": 12},
@@ -362,8 +363,8 @@ def update_stock_changes_waterfall(data):
         text=[f"{change:+,.0f}" for change in changes],
         textposition="outside",
         connector={"line": {"color": "rgb(63, 63, 63)"}},
-        increasing={"marker": {"color": "#2ca02c"}},
-        decreasing={"marker": {"color": "#c00000"}}
+        increasing={"marker": {"color": POSITIVE}},
+        decreasing={"marker": {"color": NEGATIVE}}
     ))
     
     # Convert dates to datetime and format them properly
@@ -432,7 +433,7 @@ def update_regional_stock_pie(data):
         hole=0.4,
         textinfo='label+percent+value',
         texttemplate='%{label}<br>%{value:,.0f} kb<br>(%{percent})',
-        marker_colors=['#c00000', '#1f77b4', '#ff7f0e', '#2ca02c', '#9467bd', '#8c564b']
+        marker_colors=CHART_SEQUENCE
     ))
     
     # Convert latest_date to datetime and format it properly
@@ -474,7 +475,7 @@ def update_padd_time_series(data, selected_product):
         return go.Figure().update_layout(title="No time series data available")
     
     fig = go.Figure()
-    colors = ['#c00000', '#1f77b4', '#ff7f0e', '#2ca02c', '#9467bd']
+    colors = CHART_SEQUENCE[:5]
     
     # Collect all data to check for outliers
     all_values = []
@@ -595,14 +596,3 @@ def update_padd_time_series(data, selected_product):
     
     return fig
 
-# Export callback
-@callback(
-    Output("export-data-btn-p11", "n_clicks"),
-    [Input("export-data-btn-p11", "n_clicks")],
-    prevent_initial_call=True
-)
-def handle_export(n_clicks):
-    if n_clicks > 0:
-        # In a real implementation, this would trigger a download
-        print("Export functionality would be implemented here")
-    return 0

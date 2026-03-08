@@ -33,6 +33,7 @@ def create_layout(page_id, commodity, graph_sections_input):
                 "btn_2023",
                 "btn_2024",
                 "btn_2025",
+                "btn_2026",
             ]
         }
 
@@ -71,6 +72,7 @@ def create_layout(page_id, commodity, graph_sections_input):
                 ids["btn_2023"],
                 ids["btn_2024"],
                 ids["btn_2025"],
+                ids["btn_2026"],
             ),
             html.Div(className="eia-weekly-top-spacing"),
             *[
@@ -93,6 +95,7 @@ def create_callbacks(app, page_id, num_graphs, idents, region_dct):
             Input(f"{page_id}-btn_2023-state", "data"),
             Input(f"{page_id}-btn_2024-state", "data"),
             Input(f"{page_id}-btn_2025-state", "data"),
+            Input(f"{page_id}-btn_2026-state", "data"),
             Input(f"evolution-store", "data"),
         ],
     )
@@ -103,6 +106,7 @@ def create_callbacks(app, page_id, num_graphs, idents, region_dct):
         btn_2023,
         btn_2024,
         btn_2025,
+        btn_2026,
         evolution_counter,
     ):
         return [
@@ -115,6 +119,7 @@ def create_callbacks(app, page_id, num_graphs, idents, region_dct):
                 btn_2023,
                 btn_2024,
                 btn_2025,
+                btn_2026,
                 evolution_counter,
             )
             for ident in idents

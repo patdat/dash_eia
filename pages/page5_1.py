@@ -7,6 +7,7 @@ import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
 from app import app
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, PURPLE, CHART_SEQUENCE, COLORSCALE_HEATMAP, GRAY_300, NEGATIVE
 
 processor = CLIDataProcessor()
 
@@ -56,7 +57,7 @@ def generate_market_summary_table(padd_filter='US'):
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px', 
                    'fontFamily': 'Arial', 'fontSize': '12px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black', 
+        style_header={'backgroundColor': GRAY_300, 'color': 'black', 
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -67,7 +68,7 @@ def generate_market_summary_table(padd_filter='US'):
             {
                 'if': {'column_id': 'Change %', 'filter_query': '{Change %} < 0'},
                 'backgroundColor': 'lightpink',
-                'color': '#c00000',
+                'color': NEGATIVE,
             },
             {
                 'if': {'row_index': 0, 'column_id': 'Current'},
@@ -119,7 +120,7 @@ def generate_disruption_alerts_table(padd_filter='US'):
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px', 
                    'fontFamily': 'Arial', 'fontSize': '12px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black', 
+        style_header={'backgroundColor': GRAY_300, 'color': 'black', 
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -153,17 +154,17 @@ def create_volume_time_series(padd_filter='US'):
         y=monthly_data['Volume'],
         mode='lines+markers',
         name='Monthly Volume',
-        line=dict(color='#2E86AB', width=2),
+        line=dict(color=BLUE, width=2),
         marker=dict(size=6)
     ))
-    
+
     rolling_avg = monthly_data['Volume'].rolling(window=3, center=True).mean()
     fig.add_trace(go.Scatter(
         x=monthly_data.index,
         y=rolling_avg,
         mode='lines',
         name='3-Month Moving Avg',
-        line=dict(color='#A23B72', width=2, dash='dash')
+        line=dict(color=PURPLE, width=2, dash='dash')
     ))
     
     fig.update_layout(
@@ -190,7 +191,7 @@ def create_top_importers_chart(padd_filter='US'):
         x=top_importers['Avg kbd'],
         y=top_importers.index,
         orientation='h',
-        marker_color='#2E86AB',
+        marker_color=BLUE,
         text=top_importers['Avg kbd'].apply(lambda x: f'{x:,.1f}'),
         textposition='outside'
     ))
@@ -243,7 +244,7 @@ def create_padd_distribution_chart():
     fig = go.Figure(go.Bar(
         x=padd_data.index,
         y=padd_data['Avg kbd'],
-        marker_color=['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#6A994E', '#BC4B51'],
+        marker_color=[BLUE, PURPLE, ORANGE, RED, GREEN, RED],
         text=padd_data['Avg kbd'].apply(lambda x: f'{x:,.1f}'),
         textposition='outside'
     ))
@@ -284,7 +285,7 @@ def create_quality_heatmap(padd_filter='US'):
         marker=dict(
             size=country_quality['QUANTITY'] * 20,  # Scale up for visibility with kbd values
             color=country_quality['APIGRAVITY'],
-            colorscale='RdYlGn',
+            colorscale=COLORSCALE_HEATMAP,
             showscale=True,
             colorbar=dict(title='API Gravity'),
             line=dict(width=1, color='white'),
@@ -343,10 +344,10 @@ def create_concentration_index_chart():
         y=hhi_df['HHI'],
         mode='lines+markers',
         name='Herfindahl Index',
-        line=dict(color='#2E86AB', width=2),
+        line=dict(color=BLUE, width=2),
         marker=dict(size=6)
     ))
-    
+
     fig.add_shape(
         type='line',
         x0=hhi_df['Date'].min(), x1=hhi_df['Date'].max(),

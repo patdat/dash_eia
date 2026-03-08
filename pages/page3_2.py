@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 from src.utils.data_loader import loader
+from src.utils.colors import RED, BLACK, BLUE, GREEN, ORANGE, GRAY_300
 
 df = loader.load_steo_dpr_data()
 mapping_df = loader.load_dpr_mapping()
@@ -155,27 +156,27 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("STEO DPR Data Table", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("STEO DPR Data Table", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
         
         html.Div([
             html.Button("◄", id="prev-release-btn", n_clicks=0, 
                        style={"fontSize": "1.5em", "padding": "5px 15px", "margin": "0 5px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer", "borderRadius": "4px"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer", "borderRadius": "4px"}),
             html.Div(id="release-date-display", 
                     children=f"Release: {release_dates[0].strftime('%B %Y')}",
                     style={"fontSize": "1.3em", "padding": "0 20px", "color": "#333"}),
             html.Button("►", id="next-release-btn", n_clicks=0,
                        style={"fontSize": "1.5em", "padding": "5px 15px", "margin": "0 5px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer", "borderRadius": "4px"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer", "borderRadius": "4px"}),
             html.Div([
                 html.Label("Evolution: ", style={"marginLeft": "30px", "marginRight": "10px", "fontSize": "1.1em"}),
                 daq.BooleanSwitch(
                     id="evolution-switch",
                     on=False,
-                    color="#c00000",
+                    color=RED,
                     disabled=False
                 )
             ], style={"display": "flex", "alignItems": "center", "marginLeft": "20px"})
@@ -184,12 +185,12 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Graphs", id="graph-view-btn", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
             html.Button("Download CSV", id="csv-button-dpr", n_clicks=0, 
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0",
                               "backgroundColor": "white", "border": "2px solid #f0f0f0",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -222,7 +223,7 @@ layout = html.Div([
         # Graph panel (initially hidden)
         html.Div([
             html.Div([
-                html.H3("Data Visualization", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Data Visualization", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Button("✕", id="close-graph-btn", n_clicks=0,
                            style={"position": "absolute", "top": "10px", "right": "10px",
                                   "background": "transparent", "border": "none",
@@ -272,7 +273,8 @@ def export_data_as_csv(n_clicks):
     [Input("prev-release-btn", "n_clicks"),
      Input("next-release-btn", "n_clicks"),
      Input("evolution-switch", "on")],
-    [State("current-release-index", "data")]
+    [State("current-release-index", "data")],
+    prevent_initial_call=True,
 )
 def update_release_date(prev_clicks, next_clicks, evolution_on, current_index):
     # Determine which button was clicked
@@ -400,9 +402,7 @@ def update_graphs(selected_rows, current_index):
     # Create line graph with all release dates
     line_fig = go.Figure()
     
-    # Create a color palette for releases
-    import plotly.express as px
-    colors = px.colors.qualitative.Set1 + px.colors.qualitative.Set2
+    release_colors = [BLACK, BLUE, RED, GREEN, ORANGE]
     
     # Plot each release date as a separate line (most recent first for color priority)
     for idx, release in enumerate(sorted(item_data_all['release_date'].unique(), reverse=True)):
@@ -418,7 +418,7 @@ def update_graphs(selected_rows, current_index):
             y=release_data['value'],
             mode='lines+markers',
             name=f"Release: {release.strftime('%b %Y')}",
-            line=dict(color=colors[idx % len(colors)], width=line_width, dash=line_style),
+            line=dict(color=release_colors[idx % len(release_colors)], width=line_width, dash=line_style),
             marker=dict(size=5 if release == release_dates[current_index] else 4)
         ))
     
@@ -477,19 +477,29 @@ def update_graphs(selected_rows, current_index):
         # Get all unique years (reverse order so latest year gets first color)
         years = sorted(item_data['year'].unique(), reverse=True)
         
-        # Create a color palette for years
-        import plotly.express as px
-        colors = px.colors.qualitative.Set1 + px.colors.qualitative.Set2
-        
+        seasonality_year_styles = {
+            2027: {"color": GRAY_300, "dash": "dot"},
+            2026: {"color": BLACK, "dash": "solid"},
+            2025: {"color": BLUE, "dash": "solid"},
+            2024: {"color": RED, "dash": "solid"},
+            2023: {"color": GREEN, "dash": "solid"},
+            2022: {"color": ORANGE, "dash": "solid"},
+        }
+        fallback_colors = [BLACK, BLUE, RED, GREEN, ORANGE]
+
         for idx, year in enumerate(years):
             year_data = item_data[item_data['year'] == year].sort_values('month')
+            style = seasonality_year_styles.get(
+                year,
+                {"color": fallback_colors[idx % len(fallback_colors)], "dash": "solid"},
+            )
             seasonality_fig.add_trace(go.Scatter(
                 x=year_data['month'],
                 y=year_data['value'],
                 mode='lines+markers',
                 name=str(year),
                 marker=dict(size=6),
-                line=dict(color=colors[idx % len(colors)], width=2)
+                line=dict(color=style["color"], width=2, dash=style["dash"])
             ))
         
         seasonality_fig.update_layout(

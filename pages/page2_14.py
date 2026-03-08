@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from src.wps.ag_calculations import DataProcessor
 from src.utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, PURPLE, POSITIVE, NEGATIVE, CHART_SEQUENCE
 
 # Initialize the data processor
 processor = DataProcessor()
@@ -28,7 +29,7 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("Supply/Demand Balance & Trade Analysis", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("Supply/Demand Balance & Trade Analysis", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
 
         html.Div([
@@ -48,8 +49,8 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Export Balance Sheet", id="export-balance-btn-p14", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -59,12 +60,12 @@ layout = html.Div([
         # Top row - Supply/Demand Overview
         html.Div([
             html.Div([
-                html.H3("Crude Oil Supply/Demand Balance", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Crude Oil Supply/Demand Balance", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="supply-demand-waterfall", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Import Dependency by Product", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Import Dependency by Product", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="import-dependency-chart", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -72,12 +73,12 @@ layout = html.Div([
         # Middle row - Trade flow analysis
         html.Div([
             html.Div([
-                html.H3("Regional Import/Export Flows", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Regional Import/Export Flows", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="trade-flow-sankey", style={"height": "400px"})
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Net Imports vs Production", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Net Imports vs Production", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="net-imports-vs-production", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -85,12 +86,12 @@ layout = html.Div([
         # Bottom row - Advanced analytics
         html.Div([
             html.Div([
-                html.H3("Supply Security Index", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Supply Security Index", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="supply-security-gauge", style={"height": "350px"})
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Product Balance Calendar", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Product Balance Calendar", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div([
                     dcc.Dropdown(
                         id='product-balance-selector',
@@ -107,7 +108,7 @@ layout = html.Div([
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Trade Statistics", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Trade Statistics", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div(id="trade-statistics-table", style={"height": "350px", "padding": "10px", "backgroundColor": "#f8f8f8", "border": "1px solid #ddd"})
             ], style={"width": "32%"}),
         ], style={"display": "flex"}),
@@ -257,8 +258,8 @@ def update_supply_demand_waterfall(data):
         text=[f"{val:+,.0f}" for val in values],
         textposition="outside",
         connector={"line": {"color": "rgb(63, 63, 63)"}},
-        increasing={"marker": {"color": "#2ca02c"}},
-        decreasing={"marker": {"color": "#c00000"}}
+        increasing={"marker": {"color": POSITIVE}},
+        decreasing={"marker": {"color": RED}}
     ))
     
     fig.update_layout(
@@ -317,7 +318,7 @@ def update_import_dependency_chart(data):
         return go.Figure().update_layout(title="No import dependency data available")
     
     # Create bar chart
-    colors = ['#c00000' if ratio > 50 else '#ff7f0e' if ratio > 25 else '#2ca02c' for ratio in dependency_ratios]
+    colors = [RED if ratio > 50 else ORANGE if ratio > 25 else GREEN for ratio in dependency_ratios]
     
     fig = go.Figure(data=go.Bar(
         x=product_names,
@@ -380,7 +381,7 @@ def update_trade_flow_sankey(data):
         y=padd_names,
         x=padd_imports,
         orientation='h',
-        marker_color=['#c00000', '#1f77b4', '#ff7f0e', '#2ca02c', '#9467bd'][:len(padd_names)],
+        marker_color=CHART_SEQUENCE[:5][:len(padd_names)],
         text=[f"{val:,.0f} mb/d" for val in padd_imports],
         textposition='auto'
     ))
@@ -450,17 +451,17 @@ def update_net_imports_vs_production(data):
         y=net_imports,
         mode='lines+markers',
         name='Net Imports',
-        line=dict(color='#c00000', width=2),
+        line=dict(color=RED, width=2),
         marker=dict(size=4)
     ))
-    
+
     # Add production on secondary axis
     fig.add_trace(go.Scatter(
         x=aligned_dates,
         y=production,
         mode='lines+markers',
         name='US Production',
-        line=dict(color='#2ca02c', width=2),
+        line=dict(color=GREEN, width=2),
         marker=dict(size=4),
         yaxis='y2'
     ))
@@ -474,13 +475,13 @@ def update_net_imports_vs_production(data):
         yaxis=dict(
             title="Net Imports (mb/d)",
             side="left",
-            color="#c00000"
+            color=RED
         ),
         yaxis2=dict(
             title="US Production (mb/d)",
             side="right",
             overlaying="y",
-            color="#2ca02c"
+            color=GREEN
         ),
         hovermode='x unified',
         height=400,
@@ -562,7 +563,7 @@ def update_supply_security_gauge(data):
         delta = {'reference': 75, 'position': "top"},
         gauge = {
             'axis': {'range': [None, 100]},
-            'bar': {'color': "#c00000"},
+            'bar': {'color': RED},
             'steps': [
                 {'range': [0, 40], 'color': "#ffcccc"},
                 {'range': [40, 60], 'color': "#ffeecc"},
@@ -643,11 +644,11 @@ def update_product_balance_calendar(data, selected_product):
     colors = []
     for i, change in enumerate(weekly_changes):
         if pd.isna(change) or abs(change) < 1:
-            colors.append('#FFC107')  # Yellow for minimal change
+            colors.append(ORANGE)  # Yellow for minimal change
         elif change > 0:
-            colors.append('#4CAF50')  # Green for increase
+            colors.append(POSITIVE)  # Green for increase
         else:
-            colors.append('#F44336')  # Red for decrease
+            colors.append(NEGATIVE)  # Red for decrease
     
     # Create bar chart
     fig.add_trace(go.Bar(
@@ -741,7 +742,7 @@ def update_trade_statistics_table(data):
     
     table_rows = []
     for stat, value in stats:
-        color = "#2ca02c" if "+" in value else "#c00000" if "-" in value else "black"
+        color = POSITIVE if "+" in value else NEGATIVE if "-" in value else "black"
         table_rows.append(
             html.Tr([
                 html.Td(stat, style={"padding": "5px"}),
@@ -756,13 +757,3 @@ def update_trade_statistics_table(data):
         ])
     ] + table_rows, style={"width": "100%", "border": "1px solid #ddd", "borderCollapse": "collapse"})
 
-# Export callback
-@callback(
-    Output("export-balance-btn-p14", "n_clicks"),
-    [Input("export-balance-btn-p14", "n_clicks")],
-    prevent_initial_call=True
-)
-def handle_export_balance(n_clicks):
-    if n_clicks > 0:
-        print("Export balance sheet functionality would be implemented here")
-    return 0

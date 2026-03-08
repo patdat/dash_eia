@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
 from app import app
+from src.utils.colors import BLUE, PURPLE, ORANGE, GRAY_300, NEGATIVE
 from sklearn.linear_model import LinearRegression
 from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.arima.model import ARIMA
@@ -90,7 +91,7 @@ def create_arima_forecast(padd_filter='US'):
         y=monthly.values,
         mode='lines',
         name='Historical',
-        line=dict(color='#2E86AB', width=2)
+        line=dict(color=BLUE, width=2)
     ))
     
     # Forecast
@@ -99,7 +100,7 @@ def create_arima_forecast(padd_filter='US'):
         y=forecast,
         mode='lines+markers',
         name='Forecast',
-        line=dict(color='#A23B72', width=2, dash='dash'),
+        line=dict(color=PURPLE, width=2, dash='dash'),
         marker=dict(size=8)
     ))
     
@@ -191,7 +192,7 @@ def create_trend_analysis(padd_filter='US'):
         y=ma_3.values,
         mode='lines',
         name='3-Month MA',
-        line=dict(color='#2E86AB', width=2)
+        line=dict(color=BLUE, width=2)
     ))
     
     fig.add_trace(go.Scatter(
@@ -199,7 +200,7 @@ def create_trend_analysis(padd_filter='US'):
         y=ma_6.values,
         mode='lines',
         name='6-Month MA',
-        line=dict(color='#A23B72', width=2)
+        line=dict(color=PURPLE, width=2)
     ))
     
     fig.add_trace(go.Scatter(
@@ -207,7 +208,7 @@ def create_trend_analysis(padd_filter='US'):
         y=ma_12.values,
         mode='lines',
         name='12-Month MA',
-        line=dict(color='#F18F01', width=2)
+        line=dict(color=ORANGE, width=2)
     ))
     
     fig.update_layout(
@@ -281,7 +282,7 @@ def create_volatility_analysis(padd_filter='US'):
         mode='lines',
         name='Volume',
         yaxis='y',
-        line=dict(color='#2E86AB', width=1)
+        line=dict(color=BLUE, width=1)
     ))
     
     fig.add_trace(go.Scatter(
@@ -290,7 +291,7 @@ def create_volatility_analysis(padd_filter='US'):
         mode='lines',
         name='12-Month Rolling Volatility',
         yaxis='y2',
-        line=dict(color='#A23B72', width=2)
+        line=dict(color=PURPLE, width=2)
     ))
     
     fig.update_layout(
@@ -358,7 +359,7 @@ def generate_forecast_metrics_table(padd_filter='US'):
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '12px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -369,7 +370,7 @@ def generate_forecast_metrics_table(padd_filter='US'):
             {
                 'if': {'filter_query': '{Value} contains "-" and {Value} != "-"'},
                 'backgroundColor': 'lightpink',
-                'color': '#c00000'
+                'color': NEGATIVE
             },
             {
                 'if': {'filter_query': '{Value} = "High"'},
@@ -379,7 +380,7 @@ def generate_forecast_metrics_table(padd_filter='US'):
             {
                 'if': {'filter_query': '{Value} = "Low"'},
                 'backgroundColor': 'lightpink',
-                'color': '#c00000'
+                'color': NEGATIVE
             }
         ]
     )
@@ -423,7 +424,7 @@ layout = html.Div([
         html.Div([
             html.Div(id='trend-analysis-chart',
                     style={'width': '48%', 'display': 'inline-block'}),
-            html.Div(id='yoy-comparison-chart',
+            html.Div(id='forecast-yoy-comparison-chart',
                     style={'width': '48%', 'display': 'inline-block', 'float': 'right'})
         ], style={'marginBottom': '30px'}),
         
@@ -440,7 +441,7 @@ layout = html.Div([
     [Output('forecast-metrics-table', 'children'),
      Output('arima-forecast-chart', 'children'),
      Output('trend-analysis-chart', 'children'),
-     Output('yoy-comparison-chart', 'children'),
+     Output('forecast-yoy-comparison-chart', 'children'),
      Output('volatility-analysis-chart', 'children')],
     Input('padd-filter-forecast', 'value')
 )

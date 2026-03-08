@@ -1,6 +1,9 @@
 import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
+from src.utils.colors import BLACK, BLUE, RED, GREEN, ORANGE
+
+DPR_CHART_COLORS = [BLACK, BLUE, RED, GREEN, ORANGE]
 
 
 def melt_pivot(df):
@@ -68,6 +71,7 @@ def chart_dpr(
     btn_2023,
     btn_2024,
     btn_2025,
+    btn_2026,
     evolution_counter=5
 ):
     df = dct[id]["data"]
@@ -91,6 +95,8 @@ def chart_dpr(
         df = df[df.index >= "2024"]
     if btn_2025:
         df = df[df.index >= "2025"]
+    if btn_2026:
+        df = df[df.index >= "2026"]
 
     period_as_array = df.index.to_numpy()
 
@@ -104,7 +110,7 @@ def chart_dpr(
                 y=df.iloc[:, 0],
                 mode="lines",
                 name=cols[0],
-                line=dict(color="#c00000"),
+                line=dict(color=DPR_CHART_COLORS[0]),
                 line_width=3,
             )
         )
@@ -117,7 +123,7 @@ def chart_dpr(
                 y=df.iloc[:, 1],
                 mode="lines",
                 name=cols[1],
-                line=dict(color="#e97132"),
+                line=dict(color=DPR_CHART_COLORS[1]),
             )
         )
 
@@ -129,7 +135,7 @@ def chart_dpr(
                 y=df.iloc[:, 2],
                 mode="lines",
                 name=cols[2],
-                line=dict(color="#bfbec4"),
+                line=dict(color=DPR_CHART_COLORS[2]),
             )
         )
 
@@ -141,7 +147,7 @@ def chart_dpr(
                 y=df.iloc[:, 3],
                 mode="lines",
                 name=cols[3],
-                line=dict(color="#0073c0"),
+                line=dict(color=DPR_CHART_COLORS[3]),
             )
         )
 
@@ -153,7 +159,7 @@ def chart_dpr(
                 y=df.iloc[:, 4],
                 mode="lines",
                 name=cols[4],
-                line=dict(color="#4CAF50"),
+                line=dict(color=DPR_CHART_COLORS[4]),
             )
         )
 
@@ -170,7 +176,7 @@ def chart_dpr(
         xaxis=dict(
             showline=True,
             showgrid=False,
-            linecolor="black",
+            linecolor=BLACK,
             linewidth=0.5,
             zeroline=False,
         ),
@@ -178,7 +184,7 @@ def chart_dpr(
             tickformat=yaxis_tick_format,
             showgrid=False,
             showline=True,
-            linecolor="black",
+            linecolor=BLACK,
             linewidth=0.5,
             zeroline=False,
         ),
@@ -206,6 +212,7 @@ if __name__ == "__main__":
         False,
         False,
         True,
+        False,
         False,
         False,
         False,

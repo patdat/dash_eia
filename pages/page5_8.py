@@ -7,6 +7,7 @@ import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
 from app import app
+from src.utils.colors import COLORSCALE_SEQUENTIAL, GRAY_300
 
 processor = CLIDataProcessor()
 
@@ -61,7 +62,7 @@ def generate_port_summary_table(padd_filter='US'):
                     'overflowX': 'auto'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '11px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -162,7 +163,7 @@ def create_port_efficiency_scatter(padd_filter='US'):
         marker=dict(
             size=metrics_df['Countries'] * 3,
             color=metrics_df['Efficiency'],
-            colorscale='Viridis',
+            colorscale=COLORSCALE_SEQUENTIAL,
             showscale=True,
             colorbar=dict(title='Efficiency<br>(kbd/Company)'),
             line=dict(width=1, color='white')
@@ -310,7 +311,7 @@ def create_port_padd_distribution(padd_filter='US'):
         marker=dict(
             size=ports_per_padd.values * 10,
             color=padd_volumes.values,
-            colorscale='Viridis',
+            colorscale=COLORSCALE_SEQUENTIAL,
             showscale=True,
             colorbar=dict(title='Volume<br>(kbd)'),
             line=dict(width=2, color='white')

@@ -62,33 +62,33 @@ sidebar = html.Div(
             html.Div([
                 html.A(
                     html.Img(
-                        src="/assets/best.png",  # Ensure this path is correct
+                        src="/assets/company_logo.png",
                         style={
-                            'height': 'auto',  # Adjust height to maintain aspect ratio
-                            'width': '50px',   # Adjust width to fit your design
-                            'object-fit': 'contain',  # Preserve the aspect ratio
-                            'display': 'block',  # Makes the image a block to take full width of the line
-                            'margin-bottom': '0px',
-                            'margin-left': '5px'
+                            'height': 'auto',
+                            'width': '50px',
+                            'objectFit': 'contain',
+                            'display': 'block',
+                            'marginBottom': '0px',
+                            'marginLeft': '5px'
                         }
                     ),
-                    href="https://www.google.com"  # Makes the image clickable
+                    href="https://www.google.com"
                 ),
                 html.A("Socar", href="https://www.google.com", style={
-                    'text-decoration': 'none',
+                    'textDecoration': 'none',
                     'color': 'black',
-                    'font-size': '40px',
-                    'font-family': "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                    'margin-left': '10px',  # Adds minimal space between the image and text
-                    'align-self': 'center',  # Aligns the text vertically center with the image
+                    'fontSize': '46px',
+                    'fontFamily': "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    'marginLeft': '10px',
+                    'alignSelf': 'center',
                 }),
             ], style={
                 'flex': '1',
                 'display': 'flex',
-                'justify-content': 'flex-start',  # Aligns the image and text to the left
-                'align-items': 'center',  # Aligns the image and text vertically center
+                'justifyContent': 'flex-start',
+                'alignItems': 'center',
             }),
-        ], style={'display': 'flex', 'border-bottom': '0px solid white', 'border-top': '0px solid white','margin-left':'12px'}),
+        ], style={'display': 'flex', 'borderBottom': '0px solid white', 'borderTop': '0px solid white','marginLeft':'12px'}),
 
         # Add a blank div to give the sidebar some height space
         html.Div(style={'height': '25px'}),
@@ -416,4 +416,10 @@ def display_page(pathname):
         # Default to home page for any unrecognized path
         return pages.page1.layout
 if __name__ == '__main__':
-    app.run(debug=True, port=8051)
+    app.run(
+        debug=True,
+        dev_tools_ui=False,
+        dev_tools_hot_reload=False,
+        port=8052,
+        host="127.0.0.1",
+    )

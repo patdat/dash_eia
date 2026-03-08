@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
+from src.utils.colors import BLUE, PURPLE, COLORSCALE_SEQUENTIAL, GRAY_300
 
 processor = CLIDataProcessor()
 
@@ -53,7 +54,7 @@ def generate_quality_distribution_table(padd_filter='US'):
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '12px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'}
     )
 
@@ -89,7 +90,7 @@ def generate_arbitrage_table(padd_filter='US'):
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '12px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'}
     )
 
@@ -113,7 +114,7 @@ def create_api_sulfur_scatter(padd_filter='US'):
         marker=dict(
             size=sample['QUANTITY'] * 10,  # Scale up for visibility (kbd values are small)
             color=sample['QUANTITY'],
-            colorscale='Viridis',
+            colorscale=COLORSCALE_SEQUENTIAL,
             showscale=True,
             colorbar=dict(title='Volume<br>(kbd)'),
             opacity=0.6,
@@ -154,16 +155,16 @@ def create_quality_evolution(padd_filter='US'):
         mode='lines',
         name='API Gravity',
         yaxis='y',
-        line=dict(color='#2E86AB', width=2)
+        line=dict(color=BLUE, width=2)
     ))
-    
+
     fig.add_trace(go.Scatter(
         x=monthly.index,
         y=monthly['SULFUR'],
         mode='lines',
         name='Sulfur %',
         yaxis='y2',
-        line=dict(color='#A23B72', width=2)
+        line=dict(color=PURPLE, width=2)
     ))
     
     fig.update_layout(

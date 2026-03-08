@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from src.wps.ag_calculations import DataProcessor
 from src.utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
+from src.utils.colors import RED, BLUE, ORANGE, GREEN, POSITIVE, NEGATIVE, CHART_SEQUENCE, COLORSCALE_DIVERGING
 
 # Initialize the data processor
 processor = DataProcessor()
@@ -28,7 +29,7 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("Advanced Time Series & Anomaly Detection", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("Advanced Time Series & Anomaly Detection", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
 
         html.Div([
@@ -48,8 +49,8 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Export Insights", id="export-insights-btn-p15", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -59,7 +60,7 @@ layout = html.Div([
         # Top row - Time series analysis
         html.Div([
             html.Div([
-                html.H3("Year-over-Year Comparison Analysis", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Year-over-Year Comparison Analysis", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div([
                     dcc.Dropdown(
                         id='yoy-product-selector',
@@ -77,7 +78,7 @@ layout = html.Div([
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Z-Score Anomaly Detection", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Z-Score Anomaly Detection", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div([
                     dcc.Dropdown(
                         id='anomaly-product-selector',
@@ -98,7 +99,7 @@ layout = html.Div([
         # Middle row - Advanced analytics
         html.Div([
             html.Div([
-                html.H3("Moving Average Convergence Divergence", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Moving Average Convergence Divergence", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div([
                     dcc.Dropdown(
                         id='macd-product-selector',
@@ -116,7 +117,7 @@ layout = html.Div([
             ], style={"width": "49%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Correlation Matrix Heatmap", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Correlation Matrix Heatmap", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 dcc.Graph(id="correlation-matrix-heatmap", style={"height": "400px"})
             ], style={"width": "49%"}),
         ], style={"display": "flex", "marginBottom": "20px"}),
@@ -124,12 +125,12 @@ layout = html.Div([
         # Bottom row - Insights and statistics
         html.Div([
             html.Div([
-                html.H3("Statistical Insights", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Statistical Insights", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div(id="statistical-insights-table", style={"height": "350px", "padding": "10px", "backgroundColor": "#f8f8f8", "border": "1px solid #ddd", "overflow": "auto"})
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Trend Decomposition", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Trend Decomposition", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div([
                     dcc.Dropdown(
                         id='decomposition-product-selector',
@@ -146,7 +147,7 @@ layout = html.Div([
             ], style={"width": "32%", "marginRight": "2%"}),
             
             html.Div([
-                html.H3("Forecast Confidence Intervals", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Forecast Confidence Intervals", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Div([
                     dcc.Dropdown(
                         id='forecast-product-selector',
@@ -249,7 +250,7 @@ def update_yoy_comparison_chart(data, selected_product):
         recent_years = all_years[-3:]  # Last 3 years for clarity
     
     fig = go.Figure()
-    colors = ['#c00000', '#1f77b4', '#ff7f0e']
+    colors = [RED, BLUE, ORANGE]
     
     for i, year in enumerate(recent_years):
         year_data = ts_df[ts_df['year'] == year].copy()
@@ -331,30 +332,30 @@ def update_anomaly_detection_chart(data, selected_product):
         y=values_sampled,
         mode='lines+markers',
         name='Actual Values',
-        line=dict(color='#1f77b4', width=2),
+        line=dict(color=BLUE, width=2),
         marker=dict(size=3)
     ))
-    
+
     # Add rolling mean
     fig.add_trace(go.Scatter(
         x=dates_sampled,
         y=rolling_mean,
         mode='lines',
         name='Rolling Mean',
-        line=dict(color='#2ca02c', width=2, dash='dash')
+        line=dict(color=GREEN, width=2, dash='dash')
     ))
-    
+
     # Highlight anomalies
     anomaly_dates = [date for i, date in enumerate(dates_sampled) if pd.notna(anomalies[i]) and anomalies[i]]
     anomaly_values = [value for i, value in enumerate(values_sampled) if pd.notna(anomalies[i]) and anomalies[i]]
-    
+
     if anomaly_dates:
         fig.add_trace(go.Scatter(
             x=anomaly_dates,
             y=anomaly_values,
             mode='markers',
             name='Anomalies',
-            marker=dict(color='#c00000', size=8, symbol='x')
+            marker=dict(color=RED, size=8, symbol='x')
         ))
     
     # Add confidence bands (simplified)
@@ -449,40 +450,40 @@ def update_macd_chart(data, selected_product):
         y=values_sampled,
         mode='lines',
         name='Price',
-        line=dict(color='#1f77b4', width=2)
+        line=dict(color=BLUE, width=2)
     ), row=1, col=1)
-    
+
     fig.add_trace(go.Scatter(
         x=dates_sampled,
         y=ema12,
         mode='lines',
         name='EMA 12',
-        line=dict(color='#ff7f0e', width=1, dash='dash')
+        line=dict(color=ORANGE, width=1, dash='dash')
     ), row=1, col=1)
-    
+
     fig.add_trace(go.Scatter(
         x=dates_sampled,
         y=ema26,
         mode='lines',
         name='EMA 26',
-        line=dict(color='#2ca02c', width=1, dash='dash')
+        line=dict(color=GREEN, width=1, dash='dash')
     ), row=1, col=1)
-    
+
     # MACD chart (using sampled data)
     fig.add_trace(go.Scatter(
         x=dates_sampled,
         y=macd_line,
         mode='lines',
         name='MACD',
-        line=dict(color='#c00000', width=2)
+        line=dict(color=RED, width=2)
     ), row=2, col=1)
-    
+
     fig.add_trace(go.Scatter(
         x=dates_sampled,
         y=signal_line,
         mode='lines',
         name='Signal',
-        line=dict(color='#ff7f0e', width=2)
+        line=dict(color=ORANGE, width=2)
     ), row=2, col=1)
     
     # MACD histogram (only show every few bars for clarity)
@@ -498,7 +499,7 @@ def update_macd_chart(data, selected_product):
         x=hist_dates,
         y=hist_values,
         name='Histogram',
-        marker_color=['#2ca02c' if x >= 0 else '#c00000' for x in hist_values],
+        marker_color=[POSITIVE if x >= 0 else NEGATIVE for x in hist_values],
         opacity=0.6
     ), row=2, col=1)
     
@@ -563,7 +564,7 @@ def update_correlation_matrix_heatmap(data):
         z=correlation_matrix.values,
         x=correlation_matrix.columns,
         y=correlation_matrix.columns,
-        colorscale='RdBu',
+        colorscale=COLORSCALE_DIVERGING,
         zmid=0,
         text=correlation_matrix.round(2).values,
         texttemplate="%{text}",
@@ -630,7 +631,7 @@ def update_statistical_insights_table(data):
                     trend = "N/A"
                 
                 insights.extend([
-                    html.H4(product_name, style={"color": "#c00000", "margin": "10px 0 5px 0"}),
+                    html.H4(product_name, style={"color": RED, "margin": "10px 0 5px 0"}),
                     html.P(f"Current: {current_value:,.0f}", style={"margin": "2px 0"}),
                     html.P(f"Percentile: {percentile:.0f}%", style={"margin": "2px 0"}),
                     html.P(f"Volatility: {cv:.1f}%", style={"margin": "2px 0"}),
@@ -702,7 +703,7 @@ def update_trend_decomposition_chart(data, selected_product):
         y=trend,
         mode='lines',
         name='Trend',
-        line=dict(color='#c00000', width=3)
+        line=dict(color=RED, width=3)
     ))
     
     fig.update_layout(
@@ -794,17 +795,17 @@ def update_forecast_intervals_chart(data, selected_product):
         y=display_values,
         mode='lines+markers',
         name='Historical',
-        line=dict(color='#1f77b4', width=2),
+        line=dict(color=BLUE, width=2),
         marker=dict(size=4)
     ))
-    
+
     # Forecast
     fig.add_trace(go.Scatter(
         x=forecast_dates,
         y=forecast_values,
         mode='lines+markers',
         name='Forecast',
-        line=dict(color='#c00000', width=2, dash='dash'),
+        line=dict(color=RED, width=2, dash='dash'),
         marker=dict(size=4)
     ))
     
@@ -841,13 +842,3 @@ def update_forecast_intervals_chart(data, selected_product):
     
     return fig
 
-# Export callback
-@callback(
-    Output("export-insights-btn-p15", "n_clicks"),
-    [Input("export-insights-btn-p15", "n_clicks")],
-    prevent_initial_call=True
-)
-def handle_export_insights(n_clicks):
-    if n_clicks > 0:
-        print("Export insights functionality would be implemented here")
-    return 0

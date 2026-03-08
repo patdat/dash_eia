@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from app import app
+from src.utils.colors import COLORSCALE_HEATMAP, GRAY_300
 
 processor = CLIDataProcessor()
 
@@ -40,7 +41,7 @@ def generate_country_risk_table(padd_filter='US'):
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
         style_cell={'textAlign': 'left', 'padding': '10px',
                    'fontFamily': 'Arial', 'fontSize': '11px'},
-        style_header={'backgroundColor': '#bfbec4', 'color': 'black',
+        style_header={'backgroundColor': GRAY_300, 'color': 'black',
                      'fontWeight': 'bold'},
         style_data_conditional=[
             {
@@ -114,7 +115,7 @@ def create_geographic_distribution(padd_filter='US'):
         marker=dict(
             size=country_data['Avg kbd'].head(10) / 50,
             color=country_data['Avg API'].head(10),
-            colorscale='RdYlGn',
+            colorscale=COLORSCALE_HEATMAP,
             showscale=True,
             colorbar=dict(title='Avg API'),
             line=dict(width=1, color='white')

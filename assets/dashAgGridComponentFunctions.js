@@ -12,9 +12,24 @@ dagfuncs.numberFormatter = function(value) {
     return value < 0 ? `(${formattedValue})` : formattedValue;
 };
 
+dagfuncs.numberFormatterByUnit = function(value, uom) {
+    if (value === null || value === undefined) {
+        return '';
+    }
+    const decimals = (uom === 'mb' || uom === 'pct') ? 1 : 0;
+    const formattedValue = Math.abs(value).toLocaleString('en-US', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+    });
+    return value < 0 ? `(${formattedValue})` : formattedValue;
+};
+
 // this is to highlight the row and column of the cell
 dagfuncs.HighlightCellRenderer = function (props) {
     const [backgroundColor, setBackgroundColor] = React.useState('');
+    const displayValue = typeof props.formatValue === 'function'
+        ? props.formatValue(props.value)
+        : (props.valueFormatted ?? props.value);
     
     React.useEffect(() => {
         const getColumnCells = (field) => {
@@ -57,6 +72,6 @@ dagfuncs.HighlightCellRenderer = function (props) {
     return React.createElement(
         'div',
         { style: { backgroundColor: backgroundColor } },
-        props.value
+        displayValue
     );
 };

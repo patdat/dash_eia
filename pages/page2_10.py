@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 from src.wps.ag_calculations import DataProcessor
 from src.utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
+from src.utils.colors import RED, BLUE, BLACK, GREEN, ORANGE
 
 # Initialize the data processor
 processor = DataProcessor()
@@ -26,12 +27,38 @@ except Exception as e:
 # Keep initial data for graph purposes
 initial_df = df.copy() if not df.empty else pd.DataFrame()
 
+
+def format_grid_display_data(df):
+    """Format visible grid values without changing the raw data used by graphs."""
+    if df.empty:
+        return df
+
+    display_df = df.copy()
+    metadata_cols = ['id', 'name', 'padd', 'commodity', 'type', 'uom']
+    value_cols = [col for col in display_df.columns if col not in metadata_cols]
+    display_df[value_cols] = display_df[value_cols].astype(object)
+
+    def format_value(value, uom):
+        numeric_value = pd.to_numeric(value, errors='coerce')
+        if pd.isna(numeric_value) or numeric_value == 0:
+            return '-'
+
+        decimals = 1 if uom in {'mb', 'pct'} else 0
+        formatted = f"{abs(float(numeric_value)):,.{decimals}f}"
+        return f"({formatted})" if numeric_value < 0 else formatted
+
+    for idx, row in display_df.iterrows():
+        for col in value_cols:
+            display_df.at[idx, col] = format_value(row[col], row['uom'])
+
+    return display_df
+
 # Page layout for page 2_10
 layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("EIA Stats Table", style={"fontSize": "3em", "color": "#c00000", "margin": "0"}),
+            html.H1("EIA Stats Table", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
 
         html.Div([
@@ -51,12 +78,12 @@ layout = html.Div([
         html.Div([
             html.Button("📊 Graphs", id="graph-view-btn-wps", n_clicks=0,
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": "2px solid #c00000",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "backgroundColor": "white", "border": f"2px solid {RED}",
+                              "color": RED, "cursor": "pointer"}),
             html.Button("Download CSV", id="csv-button", n_clicks=0, 
                        style={"fontSize": "1.3em", "padding": "10px", "margin": "0",
                               "backgroundColor": "white", "border": "2px solid #f0f0f0",
-                              "color": "#c00000", "cursor": "pointer"}),
+                              "color": RED, "cursor": "pointer"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
     ], style={"height": "6vh", "display": "flex", "alignItems": "center",
               "justifyContent": "space-between", "padding": "0 20px"}),
@@ -73,7 +100,7 @@ layout = html.Div([
                     "floatingFilter": True,
                     "sortable": False,
                 },
-                rowData=df.to_dict('records'),
+                rowData=format_grid_display_data(df).to_dict('records'),
                 csvExportParams={
                     "fileName": "eia_stats_data.csv",
                 },
@@ -90,7 +117,7 @@ layout = html.Div([
         # Graph panel (initially hidden)
         html.Div([
             html.Div([
-                html.H3("Data Visualization", style={"margin": "10px 0", "color": "#c00000", "fontSize": "1.5em"}),
+                html.H3("Data Visualization", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
                 html.Button("✕", id="close-graph-btn-wps", n_clicks=0,
                            style={"position": "absolute", "top": "10px", "right": "10px",
                                   "background": "transparent", "border": "none",
@@ -134,12 +161,14 @@ def export_data_as_csv(n_clicks):
      Output("export-data-grid", "columnDefs"),
      Output("current-data-store", "data")],
     [Input("date-picker-range", "start_date"),
-     Input("date-picker-range", "end_date")]
+     Input("date-picker-range", "end_date")],
+    prevent_initial_call=True,
 )
 def update_grid_data(start_date, end_date):
     try:
         df, updated_columnDefinitions = processor.get_data(start_date, end_date)
-        return df.to_dict('records'), updated_columnDefinitions, df.to_dict('records')
+        display_df = format_grid_display_data(df)
+        return display_df.to_dict('records'), updated_columnDefinitions, df.to_dict('records')
     except Exception as e:
         print(f"Error updating grid data: {e}")
         # Return empty data on error
@@ -257,7 +286,7 @@ def update_graphs(selected_rows, current_data):
         y=values,
         mode='lines+markers',
         name='Actual',
-        line=dict(color='#c00000', width=1.5),
+        line=dict(color=BLUE, width=1.5),
         marker=dict(size=3)
     ))
     
@@ -271,7 +300,7 @@ def update_graphs(selected_rows, current_data):
             y=df_ma['ma_4week'],
             mode='lines',
             name='4-Week Average',
-            line=dict(color='#0066cc', width=2, dash='dash')
+            line=dict(color=RED, width=2, dash='dash')
         ))
     
     line_fig.update_layout(
@@ -322,21 +351,26 @@ def update_graphs(selected_rows, current_data):
         
         seasonality_fig = go.Figure()
         
-        # Color palette
-        import plotly.express as px
-        colors = px.colors.qualitative.Set1
-        
+        seasonality_colors = {
+            2026: BLACK,
+            2025: BLUE,
+            2024: RED,
+            2023: GREEN,
+        }
+        fallback_colors = [ORANGE, GREEN, RED, BLUE, BLACK]
+
         for idx, year in enumerate(reversed(last_4_years)):  # Reverse to give recent years priority colors
             year_data = season_df[season_df['year'] == year].copy()
             if not year_data.empty:
                 year_data = year_data.sort_values('week')
+                year_color = seasonality_colors.get(year, fallback_colors[idx % len(fallback_colors)])
                 seasonality_fig.add_trace(go.Scatter(
                     x=year_data['week'],
                     y=year_data['value'],
                     mode='lines+markers',
                     name=str(year),
                     marker=dict(size=4),
-                    line=dict(color=colors[idx % len(colors)], width=2)
+                    line=dict(color=year_color, width=2)
                 ))
         
         seasonality_fig.update_layout(
