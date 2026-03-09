@@ -28,7 +28,7 @@ def get_other_dpr_ids():
 
 def main():
     df = get_dpr_ids()
-    # get_other_dpr_ids()
+    get_other_dpr_ids()
     return df
     
 if __name__ == '__main__':

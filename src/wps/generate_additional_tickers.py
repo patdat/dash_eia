@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+pd.set_option('future.no_silent_downcasting', True)
+
 def generate_refinery_yields(df):
     """Calculate TRUE refinery yields (excluding ethanol) from production and gross runs data
 

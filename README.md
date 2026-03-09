@@ -65,9 +65,6 @@ python -m src.steo.download
 # Company-level import data
 python -m src.cli.main
 
-# Drilling productivity data
-python -m src.cli.download
-```
 
 ### Data Storage Structure
 ```

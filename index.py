@@ -76,7 +76,7 @@ sidebar = html.Div(
                 ),
                 html.A("Socar", href="https://www.google.com", style={
                     'textDecoration': 'none',
-                    'color': 'black',
+                    'color': 'white',
                     'fontSize': '46px',
                     'fontFamily': "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
                     'marginLeft': '10px',
