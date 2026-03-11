@@ -5,28 +5,20 @@ from app import initial_data
 
 import pages.page1      # Home
 import pages.page2_1    # Headline
-import pages.page2_2    # Crude
-import pages.page2_3    # Gasoline
-import pages.page2_4    # Distillate
-import pages.page2_5    # Jet
-import pages.page2_6    # Fuel Oil
-import pages.page2_7    # C3/C3=
-import pages.page2_8    # Products Supplied
-import pages.page2_9    # Refining
-import pages.page2_10   # AgGrid
-import pages.page2_11   # PADD Regional Stock Analysis
-import pages.page2_12   # Cushing Hub Analysis
-import pages.page2_13   # Refinery Utilization & Crack Spreads
-import pages.page2_14   # Supply/Demand Balance & Trade
-import pages.page2_15   # Advanced Time Series & Anomaly Detection
+import pages.page2_2    # Graphing (Combined WPS)
+import pages.page2_3    # Stats Table
+import pages.page2_4    # PADD Regional Stock Analysis
+import pages.page2_5    # Cushing
+import pages.page2_6    # Refinery Utilization & Crack Spreads
+import pages.page2_7    # Supply/Demand Balance & Trade
+import pages.page2_8    # Advanced Time Series & Anomaly Detection
 import pages.page3_1    # regional_charts
 import pages.page3_2    # bakken
-import pages.page3_3    # eagleford
 import pages.page3_4    # haynesville
 import pages.page3_5    # permian
 import pages.page3_6    # other
-import pages.page3_7    # Regional Efficiency Heatmap
-import pages.page3_8    # DUC Inventory Waterfall Analysis
+import pages.page3_7    # Efficiency Heatmap
+import pages.page3_8    # DUC Analysis
 import pages.page3_9    # Drilling Productivity Matrix Analysis
 import pages.page3_10   # Regional Performance Radar Analysis
 import pages.page4_1    # EIA STEO - TBD
@@ -54,7 +46,7 @@ import pages.page6_6    # EIA PSM - TBD
 
 # Layout with fixed-width sidebar
 sidebar = html.Div(
-    [ 
+    [
         # Add a blank div to give the sidebar some height space
         html.Div(style={'height': '25px'}),
 
@@ -97,27 +89,20 @@ sidebar = html.Div(
             [
                 # Home
                 dbc.NavLink("Home", href="/home", active="exact", className="nav-link"),
-                
+
                 # EIA Weekly
                 dbc.NavItem([
                     dbc.Button("EIA Weekly", id="toggle-page-2", className="sidebar-button page-button closed", n_clicks=0),
                     dbc.Collapse(
                         dbc.Nav(
                             [
-                                dbc.NavLink("Headline", href="/stats/headline", active='exact', className="nav-link"),                                
-                                dbc.NavLink("Crude", href="/stats/crude", active='exact', className="nav-link"),
-                                dbc.NavLink("Gasoline", href="/stats/gasoline", active='exact', className="nav-link"),
-                                dbc.NavLink("Distillate", href="/stats/distillate", active='exact', className="nav-link"),
-                                dbc.NavLink("Jet", href="/stats/jet", active='exact', className="nav-link"),
-                                dbc.NavLink("Fuel Oil", href="/stats/fuel_oil", active='exact', className="nav-link"),
-                                dbc.NavLink("C3/C3=", href="/stats/propane_propylene", active='exact', className="nav-link"),
-                                dbc.NavLink("Products Supplied", href="/stats/products_supplied", active='exact', className="nav-link"),
-                                dbc.NavLink("Refining", href="/stats/refining", active='exact', className="nav-link"),
+                                dbc.NavLink("Headline", href="/stats/headline", active='exact', className="nav-link"),
+                                dbc.NavLink("Graphing", href="/stats/graphing", active='exact', className="nav-link"),
                                 dbc.NavLink("Stats Table", href="/stats/stats_table", active='exact', className="nav-link"),
-                                dbc.NavLink("PADD Regional Analysis", href="/stats/padd_regional", active='exact', className="nav-link"),
-                                dbc.NavLink("Cushing Hub Analysis", href="/stats/cushing_analysis", active='exact', className="nav-link"),
-                                dbc.NavLink("Refinery Analytics", href="/stats/refinery_analytics", active='exact', className="nav-link"),
-                                dbc.NavLink("Supply/Demand Balance", href="/stats/supply_demand", active='exact', className="nav-link"),
+                                dbc.NavLink("PADD Analysis", href="/stats/padd_regional", active='exact', className="nav-link"),
+                                dbc.NavLink("Cushing Analysis", href="/stats/cushing_analysis", active='exact', className="nav-link"),
+                                dbc.NavLink("Runs Analysis", href="/stats/runs_analysis", active='exact', className="nav-link", style={"color": "#00ADEF", "fontWeight": "600"}),
+                                dbc.NavLink("Balance Analysis", href="/stats/supply_demand", active='exact', className="nav-link"),
                                 dbc.NavLink("Advanced Time Series", href="/stats/time_series_analytics", active='exact', className="nav-link"),
                             ],
                             vertical=True, pills=True
@@ -125,19 +110,18 @@ sidebar = html.Div(
                         id="collapse-page-2",
                         is_open=True,
                     ),
-                ]),  
-                
+                ]),
+
                 # EIA DPR
                 dbc.NavItem([
                     dbc.Button("EIA DPR", id="toggle-page-3", className="sidebar-button page-button closed", n_clicks=0),
                     dbc.Collapse(
                         dbc.Nav(
                             [
-                                dbc.NavLink("DPR Charts", href="/dpr/dpr_charts", active='exact', className="nav-link"),  
+                                dbc.NavLink("DPR Charts", href="/dpr/dpr_charts", active='exact', className="nav-link"),
                                 dbc.NavLink("DPR Table", href="/dpr/dpr_table", active='exact', className="nav-link"),
-                                dbc.NavLink("DPR Other Table", href="/dpr/dpr_other_table", active='exact', className="nav-link"),
-                                dbc.NavLink("Regional Efficiency Heatmap", href="/dpr/efficiency_heatmap", active='exact', className="nav-link"),
-                                dbc.NavLink("DUC Inventory Waterfall", href="/dpr/duc_waterfall", active='exact', className="nav-link"),
+                                dbc.NavLink("Efficiency Heatmap", href="/dpr/efficiency_heatmap", active='exact', className="nav-link"),
+                                dbc.NavLink("DUC Analysis", href="/dpr/duc_waterfall", active='exact', className="nav-link"),
                                 dbc.NavLink("Productivity Matrix Analysis", href="/dpr/productivity_matrix", active='exact', className="nav-link"),
                                 dbc.NavLink("Performance Radar Analysis", href="/dpr/performance_radar", active='exact', className="nav-link"),
                             ],
@@ -147,7 +131,7 @@ sidebar = html.Div(
                         is_open=True,
                     ),
                 ]),
-                
+
                 # EIA STEO
                 dbc.NavItem([
                     dbc.Button("EIA STEO", id="toggle-page-4", className="sidebar-button page-button closed", n_clicks=0),
@@ -167,7 +151,7 @@ sidebar = html.Div(
                         is_open=True,
                     ),
                 ]),
-                
+
                 # EIA CLI
                 dbc.NavItem([
                     dbc.Button("EIA CLI", id="toggle-page-5", className="sidebar-button page-button closed", n_clicks=0),
@@ -191,7 +175,7 @@ sidebar = html.Div(
                         is_open=True,
                     ),
                 ]),
-                
+
                 # EIA PSM
                 dbc.NavItem([
                     dbc.Button("EIA PSM", id="toggle-page-6", className="sidebar-button page-button closed", n_clicks=0),
@@ -210,8 +194,8 @@ sidebar = html.Div(
                         id="collapse-page-6",
                         is_open=True,
                     ),
-                ]),                                                   
-                                                                 
+                ]),
+
             ],
             vertical=True,
             pills=True,
@@ -227,7 +211,7 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     sidebar,
     content,
-    dcc.Store(id='data-store', data=initial_data, storage_type='session'),    
+    dcc.Store(id='data-store', data=initial_data, storage_type='session'),
 ])
 
 @app.callback(
@@ -318,44 +302,28 @@ def display_page(pathname):
     if pathname == '/' or pathname is None:
         return pages.page1.layout
     elif pathname == '/home':
-        return pages.page1.layout        
+        return pages.page1.layout
     # EIA Weekly
     elif pathname == '/stats/headline':
-        return pages.page2_1.layout            
-    elif pathname == '/stats/crude':
+        return pages.page2_1.layout
+    elif pathname == '/stats/graphing':
         return pages.page2_2.layout
-    elif pathname == '/stats/gasoline':
-        return pages.page2_3.layout
-    elif pathname == '/stats/distillate':
-        return pages.page2_4.layout
-    elif pathname == '/stats/jet':
-        return pages.page2_5.layout
-    elif pathname == '/stats/fuel_oil':
-        return pages.page2_6.layout
-    elif pathname == '/stats/propane_propylene':
-        return pages.page2_7.layout
-    elif pathname == '/stats/products_supplied':
-        return pages.page2_8.layout
-    elif pathname == '/stats/refining':
-        return pages.page2_9.layout
     elif pathname == '/stats/stats_table':
-        return pages.page2_10.layout
+        return pages.page2_3.layout
     elif pathname == '/stats/padd_regional':
-        return pages.page2_11.layout
+        return pages.page2_4.layout
     elif pathname == '/stats/cushing_analysis':
-        return pages.page2_12.layout
-    elif pathname == '/stats/refinery_analytics':
-        return pages.page2_13.layout
+        return pages.page2_5.layout
+    elif pathname == '/stats/runs_analysis':
+        return pages.page2_6.layout
     elif pathname == '/stats/supply_demand':
-        return pages.page2_14.layout
+        return pages.page2_7.layout
     elif pathname == '/stats/time_series_analytics':
-        return pages.page2_15.layout
+        return pages.page2_8.layout
     elif pathname == '/dpr/dpr_charts':
         return pages.page3_1.layout
     elif pathname == '/dpr/dpr_table':
         return pages.page3_2.layout
-    elif pathname == '/dpr/dpr_other_table':
-        return pages.page3_3.layout
     elif pathname == '/dpr/efficiency_heatmap':
         return pages.page3_7.layout
     elif pathname == '/dpr/duc_waterfall':
@@ -411,7 +379,7 @@ def display_page(pathname):
         return pages.page6_5.layout
     elif pathname == '/psm/tbd6':
         return pages.page6_6.layout
-    
+
     else:
         # Default to home page for any unrecognized path
         return pages.page1.layout

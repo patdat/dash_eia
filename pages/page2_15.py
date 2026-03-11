@@ -1,844 +1,1133 @@
-from dash import html, dcc, callback, Output, Input, ctx, State
-import plotly.graph_objects as go
-import plotly.express as px
-import pandas as pd
+"""Advanced Time Series Analytics — 5-tabbed analytics suite with dark chart theme."""
+
+import warnings
 import numpy as np
-from src.wps.ag_calculations import DataProcessor
-from src.utils.variables import default_start_date_eia_wps_table, default_end_date_eia_wps_table
-from src.utils.colors import RED, BLUE, ORANGE, GREEN, POSITIVE, NEGATIVE, CHART_SEQUENCE, COLORSCALE_DIVERGING
-
-# Initialize the data processor
-processor = DataProcessor()
-
-# Default date range
-default_start_date = default_start_date_eia_wps_table
-default_end_date = default_end_date_eia_wps_table
-
-# Process data and column definitions - with error handling
-try:
-    df, columnDefinitions = processor.get_data(default_start_date, default_end_date)
-except Exception as e:
-    print(f"Error loading initial data for page2_15: {e}")
-    # Create empty dataframe with minimal columns for initial load
-    import pandas as pd
-    df = pd.DataFrame()
-    columnDefinitions = []
-
-# Page layout for page 2_15 - Advanced Time Series & Anomaly Detection
-layout = html.Div([
-    # Header section
-    html.Div([
-        html.Div([
-            html.H1("Advanced Time Series & Anomaly Detection", style={"fontSize": "3em", "color": RED, "margin": "0"}),
-        ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
-
-        html.Div([
-            dcc.DatePickerRange(
-                id='date-picker-range-p15',
-                min_date_allowed='2010-01-01',
-                max_date_allowed='2030-12-31',
-                initial_visible_month=default_start_date,
-                start_date=default_start_date,
-                end_date=default_end_date,
-                display_format='YYYY-MM-DD',
-                style={"padding": "10px"},
-                className="custom-date-picker"
-            ),
-        ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "center"}),
-
-        html.Div([
-            html.Button("📊 Export Insights", id="export-insights-btn-p15", n_clicks=0,
-                       style={"fontSize": "1.3em", "padding": "10px", "margin": "0 10px",
-                              "backgroundColor": "white", "border": f"2px solid {RED}",
-                              "color": RED, "cursor": "pointer"}),
-        ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-end"})
-    ], style={"height": "6vh", "display": "flex", "alignItems": "center",
-              "justifyContent": "space-between", "padding": "0 20px"}),
-    
-    # Main content area with charts
-    html.Div([
-        # Top row - Time series analysis
-        html.Div([
-            html.Div([
-                html.H3("Year-over-Year Comparison Analysis", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
-                html.Div([
-                    dcc.Dropdown(
-                        id='yoy-product-selector',
-                        options=[
-                            {'label': 'Crude Oil Stocks', 'value': 'WCESTUS1'},
-                            {'label': 'Gasoline Stocks', 'value': 'WGTSTUS1'},
-                            {'label': 'Distillate Stocks', 'value': 'WDISTUS1'},
-                            {'label': 'Crude Production', 'value': 'WCRFPUS2'}
-                        ],
-                        value='WCESTUS1',
-                        style={"marginBottom": "10px"}
-                    ),
-                    dcc.Graph(id="yoy-comparison-chart", style={"height": "350px"})
-                ])
-            ], style={"width": "49%", "marginRight": "2%"}),
-            
-            html.Div([
-                html.H3("Z-Score Anomaly Detection", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
-                html.Div([
-                    dcc.Dropdown(
-                        id='anomaly-product-selector',
-                        options=[
-                            {'label': 'Crude Oil Stocks', 'value': 'WCESTUS1'},
-                            {'label': 'Gasoline Stocks', 'value': 'WGTSTUS1'},
-                            {'label': 'Distillate Stocks', 'value': 'WDISTUS1'},
-                            {'label': 'Refinery Utilization', 'value': 'W_NA_YUP_R30_PER'}
-                        ],
-                        value='WCESTUS1',
-                        style={"marginBottom": "10px"}
-                    ),
-                    dcc.Graph(id="anomaly-detection-chart", style={"height": "350px"})
-                ])
-            ], style={"width": "49%"}),
-        ], style={"display": "flex", "marginBottom": "20px"}),
-        
-        # Middle row - Advanced analytics
-        html.Div([
-            html.Div([
-                html.H3("Moving Average Convergence Divergence", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
-                html.Div([
-                    dcc.Dropdown(
-                        id='macd-product-selector',
-                        options=[
-                            {'label': 'Crude Oil Stocks', 'value': 'WCESTUS1'},
-                            {'label': 'Gasoline Stocks', 'value': 'WGTSTUS1'},
-                            {'label': 'Distillate Stocks', 'value': 'WDISTUS1'},
-                            {'label': 'Crude Imports', 'value': 'WCEIMUS2'}
-                        ],
-                        value='WCESTUS1',
-                        style={"marginBottom": "10px"}
-                    ),
-                    dcc.Graph(id="macd-chart", style={"height": "350px"})
-                ])
-            ], style={"width": "49%", "marginRight": "2%"}),
-            
-            html.Div([
-                html.H3("Correlation Matrix Heatmap", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
-                dcc.Graph(id="correlation-matrix-heatmap", style={"height": "400px"})
-            ], style={"width": "49%"}),
-        ], style={"display": "flex", "marginBottom": "20px"}),
-        
-        # Bottom row - Insights and statistics
-        html.Div([
-            html.Div([
-                html.H3("Statistical Insights", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
-                html.Div(id="statistical-insights-table", style={"height": "350px", "padding": "10px", "backgroundColor": "#f8f8f8", "border": "1px solid #ddd", "overflow": "auto"})
-            ], style={"width": "32%", "marginRight": "2%"}),
-            
-            html.Div([
-                html.H3("Trend Decomposition", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
-                html.Div([
-                    dcc.Dropdown(
-                        id='decomposition-product-selector',
-                        options=[
-                            {'label': 'Crude Oil Stocks', 'value': 'WCESTUS1'},
-                            {'label': 'Gasoline Stocks', 'value': 'WGTSTUS1'},
-                            {'label': 'Distillate Stocks', 'value': 'WDISTUS1'}
-                        ],
-                        value='WCESTUS1',
-                        style={"marginBottom": "10px"}
-                    ),
-                    dcc.Graph(id="trend-decomposition-chart", style={"height": "300px"})
-                ])
-            ], style={"width": "32%", "marginRight": "2%"}),
-            
-            html.Div([
-                html.H3("Forecast Confidence Intervals", style={"margin": "10px 0", "color": RED, "fontSize": "1.5em"}),
-                html.Div([
-                    dcc.Dropdown(
-                        id='forecast-product-selector',
-                        options=[
-                            {'label': 'Crude Oil Stocks', 'value': 'WCESTUS1'},
-                            {'label': 'Gasoline Stocks', 'value': 'WGTSTUS1'},
-                            {'label': 'Distillate Stocks', 'value': 'WDISTUS1'}
-                        ],
-                        value='WCESTUS1',
-                        style={"marginBottom": "10px"}
-                    ),
-                    dcc.Graph(id="forecast-intervals-chart", style={"height": "300px"})
-                ])
-            ], style={"width": "32%"}),
-        ], style={"display": "flex"}),
-    ], style={"padding": "20px", "height": "85vh", "overflow": "auto"}),
-    
-    # Hidden stores
-    dcc.Store(id='current-data-store-p15', data=df.to_dict('records') if not df.empty else [])
-    
-], style={"height": "100vh", "display": "flex", "flexDirection": "column"})
-
-# Helper function to extract time series
-def extract_time_series(data_row):
-    """Extract time series data from a data row"""
-    if data_row is None or data_row.empty:
-        return [], []
-    
-    metadata_cols = ['id', 'name', 'padd', 'commodity', 'type', 'uom']
-    date_cols = [col for col in data_row.index if col not in metadata_cols]
-    
-    # Parse all date columns first, then sort by actual date
-    date_value_pairs = []
-    for col in date_cols:
-        try:
-            date = pd.to_datetime(col, format='%m/%d/%y')
-            value = data_row[col]
-            if pd.notna(value):
-                date_value_pairs.append((date, float(value)))
-        except:
-            continue
-    
-    # Sort by date to ensure chronological order
-    date_value_pairs.sort(key=lambda x: x[0])
-    
-    # Extract sorted dates and values
-    dates = []
-    values = []
-    for date, value in date_value_pairs:
-        dates.append(date)
-        values.append(value)
-    
-    return dates, values
-
-# Callback for updating data store
-@callback(
-    Output("current-data-store-p15", "data"),
-    [Input("date-picker-range-p15", "start_date"),
-     Input("date-picker-range-p15", "end_date")]
+import pandas as pd
+from dash import html, dcc, callback, Output, Input
+import dash_bootstrap_components as dbc
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+from src.utils.data_loader import loader
+from src.utils.colors import (
+    RED, BLUE, GREEN, ORANGE, PURPLE, BLACK,
+    GRAY_50, GRAY_200, GRAY_500, GRAY_800,
+    COLORSCALE_SEQUENTIAL, CHART_SEQUENCE,
 )
-def update_data_store(start_date, end_date):
-    try:
-        df, _ = processor.get_data(start_date, end_date)
-        return df.to_dict('records')
-    except Exception as e:
-        print(f"Error updating data store: {e}")
-        return []
 
-# Callback for YoY comparison chart
-@callback(
-    Output("yoy-comparison-chart", "figure"),
-    [Input("current-data-store-p15", "data"),
-     Input("yoy-product-selector", "value")]
-)
-def update_yoy_comparison_chart(data, selected_product):
-    if not data:
-        return go.Figure().update_layout(title="No data available")
-    
-    df = pd.DataFrame(data)
-    product_data = df[df['id'] == selected_product]
-    
-    if product_data.empty:
-        return go.Figure().update_layout(title="Product data not available")
-    
-    dates, values = extract_time_series(product_data.iloc[0])
-    
-    if len(dates) < 52:  # Need at least a year of data
-        return go.Figure().update_layout(title="Insufficient data for YoY comparison")
-    
-    # Create DataFrame for easier manipulation
-    ts_df = pd.DataFrame({'date': dates, 'value': values})
-    ts_df['year'] = ts_df['date'].dt.year
-    ts_df['week'] = ts_df['date'].dt.isocalendar().week
-    
-    # Get last 3-5 years depending on data range
-    all_years = sorted(ts_df['year'].unique())
-    if len(all_years) <= 3:
-        recent_years = all_years
-    else:
-        recent_years = all_years[-3:]  # Last 3 years for clarity
-    
-    fig = go.Figure()
-    colors = [RED, BLUE, ORANGE]
-    
-    for i, year in enumerate(recent_years):
-        year_data = ts_df[ts_df['year'] == year].copy()
-        year_data = year_data.sort_values('week')
-        
-        fig.add_trace(go.Scatter(
-            x=year_data['week'],
-            y=year_data['value'],
-            mode='lines+markers',
-            name=str(year),
-            line=dict(color=colors[i % len(colors)], width=2),
-            marker=dict(size=4)
-        ))
-    
+warnings.filterwarnings("ignore", category=FutureWarning)
+
+# ---------------------------------------------------------------------------
+# Data — load once at module level
+# ---------------------------------------------------------------------------
+_pivot = loader.load_wps_pivot_data().sort_values("period").reset_index(drop=True)
+
+# ---------------------------------------------------------------------------
+# Curated series
+# ---------------------------------------------------------------------------
+ANALYTICS_SERIES = {
+    "WCESTUS1": "Crude Oil Stocks",
+    "WGTSTUS1": "Gasoline Stocks",
+    "WDISTUS1": "Distillate Stocks",
+    "WKJSTUS1": "Jet Fuel Stocks",
+    "WCRFPUS2": "Crude Production",
+    "W_EPC0_FPF_R48_MBBLD": "L48 Crude Production",
+    "WCEIMUS2": "Crude Imports",
+    "WCREXUS2": "Crude Exports",
+    "WCRRIUS2": "Refinery Inputs",
+    "WPULEUS3": "Refinery Utilization",
+    "WRPUPUS2": "Total Products Supplied",
+    "WGFUPUS2": "Gasoline Supplied",
+    "WDIUPUS2": "Distillate Supplied",
+    "WKJUPUS2": "Jet Fuel Supplied",
+    "WGFRPUS2": "Gasoline Production",
+    "WDIRPUS2": "Distillate Production",
+}
+
+_SERIES_OPTIONS = [{"label": v, "value": k} for k, v in ANALYTICS_SERIES.items()]
+_DEFAULT_SERIES = "WCESTUS1"
+
+# Subset for cross-product analysis
+_CROSS_DEFAULTS = ["WCESTUS1", "WGTSTUS1", "WDISTUS1", "WCRFPUS2", "WCRRIUS2", "WRPUPUS2"]
+
+# ---------------------------------------------------------------------------
+# Dark theme helpers
+# ---------------------------------------------------------------------------
+_BG = "#1a1a2e"
+_BG2 = "#16213e"
+_GRID = "#2a2a4a"
+_TEXT = "#e0e0e0"
+_ACCENT_COLORS = ["#00d4ff", "#ff6b6b", "#ffd93d", "#6bcb77", "#c084fc", "#ff922b"]
+
+
+def _apply_theme(fig, height=480):
     fig.update_layout(
-        title=f"Year-over-Year Comparison: {product_data.iloc[0]['name']}",
-        xaxis=dict(
-            title="Week of Year",
-            range=[1, 52],
-            dtick=4
+        plot_bgcolor=_BG,
+        paper_bgcolor=_BG2,
+        font=dict(family="Montserrat", color=_TEXT),
+        height=height,
+        margin=dict(l=60, r=20, t=50, b=40),
+        legend=dict(
+            orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5,
+            font=dict(color=_TEXT, size=10),
         ),
-        yaxis_title=product_data.iloc[0]['uom'],
-        hovermode='x unified',
-        height=350,
-        plot_bgcolor='white',
-        paper_bgcolor='white',
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5)
+        hovermode="x unified",
     )
-    
+    fig.update_xaxes(showgrid=True, gridcolor=_GRID, showline=True, linecolor=_GRID, color=_TEXT)
+    fig.update_yaxes(showgrid=True, gridcolor=_GRID, showline=True, linecolor=_GRID, color=_TEXT)
     return fig
 
-# Callback for anomaly detection chart
-@callback(
-    Output("anomaly-detection-chart", "figure"),
-    [Input("current-data-store-p15", "data"),
-     Input("anomaly-product-selector", "value")]
-)
-def update_anomaly_detection_chart(data, selected_product):
-    if not data:
-        return go.Figure().update_layout(title="No data available")
-    
-    df = pd.DataFrame(data)
-    product_data = df[df['id'] == selected_product]
-    
-    if product_data.empty:
-        return go.Figure().update_layout(title="Product data not available")
-    
-    dates, values = extract_time_series(product_data.iloc[0])
-    
-    if len(values) < 20:  # Need sufficient data for z-score calculation
-        return go.Figure().update_layout(title="Insufficient data for anomaly detection")
-    
-    # For long date ranges, sample data to avoid overcrowding
-    if len(values) > 200:
-        # Sample every nth point to keep ~200 points
-        step = len(values) // 200
-        dates_sampled = dates[::step]
-        values_sampled = values[::step]
-    else:
-        dates_sampled = dates
-        values_sampled = values
-    
-    # Calculate z-scores on sampled data
-    values_array = np.array(values_sampled)
-    rolling_mean = pd.Series(values_array).rolling(window=min(12, len(values_array)//4), min_periods=3).mean()
-    rolling_std = pd.Series(values_array).rolling(window=min(12, len(values_array)//4), min_periods=3).std()
-    
-    z_scores = (values_array - rolling_mean) / rolling_std
-    
-    # Identify anomalies (|z-score| > 2)
-    anomaly_threshold = 2
-    anomalies = np.abs(z_scores) > anomaly_threshold
-    
+
+def _empty_fig(msg="No data available", height=480):
     fig = go.Figure()
-    
-    # Add main time series (sampled for clarity)
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=values_sampled,
-        mode='lines+markers',
-        name='Actual Values',
-        line=dict(color=BLUE, width=2),
-        marker=dict(size=3)
-    ))
-
-    # Add rolling mean
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=rolling_mean,
-        mode='lines',
-        name='Rolling Mean',
-        line=dict(color=GREEN, width=2, dash='dash')
-    ))
-
-    # Highlight anomalies
-    anomaly_dates = [date for i, date in enumerate(dates_sampled) if pd.notna(anomalies[i]) and anomalies[i]]
-    anomaly_values = [value for i, value in enumerate(values_sampled) if pd.notna(anomalies[i]) and anomalies[i]]
-
-    if anomaly_dates:
-        fig.add_trace(go.Scatter(
-            x=anomaly_dates,
-            y=anomaly_values,
-            mode='markers',
-            name='Anomalies',
-            marker=dict(color=RED, size=8, symbol='x')
-        ))
-    
-    # Add confidence bands (simplified)
-    upper_band = rolling_mean + 2 * rolling_std
-    lower_band = rolling_mean - 2 * rolling_std
-    
-    # Only show confidence bands if we have valid data
-    valid_indices = ~(pd.isna(upper_band) | pd.isna(lower_band))
-    if valid_indices.any():
-        fig.add_trace(go.Scatter(
-            x=[d for i, d in enumerate(dates_sampled) if valid_indices[i]],
-            y=[v for i, v in enumerate(upper_band) if valid_indices[i]],
-            mode='lines',
-            name='Upper Threshold',
-            line=dict(color='red', width=1, dash='dot'),
-            showlegend=False
-        ))
-        
-        fig.add_trace(go.Scatter(
-            x=[d for i, d in enumerate(dates_sampled) if valid_indices[i]],
-            y=[v for i, v in enumerate(lower_band) if valid_indices[i]],
-            mode='lines',
-            name='Lower Threshold',
-            line=dict(color='red', width=1, dash='dot'),
-            fill='tonexty',
-            fillcolor='rgba(255,0,0,0.1)',
-            showlegend=False
-        ))
-    
-    fig.update_layout(
-        title=f"Z-Score Anomaly Detection: {product_data.iloc[0]['name']}<br><sub>Red X marks indicate statistical anomalies (|z-score| > 2)</sub>",
-        xaxis_title="Date",
-        yaxis_title=product_data.iloc[0]['uom'],
-        height=350,
-        plot_bgcolor='white',
-        paper_bgcolor='white',
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5)
-    )
-    
+    fig.add_annotation(text=msg, xref="paper", yref="paper", x=0.5, y=0.5,
+                       showarrow=False, font=dict(size=16, color=_TEXT))
+    _apply_theme(fig, height)
     return fig
 
-# Callback for MACD chart
-@callback(
-    Output("macd-chart", "figure"),
-    [Input("current-data-store-p15", "data"),
-     Input("macd-product-selector", "value")]
-)
-def update_macd_chart(data, selected_product):
-    if not data:
-        return go.Figure().update_layout(title="No data available")
-    
-    df = pd.DataFrame(data)
-    product_data = df[df['id'] == selected_product]
-    
-    if product_data.empty:
-        return go.Figure().update_layout(title="Product data not available")
-    
-    dates, values = extract_time_series(product_data.iloc[0])
-    
-    if len(values) < 26:  # Need at least 26 periods for MACD
-        return go.Figure().update_layout(title="Insufficient data for MACD calculation")
-    
-    # For long date ranges, sample data to avoid overcrowding
-    if len(values) > 300:
-        step = len(values) // 300
-        dates_sampled = dates[::step]
-        values_sampled = values[::step]
-    else:
-        dates_sampled = dates
-        values_sampled = values
-    
-    # Calculate MACD on sampled data
-    ts_series = pd.Series(values_sampled)
-    ema12 = ts_series.ewm(span=12).mean()
-    ema26 = ts_series.ewm(span=26).mean()
-    macd_line = ema12 - ema26
-    signal_line = macd_line.ewm(span=9).mean()
-    histogram = macd_line - signal_line
-    
-    # Create subplots with better spacing
-    from plotly.subplots import make_subplots
-    fig = make_subplots(
-        rows=2, cols=1,
-        row_heights=[0.65, 0.35],
-        vertical_spacing=0.15,
-        subplot_titles=('Price & Moving Averages', 'MACD Indicator')
+
+def _get_ts(series_id):
+    """Return (dates, values) as numpy arrays, dropping NaNs."""
+    if series_id not in _pivot.columns:
+        return np.array([]), np.array([])
+    s = _pivot[["period", series_id]].dropna(subset=[series_id])
+    return s["period"].values, s[series_id].values.astype(float)
+
+
+# ---------------------------------------------------------------------------
+# Card / layout helpers
+# ---------------------------------------------------------------------------
+_CARD_STYLE = {
+    "backgroundColor": _BG2, "borderRadius": "8px",
+    "border": f"1px solid {_GRID}", "boxShadow": "0 2px 8px rgba(0,0,0,0.3)",
+}
+_PAGE_STYLE = {"padding": "1.5rem", "backgroundColor": _BG, "minHeight": "100vh"}
+
+
+def _chart_card(graph_id, **kwargs):
+    return dbc.Card(
+        dbc.CardBody(dcc.Graph(id=graph_id, config={"displayModeBar": False}, **kwargs)),
+        style=_CARD_STYLE,
     )
-    
-    # Price chart with EMAs (using sampled data)
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=values_sampled,
-        mode='lines',
-        name='Price',
-        line=dict(color=BLUE, width=2)
-    ), row=1, col=1)
 
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=ema12,
-        mode='lines',
-        name='EMA 12',
-        line=dict(color=ORANGE, width=1, dash='dash')
-    ), row=1, col=1)
 
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=ema26,
-        mode='lines',
-        name='EMA 26',
-        line=dict(color=GREEN, width=1, dash='dash')
-    ), row=1, col=1)
+def _slider(id_, label, min_, max_, value, step=1, marks=None):
+    if marks is None:
+        marks = {min_: str(min_), max_: str(max_)}
+    return html.Div([
+        html.Label(label, style={"color": _TEXT, "fontSize": "0.8rem", "marginBottom": "2px"}),
+        dcc.Slider(id=id_, min=min_, max=max_, value=value, step=step, marks=marks,
+                   tooltip={"placement": "bottom", "always_visible": False}),
+    ], style={"marginBottom": "0.75rem"})
 
-    # MACD chart (using sampled data)
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=macd_line,
-        mode='lines',
-        name='MACD',
-        line=dict(color=RED, width=2)
-    ), row=2, col=1)
 
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=signal_line,
-        mode='lines',
-        name='Signal',
-        line=dict(color=ORANGE, width=2)
-    ), row=2, col=1)
-    
-    # MACD histogram (only show every few bars for clarity)
-    if len(histogram) > 100:
-        hist_step = len(histogram) // 50  # Show only ~50 bars
-        hist_dates = dates_sampled[::hist_step]
-        hist_values = histogram[::hist_step]
+# ---------------------------------------------------------------------------
+# Tab content builders (all rendered in DOM, shown/hidden via callback)
+# ---------------------------------------------------------------------------
+def _tab_regime():
+    return html.Div([
+        _slider("p15-vol-window", "Volatility Window (weeks)", 4, 52, 20),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-cusum"), lg=6),
+            dbc.Col(_chart_card("p15-vol-regime"), lg=6),
+        ], className="mb-3"),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-structural-break"), lg=12),
+        ]),
+    ], id="p15-tab-content-regime", style={"paddingTop": "1rem"})
+
+
+def _tab_forecast():
+    return html.Div([
+        dbc.Row([
+            dbc.Col(_slider("p15-fc-horizon", "Forecast Horizon (weeks)", 4, 26, 12), lg=4),
+            dbc.Col(_slider("p15-fc-holdout", "Holdout Period (weeks)", 8, 52, 26), lg=4),
+        ]),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-stl"), lg=6),
+            dbc.Col(_chart_card("p15-forecast-compare"), lg=6),
+        ], className="mb-3"),
+        dbc.Row([
+            dbc.Col(html.Div(id="p15-forecast-metrics"), lg=12),
+        ]),
+    ], id="p15-tab-content-forecast", style={"paddingTop": "1rem", "display": "none"})
+
+
+def _tab_cross():
+    return html.Div([
+        html.Div([
+            html.Label("Select Products", style={"color": _TEXT, "fontWeight": "600", "marginRight": "0.75rem"}),
+            dcc.Dropdown(
+                id="p15-cross-products",
+                options=_SERIES_OPTIONS,
+                value=_CROSS_DEFAULTS,
+                multi=True,
+                style={"flex": "1", "backgroundColor": "#fff"},
+            ),
+        ], style={"display": "flex", "alignItems": "center", "marginBottom": "0.75rem"}),
+        _slider("p15-corr-window", "Rolling Correlation Window (weeks)", 8, 104, 26),
+        html.Div([
+            html.Label("Lead-Lag Pair", style={"color": _TEXT, "fontWeight": "600", "marginRight": "0.75rem"}),
+            dcc.Dropdown(id="p15-lag-series-a", options=_SERIES_OPTIONS, value="WCESTUS1",
+                         clearable=False, style={"width": "240px", "marginRight": "0.5rem", "backgroundColor": "#fff"}),
+            html.Span("vs", style={"color": _TEXT, "margin": "0 0.5rem"}),
+            dcc.Dropdown(id="p15-lag-series-b", options=_SERIES_OPTIONS, value="WCRFPUS2",
+                         clearable=False, style={"width": "240px", "backgroundColor": "#fff"}),
+        ], style={"display": "flex", "alignItems": "center", "marginBottom": "1rem"}),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-granger"), lg=6),
+            dbc.Col(_chart_card("p15-rolling-corr"), lg=6),
+        ], className="mb-3"),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-pca"), lg=6),
+            dbc.Col(_chart_card("p15-lead-lag"), lg=6),
+        ]),
+    ], id="p15-tab-content-cross", style={"paddingTop": "1rem", "display": "none"})
+
+
+def _tab_seasonal():
+    return html.Div([
+        dbc.Row([
+            dbc.Col(_chart_card("p15-stl-seasonal"), lg=6),
+            dbc.Col(_chart_card("p15-calendar-heatmap"), lg=6),
+        ], className="mb-3"),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-seasonal-deviation"), lg=6),
+            dbc.Col(_chart_card("p15-seasonal-strength"), lg=6),
+        ]),
+    ], id="p15-tab-content-seasonal", style={"paddingTop": "1rem", "display": "none"})
+
+
+def _tab_risk():
+    return html.Div([
+        dbc.Row([
+            dbc.Col(_slider("p15-bb-window", "Bollinger Window", 10, 52, 20), lg=4),
+            dbc.Col(_slider("p15-bb-std", "Std Multiplier", 1, 3, 2), lg=4),
+        ]),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-drawdown"), lg=6),
+            dbc.Col(_chart_card("p15-bollinger"), lg=6),
+        ], className="mb-3"),
+        dbc.Row([
+            dbc.Col(_chart_card("p15-distribution"), lg=6),
+            dbc.Col(_chart_card("p15-qq"), lg=6),
+        ]),
+    ], id="p15-tab-content-risk", style={"paddingTop": "1rem", "display": "none"})
+
+
+# Tab name -> content div id
+_TAB_IDS = {
+    "regime": "p15-tab-content-regime",
+    "forecast": "p15-tab-content-forecast",
+    "cross": "p15-tab-content-cross",
+    "seasonal": "p15-tab-content-seasonal",
+    "risk": "p15-tab-content-risk",
+}
+
+# ---------------------------------------------------------------------------
+# Layout
+# ---------------------------------------------------------------------------
+layout = html.Div([
+    # Header
+    html.Div([
+        html.Div("ADVANCED ANALYTICS", style={
+            "fontSize": "0.7rem", "fontWeight": "700", "letterSpacing": "0.1em",
+            "color": GRAY_500, "marginBottom": "0.2rem",
+        }),
+        html.H2("Time Series Analytics Suite", style={
+            "fontSize": "1.6rem", "fontWeight": "700", "color": _TEXT, "margin": "0 0 0.75rem 0",
+        }),
+    ]),
+
+    # Global product selector
+    html.Div([
+        html.Label("Primary Series", style={"color": _TEXT, "fontWeight": "600", "marginRight": "0.75rem"}),
+        dcc.Dropdown(
+            id="p15-product",
+            options=_SERIES_OPTIONS,
+            value=_DEFAULT_SERIES,
+            clearable=False,
+            style={"width": "350px", "backgroundColor": "#fff"},
+        ),
+    ], style={"display": "flex", "alignItems": "center", "marginBottom": "1rem"}),
+
+    # Tab buttons (manual, no dbc.Tabs — keeps all content in DOM)
+    html.Div([
+        html.Button("Regime Detection", id="p15-btn-regime", n_clicks=1,
+                     style={"marginRight": "4px", "padding": "8px 16px", "border": f"1px solid {_GRID}",
+                            "borderRadius": "4px 4px 0 0", "cursor": "pointer",
+                            "backgroundColor": _BG2, "color": _TEXT, "fontWeight": "600"}),
+        html.Button("Forecasting Arena", id="p15-btn-forecast", n_clicks=0,
+                     style={"marginRight": "4px", "padding": "8px 16px", "border": f"1px solid {_GRID}",
+                            "borderRadius": "4px 4px 0 0", "cursor": "pointer",
+                            "backgroundColor": _BG, "color": GRAY_500}),
+        html.Button("Cross-Product Dynamics", id="p15-btn-cross", n_clicks=0,
+                     style={"marginRight": "4px", "padding": "8px 16px", "border": f"1px solid {_GRID}",
+                            "borderRadius": "4px 4px 0 0", "cursor": "pointer",
+                            "backgroundColor": _BG, "color": GRAY_500}),
+        html.Button("Seasonal Intelligence", id="p15-btn-seasonal", n_clicks=0,
+                     style={"marginRight": "4px", "padding": "8px 16px", "border": f"1px solid {_GRID}",
+                            "borderRadius": "4px 4px 0 0", "cursor": "pointer",
+                            "backgroundColor": _BG, "color": GRAY_500}),
+        html.Button("Risk & Distribution", id="p15-btn-risk", n_clicks=0,
+                     style={"padding": "8px 16px", "border": f"1px solid {_GRID}",
+                            "borderRadius": "4px 4px 0 0", "cursor": "pointer",
+                            "backgroundColor": _BG, "color": GRAY_500}),
+    ], style={"display": "flex", "borderBottom": f"1px solid {_GRID}", "marginBottom": "0"}),
+
+    # All tab content divs (always in DOM, shown/hidden)
+    _tab_regime(),
+    _tab_forecast(),
+    _tab_cross(),
+    _tab_seasonal(),
+    _tab_risk(),
+
+], style=_PAGE_STYLE)
+
+
+# ---------------------------------------------------------------------------
+# Tab switching callback
+# ---------------------------------------------------------------------------
+_TAB_KEYS = ["regime", "forecast", "cross", "seasonal", "risk"]
+_BTN_IDS = [f"p15-btn-{k}" for k in _TAB_KEYS]
+_CONTENT_IDS = [f"p15-tab-content-{k}" for k in _TAB_KEYS]
+
+
+@callback(
+    [Output(cid, "style") for cid in _CONTENT_IDS] +
+    [Output(bid, "style") for bid in _BTN_IDS],
+    [Input(bid, "n_clicks") for bid in _BTN_IDS],
+    prevent_initial_call=True,
+)
+def switch_tab(*clicks):
+    from dash import ctx
+    if not ctx.triggered_id:
+        active = 0
     else:
-        hist_dates = dates_sampled
-        hist_values = histogram
-        
+        active = _BTN_IDS.index(ctx.triggered_id) if ctx.triggered_id in _BTN_IDS else 0
+
+    content_styles = []
+    btn_styles = []
+    for i in range(len(_TAB_KEYS)):
+        vis = "block" if i == active else "none"
+        content_styles.append({"paddingTop": "1rem", "display": vis})
+        if i == active:
+            btn_styles.append({
+                "marginRight": "4px", "padding": "8px 16px", "border": f"1px solid {_GRID}",
+                "borderRadius": "4px 4px 0 0", "cursor": "pointer",
+                "backgroundColor": _BG2, "color": _TEXT, "fontWeight": "600",
+            })
+        else:
+            btn_styles.append({
+                "marginRight": "4px", "padding": "8px 16px", "border": f"1px solid {_GRID}",
+                "borderRadius": "4px 4px 0 0", "cursor": "pointer",
+                "backgroundColor": _BG, "color": GRAY_500,
+            })
+    return content_styles + btn_styles
+
+
+# ===================================================================
+# TAB 1: REGIME DETECTION CALLBACKS
+# ===================================================================
+
+@callback(Output("p15-cusum", "figure"), Input("p15-product", "value"))
+def update_cusum(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 30:
+        return _empty_fig("Insufficient data for CUSUM")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    changes = np.diff(vals)
+    mean_chg = np.mean(changes)
+    std_chg = np.std(changes)
+    if std_chg == 0:
+        return _empty_fig("Zero variance — cannot compute CUSUM")
+
+    # CUSUM algorithm
+    threshold = 4.0 * std_chg
+    cusum_pos = np.zeros(len(changes))
+    cusum_neg = np.zeros(len(changes))
+    changepoints = []
+    for i in range(1, len(changes)):
+        cusum_pos[i] = max(0, cusum_pos[i - 1] + (changes[i] - mean_chg) - 0.5 * std_chg)
+        cusum_neg[i] = max(0, cusum_neg[i - 1] - (changes[i] - mean_chg) - 0.5 * std_chg)
+        if cusum_pos[i] > threshold or cusum_neg[i] > threshold:
+            changepoints.append(i)
+            cusum_pos[i] = 0
+            cusum_neg[i] = 0
+
+    fig = make_subplots(rows=2, cols=1, row_heights=[0.6, 0.4], vertical_spacing=0.08,
+                        subplot_titles=[f"{name} with Detected Changepoints", "CUSUM Statistics"])
+
+    cdates = dates[1:]
+
+    fig.add_trace(go.Scatter(x=pd.to_datetime(dates), y=vals, mode="lines",
+                             name=name, line=dict(color=_ACCENT_COLORS[0], width=1.5)), row=1, col=1)
+
+    for cp in changepoints:
+        fig.add_vline(x=pd.to_datetime(cdates[cp]), line_width=1, line_dash="dash",
+                      line_color="#ff6b6b", row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=pd.to_datetime(cdates), y=cusum_pos, mode="lines",
+                             name="CUSUM+", line=dict(color=_ACCENT_COLORS[3], width=1)), row=2, col=1)
+    fig.add_trace(go.Scatter(x=pd.to_datetime(cdates), y=cusum_neg, mode="lines",
+                             name="CUSUM-", line=dict(color=_ACCENT_COLORS[1], width=1)), row=2, col=1)
+    fig.add_hline(y=threshold, line_dash="dot", line_color=_TEXT, line_width=0.8,
+                  annotation_text="Threshold", row=2, col=1)
+
+    _apply_theme(fig, 520)
+    fig.update_layout(title=dict(text=f"CUSUM Changepoint Detection — {name}", font=dict(size=13)))
+    return fig
+
+
+@callback(Output("p15-vol-regime", "figure"),
+          Input("p15-product", "value"), Input("p15-vol-window", "value"))
+def update_vol_regime(series_id, window):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < window + 10:
+        return _empty_fig("Insufficient data")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    s = pd.Series(vals)
+    roll_std = s.rolling(window).std().values
+
+    valid_std = roll_std[~np.isnan(roll_std)]
+    if len(valid_std) < 2:
+        return _empty_fig("Cannot compute volatility")
+    p33 = np.percentile(valid_std, 33)
+    p66 = np.percentile(valid_std, 66)
+
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    dt = pd.to_datetime(dates)
+
+    for i in range(window, len(vals)):
+        v = roll_std[i]
+        if np.isnan(v):
+            continue
+        color = "rgba(107,203,119,0.12)" if v <= p33 else \
+                "rgba(255,217,61,0.12)" if v <= p66 else "rgba(255,107,107,0.12)"
+        fig.add_vrect(x0=dt[i - 1], x1=dt[i], fillcolor=color, line_width=0, layer="below")
+
+    fig.add_trace(go.Scatter(x=dt, y=vals, mode="lines", name=name,
+                             line=dict(color=_ACCENT_COLORS[0], width=1.5)), secondary_y=False)
+    fig.add_trace(go.Scatter(x=dt, y=roll_std, mode="lines", name=f"Rolling Std ({window}w)",
+                             line=dict(color=_ACCENT_COLORS[2], width=1, dash="dot")), secondary_y=True)
+
+    _apply_theme(fig)
+    fig.update_layout(title=dict(text=f"Volatility Regime Map — {name}", font=dict(size=13)))
+    fig.update_yaxes(title_text=name, secondary_y=False)
+    fig.update_yaxes(title_text="Volatility", secondary_y=True)
+    return fig
+
+
+@callback(Output("p15-structural-break", "figure"), Input("p15-product", "value"))
+def update_structural_break(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 60:
+        return _empty_fig("Insufficient data for structural break analysis")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    window = 26
+    slopes = np.full(len(vals), np.nan)
+    x = np.arange(window)
+    for i in range(window, len(vals)):
+        segment = vals[i - window:i]
+        coeffs = np.polyfit(x, segment, 1)
+        slopes[i] = coeffs[0]
+
+    dt = pd.to_datetime(dates)
+
+    fig = make_subplots(rows=2, cols=1, row_heights=[0.5, 0.5], vertical_spacing=0.08,
+                        subplot_titles=[f"{name}", "Rolling 26-Week Slope"])
+
+    fig.add_trace(go.Scatter(x=dt, y=vals, mode="lines", name=name,
+                             line=dict(color=_ACCENT_COLORS[0], width=1.5)), row=1, col=1)
+    colors = [_ACCENT_COLORS[3] if s >= 0 else _ACCENT_COLORS[1] if not np.isnan(s)
+              else "rgba(0,0,0,0)" for s in slopes]
+    fig.add_trace(go.Bar(x=dt, y=slopes, name="Slope", marker_color=colors, opacity=0.7), row=2, col=1)
+    fig.add_hline(y=0, line_dash="dot", line_color=_TEXT, line_width=0.5, row=2, col=1)
+
+    _apply_theme(fig, 440)
+    fig.update_layout(title=dict(text=f"Structural Break Analysis — {name}", font=dict(size=13)),
+                      showlegend=False)
+    return fig
+
+
+# ===================================================================
+# TAB 2: FORECASTING ARENA CALLBACKS
+# ===================================================================
+
+@callback(Output("p15-stl", "figure"), Input("p15-product", "value"))
+def update_stl(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 104:
+        return _empty_fig("Need 2+ years for STL decomposition")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    try:
+        from statsmodels.tsa.seasonal import STL
+        s = pd.Series(vals, index=pd.to_datetime(dates))
+        result = STL(s, period=52, robust=True).fit()
+    except Exception as e:
+        return _empty_fig(f"STL error: {e}")
+
+    dt = pd.to_datetime(dates)
+    fig = make_subplots(rows=4, cols=1, row_heights=[0.3, 0.3, 0.2, 0.2], vertical_spacing=0.04,
+                        subplot_titles=["Observed", "Trend", "Seasonal", "Residual"])
+
+    fig.add_trace(go.Scatter(x=dt, y=result.observed, mode="lines",
+                             line=dict(color=_ACCENT_COLORS[0], width=1), showlegend=False), row=1, col=1)
+    fig.add_trace(go.Scatter(x=dt, y=result.trend, mode="lines",
+                             line=dict(color=_ACCENT_COLORS[2], width=2), showlegend=False), row=2, col=1)
+    fig.add_trace(go.Scatter(x=dt, y=result.seasonal, mode="lines",
+                             line=dict(color=_ACCENT_COLORS[3], width=1), showlegend=False), row=3, col=1)
+    fig.add_trace(go.Scatter(x=dt, y=result.resid, mode="lines",
+                             line=dict(color=_ACCENT_COLORS[1], width=1), showlegend=False), row=4, col=1)
+
+    _apply_theme(fig, 580)
+    fig.update_layout(title=dict(text=f"STL Decomposition — {name}", font=dict(size=13)))
+    return fig
+
+
+@callback(
+    Output("p15-forecast-compare", "figure"),
+    Output("p15-forecast-metrics", "children"),
+    Input("p15-product", "value"),
+    Input("p15-fc-horizon", "value"),
+    Input("p15-fc-holdout", "value"),
+)
+def update_forecast(series_id, horizon, holdout):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 104 + holdout:
+        return _empty_fig("Insufficient data for forecasting"), html.Div()
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    n = len(vals)
+    split = n - holdout
+    train_vals = vals[:split]
+    test_vals = vals[split:split + horizon]
+    test_dates = dates[split:split + horizon]
+    train_dates = dates[:split]
+    actual_horizon = len(test_vals)
+    if actual_horizon < 2:
+        return _empty_fig("Holdout too large"), html.Div()
+
+    dt_train = pd.to_datetime(train_dates)
+    dt_test = pd.to_datetime(test_dates)
+
+    fig = go.Figure()
+    show_from = max(0, split - 104)
+    fig.add_trace(go.Scatter(x=pd.to_datetime(dates[show_from:split]), y=vals[show_from:split],
+                             mode="lines", name="Training", line=dict(color=_ACCENT_COLORS[0], width=1.5)))
+    fig.add_trace(go.Scatter(x=dt_test, y=test_vals, mode="lines+markers",
+                             name="Actual (Holdout)", line=dict(color=_TEXT, width=2),
+                             marker=dict(size=4)))
+
+    metrics_rows = []
+
+    # Naive seasonal
+    naive_fc = vals[split - 52:split - 52 + actual_horizon] if split >= 52 else None
+    if naive_fc is not None and len(naive_fc) == actual_horizon:
+        fig.add_trace(go.Scatter(x=dt_test, y=naive_fc, mode="lines",
+                                 name="Naive Seasonal", line=dict(color=_ACCENT_COLORS[2], width=1.5, dash="dot")))
+        err = test_vals - naive_fc
+        metrics_rows.append(("Naive Seasonal",
+                             f"{np.mean(np.abs(err)):.1f}",
+                             f"{np.sqrt(np.mean(err**2)):.1f}",
+                             f"{np.mean(np.abs(err / test_vals)) * 100:.2f}%"))
+
+    # Holt-Winters
+    try:
+        from statsmodels.tsa.holtwinters import ExponentialSmoothing
+        hw = ExponentialSmoothing(train_vals, seasonal_periods=52, trend="add",
+                                  seasonal="add", use_boxcox=False).fit(optimized=True)
+        hw_fc = hw.forecast(actual_horizon)
+        fig.add_trace(go.Scatter(x=dt_test, y=hw_fc, mode="lines",
+                                 name="Holt-Winters", line=dict(color=_ACCENT_COLORS[3], width=1.5, dash="dash")))
+        err = test_vals - hw_fc
+        metrics_rows.append(("Holt-Winters",
+                             f"{np.mean(np.abs(err)):.1f}",
+                             f"{np.sqrt(np.mean(err**2)):.1f}",
+                             f"{np.mean(np.abs(err / test_vals)) * 100:.2f}%"))
+    except Exception:
+        pass
+
+    # SARIMAX
+    try:
+        from statsmodels.tsa.statespace.sarimax import SARIMAX
+        model = SARIMAX(train_vals, order=(1, 1, 1), seasonal_order=(1, 1, 0, 52),
+                        enforce_stationarity=False, enforce_invertibility=False)
+        fit = model.fit(disp=False, maxiter=50)
+        pred = fit.get_forecast(actual_horizon)
+        sarima_fc = pred.predicted_mean
+        ci = pred.conf_int(alpha=0.05)
+        fig.add_trace(go.Scatter(x=dt_test, y=sarima_fc, mode="lines",
+                                 name="SARIMAX", line=dict(color=_ACCENT_COLORS[1], width=2)))
+        fig.add_trace(go.Scatter(x=dt_test, y=ci[:, 1], mode="lines", line=dict(width=0),
+                                 showlegend=False, hoverinfo="skip"))
+        fig.add_trace(go.Scatter(x=dt_test, y=ci[:, 0], mode="lines", line=dict(width=0),
+                                 fill="tonexty", fillcolor="rgba(255,107,107,0.15)",
+                                 name="95% CI", hoverinfo="skip"))
+        err = test_vals - sarima_fc
+        metrics_rows.append(("SARIMAX(1,1,1)(1,1,0,52)",
+                             f"{np.mean(np.abs(err)):.1f}",
+                             f"{np.sqrt(np.mean(err**2)):.1f}",
+                             f"{np.mean(np.abs(err / test_vals)) * 100:.2f}%"))
+    except Exception:
+        try:
+            from statsmodels.tsa.statespace.sarimax import SARIMAX
+            model = SARIMAX(train_vals, order=(1, 1, 1), enforce_stationarity=False, enforce_invertibility=False)
+            fit = model.fit(disp=False, maxiter=50)
+            pred = fit.get_forecast(actual_horizon)
+            arima_fc = pred.predicted_mean
+            fig.add_trace(go.Scatter(x=dt_test, y=arima_fc, mode="lines",
+                                     name="ARIMA(1,1,1)", line=dict(color=_ACCENT_COLORS[1], width=2)))
+            err = test_vals - arima_fc
+            metrics_rows.append(("ARIMA(1,1,1)",
+                                 f"{np.mean(np.abs(err)):.1f}",
+                                 f"{np.sqrt(np.mean(err**2)):.1f}",
+                                 f"{np.mean(np.abs(err / test_vals)) * 100:.2f}%"))
+        except Exception:
+            pass
+
+    _apply_theme(fig)
+    fig.update_layout(title=dict(text=f"Forecast Comparison — {name}", font=dict(size=13)))
+
+    if metrics_rows:
+        table = dbc.Table(
+            [html.Thead(html.Tr([html.Th(h, style={"color": _TEXT}) for h in ["Method", "MAE", "RMSE", "MAPE"]]))] +
+            [html.Tbody([html.Tr([html.Td(c, style={"color": _TEXT}) for c in row]) for row in metrics_rows])],
+            bordered=True, hover=True,
+            style={"backgroundColor": _BG2, "marginTop": "0.5rem", "color": _TEXT},
+        )
+    else:
+        table = html.Div("No forecast models converged.", style={"color": _TEXT})
+
+    return fig, table
+
+
+# ===================================================================
+# TAB 3: CROSS-PRODUCT DYNAMICS CALLBACKS
+# ===================================================================
+
+@callback(Output("p15-granger", "figure"), Input("p15-cross-products", "value"))
+def update_granger(selected):
+    if not selected or len(selected) < 2:
+        return _empty_fig("Select at least 2 products")
+    selected = selected[:8]
+
+    from statsmodels.tsa.stattools import grangercausalitytests
+
+    names = [ANALYTICS_SERIES.get(s, s) for s in selected]
+    short = [n[:12] for n in names]
+    n = len(selected)
+    pvals = np.ones((n, n))
+
+    cols = [s for s in selected if s in _pivot.columns]
+    if len(cols) < 2:
+        return _empty_fig("Series not found in data")
+
+    df = _pivot[["period"] + cols].dropna()
+    if len(df) < 30:
+        return _empty_fig("Insufficient overlapping data")
+
+    changes = df[cols].diff().dropna()
+
+    for i in range(n):
+        for j in range(n):
+            if i == j or selected[i] not in changes.columns or selected[j] not in changes.columns:
+                continue
+            try:
+                data = changes[[selected[j], selected[i]]].values
+                result = grangercausalitytests(data, maxlag=4, verbose=False)
+                min_p = min(result[lag][0]["ssr_ftest"][1] for lag in result)
+                pvals[i, j] = min_p
+            except Exception:
+                pvals[i, j] = 1.0
+
+    fig = go.Figure(go.Heatmap(
+        z=pvals, x=short, y=short,
+        colorscale=[[0, "#ff6b6b"], [0.05, "#ffd93d"], [0.1, "#2a2a4a"], [1, "#1a1a2e"]],
+        zmin=0, zmax=0.2,
+        text=np.round(pvals, 3), texttemplate="%{text:.3f}",
+        textfont=dict(size=9, color=_TEXT),
+        colorbar=dict(title=dict(text="p-value", font=dict(color=_TEXT)), tickfont=dict(color=_TEXT)),
+    ))
+
+    _apply_theme(fig)
+    fig.update_layout(
+        title=dict(text="Granger Causality (rows cause columns)", font=dict(size=13)),
+        xaxis=dict(title="Effect", tickangle=45),
+        yaxis=dict(title="Cause"),
+    )
+    return fig
+
+
+@callback(Output("p15-rolling-corr", "figure"),
+          Input("p15-cross-products", "value"), Input("p15-corr-window", "value"))
+def update_rolling_corr(selected, window):
+    if not selected or len(selected) < 2:
+        return _empty_fig("Select at least 2 products")
+
+    cols = [s for s in selected if s in _pivot.columns][:6]
+    df = _pivot[["period"] + cols].dropna()
+    if len(df) < window + 10:
+        return _empty_fig("Insufficient data")
+
+    fig = go.Figure()
+    color_idx = 0
+    for i in range(len(cols)):
+        for j in range(i + 1, min(len(cols), i + 3)):
+            corr = df[cols[i]].rolling(window).corr(df[cols[j]])
+            n1 = ANALYTICS_SERIES.get(cols[i], cols[i])[:10]
+            n2 = ANALYTICS_SERIES.get(cols[j], cols[j])[:10]
+            fig.add_trace(go.Scatter(
+                x=pd.to_datetime(df["period"]), y=corr, mode="lines",
+                name=f"{n1} / {n2}",
+                line=dict(color=_ACCENT_COLORS[color_idx % len(_ACCENT_COLORS)], width=1.5),
+            ))
+            color_idx += 1
+
+    fig.add_hline(y=0, line_dash="dot", line_color=_TEXT, line_width=0.5)
+    _apply_theme(fig)
+    fig.update_layout(
+        title=dict(text=f"Rolling {window}-Week Correlation", font=dict(size=13)),
+        yaxis=dict(title="Correlation", range=[-1, 1]),
+    )
+    return fig
+
+
+@callback(Output("p15-pca", "figure"), Input("p15-cross-products", "value"))
+def update_pca(selected):
+    if not selected or len(selected) < 3:
+        return _empty_fig("Select at least 3 products for PCA")
+
+    from sklearn.decomposition import PCA
+    from sklearn.preprocessing import StandardScaler
+
+    cols = [s for s in selected if s in _pivot.columns]
+    df = _pivot[cols].dropna()
+    if len(df) < 30:
+        return _empty_fig("Insufficient data")
+
+    changes = df.diff().dropna()
+    scaled = StandardScaler().fit_transform(changes)
+
+    pca = PCA()
+    pca.fit(scaled)
+
+    fig = make_subplots(rows=1, cols=2, subplot_titles=["Variance Explained", "PC1 vs PC2 Loadings"],
+                        column_widths=[0.4, 0.6])
+
+    var_exp = pca.explained_variance_ratio_
     fig.add_trace(go.Bar(
-        x=hist_dates,
-        y=hist_values,
-        name='Histogram',
-        marker_color=[POSITIVE if x >= 0 else NEGATIVE for x in hist_values],
-        opacity=0.6
-    ), row=2, col=1)
-    
-    fig.update_layout(
-        title=f"MACD Analysis: {product_data.iloc[0]['name']}",
-        height=350,
-        plot_bgcolor='white',
-        paper_bgcolor='white',
-        showlegend=True
-    )
-    
+        x=[f"PC{i+1}" for i in range(len(var_exp))],
+        y=var_exp,
+        marker_color=_ACCENT_COLORS[0], opacity=0.8, showlegend=False,
+    ), row=1, col=1)
+
+    loadings = pca.components_[:2]
+    short_names = [ANALYTICS_SERIES.get(c, c)[:14] for c in cols]
+    for i, name in enumerate(short_names):
+        fig.add_trace(go.Scatter(
+            x=[0, loadings[0, i]], y=[0, loadings[1, i]],
+            mode="lines+text", text=["", name], textposition="top center",
+            textfont=dict(size=9, color=_ACCENT_COLORS[i % len(_ACCENT_COLORS)]),
+            line=dict(color=_ACCENT_COLORS[i % len(_ACCENT_COLORS)], width=2),
+            showlegend=False,
+        ), row=1, col=2)
+
+    _apply_theme(fig)
+    fig.update_layout(title=dict(text="PCA — Weekly Changes", font=dict(size=13)))
+    fig.update_yaxes(title_text="Variance Ratio", row=1, col=1)
+    fig.update_xaxes(title_text="PC1 Loading", row=1, col=2)
+    fig.update_yaxes(title_text="PC2 Loading", row=1, col=2)
     return fig
 
-# Callback for correlation matrix heatmap
-@callback(
-    Output("correlation-matrix-heatmap", "figure"),
-    [Input("current-data-store-p15", "data")]
-)
-def update_correlation_matrix_heatmap(data):
-    if not data:
-        return go.Figure().update_layout(title="No data available")
-    
-    df = pd.DataFrame(data)
-    
-    # Select key petroleum products for correlation analysis
-    key_products = {
-        'WCESTUS1': 'Crude Stocks',
-        'WGTSTUS1': 'Gasoline Stocks', 
-        'WDISTUS1': 'Distillate Stocks',
-        'WKJSTUS1': 'Jet Fuel Stocks',
-        'WCRRIUS2': 'Crude Runs',
-        'WCEIMUS2': 'Crude Imports',
-        'WGFRPUS2': 'Gasoline Production'
-    }
-    
-    # Extract time series for each product
-    correlation_data = {}
-    
-    for product_id, product_name in key_products.items():
-        product_data = df[df['id'] == product_id]
-        if not product_data.empty:
-            dates, values = extract_time_series(product_data.iloc[0])
-            if len(values) >= 20:  # Need sufficient data
-                correlation_data[product_name] = pd.Series(values, index=dates)
-    
-    if len(correlation_data) < 3:
-        return go.Figure().update_layout(title="Insufficient data for correlation analysis")
-    
-    # Create DataFrame and calculate correlation
-    corr_df = pd.DataFrame(correlation_data)
-    
-    # Align all series to common dates
-    corr_df = corr_df.dropna()
-    
-    if corr_df.empty:
-        return go.Figure().update_layout(title="No overlapping data for correlation")
-    
-    correlation_matrix = corr_df.corr()
-    
-    # Create heatmap
-    fig = go.Figure(data=go.Heatmap(
-        z=correlation_matrix.values,
-        x=correlation_matrix.columns,
-        y=correlation_matrix.columns,
-        colorscale=COLORSCALE_DIVERGING,
-        zmid=0,
-        text=correlation_matrix.round(2).values,
-        texttemplate="%{text}",
-        textfont={"size": 10},
+
+@callback(Output("p15-lead-lag", "figure"),
+          Input("p15-lag-series-a", "value"), Input("p15-lag-series-b", "value"))
+def update_lead_lag(series_a, series_b):
+    _, vals_a = _get_ts(series_a)
+    _, vals_b = _get_ts(series_b)
+    min_len = min(len(vals_a), len(vals_b))
+    if min_len < 60:
+        return _empty_fig("Insufficient data for cross-correlation")
+
+    a = vals_a[-min_len:]
+    b = vals_b[-min_len:]
+    a = (a - np.mean(a)) / np.std(a)
+    b = (b - np.mean(b)) / np.std(b)
+
+    max_lag = 26
+    lags = np.arange(-max_lag, max_lag + 1)
+    ccf = np.array([np.corrcoef(a[max_lag:min_len - max_lag], b[max_lag + l:min_len - max_lag + l])[0, 1]
+                     for l in lags])
+
+    peak_lag = lags[np.argmax(np.abs(ccf))]
+    peak_val = ccf[np.argmax(np.abs(ccf))]
+
+    colors = [_ACCENT_COLORS[1] if abs(c) == abs(peak_val) else _ACCENT_COLORS[0] for c in ccf]
+
+    name_a = ANALYTICS_SERIES.get(series_a, series_a)[:18]
+    name_b = ANALYTICS_SERIES.get(series_b, series_b)[:18]
+
+    fig = go.Figure(go.Bar(x=lags, y=ccf, marker_color=colors, opacity=0.8))
+    fig.add_hline(y=0, line_dash="dot", line_color=_TEXT, line_width=0.5)
+
+    sig = 1.96 / np.sqrt(min_len)
+    fig.add_hline(y=sig, line_dash="dash", line_color="rgba(255,255,255,0.3)", line_width=0.5)
+    fig.add_hline(y=-sig, line_dash="dash", line_color="rgba(255,255,255,0.3)", line_width=0.5)
+
+    fig.add_annotation(x=peak_lag, y=peak_val, text=f"Peak: lag={peak_lag}, r={peak_val:.3f}",
+                       showarrow=True, arrowhead=2, arrowcolor=_TEXT, font=dict(color=_TEXT, size=10))
+
+    _apply_theme(fig)
+    fig.update_layout(
+        title=dict(text=f"Cross-Correlation: {name_a} vs {name_b}", font=dict(size=13)),
+        xaxis=dict(title="Lag (weeks) — negative = A leads"),
+        yaxis=dict(title="Correlation"),
+    )
+    return fig
+
+
+# ===================================================================
+# TAB 4: SEASONAL INTELLIGENCE CALLBACKS
+# ===================================================================
+
+@callback(Output("p15-stl-seasonal", "figure"), Input("p15-product", "value"))
+def update_stl_seasonal(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 104:
+        return _empty_fig("Need 2+ years for seasonal extraction")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    try:
+        from statsmodels.tsa.seasonal import STL
+        s = pd.Series(vals, index=pd.to_datetime(dates))
+        result = STL(s, period=52, robust=True).fit()
+    except Exception as e:
+        return _empty_fig(f"STL error: {e}")
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=pd.to_datetime(dates), y=result.seasonal, mode="lines",
+                             name="Seasonal Component", line=dict(color=_ACCENT_COLORS[3], width=1.5)))
+    fig.add_hline(y=0, line_dash="dot", line_color=_TEXT, line_width=0.5)
+
+    _apply_theme(fig)
+    fig.update_layout(title=dict(text=f"STL Seasonal Component — {name}", font=dict(size=13)),
+                      yaxis=dict(title="Seasonal Effect"))
+    return fig
+
+
+@callback(Output("p15-calendar-heatmap", "figure"), Input("p15-product", "value"))
+def update_calendar_heatmap(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 52:
+        return _empty_fig("Insufficient data")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    df = pd.DataFrame({"date": pd.to_datetime(dates), "value": vals})
+    df["week"] = df["date"].dt.isocalendar().week.astype(int)
+    df["year"] = df["date"].dt.year
+
+    pivot = df.pivot_table(values="value", index="year", columns="week", aggfunc="mean")
+
+    fig = go.Figure(go.Heatmap(
+        z=pivot.values, x=[str(w) for w in pivot.columns], y=[str(y) for y in pivot.index],
+        colorscale=COLORSCALE_SEQUENTIAL,
+        colorbar=dict(title=dict(text="Value", font=dict(color=_TEXT)), tickfont=dict(color=_TEXT)),
         hoverongaps=False,
-        colorbar=dict(title="Correlation")
     ))
-    
+
+    _apply_theme(fig, 420)
     fig.update_layout(
-        title="Petroleum Products Correlation Matrix",
-        height=400,
-        plot_bgcolor='white',
-        paper_bgcolor='white'
+        title=dict(text=f"Calendar Heatmap — {name}", font=dict(size=13)),
+        xaxis=dict(title="Week of Year", dtick=4),
+        yaxis=dict(title="Year"),
     )
-    
     return fig
 
-# Callback for statistical insights table
-@callback(
-    Output("statistical-insights-table", "children"),
-    [Input("current-data-store-p15", "data")]
-)
-def update_statistical_insights_table(data):
-    if not data:
-        return html.Div("No data available")
-    
-    df = pd.DataFrame(data)
-    
-    insights = []
-    
-    # Analyze key products
-    key_products = {
-        'WCESTUS1': 'Crude Oil Stocks',
-        'WGTSTUS1': 'Gasoline Stocks',
-        'WDISTUS1': 'Distillate Stocks'
-    }
-    
-    for product_id, product_name in key_products.items():
-        product_data = df[df['id'] == product_id]
-        if not product_data.empty:
-            dates, values = extract_time_series(product_data.iloc[0])
-            
-            if len(values) >= 10:
-                # Calculate statistics
-                current_value = values[-1]
-                mean_value = np.mean(values)
-                std_value = np.std(values)
-                min_value = min(values)
-                max_value = max(values)
-                
-                # Percentile ranking
-                percentile = (sum(v <= current_value for v in values) / len(values)) * 100
-                
-                # Volatility (coefficient of variation)
-                cv = (std_value / mean_value) * 100 if mean_value != 0 else 0
-                
-                # Trend analysis (last 12 weeks slope)
-                if len(values) >= 12:
-                    recent_values = values[-12:]
-                    x = np.arange(len(recent_values))
-                    slope = np.polyfit(x, recent_values, 1)[0]
-                    trend = "Rising" if slope > 0 else "Falling" if slope < 0 else "Stable"
-                else:
-                    trend = "N/A"
-                
-                insights.extend([
-                    html.H4(product_name, style={"color": RED, "margin": "10px 0 5px 0"}),
-                    html.P(f"Current: {current_value:,.0f}", style={"margin": "2px 0"}),
-                    html.P(f"Percentile: {percentile:.0f}%", style={"margin": "2px 0"}),
-                    html.P(f"Volatility: {cv:.1f}%", style={"margin": "2px 0"}),
-                    html.P(f"Trend: {trend}", style={"margin": "2px 0"}),
-                    html.Hr(style={"margin": "10px 0"})
-                ])
-    
-    if not insights:
-        return html.Div("No insights available")
-    
-    return html.Div(insights)
 
-# Callback for trend decomposition chart
-@callback(
-    Output("trend-decomposition-chart", "figure"),
-    [Input("current-data-store-p15", "data"),
-     Input("decomposition-product-selector", "value")]
-)
-def update_trend_decomposition_chart(data, selected_product):
-    if not data:
-        return go.Figure().update_layout(title="No data available")
-    
-    df = pd.DataFrame(data)
-    product_data = df[df['id'] == selected_product]
-    
-    if product_data.empty:
-        return go.Figure().update_layout(title="Product data not available")
-    
-    dates, values = extract_time_series(product_data.iloc[0])
-    
-    if len(values) < 52:  # Need at least a year of data
-        return go.Figure().update_layout(title="Insufficient data for trend decomposition")
-    
-    # For long date ranges, sample data
-    if len(values) > 300:
-        step = len(values) // 300
-        dates_sampled = dates[::step]
-        values_sampled = values[::step]
-    else:
-        dates_sampled = dates
-        values_sampled = values
-    
-    # Simple trend decomposition using moving averages
-    ts_series = pd.Series(values_sampled)
-    
-    # Adjust window size based on data length
-    window_size = min(52, len(values_sampled) // 4)
-    if window_size < 4:
-        window_size = 4
-    
-    # Trend (moving average)
-    trend = ts_series.rolling(window=window_size, center=True, min_periods=1).mean()
-    
+@callback(Output("p15-seasonal-deviation", "figure"), Input("p15-product", "value"))
+def update_seasonal_deviation(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 52:
+        return _empty_fig("Insufficient data")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    df = pd.DataFrame({"date": pd.to_datetime(dates), "value": vals})
+    df["week"] = df["date"].dt.isocalendar().week.astype(int)
+    df["year"] = df["date"].dt.year
+
+    current_year = df["year"].max()
+    hist_years = range(current_year - 5, current_year)
+    hist = df[df["year"].isin(hist_years)]
+    stats = hist.groupby("week")["value"].agg(["mean", "min", "max"]).reset_index()
+
+    cur = df[df["year"] == current_year].sort_values("week")
+
     fig = go.Figure()
-    
-    # Plot original data (lightly)
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=values_sampled,
-        mode='lines',
-        name='Original Data',
-        line=dict(color='lightgray', width=1),
-        opacity=0.5
-    ))
-    
-    # Plot trend
-    fig.add_trace(go.Scatter(
-        x=dates_sampled,
-        y=trend,
-        mode='lines',
-        name='Trend',
-        line=dict(color=RED, width=3)
-    ))
-    
+    fig.add_trace(go.Scatter(x=stats["week"], y=stats["max"], mode="lines", line=dict(width=0),
+                             showlegend=False, hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=stats["week"], y=stats["min"], mode="lines", line=dict(width=0),
+                             fill="tonexty", fillcolor="rgba(0,212,255,0.12)",
+                             name="5-Year Range", hoverinfo="skip"))
+    fig.add_trace(go.Scatter(x=stats["week"], y=stats["mean"], mode="lines",
+                             line=dict(color="rgba(255,255,255,0.4)", width=1.5, dash="dash"),
+                             name="5-Year Avg"))
+    prior = df[df["year"] == current_year - 1].sort_values("week")
+    if not prior.empty:
+        fig.add_trace(go.Scatter(x=prior["week"], y=prior["value"], mode="lines",
+                                 name=str(current_year - 1), line=dict(color=_ACCENT_COLORS[2], width=1.5)))
+    if not cur.empty:
+        fig.add_trace(go.Scatter(x=cur["week"], y=cur["value"], mode="lines",
+                                 name=str(current_year), line=dict(color=_ACCENT_COLORS[0], width=2.5)))
+
+    _apply_theme(fig)
     fig.update_layout(
-        title=f"Trend Decomposition: {product_data.iloc[0]['name']}",
-        xaxis_title="Date",
-        yaxis_title=product_data.iloc[0]['uom'],
-        height=300,
-        plot_bgcolor='white',
-        paper_bgcolor='white',
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5)
+        title=dict(text=f"Seasonal Deviation — {name}", font=dict(size=13)),
+        xaxis=dict(title="Week of Year"),
+        yaxis=dict(title="Value"),
     )
-    
     return fig
 
-# Callback for forecast intervals chart
-@callback(
-    Output("forecast-intervals-chart", "figure"),
-    [Input("current-data-store-p15", "data"),
-     Input("forecast-product-selector", "value")]
-)
-def update_forecast_intervals_chart(data, selected_product):
-    if not data:
-        return go.Figure().update_layout(title="No data available")
-    
-    df = pd.DataFrame(data)
-    product_data = df[df['id'] == selected_product]
-    
-    if product_data.empty:
-        return go.Figure().update_layout(title="Product data not available")
-    
-    dates, values = extract_time_series(product_data.iloc[0])
-    
-    if len(values) < 20:
-        return go.Figure().update_layout(title="Insufficient data for forecasting")
-    
-    # For long date ranges, use recent data for forecast
-    if len(values) > 100:
-        # Use last 100 points for forecast calculation
-        recent_dates = dates[-100:]
-        recent_values = values[-100:]
-        # But show last 50 points for visualization
-        display_dates = dates[-50:]
-        display_values = values[-50:]
-    else:
-        recent_dates = dates
-        recent_values = values
-        display_dates = dates
-        display_values = values
-    
-    # Simple forecast using exponential smoothing on recent data
-    ts_series = pd.Series(recent_values)
-    
-    # Calculate exponentially weighted moving average
-    alpha = 0.3  # Smoothing parameter
-    ewma = ts_series.ewm(alpha=alpha).mean()
-    
-    # Calculate forecast (simple extension of trend)
-    recent_trend = ewma.iloc[-min(5, len(ewma)):].diff().mean()
-    last_value = ewma.iloc[-1]
-    
-    # Generate 8-week forecast
-    forecast_periods = 8
-    forecast_values = []
-    for i in range(forecast_periods):
-        forecast_val = last_value + (i + 1) * recent_trend
-        forecast_values.append(forecast_val)
-    
-    # Generate forecast dates
-    last_date = recent_dates[-1]
-    forecast_dates = [last_date + pd.Timedelta(weeks=i+1) for i in range(forecast_periods)]
-    
-    # Calculate confidence intervals based on historical volatility
-    historical_std = ts_series.rolling(window=min(12, len(ts_series)//2), min_periods=3).std().iloc[-1]
-    
-    if pd.notna(historical_std) and historical_std > 0:
-        upper_confidence = [val + 1.96 * historical_std * np.sqrt(i+1) for i, val in enumerate(forecast_values)]
-        lower_confidence = [val - 1.96 * historical_std * np.sqrt(i+1) for i, val in enumerate(forecast_values)]
-    else:
-        # Fallback if std calculation fails
-        std_estimate = np.std(recent_values) if len(recent_values) > 1 else abs(recent_values[-1] * 0.1)
-        upper_confidence = [val + 1.96 * std_estimate * np.sqrt(i+1) for i, val in enumerate(forecast_values)]
-        lower_confidence = [val - 1.96 * std_estimate * np.sqrt(i+1) for i, val in enumerate(forecast_values)]
-    
+
+@callback(Output("p15-seasonal-strength", "figure"), Input("p15-product", "value"))
+def update_seasonal_strength(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 104:
+        return _empty_fig("Need 2+ years for seasonal strength")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    df = pd.DataFrame({"date": pd.to_datetime(dates), "value": vals})
+    df["week"] = df["date"].dt.isocalendar().week.astype(int)
+    df["year"] = df["date"].dt.year
+
+    years = sorted(df["year"].unique())
+    strengths = []
+    for yr in years:
+        yr_data = df[df["year"] == yr]["value"]
+        if len(yr_data) < 20:
+            continue
+        total_var = yr_data.var()
+        if total_var == 0:
+            strengths.append({"year": yr, "strength": 0, "amplitude": 0})
+            continue
+        wk_means = df[df["year"] == yr].groupby("week")["value"].mean()
+        seasonal_var = wk_means.var()
+        strengths.append({
+            "year": yr,
+            "strength": seasonal_var / total_var if total_var > 0 else 0,
+            "amplitude": wk_means.max() - wk_means.min(),
+        })
+
+    if not strengths:
+        return _empty_fig("No data")
+
+    sdf = pd.DataFrame(strengths)
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+    fig.add_trace(go.Bar(x=sdf["year"].astype(str), y=sdf["strength"], name="Seasonal Variance Ratio",
+                         marker_color=_ACCENT_COLORS[0], opacity=0.8), secondary_y=False)
+    fig.add_trace(go.Scatter(x=sdf["year"].astype(str), y=sdf["amplitude"], mode="lines+markers",
+                             name="Amplitude (Max-Min)", line=dict(color=_ACCENT_COLORS[1], width=2),
+                             marker=dict(size=6)), secondary_y=True)
+
+    _apply_theme(fig)
+    fig.update_layout(title=dict(text=f"Seasonal Strength by Year — {name}", font=dict(size=13)))
+    fig.update_yaxes(title_text="Variance Ratio", secondary_y=False)
+    fig.update_yaxes(title_text="Amplitude", secondary_y=True)
+    return fig
+
+
+# ===================================================================
+# TAB 5: RISK & DISTRIBUTION CALLBACKS
+# ===================================================================
+
+@callback(Output("p15-drawdown", "figure"), Input("p15-product", "value"))
+def update_drawdown(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 30:
+        return _empty_fig("Insufficient data")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    dt = pd.to_datetime(dates)
+
+    running_max = np.maximum.accumulate(vals)
+    drawdown = (vals - running_max) / running_max * 100
+
+    fig = make_subplots(rows=2, cols=1, row_heights=[0.6, 0.4], vertical_spacing=0.08,
+                        subplot_titles=[f"{name} with Peak-to-Trough", "Drawdown %"])
+
+    fig.add_trace(go.Scatter(x=dt, y=vals, mode="lines", name=name,
+                             line=dict(color=_ACCENT_COLORS[0], width=1.5)), row=1, col=1)
+    fig.add_trace(go.Scatter(x=dt, y=running_max, mode="lines", name="Running Max",
+                             line=dict(color="rgba(255,255,255,0.3)", width=1, dash="dot")), row=1, col=1)
+
+    in_drawdown = False
+    dd_events = []
+    start_idx = 0
+    for i in range(len(drawdown)):
+        if drawdown[i] < -0.5 and not in_drawdown:
+            in_drawdown = True
+            start_idx = i
+        elif (drawdown[i] >= 0 or i == len(drawdown) - 1) and in_drawdown:
+            in_drawdown = False
+            trough_idx = start_idx + np.argmin(drawdown[start_idx:i + 1])
+            dd_events.append((start_idx, trough_idx, i, drawdown[trough_idx]))
+
+    dd_events.sort(key=lambda x: x[3])
+    shade_colors = ["rgba(255,107,107,0.2)", "rgba(255,217,61,0.15)", "rgba(192,132,252,0.12)"]
+    for rank, ev in enumerate(dd_events[:3]):
+        fig.add_vrect(x0=dt[ev[0]], x1=dt[ev[2]], fillcolor=shade_colors[rank],
+                      line_width=0, row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=dt, y=drawdown, mode="lines", name="Drawdown %",
+                             fill="tozeroy", fillcolor="rgba(255,107,107,0.2)",
+                             line=dict(color=_ACCENT_COLORS[1], width=1)), row=2, col=1)
+
+    max_dd = np.min(drawdown)
+    max_dd_idx = np.argmin(drawdown)
+    fig.add_annotation(x=dt[max_dd_idx], y=max_dd, text=f"Max: {max_dd:.1f}%",
+                       showarrow=True, arrowhead=2, arrowcolor=_TEXT,
+                       font=dict(color=_TEXT, size=10), row=2, col=1)
+
+    _apply_theme(fig, 520)
+    fig.update_layout(title=dict(text=f"Drawdown Analysis — {name}", font=dict(size=13)))
+    return fig
+
+
+@callback(Output("p15-bollinger", "figure"),
+          Input("p15-product", "value"), Input("p15-bb-window", "value"), Input("p15-bb-std", "value"))
+def update_bollinger(series_id, window, std_mult):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < window + 10:
+        return _empty_fig("Insufficient data")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    s = pd.Series(vals)
+    sma = s.rolling(window).mean()
+    std = s.rolling(window).std()
+    upper = sma + std_mult * std
+    lower = sma - std_mult * std
+    bandwidth = ((upper - lower) / sma * 100).values
+
+    valid_bw = bandwidth[~np.isnan(bandwidth)]
+    if len(valid_bw) < 5:
+        return _empty_fig("Cannot compute Bollinger Bands")
+    squeeze_threshold = np.percentile(valid_bw, 10)
+
+    dt = pd.to_datetime(dates)
+
+    fig = make_subplots(rows=2, cols=1, row_heights=[0.7, 0.3], vertical_spacing=0.08,
+                        subplot_titles=[f"{name} with Bollinger Bands", "Bandwidth %"])
+
+    for i in range(window, len(vals)):
+        if not np.isnan(bandwidth[i]) and bandwidth[i] <= squeeze_threshold:
+            fig.add_vrect(x0=dt[i - 1], x1=dt[i], fillcolor="rgba(255,217,61,0.15)",
+                          line_width=0, row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=dt, y=upper.values, mode="lines", line=dict(width=0),
+                             showlegend=False, hoverinfo="skip"), row=1, col=1)
+    fig.add_trace(go.Scatter(x=dt, y=lower.values, mode="lines", line=dict(width=0),
+                             fill="tonexty", fillcolor="rgba(0,212,255,0.08)",
+                             name="Bollinger Band", hoverinfo="skip"), row=1, col=1)
+    fig.add_trace(go.Scatter(x=dt, y=sma.values, mode="lines", name=f"SMA({window})",
+                             line=dict(color="rgba(255,255,255,0.5)", width=1, dash="dash")), row=1, col=1)
+    fig.add_trace(go.Scatter(x=dt, y=vals, mode="lines", name=name,
+                             line=dict(color=_ACCENT_COLORS[0], width=1.5)), row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=dt, y=bandwidth, mode="lines", name="Bandwidth %",
+                             line=dict(color=_ACCENT_COLORS[4], width=1)), row=2, col=1)
+    fig.add_hline(y=squeeze_threshold, line_dash="dot", line_color=_ACCENT_COLORS[2],
+                  line_width=0.8, row=2, col=1,
+                  annotation_text="Squeeze", annotation_font_color=_TEXT)
+
+    _apply_theme(fig, 520)
+    fig.update_layout(title=dict(text=f"Bollinger Bands & Squeeze — {name}", font=dict(size=13)))
+    return fig
+
+
+@callback(Output("p15-distribution", "figure"), Input("p15-product", "value"))
+def update_distribution(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 30:
+        return _empty_fig("Insufficient data")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    changes = np.diff(vals)
+    changes = changes[~np.isnan(changes)]
+    if len(changes) < 10:
+        return _empty_fig("Insufficient changes data")
+
+    from scipy import stats as sp_stats
+    from statsmodels.stats.stattools import jarque_bera
+
+    skew = sp_stats.skew(changes)
+    kurt = sp_stats.kurtosis(changes)
+    jb_stat, jb_pval, _, _ = jarque_bera(changes)
+
     fig = go.Figure()
-    
-    # Historical data (show recent portion for clarity)
-    fig.add_trace(go.Scatter(
-        x=display_dates,
-        y=display_values,
-        mode='lines+markers',
-        name='Historical',
-        line=dict(color=BLUE, width=2),
-        marker=dict(size=4)
+
+    fig.add_trace(go.Histogram(
+        x=changes, nbinsx=40, name="Weekly Changes",
+        marker_color=_ACCENT_COLORS[0], opacity=0.7,
+        histnorm="probability density",
     ))
 
-    # Forecast
-    fig.add_trace(go.Scatter(
-        x=forecast_dates,
-        y=forecast_values,
-        mode='lines+markers',
-        name='Forecast',
-        line=dict(color=RED, width=2, dash='dash'),
-        marker=dict(size=4)
-    ))
-    
-    # Confidence intervals
-    fig.add_trace(go.Scatter(
-        x=forecast_dates,
-        y=upper_confidence,
-        mode='lines',
-        name='95% Confidence',
-        line=dict(color='red', width=1, dash='dot'),
-        showlegend=False
-    ))
-    
-    fig.add_trace(go.Scatter(
-        x=forecast_dates,
-        y=lower_confidence,
-        mode='lines',
-        name='95% Confidence',
-        line=dict(color='red', width=1, dash='dot'),
-        fill='tonexty',
-        fillcolor='rgba(255,0,0,0.1)',
-        showlegend=True
-    ))
-    
-    fig.update_layout(
-        title=f"8-Week Forecast: {product_data.iloc[0]['name']}<br><sub>With 95% confidence intervals</sub>",
-        xaxis_title="Date",
-        yaxis_title=product_data.iloc[0]['uom'],
-        height=300,
-        plot_bgcolor='white',
-        paper_bgcolor='white',
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5)
+    x_range = np.linspace(changes.min(), changes.max(), 200)
+    normal_pdf = sp_stats.norm.pdf(x_range, np.mean(changes), np.std(changes))
+    fig.add_trace(go.Scatter(x=x_range, y=normal_pdf, mode="lines", name="Normal Fit",
+                             line=dict(color=_ACCENT_COLORS[1], width=2)))
+
+    fig.add_annotation(
+        text=f"Skewness: {skew:.3f}<br>Kurtosis: {kurt:.3f}<br>JB stat: {jb_stat:.1f} (p={jb_pval:.4f})",
+        xref="paper", yref="paper", x=0.98, y=0.95, showarrow=False,
+        font=dict(color=_TEXT, size=10), align="right",
+        bgcolor="rgba(26,26,46,0.8)", bordercolor=_GRID, borderwidth=1,
     )
-    
+
+    _apply_theme(fig)
+    fig.update_layout(
+        title=dict(text=f"Weekly Change Distribution — {name}", font=dict(size=13)),
+        xaxis=dict(title="Weekly Change"),
+        yaxis=dict(title="Density"),
+        barmode="overlay",
+    )
     return fig
 
+
+@callback(Output("p15-qq", "figure"), Input("p15-product", "value"))
+def update_qq(series_id):
+    dates, vals = _get_ts(series_id)
+    if len(vals) < 30:
+        return _empty_fig("Insufficient data")
+
+    name = ANALYTICS_SERIES.get(series_id, series_id)
+    changes = np.diff(vals)
+    changes = changes[~np.isnan(changes)]
+    if len(changes) < 10:
+        return _empty_fig("Insufficient data")
+
+    from scipy import stats as sp_stats
+    sorted_changes = np.sort(changes)
+    n = len(sorted_changes)
+    theoretical = sp_stats.norm.ppf(np.arange(1, n + 1) / (n + 1))
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=theoretical, y=sorted_changes, mode="markers",
+                             name="Sample Quantiles",
+                             marker=dict(color=_ACCENT_COLORS[0], size=4, opacity=0.7)))
+
+    slope, intercept = np.polyfit(theoretical, sorted_changes, 1)
+    ref_line = slope * theoretical + intercept
+    fig.add_trace(go.Scatter(x=theoretical, y=ref_line, mode="lines",
+                             name="Reference Line",
+                             line=dict(color=_ACCENT_COLORS[1], width=2, dash="dash")))
+
+    _apply_theme(fig)
+    fig.update_layout(
+        title=dict(text=f"QQ Plot — {name} Weekly Changes", font=dict(size=13)),
+        xaxis=dict(title="Theoretical Quantiles (Normal)"),
+        yaxis=dict(title="Sample Quantiles"),
+    )
+    return fig

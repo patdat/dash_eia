@@ -166,7 +166,7 @@ layout = html.Div([
     # Header section
     html.Div([
         html.Div([
-            html.H1("STEO DPR Other Data Table", style={"fontSize": "3em", "color": RED, "margin": "0"}),
+            html.H1("STEO DPR Other", style={"fontSize": "3em", "color": RED, "margin": "0"}),
         ], style={"flex": "1", "display": "flex", "alignItems": "center", "justifyContent": "flex-start"}),
         
         html.Div([

@@ -34,3 +34,12 @@ NEGATIVE = RED
 COLORSCALE_DIVERGING  = "RdBu"
 COLORSCALE_SEQUENTIAL = "Viridis"
 COLORSCALE_HEATMAP    = "RdYlGn"
+COLORSCALE_EFFICIENCY = [
+    [0.0, "#ef5350"],    # Red (worst) — light enough for dark text
+    [0.2, "#ff9800"],    # Orange
+    [0.4, "#ffee58"],    # Yellow
+    [0.5, "#fffde7"],    # Very light yellow (neutral)
+    [0.6, "#81d4fa"],    # Light blue
+    [0.8, "#42a5f5"],    # Medium blue
+    [1.0, "#1e88e5"],    # Blue (best) — not too dark for readability
+]

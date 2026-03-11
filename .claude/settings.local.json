@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python -m src.steo.create_more_files)"
+      "Bash(python -m src.steo.create_more_files)",
+      "Bash(python -c \"from pages import page2_14; print\\(''Layout type:'', type\\(page2_14.layout\\)\\); print\\(''OK''\\)\")"
     ]
   }
 }
