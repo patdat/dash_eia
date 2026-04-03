@@ -146,22 +146,22 @@ TABLE_DEFS = {
 # 3-column layout: each column is a list of table names, stacked top to bottom.
 # Heights are proportional to the number of data rows in each table.
 TABLE_COLUMNS = [
-    # Column 1: Headline + Crude
+    # Column 1: Headline + Refining
     [
         "Headline",
+        "Products Supplied",
+        "CDU Utilization",
+        "Feedstock Runs",
+    ],
+    # Column 2: Crude
+    [
         "Crude Stocks",
         "Crude Other Stocks",
         "Crude Production",
-        "Crude Adjustment",
-        "Crude Exports",
-    ],
-    # Column 2: Supply/Demand + Refining
-    [
-        "Products Supplied",
         "Crude Imports",
+        "Crude Exports",
         "Crude Runs",
-        "CDU Utilization",
-        "Feedstock Runs",
+        "Crude Adjustment",
     ],
     # Column 3: Product Stocks
     [
@@ -441,7 +441,7 @@ def _table_row_count(table_name):
 
 
 # Layout constants (in inches)
-ROW_HEIGHT = 0.155       # height per table row (header or data)
+ROW_HEIGHT = 0.215       # height per table row (header or data), accounts for scale(1, 1.2)
 TABLE_GAP = 0.18         # vertical gap between tables (title space)
 COL_MARGIN = 0.03        # horizontal gap between columns
 HEADER_HEIGHT = 0.4      # report title height
