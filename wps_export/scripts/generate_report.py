@@ -463,10 +463,13 @@ def render_table(ax, table_name, table_df):
 
     for j in range(len(col_labels)):
         cell = tbl[0, j]
-        cell.set_facecolor("#bfbfbf" if j in monthly_col_indices else HEADER_BG)
+        is_monthly = j in monthly_col_indices
+        cell.set_facecolor("#555555" if is_monthly else HEADER_BG)
         cell.set_edgecolor("#cccccc")
         if j == 0:
             cell.set_text_props(fontweight="bold", fontsize=7)
+        elif is_monthly:
+            cell.set_text_props(fontweight="bold", fontsize=7, ha="right", color="white")
         else:
             cell.set_text_props(fontweight="bold", fontsize=7, ha="right")
 
