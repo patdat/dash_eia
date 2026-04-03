@@ -464,8 +464,8 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     max_table_rows = max(
         sum(_table_row_count(t) for t in col) for col in TABLE_COLUMNS
     )
-    # Each data row ~0.18 inches, charts ~4.5 inches
-    table_height = max_table_rows * 0.18
+    # Each data row ~0.28 inches, charts ~4.5 inches
+    table_height = max_table_rows * 0.28
     chart_height = 4.5
     fig_height = table_height + chart_height + 0.6  # +header
     fig = plt.figure(figsize=(14, fig_height), facecolor="white")
@@ -487,7 +487,7 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     )
 
     # --- Tables: 3 columns, zero internal gap ---
-    table_gs = outer_gs[1].subgridspec(1, num_cols, wspace=0.18)
+    table_gs = outer_gs[1].subgridspec(1, num_cols, wspace=0.08)
 
     for col_idx, col_tables in enumerate(TABLE_COLUMNS):
         row_heights = [_table_row_count(t) for t in col_tables]
