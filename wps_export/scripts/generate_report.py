@@ -365,13 +365,11 @@ def render_table(ax, table_name, table_df):
         cellText=display_data,
         colLabels=col_labels,
         cellLoc="right",
-        loc="upper center",
-        colWidths=[0.45] + [0.18] * (len(date_cols) + 1),
+        bbox=[0, 0, 1, 0.85],
     )
 
     tbl.auto_set_font_size(False)
     tbl.set_fontsize(7)
-    tbl.scale(1, 1.2)
 
     for j in range(len(col_labels)):
         cell = tbl[0, j]
@@ -437,7 +435,7 @@ def render_seasonality_chart(ax, series_id, seasonality_data):
 
 def _table_row_count(table_name):
     """Number of data rows in a table (for height proportioning)."""
-    return len(TABLE_DEFS.get(table_name, {})) + 1  # +1 for header row
+    return len(TABLE_DEFS.get(table_name, {})) + 2  # +1 header, +1 title/padding
 
 
 def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
@@ -464,8 +462,8 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     max_table_rows = max(
         sum(_table_row_count(t) for t in col) for col in TABLE_COLUMNS
     )
-    # Each data row ~0.28 inches, charts ~4.5 inches
-    table_height = max_table_rows * 0.28
+    # Each data row ~0.22 inches, charts ~4.5 inches
+    table_height = max_table_rows * 0.22
     chart_height = 4.5
     fig_height = table_height + chart_height + 0.6  # +header
     fig = plt.figure(figsize=(14, fig_height), facecolor="white")
@@ -492,7 +490,7 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     for col_idx, col_tables in enumerate(TABLE_COLUMNS):
         row_heights = [_table_row_count(t) for t in col_tables]
         col_gs = table_gs[col_idx].subgridspec(
-            len(col_tables), 1, hspace=0.0,
+            len(col_tables), 1, hspace=0.05,
             height_ratios=row_heights,
         )
         for row_idx, table_name in enumerate(col_tables):
