@@ -123,10 +123,53 @@ def process_flow_items(df):
     return monthly_flow
 
 
+def compute_derived_series(df):
+    """Compute derived series (feedstock runs, P2E stocks, adjustment factor)
+    and append to the DataFrame. Same logic as generate_report.py."""
+
+    pivot = df.pivot_table(index="date", columns="series_id", values="value")
+    new_rows = []
+
+    # Feedstock Runs = Gross Runs - Crude Runs
+    feedstock_pairs = {
+        "feedstockRunsUS":  ("WGIRIUS2",  "WCRRIUS2"),
+        "feddStockRunsP1":  ("WGIRIP12",  "WCRRIP12"),
+        "feedstockRunsP2":  ("WGIRIP22",  "WCRRIP22"),
+        "feedstockRunsP3":  ("WGIRIP32",  "WCRRIP32"),
+        "feedstockRunsP4":  ("WGIRIP42",  "WCRRIP42"),
+        "feedstockRunsP5":  ("WGIRIP52",  "WCRRIP52"),
+        # P2E Stocks = P2 - Cushing
+        "crudeStocksP2E":   ("WCESTP21",  "W_EPC0_SAX_YCUOK_MBBL"),
+    }
+
+    for derived_id, (a, b) in feedstock_pairs.items():
+        if a in pivot.columns and b in pivot.columns:
+            result = pivot[a] - pivot[b]
+            for date, value in result.dropna().items():
+                new_rows.append({"date": date, "series_id": derived_id, "value": value, "series": "", "source": ""})
+
+    # Adjustment factor
+    adj_cols = ["WCRFPUS2", "WCEIMUS2", "WCRRIUS2", "WCREXUS2", "WCRSTUS1"]
+    if all(c in pivot.columns for c in adj_cols):
+        stock_change = pivot["WCRSTUS1"].diff() / 7
+        adjustment = -(pivot["WCRFPUS2"] + pivot["WCEIMUS2"] - pivot["WCRRIUS2"] - pivot["WCREXUS2"] - stock_change)
+        for date, value in adjustment.dropna().items():
+            new_rows.append({"date": date, "series_id": "crudeOriginalAdjustment", "value": value, "series": "", "source": ""})
+
+    if new_rows:
+        derived_df = pd.DataFrame(new_rows)
+        derived_df["date"] = pd.to_datetime(derived_df["date"])
+        return pd.concat([df, derived_df], ignore_index=True)
+    return df
+
+
 def create_monthly_data():
     """Create monthly aggregated data from weekly WPS data."""
     logger.info("Loading weekly data...")
     df = load_wps_data()
+
+    logger.info("Computing derived series...")
+    df = compute_derived_series(df)
 
     logger.info("Processing storage items (stocks)...")
     storage_monthly = process_storage_items(df)
