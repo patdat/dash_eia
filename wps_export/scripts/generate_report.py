@@ -330,13 +330,19 @@ def build_table_data(df, monthly_df=None):
                 if pd.notna(v_prev) and pd.notna(v_curr):
                     wow = v_curr - v_prev
 
-            # m/m change
+            # m/m change — try exact match first, then uppercase
             mom = np.nan
-            if monthly_pivot is not None and sid.upper() in monthly_pivot.index:
+            m_key = None
+            if monthly_pivot is not None:
+                if sid in monthly_pivot.index:
+                    m_key = sid
+                elif sid.upper() in monthly_pivot.index:
+                    m_key = sid.upper()
+            if m_key is not None:
                 m_cols = monthly_pivot.columns
                 if len(m_cols) >= 2:
-                    m_prev = monthly_pivot.loc[sid.upper(), m_cols[-2]]
-                    m_curr = monthly_pivot.loc[sid.upper(), m_cols[-1]]
+                    m_prev = monthly_pivot.loc[m_key, m_cols[-2]]
+                    m_curr = monthly_pivot.loc[m_key, m_cols[-1]]
                     if pd.notna(m_prev) and pd.notna(m_curr):
                         mom = m_curr - m_prev
 
@@ -374,21 +380,21 @@ def compute_seasonality(df, series_id):
     }
 
 
-def _fmt_value(val):
-    """Format a numeric value for display."""
+def _fmt_value(val, is_pct=False):
+    """Format a numeric value for display. Pct gets 1 decimal, all else 0."""
     if pd.isna(val):
         return "\u2014"
-    if abs(val) < 1000:
+    if is_pct:
         return f"{val:,.1f}"
     return f"{val:,.0f}"
 
 
-def _fmt_change(val):
+def _fmt_change(val, is_pct=False):
     """Format a change value with +/- sign."""
     if pd.isna(val):
         return "\u2014"
     sign = "+" if val > 0 else ""
-    if abs(val) < 100:
+    if is_pct:
         return f"{sign}{val:,.1f}"
     return f"{sign}{val:,.0f}"
 
@@ -406,11 +412,12 @@ def render_table(ax, table_name, table_df):
 
     display_data = []
     for _, row in table_df.iterrows():
+        is_pct = "pct" in str(row["name"]).lower()
         display_data.append([
             row["name"],
-            _fmt_value(row[date_col]),
-            _fmt_change(row["w/w"]),
-            _fmt_change(row["m/m"]),
+            _fmt_value(row[date_col], is_pct),
+            _fmt_change(row["w/w"], is_pct),
+            _fmt_change(row["m/m"], is_pct),
         ])
 
     col_labels = ["", date_col, "w/w", "m/m"]
