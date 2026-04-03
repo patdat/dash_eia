@@ -454,10 +454,16 @@ def render_table(ax, table_name, table_df):
     tbl.set_fontsize(7)
     tbl.scale(1, 1.2)
 
-    # Style header row
+    # Style header row — monthly columns get darker background
+    monthly_col_indices = set()
+    if month_col:
+        for j, label in enumerate(col_labels):
+            if label in (month_col, "m/m"):
+                monthly_col_indices.add(j)
+
     for j in range(len(col_labels)):
         cell = tbl[0, j]
-        cell.set_facecolor(HEADER_BG)
+        cell.set_facecolor("#bfbfbf" if j in monthly_col_indices else HEADER_BG)
         cell.set_edgecolor("#cccccc")
         if j == 0:
             cell.set_text_props(fontweight="bold", fontsize=7)
