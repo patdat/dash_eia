@@ -487,7 +487,7 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     )
 
     # --- Tables: 3 columns, zero internal gap ---
-    table_gs = outer_gs[1].subgridspec(1, num_cols, wspace=0.08)
+    table_gs = outer_gs[1].subgridspec(1, num_cols, wspace=0.18)
 
     for col_idx, col_tables in enumerate(TABLE_COLUMNS):
         row_heights = [_table_row_count(t) for t in col_tables]
