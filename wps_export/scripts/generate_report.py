@@ -12,6 +12,7 @@ Usage:
 
 import os
 import sys
+import datetime as _dt
 
 import pandas as pd
 import numpy as np
@@ -126,9 +127,10 @@ CHART_NAMES = {
     "WDISTUS1": "US Distillate Stocks (mb)",
 }
 
-RANGE_BAND_YEARS = list(range(2015, 2024))
-CURRENT_YEAR = 2026
-DISPLAY_YEARS = [2026, 2025, 2024, 2023, 2022]
+_current_year = _dt.date.today().year
+CURRENT_YEAR = _current_year
+DISPLAY_YEARS = [_current_year - i for i in range(5)]
+RANGE_BAND_YEARS = list(range(2015, _current_year - 2))  # up to 3 years before current
 
 YEAR_COLORS = ["#000000", "#00ADEF", "#EC002B", "#4AB04D", "#F68E2F"]
 POSITIVE_COLOR = "#4caf50"
@@ -187,7 +189,7 @@ def build_table_data(df):
 def compute_seasonality(df, series_id):
     series = df[df["series_id"] == series_id].copy()
     series["year"] = series["date"].dt.year
-    series["week_of_year"] = series["date"].dt.isocalendar().week.astype(int) - 1
+    series["week_of_year"] = series["date"].dt.isocalendar().week.astype(int).clip(upper=52) - 1
 
     historical = series[series["year"].isin(RANGE_BAND_YEARS)]
     band = historical.groupby("week_of_year")["value"].agg(["min", "max", "mean"])
@@ -262,11 +264,10 @@ def render_table(ax, table_name, table_df):
         tbl[i + 1, 0].set_text_props(ha="left", fontsize=7)
         tbl[i + 1, 0].set_edgecolor("#cccccc")
 
-        for j in range(1, len(date_cols) + 1):
+        for j in range(1, len(col_labels)):
             tbl[i + 1, j].set_edgecolor("#cccccc")
 
         chg_cell = tbl[i + 1, len(col_labels) - 1]
-        chg_cell.set_edgecolor("#cccccc")
         chg_val = table_df.iloc[i]["change"]
         if pd.notna(chg_val):
             if chg_val > 0:
@@ -361,6 +362,7 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
         else:
             ax_right.axis("off")
 
+    assert len(CHART_SERIES) == 4, "Update chart_positions and GridSpec nrows if CHART_SERIES changes"
     chart_positions = [(7, 0), (7, 1), (8, 0), (8, 1)]
     for i, (row, col) in enumerate(chart_positions):
         ax_chart = fig.add_subplot(gs[row, col])
