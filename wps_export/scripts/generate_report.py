@@ -376,8 +376,11 @@ def render_table(ax, table_name, table_df):
     for j in range(len(col_labels)):
         cell = tbl[0, j]
         cell.set_facecolor(HEADER_BG)
-        cell.set_text_props(fontweight="bold", fontsize=7)
         cell.set_edgecolor("#cccccc")
+        if j == 0:
+            cell.set_text_props(fontweight="bold", fontsize=7)
+        else:
+            cell.set_text_props(fontweight="bold", fontsize=7, ha="right")
 
     for i in range(len(display_data)):
         tbl[i + 1, 0].set_text_props(ha="left", fontsize=7)
