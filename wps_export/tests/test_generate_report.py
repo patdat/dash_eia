@@ -13,8 +13,8 @@ from scripts.generate_report import (
 
 
 class TestTableDefs:
-    def test_table_defs_has_16_tables(self):
-        assert len(TABLE_DEFS) == 16
+    def test_table_defs_has_17_tables(self):
+        assert len(TABLE_DEFS) == 17
 
     def test_headline_series_ids(self):
         assert "WCESTUS1" in TABLE_DEFS["Headline"]

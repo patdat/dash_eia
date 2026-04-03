@@ -102,6 +102,14 @@ TABLE_DEFS = {
         "feedstockRunsP4": "P4 Feedstock Runs (kbd)",
         "feedstockRunsP5": "P5 Feedstock Runs (kbd)",
     },
+    "Gross Runs": {
+        "WGIRIUS2": "US Gross Runs (kbd)",
+        "WGIRIP12": "P1 Gross Runs (kbd)",
+        "WGIRIP22": "P2 Gross Runs (kbd)",
+        "WGIRIP32": "P3 Gross Runs (kbd)",
+        "WGIRIP42": "P4 Gross Runs (kbd)",
+        "WGIRIP52": "P5 Gross Runs (kbd)",
+    },
     "Gasoline Stocks": {
         "WGTSTUS1": "US Gasoline Stocks (kb)",
         "WGTSTP11": "P1 Gasoline Stocks (kb)",
@@ -152,6 +160,7 @@ TABLE_COLUMNS = [
         "Products Supplied",
         "CDU Utilization",
         "Feedstock Runs",
+        "Gross Runs",
     ],
     # Column 2: Crude
     [
