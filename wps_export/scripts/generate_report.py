@@ -102,15 +102,75 @@ TABLE_DEFS = {
         "feedstockRunsP4": "P4 Feedstock Runs (kbd)",
         "feedstockRunsP5": "P5 Feedstock Runs (kbd)",
     },
+    "Gasoline Stocks": {
+        "WGTSTUS1": "US Gasoline Stocks (kb)",
+        "WGTSTP11": "P1 Gasoline Stocks (kb)",
+        "WGTSTP21": "P2 Gasoline Stocks (kb)",
+        "WGTSTP31": "P3 Gasoline Stocks (kb)",
+        "WGTSTP41": "P4 Gasoline Stocks (kb)",
+        "WGTSTP51": "P5 Gasoline Stocks (kb)",
+    },
+    "Distillate Stocks": {
+        "WDISTUS1": "US Distillate Stocks (kb)",
+        "WDISTP11": "P1 Distillate Stocks (kb)",
+        "WDISTP21": "P2 Distillate Stocks (kb)",
+        "WDISTP31": "P3 Distillate Stocks (kb)",
+        "WDISTP41": "P4 Distillate Stocks (kb)",
+        "WDISTP51": "P5 Distillate Stocks (kb)",
+    },
+    "Jet Stocks": {
+        "WKJSTUS1": "US Jet Stocks (kb)",
+        "WKJSTP11": "P1 Jet Stocks (kb)",
+        "WKJSTP21": "P2 Jet Stocks (kb)",
+        "WKJSTP31": "P3 Jet Stocks (kb)",
+        "WKJSTP41": "P4 Jet Stocks (kb)",
+        "WKJSTP51": "P5 Jet Stocks (kb)",
+    },
+    "Fuel Oil Stocks": {
+        "WRESTUS1": "US Fuel Oil Stocks (kb)",
+        "WRESTP11": "P1 Fuel Oil Stocks (kb)",
+        "WRESTP21": "P2 Fuel Oil Stocks (kb)",
+        "WRESTP31": "P3 Fuel Oil Stocks (kb)",
+        "WRESTP41": "P4 Fuel Oil Stocks (kb)",
+        "WRESTP51": "P5 Fuel Oil Stocks (kb)",
+    },
+    "Propane Stocks": {
+        "WPRSTUS1": "US C3/C3= Stocks (kb)",
+        "WPRSTP11": "P1 C3/C3= Stocks (kb)",
+        "WPRSTP21": "P2 C3/C3= Stocks (kb)",
+        "WPRSTP31": "P3 C3/C3= Stocks (kb)",
+        "WPRST_R4N5_1": "P4P5 C3/C3= Stocks (kb)",
+    },
 }
 
-TABLE_GRID = [
-    ("Headline", "Products Supplied"),
-    ("Crude Stocks", "Crude Other Stocks"),
-    ("Crude Production", "Crude Imports"),
-    ("Crude Adjustment", "Crude Runs"),
-    ("Crude Exports", "CDU Utilization"),
-    ("Feedstock Runs", None),
+# 3-column layout: each column is a list of table names, stacked top to bottom.
+# Heights are proportional to the number of data rows in each table.
+TABLE_COLUMNS = [
+    # Column 1: Headline + Crude
+    [
+        "Headline",
+        "Crude Stocks",
+        "Crude Other Stocks",
+        "Crude Production",
+        "Crude Adjustment",
+        "Crude Exports",
+    ],
+    # Column 2: Supply/Demand + Refining
+    [
+        "Products Supplied",
+        "Crude Imports",
+        "Crude Runs",
+        "CDU Utilization",
+        "Feedstock Runs",
+    ],
+    # Column 3: Product Stocks
+    [
+        "Gasoline Stocks",
+        "Distillate Stocks",
+        "Jet Stocks",
+        "Fuel Oil Stocks",
+        "Propane Stocks",
+    ],
 ]
 
 CHART_SERIES = [
@@ -375,6 +435,11 @@ def render_seasonality_chart(ax, series_id, seasonality_data):
     ax.legend(fontsize=5, loc="upper right", framealpha=0.8, ncol=2)
 
 
+def _table_row_count(table_name):
+    """Number of data rows in a table (for height proportioning)."""
+    return len(TABLE_DEFS.get(table_name, {})) + 1  # +1 for header row
+
+
 def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     print("Loading data...")
     df = load_data(parquet_path)
@@ -394,41 +459,54 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     for sid in CHART_SERIES:
         seasonality[sid] = compute_seasonality(df, sid)
 
-    fig = plt.figure(figsize=(8, 18), facecolor="white")
-    gs = GridSpec(
-        nrows=9, ncols=2, figure=fig,
-        hspace=0.35, wspace=0.15,
-        top=0.97, bottom=0.02, left=0.03, right=0.97,
-        height_ratios=[0.3, 1, 1, 1, 1, 1, 0.7, 1.5, 1.5],
+    # --- Build the figure with 3-column layout ---
+    # Outer grid: header row, table row, chart row
+    # Table row uses nested grids per column with tight row heights.
+    num_cols = len(TABLE_COLUMNS)
+    max_table_rows = max(
+        sum(_table_row_count(t) for t in col) for col in TABLE_COLUMNS
+    )
+    # Figure height scales with content: tables + charts
+    fig_height = max_table_rows * 0.32 + 5  # table portion + chart portion
+    fig = plt.figure(figsize=(14, fig_height), facecolor="white")
+
+    outer_gs = GridSpec(
+        nrows=3, ncols=1, figure=fig,
+        height_ratios=[0.4, max_table_rows * 0.32, 5],
+        hspace=0.08, top=0.98, bottom=0.02, left=0.02, right=0.98,
     )
 
-    ax_header = fig.add_subplot(gs[0, :])
+    # --- Header ---
+    ax_header = fig.add_subplot(outer_gs[0])
     ax_header.axis("off")
     ax_header.text(
         0.5, 0.5,
         f"EIA Weekly Petroleum Status \u2014 Week Ending {week_ending}",
-        ha="center", va="center", fontsize=12, fontweight="bold",
+        ha="center", va="center", fontsize=14, fontweight="bold",
         transform=ax_header.transAxes,
     )
 
-    for row_idx, (left_name, right_name) in enumerate(TABLE_GRID):
-        ax_left = fig.add_subplot(gs[row_idx + 1, 0])
-        if left_name and left_name in tables:
-            render_table(ax_left, left_name, tables[left_name])
-        else:
-            ax_left.axis("off")
+    # --- Tables: 3 columns with per-column row heights ---
+    table_gs = outer_gs[1].subgridspec(1, num_cols, wspace=0.08)
 
-        ax_right = fig.add_subplot(gs[row_idx + 1, 1])
-        if right_name and right_name in tables:
-            render_table(ax_right, right_name, tables[right_name])
-        else:
-            ax_right.axis("off")
+    for col_idx, col_tables in enumerate(TABLE_COLUMNS):
+        row_heights = [_table_row_count(t) for t in col_tables]
+        col_gs = table_gs[col_idx].subgridspec(
+            len(col_tables), 1, hspace=0.15,
+            height_ratios=row_heights,
+        )
+        for row_idx, table_name in enumerate(col_tables):
+            ax = fig.add_subplot(col_gs[row_idx])
+            if table_name in tables:
+                render_table(ax, table_name, tables[table_name])
+            else:
+                ax.axis("off")
 
-    assert len(CHART_SERIES) == 4, "Update chart_positions and GridSpec nrows if CHART_SERIES changes"
-    chart_positions = [(7, 0), (7, 1), (8, 0), (8, 1)]
-    for i, (row, col) in enumerate(chart_positions):
-        ax_chart = fig.add_subplot(gs[row, col])
-        sid = CHART_SERIES[i]
+    # --- Charts: 2x2 grid ---
+    assert len(CHART_SERIES) == 4, "Update chart layout if CHART_SERIES changes"
+    chart_gs = outer_gs[2].subgridspec(2, 2, hspace=0.3, wspace=0.15)
+    for i, sid in enumerate(CHART_SERIES):
+        ax_chart = fig.add_subplot(chart_gs[i // 2, i % 2])
         render_seasonality_chart(ax_chart, sid, seasonality[sid])
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
