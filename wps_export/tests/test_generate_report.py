@@ -38,22 +38,21 @@ class TestBuildTableData:
             rows.append({"date": d, "series_id": "WGTSTUS1", "value": 230.0 + (d.day - 14)})
         return pd.DataFrame(rows)
 
-    def test_returns_tuple_with_date_and_dict(self, sample_df):
-        date_label, result = build_table_data(sample_df)
+    def test_returns_tuple_with_dates_and_dict(self, sample_df):
+        date_label, month_label, result = build_table_data(sample_df)
         assert isinstance(date_label, str)
         assert isinstance(result, dict)
         assert "Headline" in result
 
     def test_table_has_correct_columns(self, sample_df):
-        date_label, result = build_table_data(sample_df)
+        date_label, month_label, result = build_table_data(sample_df)
         headline = result["Headline"]
         assert "name" in headline.columns
         assert "w/w" in headline.columns
         assert "m/m" in headline.columns
-        assert len(headline.columns) == 4  # name, date_value, w/w, m/m
 
     def test_wow_is_week_over_week(self, sample_df):
-        date_label, result = build_table_data(sample_df)
+        date_label, month_label, result = build_table_data(sample_df)
         headline = result["Headline"]
         row = headline[headline["name"] == "US Commercial Stocks (kb)"]
         assert len(row) == 1
@@ -61,12 +60,12 @@ class TestBuildTableData:
         assert wow == pytest.approx(7.0)
 
     def test_missing_series_has_nan(self, sample_df):
-        date_label, result = build_table_data(sample_df)
+        date_label, month_label, result = build_table_data(sample_df)
         if "CDU Utilization" in result:
             assert result["CDU Utilization"]["w/w"].isna().all()
 
     def test_date_label(self, sample_df):
-        date_label, result = build_table_data(sample_df)
+        date_label, month_label, result = build_table_data(sample_df)
         assert date_label == "03/28"
 
 

@@ -279,10 +279,10 @@ def compute_derived_series(df):
 
 
 def build_table_data(df, monthly_df=None):
-    """Build per-table DataFrames with latest value, w/w change, and m/m change.
+    """Build per-table DataFrames with latest value, w/w, monthly value, and m/m.
 
     Returns:
-        (date_label, dict of {table_name: DataFrame[name, value, w/w, m/m]})
+        (date_label, month_label, dict of {table_name: DataFrame})
     """
     all_series_ids = set()
     for idents in TABLE_DEFS.values():
@@ -300,16 +300,18 @@ def build_table_data(df, monthly_df=None):
     recent = subset[subset["date"].isin(last_two)]
     pivot = recent.pivot_table(index="series_id", columns="date", values="value")
 
-    # Monthly m/m: last 2 months
+    # Monthly: last 2 months for m/m, current month value for display
     monthly_pivot = None
+    month_label = ""
     if monthly_df is not None and not monthly_df.empty:
         monthly_df = monthly_df.copy()
         monthly_df["date"] = pd.to_datetime(monthly_df["date"])
-        # Strip _plm suffix to match raw series IDs
         monthly_df["raw_id"] = monthly_df["series_id"].str.replace("_plm", "", case=False, regex=False)
         monthly_dates = sorted(monthly_df["date"].unique())
         if len(monthly_dates) >= 2:
             last_two_months = monthly_dates[-2:]
+            # Format as "Mar-26" style
+            month_label = pd.Timestamp(last_two_months[-1]).strftime("%b-%y").lower()
             m_recent = monthly_df[monthly_df["date"].isin(last_two_months)]
             monthly_pivot = m_recent.pivot_table(index="raw_id", columns="date", values="value")
 
@@ -317,7 +319,7 @@ def build_table_data(df, monthly_df=None):
     for table_name, idents in TABLE_DEFS.items():
         rows = []
         for sid, display_name in idents.items():
-            # Latest value
+            # Latest weekly value
             val = np.nan
             if sid in pivot.index and last_two[-1] in pivot.columns:
                 val = pivot.loc[sid, last_two[-1]]
@@ -330,7 +332,8 @@ def build_table_data(df, monthly_df=None):
                 if pd.notna(v_prev) and pd.notna(v_curr):
                     wow = v_curr - v_prev
 
-            # m/m change — try exact match first, then uppercase
+            # Monthly value + m/m change
+            m_val = np.nan
             mom = np.nan
             m_key = None
             if monthly_pivot is not None:
@@ -343,13 +346,20 @@ def build_table_data(df, monthly_df=None):
                 if len(m_cols) >= 2:
                     m_prev = monthly_pivot.loc[m_key, m_cols[-2]]
                     m_curr = monthly_pivot.loc[m_key, m_cols[-1]]
+                    m_val = m_curr
                     if pd.notna(m_prev) and pd.notna(m_curr):
                         mom = m_curr - m_prev
 
-            rows.append({"name": display_name, date_label: val, "w/w": wow, "m/m": mom})
+            rows.append({
+                "name": display_name,
+                date_label: val,
+                "w/w": wow,
+                month_label: m_val,
+                "m/m": mom,
+            })
         result[table_name] = pd.DataFrame(rows)
 
-    return date_label, result
+    return date_label, month_label, result
 
 
 def compute_seasonality(df, series_id):
@@ -407,27 +417,37 @@ def render_table(ax, table_name, table_df):
                 fontsize=9, color="#999999", transform=ax.transAxes)
         return
 
-    # Columns: name, date_value, w/w, m/m
-    date_col = [c for c in table_df.columns if c not in ("name", "w/w", "m/m")][0]
+    # Columns: name, weekly_value, w/w, monthly_value, m/m
+    non_special = [c for c in table_df.columns if c not in ("name", "w/w", "m/m")]
+    date_col = non_special[0]   # weekly date
+    month_col = non_special[1] if len(non_special) > 1 else None  # monthly date
 
     display_data = []
     for _, row in table_df.iterrows():
         is_pct = "pct" in str(row["name"]).lower()
-        display_data.append([
+        fmt_row = [
             row["name"],
             _fmt_value(row[date_col], is_pct),
             _fmt_change(row["w/w"], is_pct),
-            _fmt_change(row["m/m"], is_pct),
-        ])
+        ]
+        if month_col:
+            fmt_row.append(_fmt_value(row[month_col], is_pct))
+            fmt_row.append(_fmt_change(row["m/m"], is_pct))
+        display_data.append(fmt_row)
 
-    col_labels = ["", date_col, "w/w", "m/m"]
+    if month_col:
+        col_labels = ["", date_col, "w/w", month_col, "m/m"]
+        col_widths = [0.34, 0.165, 0.165, 0.165, 0.165]
+    else:
+        col_labels = ["", date_col, "w/w"]
+        col_widths = [0.40, 0.30, 0.30]
 
     tbl = ax.table(
         cellText=display_data,
         colLabels=col_labels,
         cellLoc="right",
         loc="upper center",
-        colWidths=[0.40, 0.20, 0.20, 0.20],
+        colWidths=col_widths,
     )
 
     tbl.auto_set_font_size(False)
@@ -452,17 +472,18 @@ def render_table(ax, table_name, table_df):
         for j in range(1, len(col_labels)):
             tbl[i + 1, j].set_edgecolor("#cccccc")
 
-        # Color w/w column
+        # Color w/w column (index 2)
         wow_val = table_df.iloc[i]["w/w"]
         if pd.notna(wow_val) and wow_val != 0:
             color = POSITIVE_COLOR if wow_val > 0 else NEGATIVE_COLOR
             tbl[i + 1, 2].set_text_props(color=color, fontweight="bold")
 
-        # Color m/m column
-        mom_val = table_df.iloc[i]["m/m"]
-        if pd.notna(mom_val) and mom_val != 0:
-            color = POSITIVE_COLOR if mom_val > 0 else NEGATIVE_COLOR
-            tbl[i + 1, 3].set_text_props(color=color, fontweight="bold")
+        # Color m/m column (index 4, skip monthly value at index 3)
+        if month_col and "m/m" in table_df.columns:
+            mom_val = table_df.iloc[i]["m/m"]
+            if pd.notna(mom_val) and mom_val != 0:
+                color = POSITIVE_COLOR if mom_val > 0 else NEGATIVE_COLOR
+                tbl[i + 1, 4].set_text_props(color=color, fontweight="bold")
 
     ax.set_title(table_name, fontsize=8, fontweight="bold", loc="left", pad=2)
 
@@ -537,7 +558,7 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
 
     print(f"Week ending: {week_ending}")
     print("Building table data...")
-    date_label, tables = build_table_data(df, monthly_df)
+    date_label, month_label, tables = build_table_data(df, monthly_df)
 
     print("Computing seasonality...")
     seasonality = {}
