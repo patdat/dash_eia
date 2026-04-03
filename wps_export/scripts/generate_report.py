@@ -149,6 +149,65 @@ def load_data(parquet_path=INPUT_PARQUET):
     return df
 
 
+# ---------------------------------------------------------------------------
+# Derived series computation
+# ---------------------------------------------------------------------------
+# These series don't exist in the raw EIA parquet — they're computed from
+# raw series, matching the logic in src/wps/generate_additional_tickers.py.
+
+DERIVED_SERIES = {
+    # Feedstock Runs = Gross Runs - Crude Runs
+    "feedstockRunsUS":  ("WGIRIUS2",  "WCRRIUS2"),
+    "feddStockRunsP1":  ("WGIRIP12",  "WCRRIP12"),
+    "feedstockRunsP2":  ("WGIRIP22",  "WCRRIP22"),
+    "feedstockRunsP3":  ("WGIRIP32",  "WCRRIP32"),
+    "feedstockRunsP4":  ("WGIRIP42",  "WCRRIP42"),
+    "feedstockRunsP5":  ("WGIRIP52",  "WCRRIP52"),
+    # P2E Stocks = P2 Stocks - Cushing Stocks
+    "crudeStocksP2E":   ("WCESTP21",  "W_EPC0_SAX_YCUOK_MBBL"),
+}
+
+
+def compute_derived_series(df):
+    """Compute derived series from raw EIA data and append to the DataFrame.
+
+    Handles:
+    - Feedstock Runs (Gross Runs minus Crude Runs) for US and PADDs 1-5
+    - P2E Stocks (P2 minus Cushing)
+    - Crude Adjustment Factor (balance sheet residual)
+    """
+    # Pivot to wide format for arithmetic
+    pivot = df.pivot_table(index="date", columns="series_id", values="value")
+
+    new_rows = []
+
+    # Simple subtraction series (feedstock runs + P2E stocks)
+    for derived_id, (series_a, series_b) in DERIVED_SERIES.items():
+        if series_a in pivot.columns and series_b in pivot.columns:
+            result = pivot[series_a] - pivot[series_b]
+            for date, value in result.dropna().items():
+                new_rows.append({"date": date, "series_id": derived_id, "value": value})
+
+    # Crude Adjustment Factor: -(Production + Imports - Runs - Exports - StockChange)
+    adj_cols = ["WCRFPUS2", "WCEIMUS2", "WCRRIUS2", "WCREXUS2", "WCRSTUS1"]
+    if all(c in pivot.columns for c in adj_cols):
+        stock_change = pivot["WCRSTUS1"].diff() / 7
+        adjustment = -(
+            pivot["WCRFPUS2"] + pivot["WCEIMUS2"]
+            - pivot["WCRRIUS2"] - pivot["WCREXUS2"]
+            - stock_change
+        )
+        for date, value in adjustment.dropna().items():
+            new_rows.append({"date": date, "series_id": "crudeOriginalAdjustment", "value": value})
+
+    if new_rows:
+        derived_df = pd.DataFrame(new_rows)
+        derived_df["date"] = pd.to_datetime(derived_df["date"])
+        return pd.concat([df, derived_df], ignore_index=True)
+
+    return df
+
+
 def build_table_data(df):
     all_series_ids = set()
     for idents in TABLE_DEFS.values():
@@ -319,6 +378,9 @@ def render_seasonality_chart(ax, series_id, seasonality_data):
 def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     print("Loading data...")
     df = load_data(parquet_path)
+
+    print("Computing derived series...")
+    df = compute_derived_series(df)
 
     max_date = df["date"].max()
     week_ending = max_date.strftime("%B %d, %Y")
