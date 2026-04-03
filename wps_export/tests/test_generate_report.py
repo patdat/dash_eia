@@ -38,38 +38,36 @@ class TestBuildTableData:
             rows.append({"date": d, "series_id": "WGTSTUS1", "value": 230.0 + (d.day - 14)})
         return pd.DataFrame(rows)
 
-    def test_returns_dict_keyed_by_table_name(self, sample_df):
-        result = build_table_data(sample_df)
+    def test_returns_tuple_with_date_and_dict(self, sample_df):
+        date_label, result = build_table_data(sample_df)
+        assert isinstance(date_label, str)
         assert isinstance(result, dict)
         assert "Headline" in result
 
     def test_table_has_correct_columns(self, sample_df):
-        result = build_table_data(sample_df)
+        date_label, result = build_table_data(sample_df)
         headline = result["Headline"]
         assert "name" in headline.columns
-        assert "change" in headline.columns
-        assert len(headline.columns) == 4
+        assert "w/w" in headline.columns
+        assert "m/m" in headline.columns
+        assert len(headline.columns) == 4  # name, date_value, w/w, m/m
 
-    def test_change_is_week_over_week(self, sample_df):
-        result = build_table_data(sample_df)
+    def test_wow_is_week_over_week(self, sample_df):
+        date_label, result = build_table_data(sample_df)
         headline = result["Headline"]
         row = headline[headline["name"] == "US Commercial Stocks (kb)"]
         assert len(row) == 1
-        change = row["change"].iloc[0]
-        assert change == pytest.approx(7.0)
+        wow = row["w/w"].iloc[0]
+        assert wow == pytest.approx(7.0)
 
-    def test_missing_series_excluded(self, sample_df):
-        result = build_table_data(sample_df)
+    def test_missing_series_has_nan(self, sample_df):
+        date_label, result = build_table_data(sample_df)
         if "CDU Utilization" in result:
-            assert result["CDU Utilization"]["change"].isna().all()
+            assert result["CDU Utilization"]["w/w"].isna().all()
 
-    def test_week_ending_date(self, sample_df):
-        result = build_table_data(sample_df)
-        headline = result["Headline"]
-        date_cols = [c for c in headline.columns if c not in ("name", "change")]
-        assert len(date_cols) == 2
-        assert date_cols[1] == "03/28"
-        assert date_cols[0] == "03/21"
+    def test_date_label(self, sample_df):
+        date_label, result = build_table_data(sample_df)
+        assert date_label == "03/28"
 
 
 class TestComputeSeasonality:
