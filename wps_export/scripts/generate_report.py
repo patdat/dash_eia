@@ -437,7 +437,7 @@ def render_table(ax, table_name, table_df):
 
     if month_col:
         col_labels = ["", date_col, "w/w", month_col, "m/m"]
-        col_widths = [0.34, 0.165, 0.165, 0.165, 0.165]
+        col_widths = [0.38, 0.155, 0.155, 0.155, 0.155]
     else:
         col_labels = ["", date_col, "w/w"]
         col_widths = [0.40, 0.30, 0.30]
