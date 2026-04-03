@@ -365,11 +365,13 @@ def render_table(ax, table_name, table_df):
         cellText=display_data,
         colLabels=col_labels,
         cellLoc="right",
-        bbox=[0, 0, 1, 0.85],
+        loc="upper center",
+        colWidths=[0.45] + [0.18] * (len(date_cols) + 1),
     )
 
     tbl.auto_set_font_size(False)
     tbl.set_fontsize(7)
+    tbl.scale(1, 1.2)
 
     for j in range(len(col_labels)):
         cell = tbl[0, j]
@@ -434,8 +436,17 @@ def render_seasonality_chart(ax, series_id, seasonality_data):
 
 
 def _table_row_count(table_name):
-    """Number of data rows in a table (for height proportioning)."""
-    return len(TABLE_DEFS.get(table_name, {})) + 2  # +1 header, +1 title/padding
+    """Number of data rows + 1 header row."""
+    return len(TABLE_DEFS.get(table_name, {})) + 1
+
+
+# Layout constants (in inches)
+ROW_HEIGHT = 0.155       # height per table row (header or data)
+TABLE_GAP = 0.18         # vertical gap between tables (title space)
+COL_MARGIN = 0.03        # horizontal gap between columns
+HEADER_HEIGHT = 0.4      # report title height
+CHART_HEIGHT = 2.5       # per chart row height
+FIG_WIDTH = 14
 
 
 def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
@@ -457,25 +468,27 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
     for sid in CHART_SERIES:
         seasonality[sid] = compute_seasonality(df, sid)
 
-    # --- Build the figure with 3-column layout ---
+    # --- Compute figure height from content ---
     num_cols = len(TABLE_COLUMNS)
-    max_table_rows = max(
-        sum(_table_row_count(t) for t in col) for col in TABLE_COLUMNS
-    )
-    # Each data row ~0.22 inches, charts ~4.5 inches
-    table_height = max_table_rows * 0.22
-    chart_height = 4.5
-    fig_height = table_height + chart_height + 0.6  # +header
-    fig = plt.figure(figsize=(14, fig_height), facecolor="white")
+    col_heights_in = []
+    for col_tables in TABLE_COLUMNS:
+        h = 0
+        for i, t in enumerate(col_tables):
+            h += _table_row_count(t) * ROW_HEIGHT
+            if i < len(col_tables) - 1:
+                h += TABLE_GAP
+        col_heights_in.append(h)
 
-    outer_gs = GridSpec(
-        nrows=3, ncols=1, figure=fig,
-        height_ratios=[0.3, table_height, chart_height],
-        hspace=0.04, top=0.99, bottom=0.02, left=0.02, right=0.98,
-    )
+    table_section_height = max(col_heights_in)
+    chart_section_height = CHART_HEIGHT * 2 + 0.4  # 2 rows of charts + gap
+    fig_height = HEADER_HEIGHT + table_section_height + chart_section_height + 0.3
 
-    # --- Header ---
-    ax_header = fig.add_subplot(outer_gs[0])
+    fig = plt.figure(figsize=(FIG_WIDTH, fig_height), facecolor="white")
+
+    # --- Header (in figure coordinates: 0=bottom, 1=top) ---
+    header_top = 1.0
+    header_bottom = 1.0 - HEADER_HEIGHT / fig_height
+    ax_header = fig.add_axes([0, header_bottom, 1, HEADER_HEIGHT / fig_height])
     ax_header.axis("off")
     ax_header.text(
         0.5, 0.5,
@@ -484,28 +497,44 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
         transform=ax_header.transAxes,
     )
 
-    # --- Tables: 3 columns, zero internal gap ---
-    table_gs = outer_gs[1].subgridspec(1, num_cols, wspace=0.08)
+    # --- Tables: manually position each axes ---
+    table_top = header_bottom - 0.01  # start just below header
+    col_width = (1.0 - COL_MARGIN * (num_cols + 1)) / num_cols
 
     for col_idx, col_tables in enumerate(TABLE_COLUMNS):
-        row_heights = [_table_row_count(t) for t in col_tables]
-        col_gs = table_gs[col_idx].subgridspec(
-            len(col_tables), 1, hspace=0.05,
-            height_ratios=row_heights,
-        )
-        for row_idx, table_name in enumerate(col_tables):
-            ax = fig.add_subplot(col_gs[row_idx])
+        left = COL_MARGIN + col_idx * (col_width + COL_MARGIN)
+        cursor_y = table_top  # tracks current y position (top-down)
+
+        for table_name in col_tables:
+            num_rows = _table_row_count(table_name)
+            ax_height = num_rows * ROW_HEIGHT / fig_height
+            bottom = cursor_y - ax_height
+
+            ax = fig.add_axes([left, bottom, col_width, ax_height])
             if table_name in tables:
                 render_table(ax, table_name, tables[table_name])
             else:
                 ax.axis("off")
 
-    # --- Charts: 2x2 grid ---
+            cursor_y = bottom - TABLE_GAP / fig_height
+
+    # --- Charts: 2x2 grid below tables ---
     assert len(CHART_SERIES) == 4, "Update chart layout if CHART_SERIES changes"
-    chart_gs = outer_gs[2].subgridspec(2, 2, hspace=0.3, wspace=0.15)
-    for i, sid in enumerate(CHART_SERIES):
-        ax_chart = fig.add_subplot(chart_gs[i // 2, i % 2])
-        render_seasonality_chart(ax_chart, sid, seasonality[sid])
+    chart_top = table_top - table_section_height / fig_height - 0.02
+    chart_w = (1.0 - COL_MARGIN * 3) / 2
+    chart_h = CHART_HEIGHT / fig_height
+    chart_gap_h = 0.4 / fig_height  # vertical gap between chart rows
+    chart_gap_w = COL_MARGIN
+
+    chart_positions = [
+        (COL_MARGIN, chart_top - chart_h),                              # top-left
+        (COL_MARGIN + chart_w + chart_gap_w, chart_top - chart_h),      # top-right
+        (COL_MARGIN, chart_top - chart_h * 2 - chart_gap_h),            # bottom-left
+        (COL_MARGIN + chart_w + chart_gap_w, chart_top - chart_h * 2 - chart_gap_h),  # bottom-right
+    ]
+    for i, (cx, cy) in enumerate(chart_positions):
+        ax_chart = fig.add_axes([cx, cy, chart_w, chart_h])
+        render_seasonality_chart(ax_chart, CHART_SERIES[i], seasonality[CHART_SERIES[i]])
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     fig.savefig(output_path, dpi=150, bbox_inches="tight", facecolor="white")
