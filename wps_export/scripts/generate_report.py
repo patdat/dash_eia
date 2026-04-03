@@ -460,20 +460,20 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
         seasonality[sid] = compute_seasonality(df, sid)
 
     # --- Build the figure with 3-column layout ---
-    # Outer grid: header row, table row, chart row
-    # Table row uses nested grids per column with tight row heights.
     num_cols = len(TABLE_COLUMNS)
     max_table_rows = max(
         sum(_table_row_count(t) for t in col) for col in TABLE_COLUMNS
     )
-    # Figure height scales with content: tables + charts
-    fig_height = max_table_rows * 0.32 + 5  # table portion + chart portion
+    # Each data row ~0.18 inches, charts ~4.5 inches
+    table_height = max_table_rows * 0.18
+    chart_height = 4.5
+    fig_height = table_height + chart_height + 0.6  # +header
     fig = plt.figure(figsize=(14, fig_height), facecolor="white")
 
     outer_gs = GridSpec(
         nrows=3, ncols=1, figure=fig,
-        height_ratios=[0.4, max_table_rows * 0.32, 5],
-        hspace=0.08, top=0.98, bottom=0.02, left=0.02, right=0.98,
+        height_ratios=[0.3, table_height, chart_height],
+        hspace=0.04, top=0.99, bottom=0.02, left=0.02, right=0.98,
     )
 
     # --- Header ---
@@ -486,13 +486,13 @@ def generate_report(parquet_path=INPUT_PARQUET, output_path=OUTPUT_PNG):
         transform=ax_header.transAxes,
     )
 
-    # --- Tables: 3 columns with per-column row heights ---
+    # --- Tables: 3 columns, zero internal gap ---
     table_gs = outer_gs[1].subgridspec(1, num_cols, wspace=0.08)
 
     for col_idx, col_tables in enumerate(TABLE_COLUMNS):
         row_heights = [_table_row_count(t) for t in col_tables]
         col_gs = table_gs[col_idx].subgridspec(
-            len(col_tables), 1, hspace=0.15,
+            len(col_tables), 1, hspace=0.0,
             height_ratios=row_heights,
         )
         for row_idx, table_name in enumerate(col_tables):
