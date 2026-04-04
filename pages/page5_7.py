@@ -5,7 +5,7 @@ from dash.dash_table.Format import Format
 import plotly.graph_objects as go
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
-from app import app
+from src.app import app
 from src.utils.colors import BLUE, PURPLE, ORANGE, GRAY_300, NEGATIVE
 from sklearn.linear_model import LinearRegression
 from statsmodels.tsa.seasonal import seasonal_decompose

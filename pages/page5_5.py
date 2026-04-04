@@ -5,7 +5,7 @@ from dash.dash_table.Format import Format, Group
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
-from app import app
+from src.app import app
 from src.utils.colors import COLORSCALE_HEATMAP, GRAY_300
 
 processor = CLIDataProcessor()

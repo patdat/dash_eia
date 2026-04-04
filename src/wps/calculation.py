@@ -6,7 +6,7 @@ from src.wps.graph_seag import chart_seasonality
 from src.wps.graph_line import chart_trend
 import plotly.graph_objects as go
 from src.wps.graph_optionality import checklist_header
-from app import app
+from src.app import app
 
 from src.utils.variables import year_1_string, year_2_string, year_3_string, year_4_string, year_5_string, full_year_range_normal_string, full_year_range_last_five_years_string
 

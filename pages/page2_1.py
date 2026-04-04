@@ -7,7 +7,7 @@ from src.utils.colors import RED, GRAY_300, POSITIVE, NEGATIVE
 import dash
 from dash import html, dash_table, dcc, Input, Output
 from dash.dash_table.Format import Format, Group, Sign, Symbol
-from app import app, initial_data
+from src.app import app, initial_data
 import pandas as pd
 
 layout = html.Div([

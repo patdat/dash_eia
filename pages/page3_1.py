@@ -108,7 +108,7 @@ def graph_sections_input(page_id):
 #######################################################################
 
 
-from app import app
+from src.app import app
 import os
 from src.steo.calcs import create_callbacks, create_layout
 from src.steo.chart_dpr import get_regional_dict_data

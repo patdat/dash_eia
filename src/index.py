@@ -1,7 +1,7 @@
 from dash import Dash, dcc, html, Input, Output, State
 import dash_bootstrap_components as dbc
-from app import app  # Ensure this import points to where your Dash app is initialized
-from app import initial_data
+from src.app import app
+from src.app import initial_data
 
 import pages.page1      # Home
 import pages.page2_1    # Headline
@@ -383,11 +383,3 @@ def display_page(pathname):
     else:
         # Default to home page for any unrecognized path
         return pages.page1.layout
-if __name__ == '__main__':
-    app.run(
-        debug=True,
-        dev_tools_ui=False,
-        dev_tools_hot_reload=False,
-        port=8052,
-        host="127.0.0.1",
-    )

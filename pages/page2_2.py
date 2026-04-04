@@ -1,6 +1,6 @@
 import dash_bootstrap_components as dbc
 from dash import html, Output, Input
-from app import app
+from src.app import app
 from src.wps.graph_optionality import checklist_header
 from src.utils.variables import (
     year_1_string, year_2_string, year_3_string,

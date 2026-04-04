@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Running the Application
 ```bash
-python index.py                     # Dashboard at http://localhost:8050
+python run.py                       # Dashboard at http://localhost:8052
 python main.py                      # Full data refresh (all modules)
 ```
 
@@ -29,8 +29,9 @@ Multi-module Dash application for energy market analysis using EIA data. Five da
 
 ### Entry Points
 
-- **`app.py`** — Dash app initialization, loads initial WPS pivot data into `initial_data` dict. Exports `app` and `initial_data`.
-- **`index.py`** — Main entry point. Imports all page modules (registering their callbacks), defines the sidebar navigation, URL routing (`display_page` callback), and sidebar collapse callbacks.
+- **`run.py`** — Launch script. Imports the app from `src/index.py` and starts the dev server.
+- **`src/app.py`** — Dash app initialization, loads initial WPS pivot data into `initial_data` dict. Exports `app` and `initial_data`.
+- **`src/index.py`** — Imports all page modules (registering their callbacks), defines the sidebar navigation, URL routing (`display_page` callback), and sidebar collapse callbacks.
 
 ### Data Processing Modules
 
@@ -69,13 +70,13 @@ Pages 2_2 through 2_9 follow a shared pattern using `src/wps/calculation.py`:
 
 ### URL Routing
 
-Routes are defined in `index.py:display_page()` as a manual if/elif chain:
+Routes are defined in `src/index.py:display_page()` as a manual if/elif chain:
 - `/home` → page1, `/stats/*` → page2_*, `/dpr/*` → page3_*
 - `/steo/*` → page4_*, `/cli/*` → page5_*, `/psm/*` → page6_*
 
 ### Data Flow
 
-1. `app.py` loads WPS pivot data into `initial_data` → stored in `dcc.Store(id='data-store', storage_type='session')`
+1. `src/app.py` loads WPS pivot data into `initial_data` → stored in `dcc.Store(id='data-store', storage_type='session')`
 2. page2_1 (Headline) has a "Generate and Save Data" button that triggers full WPS download + regeneration
 3. Other pages load data directly via `src/utils/data_loader.py` → `simple_loader.py`
 
@@ -98,7 +99,7 @@ Routes are defined in `index.py:display_page()` as a manual if/elif chain:
 
 1. Create `pages/pageN_X.py` following the naming convention
 2. For WPS-style pages: define `idents` dict + `graph_sections_input()`, use `create_layout`/`create_callbacks`
-3. Import in `index.py` with a descriptive comment
+3. Import in `src/index.py` with a descriptive comment
 4. Add URL route in the `display_page()` callback chain
 5. Add sidebar navigation entry in the appropriate `dbc.Collapse` section
 

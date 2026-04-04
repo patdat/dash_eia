@@ -4,7 +4,7 @@ from dash import html, dash_table, dcc, Input, Output, callback
 from dash.dash_table.Format import Format, Group, Sign
 import plotly.graph_objects as go
 from src.cli.cli_data_processor import CLIDataProcessor
-from app import app
+from src.app import app
 from src.utils.colors import GRAY_300, NEGATIVE
 
 processor = CLIDataProcessor()

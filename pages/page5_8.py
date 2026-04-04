@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
 from datetime import datetime, timedelta
-from app import app
+from src.app import app
 from src.utils.colors import COLORSCALE_SEQUENTIAL, GRAY_300
 
 processor = CLIDataProcessor()

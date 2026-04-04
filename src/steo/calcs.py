@@ -5,7 +5,7 @@ import pandas as pd
 from src.steo.graph_optionality import checklist_header
 from src.steo.chart_dpr import chart_dpr
 from src.steo.evolution_counter import evolution_counter
-from app import app
+from src.app import app
 
 
 

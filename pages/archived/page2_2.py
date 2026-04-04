@@ -64,7 +64,7 @@ def graph_sections_input(page_id):
 ### END MANUAL INPUTS #################################################
 #######################################################################
 
-from app import app
+from src.app import app
 import os
 from src.wps.calculation import create_callbacks, create_layout
 

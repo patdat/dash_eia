@@ -28,7 +28,7 @@ import pandas as pd
 import numpy as np
 import os
 
-from app import app
+from src.app import app
 from src.wps.calculation import create_callbacks, create_layout
 from src.utils.data_loader import loader, get_line_data_for_ids
 from src.utils.colors import (

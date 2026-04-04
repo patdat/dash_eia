@@ -1,8 +1,13 @@
+import os
 from dash import Dash
 import dash_bootstrap_components as dbc
 import pandas as pd
 
+# Project root is one level up from src/
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 app = Dash(__name__, suppress_callback_exceptions=True,
+           assets_folder=os.path.join(PROJECT_ROOT, 'assets'),
            external_stylesheets=[
                dbc.themes.BOOTSTRAP,
                # Add Google Fonts directly
