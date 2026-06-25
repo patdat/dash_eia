@@ -1,10 +1,20 @@
+import os
 import requests
 import pandas as pd
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # python-dotenv not installed; fall back to shell environment variables.
+    pass
 
 
 def download_api():
     base_url = "https://api.eia.gov/v2/steo/data/"
-    api_key = "6EF7F9D5C3541865CEC21B793BAC4433"  # Replace with your EIA API key
+    api_key = os.getenv("EIA_API_KEY")
+    if not api_key:
+        raise RuntimeError("Missing EIA_API_KEY. Set it in .env or your shell.")
     params = {
         "api_key": api_key,
         "frequency": "monthly",
