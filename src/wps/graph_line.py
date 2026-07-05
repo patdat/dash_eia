@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from src.wps.mapping import production_mapping
 from src.utils.colors import RED, BLUE, GREEN, BLACK, WHITE, MA_COLORS
+from src.utils.plotly_theme import apply_minimal_chrome
 
 def chart_trend(df, id, btn_1m, btn_3m, btn_12m, btn_36m, btn_60m,
                 toggle_main_line=True,
@@ -145,4 +146,4 @@ def chart_trend(df, id, btn_1m, btn_3m, btn_12m, btn_36m, btn_60m,
         margin=dict(l=40, r=40, t=75, b=25),
     )
 
-    return {'data': traces, 'layout': layout}
+    return {'data': traces, 'layout': apply_minimal_chrome(layout)}

@@ -3,6 +3,7 @@ import plotly.graph_objects as go
 
 from src.utils.variables import range_selector_normal, range_selector_last_five_years, year_1_string, year_2_string, year_3_string, year_4_string, year_5_string
 from src.utils.colors import YEAR_COLORS, GRAY_50, BLACK
+from src.utils.plotly_theme import apply_minimal_chrome
 
 tickvals = [0, 5, 9, 14, 18, 22, 27, 31, 36, 40, 45, 49]
 ticktext = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -179,4 +180,4 @@ def chart_seasonality(df, id, toggle_seag_range, toggle_year_1,toggle_year_2,tog
 
 
     # Return the figure as a dictionary
-    return {'data': traces, 'layout': layout}
+    return {'data': traces, 'layout': apply_minimal_chrome(layout)}

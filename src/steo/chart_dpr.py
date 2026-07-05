@@ -2,6 +2,7 @@ import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
 from src.utils.colors import BLACK, BLUE, RED, GREEN, ORANGE
+from src.utils.plotly_theme import apply_minimal_chrome
 
 DPR_CHART_COLORS = [BLACK, BLUE, RED, GREEN, ORANGE]
 
@@ -190,7 +191,9 @@ def chart_dpr(
         ),
     )
 
-    return go.Figure(data=traces, layout=layout)
+    fig = go.Figure(data=traces, layout=layout)
+    apply_minimal_chrome(fig.layout)
+    return fig
 
 
 ### PARAMETERS ##########################################################
