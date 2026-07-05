@@ -89,19 +89,14 @@ li {
 }
 
 /* ── Sidebar ── */
-/* NOTE: Sidebar rules are intentionally left mostly as-is in this task —
-   Task 4 replaces this block with the new flat sidebar design. Only the
-   flat-design-forbidden shadow, lift-transform, and legacy red accent
-   usages below were neutralized here; remaining legacy color token
-   references are expected to stay stale until Task 4 lands. */
 
 .sidebar {
     position: fixed;
     inset: 0 auto 0 0;
     width: var(--sidebar-width);
-    padding: 0;
-    background: var(--color-sidebar-bg);
-    border-right: 1px solid var(--color-border);
+    padding: 1rem 0 1.5rem;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
     overflow-y: auto;
     z-index: 1001;
 }
@@ -109,105 +104,142 @@ li {
 .brand-lockup {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin: 0 0.9rem;
-    padding: 0 0.35rem 1rem;
+    gap: 0.6rem;
+    margin: 0 1rem 0.75rem;
+    padding: 0 0.25rem 0.9rem;
+    border-bottom: 1px solid var(--border);
 }
 
 .brand-logo-link {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 58px;
-    height: 58px;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: none;
 }
 
 .brand-logo {
-    width: 42px;
+    width: 40px;
     height: auto;
     object-fit: contain;
 }
 
 .brand-name {
-    color: var(--color-white);
-    font-size: 2rem;
-    font-weight: 700;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: 600;
     text-decoration: none;
     line-height: 1;
 }
 
 .sidebar-nav,
-.sidebar .nav,
-.sidebar .nav-item,
+.nav,
+.nav-item,
 .btn {
     width: 100%;
 }
 
-.sidebar .nav-item {
+.nav-item {
     padding: 0 0.75rem;
 }
 
-.sidebar-button.page-button,
-.sidebar .nav-link {
-    border-radius: 14px;
-}
-
 .sidebar-button.page-button {
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border: none;
-    padding: 0.85rem 1.2rem;
-    margin: 0 0 0.5rem;
-    background: var(--color-blue);
-    color: var(--color-white);
-    font-weight: 700;
-    text-align: left;
+    padding: 0.9rem 0.6rem 0.35rem;
+    margin: 0;
+    background: transparent;
     box-shadow: none;
 }
 
-.sidebar-button.page-button::after {
-    content: "\25BC";
-    position: absolute;
-    right: 1rem;
-    font-size: 0.95rem;
+.nav-section-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
 }
 
-.sidebar-button.page-button.open::after {
-    content: "\25B2";
+.nav-section-icon {
+    width: 16px;
+    font-size: 12px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.nav-section-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.nav-section-chevron {
+    color: var(--text-muted);
+    font-size: 10px;
+    transition: transform 0.15s ease;
+}
+
+.sidebar-button.page-button.closed .nav-section-chevron {
+    transform: rotate(-90deg);
 }
 
 .sidebar-button.page-button:hover,
 .sidebar-button.page-button:focus {
-    background: var(--color-blue);
-    color: var(--color-white);
+    background: transparent;
+    box-shadow: none;
     transform: none;
 }
 
-.sidebar .nav-link {
-    display: block;
-    padding: 0.75rem 1.2rem;
-    margin-bottom: 0.35rem;
+.sidebar-button.page-button:hover .nav-section-label,
+.sidebar-button.page-button:hover .nav-section-icon {
+    color: var(--text-secondary);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.6rem;
+    margin-bottom: 2px;
+    border-radius: var(--radius-md);
+    border-left: 2px solid transparent;
     background: transparent;
-    color: rgba(255, 255, 255, 0.88);
+    color: var(--text-secondary);
     text-decoration: none;
-    font-weight: 400;
+    font-size: 13px;
+    font-weight: 450;
 }
 
-.sidebar .nav-link:hover {
-    color: var(--color-blue);
-    background: rgba(255, 255, 255, 0.12);
+.nav-link-child {
+    padding-left: 2.2rem;
+}
+
+.nav-icon {
+    width: 16px;
+    font-size: 13px;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.nav-link:hover {
+    color: var(--text);
+    background: var(--hover);
     box-shadow: none;
 }
 
-.sidebar .nav-link.active {
-    background: rgba(255, 255, 255, 0.18) !important;
-    color: var(--color-blue) !important;
-    border-left: 10px solid;
-    border-image: linear-gradient(to bottom, var(--negative) 50%, var(--color-green) 50%) 1;
-    font-weight: 400;
+.nav-link:hover .nav-icon {
+    color: var(--text-secondary);
+}
+
+.nav-link.active {
+    background: var(--accent-soft) !important;
+    color: var(--accent) !important;
+    border-left: 2px solid var(--accent);
+    font-weight: 500;
     box-shadow: none;
+}
+
+.nav-link.active .nav-icon {
+    color: var(--accent);
 }
 
 /* ── Advanced Time Series Tabs ── */
