@@ -1,7 +1,11 @@
 from dash import Dash, dcc, html, Input, Output, State
+from dash import ALL, ctx
+from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
 from src.app import app
 from src.app import initial_data
+from src.config.navigation import BRAND, HOME, NAV_SECTIONS
+from src.components.shell import build_sidebar, compute_collapse_state
 
 import pages.page1      # Home
 import pages.page2_1    # Headline
@@ -44,166 +48,7 @@ import pages.page6_4    # EIA PSM - TBD
 import pages.page6_5    # EIA PSM - TBD
 import pages.page6_6    # EIA PSM - TBD
 
-# Layout with fixed-width sidebar
-sidebar = html.Div(
-    [
-        # Add a blank div to give the sidebar some height space
-        html.Div(style={'height': '25px'}),
-
-        html.Div([
-            html.Div([
-                html.A(
-                    html.Img(
-                        src="/assets/company_logo.png",
-                        style={
-                            'height': 'auto',
-                            'width': '50px',
-                            'objectFit': 'contain',
-                            'display': 'block',
-                            'marginBottom': '0px',
-                            'marginLeft': '5px'
-                        }
-                    ),
-                    href="https://www.google.com"
-                ),
-                html.A("Socar", href="https://www.google.com", style={
-                    'textDecoration': 'none',
-                    'color': 'white',
-                    'fontSize': '46px',
-                    'fontFamily': "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                    'marginLeft': '10px',
-                    'alignSelf': 'center',
-                }),
-            ], style={
-                'flex': '1',
-                'display': 'flex',
-                'justifyContent': 'flex-start',
-                'alignItems': 'center',
-            }),
-        ], style={'display': 'flex', 'borderBottom': '0px solid white', 'borderTop': '0px solid white','marginLeft':'12px'}),
-
-        # Add a blank div to give the sidebar some height space
-        html.Div(style={'height': '25px'}),
-
-        dbc.Nav(
-            [
-                # Home
-                dbc.NavLink("Home", href="/home", active="exact", className="nav-link"),
-
-                # EIA Weekly
-                dbc.NavItem([
-                    dbc.Button("EIA Weekly", id="toggle-page-2", className="sidebar-button page-button closed", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [
-                                dbc.NavLink("Headline", href="/stats/headline", active='exact', className="nav-link"),
-                                dbc.NavLink("Graphing", href="/stats/graphing", active='exact', className="nav-link"),
-                                dbc.NavLink("Stats Table", href="/stats/stats_table", active='exact', className="nav-link"),
-                                dbc.NavLink("PADD Analysis", href="/stats/padd_regional", active='exact', className="nav-link"),
-                                dbc.NavLink("Cushing Analysis", href="/stats/cushing_analysis", active='exact', className="nav-link"),
-                                dbc.NavLink("Runs Analysis", href="/stats/runs_analysis", active='exact', className="nav-link", style={"color": "#00ADEF", "fontWeight": "600"}),
-                                dbc.NavLink("Balance Analysis", href="/stats/supply_demand", active='exact', className="nav-link"),
-                                dbc.NavLink("Advanced Time Series", href="/stats/time_series_analytics", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-2",
-                        is_open=True,
-                    ),
-                ]),
-
-                # EIA DPR
-                dbc.NavItem([
-                    dbc.Button("EIA DPR", id="toggle-page-3", className="sidebar-button page-button closed", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [
-                                dbc.NavLink("DPR Charts", href="/dpr/dpr_charts", active='exact', className="nav-link"),
-                                dbc.NavLink("DPR Table", href="/dpr/dpr_table", active='exact', className="nav-link"),
-                                dbc.NavLink("Efficiency Heatmap", href="/dpr/efficiency_heatmap", active='exact', className="nav-link"),
-                                dbc.NavLink("DUC Analysis", href="/dpr/duc_waterfall", active='exact', className="nav-link"),
-                                dbc.NavLink("Productivity Matrix Analysis", href="/dpr/productivity_matrix", active='exact', className="nav-link"),
-                                dbc.NavLink("Performance Radar Analysis", href="/dpr/performance_radar", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-3",
-                        is_open=True,
-                    ),
-                ]),
-
-                # EIA STEO
-                dbc.NavItem([
-                    dbc.Button("EIA STEO", id="toggle-page-4", className="sidebar-button page-button closed", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [
-                                dbc.NavLink("TBD", href="/steo/tbd1", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/steo/tbd2", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/steo/tbd3", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/steo/tbd4", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/steo/tbd5", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/steo/tbd6", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-4",
-                        is_open=True,
-                    ),
-                ]),
-
-                # EIA CLI
-                dbc.NavItem([
-                    dbc.Button("EIA CLI", id="toggle-page-5", className="sidebar-button page-button closed", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [
-                                dbc.NavLink("Market Overview", href="/cli/market_overview", active='exact', className="nav-link"),
-                                dbc.NavLink("Company Analysis", href="/cli/company_analysis", active='exact', className="nav-link"),
-                                dbc.NavLink("Quality Analysis", href="/cli/quality_analysis", active='exact', className="nav-link"),
-                                dbc.NavLink("Regional/PADD", href="/cli/regional_padd", active='exact', className="nav-link"),
-                                dbc.NavLink("Country Risk", href="/cli/country_risk", active='exact', className="nav-link"),
-                                dbc.NavLink("Seasonal Patterns", href="/cli/seasonal_patterns", active='exact', className="nav-link"),
-                                dbc.NavLink("Time Series Forecasting", href="/cli/forecasting", active='exact', className="nav-link"),
-                                dbc.NavLink("Port Analysis", href="/cli/port_analysis", active='exact', className="nav-link"),
-                                dbc.NavLink("Trade Flow Analysis", href="/cli/trade_flow", active='exact', className="nav-link"),
-                                dbc.NavLink("Market Alerts", href="/cli/market_alerts", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-5",
-                        is_open=True,
-                    ),
-                ]),
-
-                # EIA PSM
-                dbc.NavItem([
-                    dbc.Button("EIA PSM", id="toggle-page-6", className="sidebar-button page-button closed", n_clicks=0),
-                    dbc.Collapse(
-                        dbc.Nav(
-                            [
-                                dbc.NavLink("TBD", href="/psm/tbd1", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/psm/tbd2", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/psm/tbd3", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/psm/tbd4", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/psm/tbd5", active='exact', className="nav-link"),
-                                dbc.NavLink("TBD", href="/psm/tbd6", active='exact', className="nav-link"),
-                            ],
-                            vertical=True, pills=True
-                        ),
-                        id="collapse-page-6",
-                        is_open=True,
-                    ),
-                ]),
-
-            ],
-            vertical=True,
-            pills=True,
-            className="flex-grow-1"
-        ),
-    ],
-    className="sidebar d-flex flex-column vh-100"
-)
+sidebar = build_sidebar(BRAND, HOME, NAV_SECTIONS)
 
 content = html.Div(id="page-content", className="content-area")
 
@@ -215,84 +60,17 @@ app.layout = html.Div([
 ])
 
 @app.callback(
-    Output("collapse-page-2", "is_open"),
-    Output("toggle-page-2", "className"),
-    [Input("toggle-page-2", "n_clicks")],
-    [State("collapse-page-2", "is_open"), State("toggle-page-2", "className")]
+    Output({"type": "nav-collapse", "index": ALL}, "is_open"),
+    Output({"type": "nav-toggle", "index": ALL}, "className"),
+    Input({"type": "nav-toggle", "index": ALL}, "n_clicks"),
+    State({"type": "nav-collapse", "index": ALL}, "is_open"),
+    prevent_initial_call=True,
 )
-def toggle_collapse_page_2(n, is_open, current_class):
-    if n:
-        is_open = not is_open
-        if is_open:
-            new_class = current_class.replace("closed", "open") if "closed" in current_class else current_class
-        else:
-            new_class = current_class.replace("open", "closed") if "open" in current_class else current_class
-        return is_open, new_class
-    return is_open, current_class
-
-@app.callback(
-    Output("collapse-page-3", "is_open"),
-    Output("toggle-page-3", "className"),
-    [Input("toggle-page-3", "n_clicks")],
-    [State("collapse-page-3", "is_open"), State("toggle-page-3", "className")]
-)
-def toggle_collapse_page_3(n, is_open, current_class):
-    if n:
-        is_open = not is_open
-        if is_open:
-            new_class = current_class.replace("closed", "open") if "closed" in current_class else current_class
-        else:
-            new_class = current_class.replace("open", "closed") if "open" in current_class else current_class
-        return is_open, new_class
-    return is_open, current_class
-
-@app.callback(
-    Output("collapse-page-4", "is_open"),
-    Output("toggle-page-4", "className"),
-    [Input("toggle-page-4", "n_clicks")],
-    [State("collapse-page-4", "is_open"), State("toggle-page-4", "className")]
-)
-def toggle_collapse_page_4(n, is_open, current_class):
-    if n:
-        is_open = not is_open
-        if is_open:
-            new_class = current_class.replace("closed", "open") if "closed" in current_class else current_class
-        else:
-            new_class = current_class.replace("open", "closed") if "open" in current_class else current_class
-        return is_open, new_class
-    return is_open, current_class
-
-@app.callback(
-    Output("collapse-page-5", "is_open"),
-    Output("toggle-page-5", "className"),
-    [Input("toggle-page-5", "n_clicks")],
-    [State("collapse-page-5", "is_open"), State("toggle-page-5", "className")]
-)
-def toggle_collapse_page_5(n, is_open, current_class):
-    if n:
-        is_open = not is_open
-        if is_open:
-            new_class = current_class.replace("closed", "open") if "closed" in current_class else current_class
-        else:
-            new_class = current_class.replace("open", "closed") if "open" in current_class else current_class
-        return is_open, new_class
-    return is_open, current_class
-
-@app.callback(
-    Output("collapse-page-6", "is_open"),
-    Output("toggle-page-6", "className"),
-    [Input("toggle-page-6", "n_clicks")],
-    [State("collapse-page-6", "is_open"), State("toggle-page-6", "className")]
-)
-def toggle_collapse_page_6(n, is_open, current_class):
-    if n:
-        is_open = not is_open
-        if is_open:
-            new_class = current_class.replace("closed", "open") if "closed" in current_class else current_class
-        else:
-            new_class = current_class.replace("open", "closed") if "open" in current_class else current_class
-        return is_open, new_class
-    return is_open, current_class
+def toggle_nav_section(n_clicks_list, is_open_list):
+    triggered = ctx.triggered_id
+    if not triggered:
+        raise PreventUpdate
+    return compute_collapse_state(NAV_SECTIONS, is_open_list, triggered["index"])
 
 
 @app.callback(Output('page-content', 'children'),
