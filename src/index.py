@@ -1,7 +1,6 @@
-from dash import Dash, dcc, html, Input, Output, State
+from dash import dcc, html, Input, Output, State
 from dash import ALL, ctx
 from dash.exceptions import PreventUpdate
-import dash_bootstrap_components as dbc
 from src.app import app
 from src.app import initial_data
 from src.config.navigation import BRAND, HOME, NAV_SECTIONS
