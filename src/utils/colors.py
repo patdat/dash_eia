@@ -6,12 +6,18 @@ Import from this module instead of hardcoding hex values.
 
 # === Brand Palette (muted accent scheme) ===
 BLACK      = "#000000"
-BRAND_BLUE = "#00ADEF"   # logo/brand only
+BRAND_BLUE = "#00ADEF"   # logo/brand + seasonality
 BLUE       = "#0072ab"   # primary accent
 RED        = "#c8102e"   # muted semantic negative
 GREEN      = "#1a7f42"   # muted semantic positive
 ORANGE     = "#b45d0e"   # muted amber
 PURPLE     = "#5c6b7f"   # de-emphasized -> slate
+
+# === Full brand colors (distinct multi-series charts, e.g. seasonality) ===
+BRAND_RED    = "#EC002B"
+BRAND_GREEN  = "#4AB04D"
+BRAND_ORANGE = "#F68E2F"
+BRAND_PURPLE = "#6A1B9A"
 
 # === Neutrals ===
 WHITE    = "#FFFFFF"
@@ -23,8 +29,9 @@ GRAY_500 = "#8b97a6"
 GRAY_600 = "#5c6b7f"
 GRAY_800 = "#1a2332"
 
-# === Chart Color Sequences (accent + grays) ===
-YEAR_COLORS      = [BLUE, GRAY_600, GRAY_500, GRAY_400, GRAY_300]
+# === Chart Color Sequences ===
+# Seasonality year lines use the full distinct brand palette (per preference).
+YEAR_COLORS      = [BLACK, BRAND_BLUE, BRAND_RED, BRAND_GREEN, BRAND_ORANGE, BRAND_PURPLE]
 MA_COLORS        = [BLUE, GRAY_500, GRAY_400]
 EVOLUTION_COLORS = [BLUE, GRAY_600, GRAY_500, GRAY_400, GRAY_300]
 CHART_SEQUENCE   = [BLUE, GRAY_600, GRAY_500, RED, GREEN, GRAY_400]

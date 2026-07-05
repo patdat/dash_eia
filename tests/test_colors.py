@@ -7,9 +7,12 @@ def test_accent_is_muted_blue():
     assert colors.BLUE == "#0072ab"
     assert colors.BRAND_BLUE == "#00ADEF"
 
-def test_year_colors_accent_then_grays():
-    assert len(colors.YEAR_COLORS) == 5
-    assert colors.YEAR_COLORS[0] == colors.BLUE
+def test_year_colors_full_brand_palette():
+    # Seasonality year lines use the distinct brand palette.
+    assert colors.YEAR_COLORS == [
+        colors.BLACK, colors.BRAND_BLUE, colors.BRAND_RED,
+        colors.BRAND_GREEN, colors.BRAND_ORANGE, colors.BRAND_PURPLE,
+    ]
     for c in colors.YEAR_COLORS:
         assert HEX.match(c)
 
