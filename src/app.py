@@ -8,19 +8,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 app = Dash(__name__, suppress_callback_exceptions=True,
            assets_folder=os.path.join(PROJECT_ROOT, 'assets'),
-           external_stylesheets=[
-               dbc.themes.BOOTSTRAP,
-               # Add Google Fonts directly
-               'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap',
-               'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
-               'https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap',
-               'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap',
-               'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap',
-               'https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap',
-               'https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap',
-               'https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap',
-               'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap'
-           ])
+           external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
 def load_data():
