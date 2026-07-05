@@ -4,27 +4,30 @@ All colors used in charts, buttons, and UI elements are defined here.
 Import from this module instead of hardcoding hex values.
 """
 
-# === Brand Palette ===
-BLACK   = "#000000"
-BLUE    = "#00ADEF"
-RED     = "#EC002B"
-GREEN   = "#4AB04D"
-ORANGE  = "#F68E2F"
-PURPLE  = "#6A1B9A"
+# === Brand Palette (muted accent scheme) ===
+BLACK      = "#000000"
+BRAND_BLUE = "#00ADEF"   # logo/brand only
+BLUE       = "#0072ab"   # primary accent
+RED        = "#c8102e"   # muted semantic negative
+GREEN      = "#1a7f42"   # muted semantic positive
+ORANGE     = "#b45d0e"   # muted amber
+PURPLE     = "#5c6b7f"   # de-emphasized -> slate
 
 # === Neutrals ===
-WHITE      = "#FFFFFF"
-GRAY_50    = "#f4f5f9"    # Page background, range bands
-GRAY_200   = "#dee2e6"    # Borders, dividers
-GRAY_300   = "#bfbec4"    # Sidebar border, table headers, year 1 data
-GRAY_500   = "#6c757d"    # Secondary text
-GRAY_800   = "#2c3e50"    # Dark headings
+WHITE    = "#FFFFFF"
+GRAY_50  = "#fafbfc"
+GRAY_200 = "#e5e8ec"
+GRAY_300 = "#d3d8de"
+GRAY_400 = "#b8c0cb"
+GRAY_500 = "#8b97a6"
+GRAY_600 = "#5c6b7f"
+GRAY_800 = "#1a2332"
 
-# === Chart Color Sequences (ordered) ===
-YEAR_COLORS      = [BLACK, BLUE, RED, GREEN, ORANGE]    # Seasonality: Year 3, Year 2, Year 1, Year 4, Year 5
-MA_COLORS        = [BLUE, RED, GREEN]                    # 1m MA, 3m MA, 12m MA
-EVOLUTION_COLORS = [RED, ORANGE, GRAY_300, BLUE, GREEN]  # DPR forecast releases (1-5)
-CHART_SEQUENCE   = [RED, BLUE, ORANGE, GREEN, PURPLE, GRAY_300]  # General multi-series
+# === Chart Color Sequences (accent + grays) ===
+YEAR_COLORS      = [BLUE, GRAY_600, GRAY_500, GRAY_400, GRAY_300]
+MA_COLORS        = [BLUE, GRAY_500, GRAY_400]
+EVOLUTION_COLORS = [BLUE, GRAY_600, GRAY_500, GRAY_400, GRAY_300]
+CHART_SEQUENCE   = [BLUE, GRAY_600, GRAY_500, RED, GREEN, GRAY_400]
 
 # === Semantic Aliases ===
 POSITIVE = GREEN
