@@ -1,35 +1,35 @@
 .ag-theme-alpine-dark {
-    --ag-foreground-color: var(--color-purple);
-    --ag-background-color: white;
-    --ag-header-foreground-color: var(--color-red);
-    --ag-header-background-color: var(--color-border);
-    --ag-odd-row-background-color: white;
-    --ag-header-column-resize-handle-color: var(--color-purple);
+    --ag-foreground-color: var(--text);
+    --ag-background-color: var(--surface);
+    --ag-header-foreground-color: var(--accent);
+    --ag-header-background-color: var(--border);
+    --ag-odd-row-background-color: var(--surface);
+    --ag-header-column-resize-handle-color: var(--text-secondary);
 
     --ag-font-size: 17px;
     --ag-font-family: monospace;
 }
 
 :root {
-    --color-red: #ec002b;
-    --color-blue: #00adef;
-    --color-green: #4ab04d;
-    --color-orange: #f68e2f;
-    --color-purple: #6a1b9a;
-    --color-black: #000000;
-    --color-white: #ffffff;
-    --color-sidebar-bg: #4C4D4E;
-    --color-bg: #f4f5f9;
-    --color-surface: #ffffff;
-    --color-border: #bfbec4;
-    --color-border-soft: #dee2e6;
-    --color-copy: #2c3e50;
-    --color-copy-muted: #6c757d;
-    --sidebar-width: 18rem;
-    --shadow-soft: 0 12px 30px rgba(44, 62, 80, 0.08);
-    --shadow-hover: 0 18px 40px rgba(44, 62, 80, 0.12);
-    --radius-lg: 18px;
-    --radius-md: 12px;
+    --bg: #fafbfc;
+    --surface: #ffffff;
+    --border: #e5e8ec;
+    --border-strong: #d3d8de;
+    --text: #1a2332;
+    --text-secondary: #5c6b7f;
+    --text-muted: #8b97a6;
+    --hover: #f2f4f7;
+    --row-hover: #f7f9fb;
+    --accent: #0072ab;
+    --accent-hover: #005f8f;
+    --accent-soft: #eaf5fb;
+    --brand-blue: #00ADEF;
+    --positive: #1a7f42;
+    --negative: #c8102e;
+    --warning: #b45d0e;
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --sidebar-width: 15rem;
 }
 
 @font-face {
@@ -50,15 +50,16 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100%;
-    background: var(--color-bg);
+    background: var(--bg);
 }
 
 body {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: var(--color-copy);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    color: var(--text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
 }
 
 h1,
@@ -88,6 +89,11 @@ li {
 }
 
 /* ── Sidebar ── */
+/* NOTE: Sidebar rules are intentionally left mostly as-is in this task —
+   Task 4 replaces this block with the new flat sidebar design. Only the
+   flat-design-forbidden shadow, lift-transform, and legacy red accent
+   usages below were neutralized here; remaining legacy color token
+   references are expected to stay stale until Task 4 lands. */
 
 .sidebar {
     position: fixed;
@@ -116,7 +122,7 @@ li {
     height: 58px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.12);
-    box-shadow: var(--shadow-soft);
+    box-shadow: none;
 }
 
 .brand-logo {
@@ -158,7 +164,7 @@ li {
     color: var(--color-white);
     font-weight: 700;
     text-align: left;
-    box-shadow: var(--shadow-soft);
+    box-shadow: none;
 }
 
 .sidebar-button.page-button::after {
@@ -176,7 +182,7 @@ li {
 .sidebar-button.page-button:focus {
     background: var(--color-blue);
     color: var(--color-white);
-    transform: translateY(-1px);
+    transform: none;
 }
 
 .sidebar .nav-link {
@@ -192,23 +198,23 @@ li {
 .sidebar .nav-link:hover {
     color: var(--color-blue);
     background: rgba(255, 255, 255, 0.12);
-    box-shadow: var(--shadow-soft);
+    box-shadow: none;
 }
 
 .sidebar .nav-link.active {
     background: rgba(255, 255, 255, 0.18) !important;
     color: var(--color-blue) !important;
     border-left: 10px solid;
-    border-image: linear-gradient(to bottom, var(--color-red) 50%, var(--color-green) 50%) 1;
+    border-image: linear-gradient(to bottom, var(--negative) 50%, var(--color-green) 50%) 1;
     font-weight: 400;
-    box-shadow: var(--shadow-soft);
+    box-shadow: none;
 }
 
 /* ── Advanced Time Series Tabs ── */
 
 #p15-tabs {
-    background: #16213e;
-    border-bottom: 1px solid #2a2a4a;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
 }
 
 #p15-tabs .nav {
@@ -229,25 +235,25 @@ li {
     margin: 0;
     border: none;
     border-radius: 0;
-    color: rgba(224, 224, 224, 0.65);
+    color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.9rem;
     background: transparent;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
 }
 
 #p15-tabs .nav-link:hover {
-    color: #e0e0e0;
-    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    background: var(--hover);
     box-shadow: none;
 }
 
 #p15-tabs .nav-link.active {
-    color: #00adef !important;
-    background: rgba(0, 173, 239, 0.08) !important;
+    color: var(--accent) !important;
+    background: transparent !important;
     border-left: none;
     border-image: none;
-    border-bottom: 3px solid #00adef;
+    border-bottom: 2px solid var(--accent);
     box-shadow: none;
 }
 
@@ -263,39 +269,36 @@ li {
 }
 
 .page-hero {
-    margin-bottom: 2rem;
-    padding: 2rem 2.25rem;
-    border: 1px solid rgba(255, 255, 255, 0.65);
-    border-radius: 24px;
-    background:
-        radial-gradient(circle at top right, rgba(0, 173, 239, 0.1), transparent 32%),
-        radial-gradient(circle at bottom left, rgba(236, 0, 43, 0.08), transparent 30%),
-        var(--color-surface);
-    box-shadow: var(--shadow-soft);
+    margin-bottom: 1.25rem;
+    padding: 0 0 1rem;
+    border-bottom: 1px solid var(--border);
+    background: none;
+    box-shadow: none;
 }
 
 .page-eyebrow {
-    margin-bottom: 0.65rem;
-    color: var(--color-blue);
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
 }
 
 .page-title {
-    margin: 0 0 0.6rem;
-    color: var(--color-copy);
-    font-size: clamp(2rem, 4vw, 3.3rem);
-    font-weight: 700;
+    margin: 0 0 0.3rem;
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
 }
 
 .page-summary {
     max-width: 56rem;
     margin: 0;
-    color: var(--color-copy-muted);
-    font-size: 1.02rem;
-    line-height: 1.7;
+    color: var(--text-muted);
+    font-size: 12.5px;
+    line-height: 1.55;
 }
 
 .section-block {
@@ -308,35 +311,35 @@ li {
 .feature-card,
 .surface-card {
     height: 100%;
-    border: none;
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-soft);
+    background: var(--surface);
+    box-shadow: none;
 }
 
 .metric-card:hover,
 .feature-card:hover,
 .surface-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
+    transform: none;
+    box-shadow: none;
 }
 
 .homepage-metric-card {
     border-radius: 0 0 10px 10px;
     border: none;
     height: 108px;
-    background: var(--color-surface);
-    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    background: var(--surface);
+    box-shadow: none;
 }
 
 .homepage-metric-card:hover {
     transform: none;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    box-shadow: none;
 }
 
 .metric-label {
     margin-bottom: 0.65rem;
-    color: var(--color-copy-muted);
+    color: var(--text-muted);
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -345,31 +348,24 @@ li {
 
 .metric-value {
     margin-bottom: 0.35rem;
-    color: var(--color-copy);
-    font-size: 2rem;
+    color: var(--text);
+    font-size: 22px;
     font-weight: 700;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
 }
 
 .metric-delta {
     font-size: 0.95rem;
     font-weight: 600;
+    color: var(--text-secondary);
 }
 
-.metric-blue {
-    color: var(--color-blue);
-}
-
-.metric-green {
-    color: var(--color-green);
-}
-
-.metric-orange {
-    color: var(--color-orange);
-}
-
+.metric-blue,
+.metric-green,
+.metric-orange,
 .metric-red {
-    color: var(--color-red);
+    color: var(--text);
 }
 
 .feature-accent {
@@ -380,28 +376,28 @@ li {
 }
 
 .accent-blue {
-    background: var(--color-blue);
+    background: var(--accent);
 }
 
 .accent-green {
-    background: var(--color-green);
+    background: var(--positive);
 }
 
 .accent-red {
-    background: var(--color-red);
+    background: var(--negative);
 }
 
 .feature-title,
 .surface-title {
     margin-bottom: 0.8rem;
-    color: var(--color-copy);
+    color: var(--text);
     font-size: 1.25rem;
     font-weight: 700;
 }
 
 .feature-copy,
 .surface-copy {
-    color: var(--color-copy-muted);
+    color: var(--text-secondary);
     line-height: 1.7;
 }
 
@@ -420,7 +416,7 @@ li {
 
 .surface-list-item {
     margin-bottom: 0.55rem;
-    color: var(--color-copy-muted);
+    color: var(--text-secondary);
 }
 
 /* ── EIA Weekly / DPR layouts ── */
@@ -448,9 +444,10 @@ li {
 }
 
 .graph-container {
-    border-radius: 15px !important;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-    background-color: white !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: none !important;
+    border: 1px solid var(--border) !important;
+    background-color: var(--surface) !important;
     padding: 10px !important;
 }
 
@@ -479,15 +476,15 @@ li {
 /* ── AG Grid ── */
 
 .highlight-column {
-    background-color: var(--color-border) !important;
+    background-color: var(--row-hover) !important;
 }
 .highlight-row {
-    background-color: var(--color-border) !important;
+    background-color: var(--row-hover) !important;
 }
 
 .ag-theme-alpine .ag-row.ag-row-selected {
-    background-color: var(--color-red) !important;
-    color: white;
+    background-color: var(--accent-soft) !important;
+    color: var(--text);
 }
 
 /* ── Date Picker ── */
@@ -495,7 +492,7 @@ li {
 .custom-date-picker .DateInput_input,
 .custom-date-picker .DateInput {
     background-color: white !important;
-    color: var(--color-red) !important;
+    color: var(--accent) !important;
 }
 
 .custom-date-picker .DayPicker_weekHeader {
@@ -508,13 +505,13 @@ li {
 }
 
 .custom-date-picker td.CalendarDay__selected {
-    background-color: var(--color-red) !important;
+    background-color: var(--accent) !important;
     color: white !important;
 }
 
 .custom-date-picker td.CalendarDay__selected_span {
     background-color: #f0f0f0 !important;
-    color: var(--color-red) !important;
+    color: var(--accent) !important;
 }
 
 /* ── Combined WPS Tabs ── */
@@ -532,9 +529,10 @@ li {
 }
 
 #wps-combined-tabs {
-    background: var(--color-sidebar-bg);
+    background: var(--surface);
     border-radius: 0;
     border: none;
+    border-bottom: 1px solid var(--border);
     display: flex;
     padding: 0;
 }
@@ -552,25 +550,25 @@ li {
     margin: 0;
     border: none;
     border-radius: 0;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.9rem;
     background: transparent;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
 }
 
 #wps-combined-tabs .nav-link:hover {
-    color: var(--color-white);
-    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    background: var(--hover);
     box-shadow: none;
 }
 
 #wps-combined-tabs .nav-link.active {
-    color: var(--color-blue) !important;
-    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--accent) !important;
+    background: transparent !important;
     border-left: none;
     border-image: none;
-    border-bottom: 3px solid var(--color-blue);
+    border-bottom: 2px solid var(--accent);
     box-shadow: none;
 }
 
@@ -583,9 +581,10 @@ li {
 }
 
 #dpr-table-tabs {
-    background: var(--color-sidebar-bg);
+    background: var(--surface);
     border-radius: 0;
     border: none;
+    border-bottom: 1px solid var(--border);
     display: flex;
     padding: 0;
 }
@@ -603,25 +602,25 @@ li {
     margin: 0;
     border: none;
     border-radius: 0;
-    color: rgba(255, 255, 255, 0.75);
+    color: var(--text-secondary);
     font-weight: 600;
     font-size: 0.9rem;
     background: transparent;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
 }
 
 #dpr-table-tabs .nav-link:hover {
-    color: var(--color-white);
-    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    background: var(--hover);
     box-shadow: none;
 }
 
 #dpr-table-tabs .nav-link.active {
-    color: var(--color-blue) !important;
-    background: rgba(255, 255, 255, 0.1) !important;
+    color: var(--accent) !important;
+    background: transparent !important;
     border-left: none;
     border-image: none;
-    border-bottom: 3px solid var(--color-blue);
+    border-bottom: 2px solid var(--accent);
     box-shadow: none;
 }
 
