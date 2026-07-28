@@ -4,6 +4,15 @@ __pycache__/
 *$py.class
 .Ds_Store
 
+# Canonical generated data. Reviewed data/reference content remains tracked.
+data/raw/
+data/interim/
+data/processed/
+data/exports/
+data/state/
+data/cache/
+logs/
+
 # C extensions
 *.so
 

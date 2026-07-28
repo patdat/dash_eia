@@ -1,0 +1,85 @@
+[build-system]
+requires = ["uv_build>=0.11.33,<0.12.0"]
+build-backend = "uv_build"
+
+[project]
+name = "dash-eia"
+version = "0.1.0"
+description = "EIA energy analytics dashboard"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = ["Private :: Do Not Upload"]
+dependencies = [
+    "beautifulsoup4==4.13.5",
+    "numpy==2.4.2",
+    "openpyxl==3.1.5",
+    "pandas==3.0.1",
+    "pyarrow==23.0.1",
+    "python-dateutil==2.9.0.post0",
+    "requests==2.34.2",
+    "scikit-learn==1.7.1",
+    "statsmodels==0.14.5",
+    "xlrd==2.0.1",
+]
+
+[project.optional-dependencies]
+apps = [
+    "dash==4.1.0",
+    "dash-ag-grid==32.3.1",
+    "dash-bootstrap-components==2.0.4",
+    "dash-daq==0.6.0",
+    "plotly==6.6.0",
+]
+
+[project.scripts]
+dash-eia = "dash_eia.cli:main"
+eia-dashboard = "dash_eia.apps.launchers:eia_dashboard"
+
+[dependency-groups]
+dev = [
+    "nbstripout==0.9.1",
+    "pre-commit==4.6.1",
+    "pre-commit-hooks==6.0.0",
+    "pyright==1.1.411",
+    "pytest==7.4.0",
+    "pytest-cov==7.1.0",
+    "ruff==0.16.0",
+]
+notebooks = ["ipykernel>=6.29,<8", "jupyterlab>=4.2,<5"]
+
+[tool.uv]
+required-version = "==0.11.33"
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+cache_dir = ".venv/.pytest_cache"
+addopts = ["--import-mode=importlib", "--strict-config", "--strict-markers"]
+markers = ["live: requires EIA connectivity or developer-local data"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+force-exclude = true
+extend-exclude = [
+    "eia_downloads/**",
+    "pages/**",
+    "src/cli/**",
+    "src/msg/**",
+    "src/steo/**",
+    "src/utils/**",
+    "src/wps/**",
+]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "standard"
+venvPath = "."
+venv = ".venv"
+include = ["run.py", "src/dash_eia"]
