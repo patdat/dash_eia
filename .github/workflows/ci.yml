@@ -34,6 +34,17 @@ jobs:
       - run: uv run --locked ruff check src/dash_eia tests
       - run: uv run --locked ruff format --check src/dash_eia tests
       - run: uv run --locked pyright
+      # requirements.txt is a documented pip fallback generated from uv.lock.
+      # Re-export and diff so it cannot drift from the lock unnoticed. uv stamps
+      # its own command line into the header, so only column-0 comments are
+      # stripped; the indented `# via` annotations are still compared.
+      - name: requirements.txt matches uv.lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          uv export --locked --extra apps --no-dev --no-hashes >requirements.expected.txt
+          diff -u <(grep -v '^#' requirements.txt) <(grep -v '^#' requirements.expected.txt)
+          rm -f requirements.expected.txt
       - run: uv run --locked pytest -m "not live"
       - run: uv build --wheel --no-sources
       # Runs the built wheel from outside the checkout, pointing --workspace at
