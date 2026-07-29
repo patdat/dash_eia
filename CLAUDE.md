@@ -23,6 +23,57 @@ python -m src.cli.download          # CLI raw download
 pip install -r requirements.txt     # Python 3.11.5
 ```
 
+## Windows: "Access is denied" running tools
+
+On SOCAR-managed Windows machines, Microsoft Defender ASR rule
+`01443614-cd74-433a-b99e-2ecdc07bfc25` ("block executable files unless they meet
+a prevalence, age, or trusted list criterion") blocks the per-venv `.exe`
+console-script shims. Each shim embeds its own venv path, so its hash is unique
+to this machine and can never build the cloud reputation the rule wants — this is
+permanent, not a cold-start delay. It is not a broken install, and it cannot be
+fixed locally: Tamper Protection is on and the policy comes from Intune.
+
+Symptoms:
+
+```text
+uv run pytest
+error: Failed to spawn: `pytest`
+  Caused by: Access is denied. (os error 5)
+
+.venv\Scripts\pytest.exe --version
+Permission denied
+```
+
+**Fix: go through the interpreter.** `python.exe` is hash-stable across venvs, so
+it is allowed. Every tool used here supports `-m`:
+
+| instead of | use |
+| --- | --- |
+| `uv run pytest` | `uv run python -m pytest` |
+| `uv run ruff check .` | `uv run python -m ruff check .` |
+| `uv run ruff format .` | `uv run python -m ruff format .` |
+| `uv run pyright` | `uv run python -m pyright` |
+| `uv run dash-eia ...` | `uv run python -m dash_eia ...` |
+
+`python -m dash_eia` is wired to the same entry point as the `dash-eia`
+command, so the two are interchangeable.
+
+**Never create a venv with `uv venv`.** uv writes a trampoline `python.exe`
+(~45 KB) that the same rule blocks, which leaves the venv unusable. Create it
+with the stdlib and let uv populate it:
+
+```bash
+python -m venv .venv
+uv sync --locked          # safe: leaves python.exe alone
+```
+
+`uv sync` into an existing venv is fine — only uv's *create* step writes the
+trampoline. `ruff.exe` happens to be allowed (it is a real, hash-stable binary),
+but prefer `-m` everywhere for consistency.
+
+CI is unaffected — GitHub runners carry no such policy — so the workflow files
+deliberately keep the plain `uv run <tool>` form.
+
 ## Architecture Overview
 
 Multi-module Dash application for energy market analysis using EIA data. Five data modules feed into 50+ dashboard pages via a single-page app with manual URL routing.
