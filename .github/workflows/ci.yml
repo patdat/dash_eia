@@ -36,3 +36,40 @@ jobs:
       - run: uv run --locked pyright
       - run: uv run --locked pytest -m "not live"
       - run: uv build --wheel --no-sources
+      # Runs the built wheel from outside the checkout, pointing --workspace at
+      # it. `bootstrap` needs no credentials and no app extras.
+      - name: Smoke-test the installed wheel outside the checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          wheel="$(ls "$PWD"/dist/*.whl)"
+          checkout="$PWD"
+          cd "$(mktemp -d)"
+          uv run --isolated --no-project --with "$wheel" dash-eia --help
+          uv run --isolated --no-project --with "$wheel" \
+            dash-eia --workspace "$checkout" bootstrap
+      # The dashboard itself lives at `src/index.py` in the workspace, so it
+      # cannot come from the wheel. Import it from a foreign working directory
+      # (without starting the server) to prove the compat layer still reaches
+      # it; `run_app` does exactly this before calling `app.run`.
+      - name: Import the dashboard from a foreign working directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$PWD"
+          uv run --locked --extra apps python - "$PWD" <<'PY'
+          import importlib, os, sys
+          from pathlib import Path
+          from dash_eia.apps.compat import working_directory
+          from dash_eia.apps.runner import APP_SPECS
+
+          checkout = Path(sys.argv[1])
+          os.chdir(Path(os.sep))
+          before = list(sys.path)
+          spec = APP_SPECS["eia-dashboard"]
+          with working_directory(checkout):
+              app = getattr(importlib.import_module(spec.module), spec.attribute)
+          assert app is not None, "dashboard object missing"
+          assert sys.path == before, "sys.path was not restored"
+          print(f"{spec.module} imported from {Path.cwd()}")
+          PY

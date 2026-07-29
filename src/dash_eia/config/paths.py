@@ -22,7 +22,7 @@ def _is_workspace(path: Path) -> bool:
         return False
     try:
         return (
-            tomllib.loads(project.read_text(encoding="utf-8")).get("project", {}).get("name")
+            tomllib.loads(project.read_text(encoding="utf-8-sig")).get("project", {}).get("name")
             == PROJECT_NAME
         )
     except (OSError, tomllib.TOMLDecodeError):

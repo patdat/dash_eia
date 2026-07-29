@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import importlib
 from dataclasses import dataclass
+from pathlib import Path
+
+from dash_eia.apps.compat import working_directory
 
 
 @dataclass(frozen=True, slots=True)
@@ -24,6 +27,7 @@ APP_NAMES = tuple(APP_SPECS)
 def run_app(
     name: str,
     *,
+    root: Path,
     host: str = "127.0.0.1",
     port: int | None = None,
     debug: bool = False,
@@ -32,6 +36,7 @@ def run_app(
         spec = APP_SPECS[name]
     except KeyError as exc:
         raise ValueError(f"Unknown app {name!r}; choose one of: {', '.join(APP_NAMES)}") from exc
-    app = getattr(importlib.import_module(spec.module), spec.attribute)
+    with working_directory(root):
+        app = getattr(importlib.import_module(spec.module), spec.attribute)
     app.run(host=host, port=port or spec.default_port, debug=debug)
     return 0

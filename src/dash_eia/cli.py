@@ -18,8 +18,14 @@ def _bootstrap(args: argparse.Namespace) -> int:
 def _app(args: argparse.Namespace) -> int:
     from dash_eia.apps.runner import run_app
 
-    WorkspacePaths.discover(args.workspace)
-    return run_app(args.name, host=args.host, port=args.port, debug=args.debug)
+    paths = WorkspacePaths.discover(args.workspace)
+    return run_app(
+        args.name,
+        root=paths.root,
+        host=args.host,
+        port=args.port,
+        debug=args.debug,
+    )
 
 
 def build_parser() -> argparse.ArgumentParser:
