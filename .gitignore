@@ -164,3 +164,14 @@ cython_debug/
 
 # Superpowers brainstorming sessions
 .superpowers/
+
+# Generated pipeline data. Regenerable via the eia_downloads/* entrypoints;
+# only data/reference/ is tracked source-of-truth. Tracking these meant every
+# pipeline run dirtied git.
+*.feather
+*.parquet
+!data/reference/**/*.feather
+!data/reference/**/*.parquet
+
+# Editor backups do not belong in the repo.
+*.bak
