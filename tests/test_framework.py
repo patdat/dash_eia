@@ -1,6 +1,8 @@
+import ast
 import importlib
 import re
 import sys
+from collections.abc import Iterator
 from pathlib import Path
 
 from dash_eia.apps.compat import working_directory
@@ -85,3 +87,144 @@ def test_src_references_stay_inside_the_compat_layer():
         if reference.search(path.read_text(encoding="utf-8"))
     }
     assert offenders <= allowed
+
+
+# ---------------------------------------------------------------------------
+# Guard A — no module-scope credential loading.
+#
+# Importing a module must never put a secret into ``os.environ`` and must never
+# require one to be there already. For a pytest session, "import time" is
+# *collection* time: it happens before any fixture runs, so nothing a test does
+# can undo it, and a module that hard-indexes a credential turns a missing
+# ``.env`` into a collection error rather than a test failure.
+#
+# ``ROOTS`` is derived from ``__file__``, not from the process CWD. A relative
+# ``Path("src")`` would resolve to nothing when pytest is invoked from anywhere
+# but the repository root, and a guard that walks zero files passes.
+#
+# Both importable top-level trees are walked, not just ``src/``. ``pythonpath``
+# is ``["src", "."]``, so ``eia_downloads`` is importable too, and it carries a
+# near-verbatim copy of the ``src/steo`` downloaders. Walking only one of the
+# two would leave the guard reporting green on half the code it claims to cover.
+# ---------------------------------------------------------------------------
+_REPO = Path(__file__).resolve().parents[1]
+ROOTS = (_REPO / "src", _REPO / "eia_downloads")
+
+# Substrings that make an environment variable name credential-shaped.
+_CREDENTIAL_NAME = re.compile(
+    r"ACCESS|AUTH|AWS|BUCKET|CREDENTIAL|KEY|PASS|SECRET|TOKEN|USER|^DB_|^PG|POSTGRES"
+)
+
+
+def _is_main_guard(node: ast.If) -> bool:
+    """True for ``if __name__ == "__main__":``, which never runs on import."""
+    test = node.test
+    return (
+        isinstance(test, ast.Compare)
+        and isinstance(test.left, ast.Name)
+        and test.left.id == "__name__"
+        and len(test.ops) == 1
+        and isinstance(test.ops[0], ast.Eq)
+        and isinstance(test.comparators[0], ast.Constant)
+        and test.comparators[0].value == "__main__"
+    )
+
+
+def _runs_at_import(tree: ast.Module) -> Iterator[ast.AST]:
+    """Yield every node evaluated while the module is being imported.
+
+    Walking only ``tree.body`` -- the top-level statement list -- is not
+    sufficient, and the gap is not hypothetical: it is exactly how this repo hid
+    a ``load_dotenv()`` at ``src/steo/meta.py``. Nested one level inside a
+    ``try:``, it executed at precisely the same moment as one at column 0 while
+    reading as though it were guarded. ``try``/``if``/``with``/loops/class
+    bodies all run on import, so this descends through them.
+
+    It stops at two boundaries, both of which genuinely do not run on import:
+    a ``def`` body (its decorators and default values do, so those are kept),
+    and ``if __name__ == "__main__":`` (an ``else:`` branch on that guard *does*
+    run, so it is kept).
+    """
+    stack: list[ast.AST] = list(tree.body)
+    while stack:
+        node = stack.pop()
+        if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
+            stack.extend(node.decorator_list)
+            stack.extend(d for d in [*node.args.defaults, *node.args.kw_defaults] if d)
+            continue
+        if isinstance(node, ast.Lambda):
+            continue
+        if isinstance(node, ast.If) and _is_main_guard(node):
+            stack.extend(node.orelse)
+            continue
+        yield node
+        stack.extend(ast.iter_child_nodes(node))
+
+
+def _import_time_offenders(check) -> list[str]:
+    """Apply ``check`` to every import-time node of every module under ``ROOTS``."""
+    offenders: list[str] = []
+    for root in ROOTS:
+        assert root.is_dir(), f"guard root is missing: {root}"
+        for path in sorted(root.rglob("*.py")):
+            tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+            where = path.relative_to(_REPO).as_posix()
+            for node in _runs_at_import(tree):
+                finding = check(node)
+                if finding is not None:
+                    offenders.append(f"{where}:{node.lineno}: {finding}")
+    return sorted(offenders)
+
+
+def test_no_module_scope_load_dotenv():
+    """Importing anything importable must not read `.env`.
+
+    A module-scope `load_dotenv()` puts real credentials into `os.environ` the
+    moment the module is imported -- which, for a test session, is collection
+    time. `monkeypatch.setenv`/`delenv` cannot undo that: the loader is
+    idempotent behind a module global, so the values are already there and stay
+    there for every test that follows. Load `.env` inside the function that
+    needs the value, as `steo/meta.py::_load_dotenv` now does.
+    """
+
+    def check(node: ast.AST) -> str | None:
+        if not isinstance(node, ast.Call):
+            return None
+        name = getattr(node.func, "id", None) or getattr(node.func, "attr", None)
+        return "load_dotenv()" if name == "load_dotenv" else None
+
+    offenders = _import_time_offenders(check)
+    assert not offenders, f"import-time load_dotenv(): {offenders}"
+
+
+def test_no_module_scope_credential_environ_reads():
+    """Importing anything importable must not index `os.environ` for a secret.
+
+    `os.environ["EIA_API_KEY"]` at module scope is the defect that left a
+    sibling repo's CI red for four consecutive runs: with no `.env` on a runner
+    the subscript raises `KeyError` during collection, so *no* test in that file
+    ever executed and every green result it had came from a developer machine.
+    Read credentials inside the function that needs them.
+
+    A non-literal key (`os.environ[NAME]`) is reported too -- it cannot be shown
+    to be safe from the source alone, so it is not assumed to be.
+    """
+
+    def check(node: ast.AST) -> str | None:
+        if not isinstance(node, ast.Subscript):
+            return None
+        target = node.value
+        is_environ = (isinstance(target, ast.Attribute) and target.attr == "environ") or (
+            isinstance(target, ast.Name) and target.id == "environ"
+        )
+        if not is_environ:
+            return None
+        key = node.slice.value if isinstance(node.slice, ast.Constant) else None
+        if key is None:
+            return "environ[<non-literal>]"
+        if _CREDENTIAL_NAME.search(str(key).upper()):
+            return f"environ[{key!r}]"
+        return None
+
+    offenders = _import_time_offenders(check)
+    assert not offenders, f"import-time credential read: {offenders}"

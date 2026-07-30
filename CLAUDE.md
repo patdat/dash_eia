@@ -245,13 +245,33 @@ Don't move live data into them expecting the app to follow.
 
 ## Gotchas
 
-- **The test suite is 8 tests and proves almost nothing.** `tests/test_framework.py`
-  (7) covers workspace discovery, `bootstrap`, credential-free `--help`, the app
-  registry, and the compat layer's `sys.path` handling; `tests/test_entrypoints.py`
-  (1) asserts `run.py` imports without running. There is **zero** coverage of
-  `pages/**`, WPS/STEO/CLI/MSG parsing, or any chart. A green CI run means the
-  package shell and compat layer are intact — nothing more. Verify dashboard
-  changes by actually loading the page.
+- **The test suite is 15 tests and proves almost nothing about the dashboard.**
+  `tests/test_framework.py` (9) covers workspace discovery, `bootstrap`,
+  credential-free `--help`, the app registry, the compat layer's `sys.path`
+  handling, and the two import-time credential guards below;
+  `tests/test_entrypoints.py` (3) asserts `run.py` imports without running, in a
+  subprocess with a scrubbed environment, plus two tests on the scrubber;
+  `tests/test_guard_contract.py` (3) pins the boundary guard, one of them `live`
+  and one **skipped** because `boto3` is not installed. There is **zero**
+  coverage of `pages/**`, WPS/STEO/CLI/MSG parsing, or any chart. A green CI run
+  means the package shell, the compat layer, and the credential boundary are
+  intact — nothing more. Verify dashboard changes by actually loading the page.
+- **`load_dotenv()` must never run at import.** `test_framework.py`'s two AST
+  guards parse every module under **both** importable trees — `src/` and
+  `eia_downloads/`, since `pythonpath` is `["src", "."]` — and fail on an
+  import-time `load_dotenv()` or a credential-shaped `os.environ[...]`. Import
+  time is pytest *collection* time, before any fixture exists, so a module-scope
+  credential read cannot be undone. `steo/meta.py` had exactly this in both
+  trees, nested inside a `try:` where a top-level-statements-only scan could not
+  see it; it now loads `.env` in `_load_dotenv()`, called from `download_api()`.
+  Add new secrets the same way: read them in the function that needs them.
+- **This repo has no AWS surface, and the tests say so honestly.** `boto3` is
+  not a dependency, not in `uv.lock`, not installed, and appears nowhere in
+  `src/`, `eia_downloads/`, `pages/` or `run.py`. The sibling repos' subprocess
+  assertion that importing an entrypoint leaves `boto3.DEFAULT_SESSION is None`
+  is **deliberately not present here** — see the module docstring of
+  `tests/test_entrypoints.py`. Do not add it as an `importorskip`; that yields a
+  test that always skips. Add it for real if AWS ever arrives.
 - **Year constants are a manual annual chore.** `src/utils/variables.py`
   (`year_1_string`, `year_2_string`, `year_3_string`, `range_selector_*`,
   `type_to_remove`) is hardcoded and read by every WPS page; nothing warns when it

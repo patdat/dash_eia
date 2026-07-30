@@ -2,15 +2,27 @@ import os
 import requests
 import pandas as pd
 
-try:
-    from dotenv import load_dotenv
+
+def _load_dotenv():
+    """Read `.env` when a command asks for it, never when the module is imported.
+
+    This call used to sit at module scope (inside a `try:`, which runs on import
+    just the same). That put a real EIA_API_KEY into `os.environ` for anything
+    that so much as imported this module -- and for a pytest session, import
+    happens at collection, before any fixture exists to undo it.
+
+    python-dotenv is not a declared dependency of this project, so its absence
+    stays non-fatal: fall back to whatever the shell already exports.
+    """
+    try:
+        from dotenv import load_dotenv
+    except ImportError:
+        return
     load_dotenv()
-except ImportError:
-    # python-dotenv not installed; fall back to shell environment variables.
-    pass
 
 
 def download_api():
+    _load_dotenv()
     base_url = "https://api.eia.gov/v2/steo/data/"
     api_key = os.getenv("EIA_API_KEY")
     if not api_key:
