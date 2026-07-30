@@ -130,7 +130,7 @@ def _is_main_guard(node: ast.If) -> bool:
     )
 
 
-def _runs_at_import(tree: ast.Module) -> Iterator[ast.AST]:
+def _runs_at_import(tree: ast.Module) -> Iterator[ast.stmt | ast.expr]:
     """Yield every node evaluated while the module is being imported.
 
     Walking only ``tree.body`` -- the top-level statement list -- is not
@@ -157,7 +157,10 @@ def _runs_at_import(tree: ast.Module) -> Iterator[ast.AST]:
         if isinstance(node, ast.If) and _is_main_guard(node):
             stack.extend(node.orelse)
             continue
-        yield node
+        # Traversal covers every child; only statements and expressions are
+        # yielded, because they are the nodes that carry a `lineno` to report.
+        if isinstance(node, ast.stmt | ast.expr):
+            yield node
         stack.extend(ast.iter_child_nodes(node))
 
 
@@ -187,7 +190,7 @@ def test_no_module_scope_load_dotenv():
     needs the value, as `steo/meta.py::_load_dotenv` now does.
     """
 
-    def check(node: ast.AST) -> str | None:
+    def check(node: ast.stmt | ast.expr) -> str | None:
         if not isinstance(node, ast.Call):
             return None
         name = getattr(node.func, "id", None) or getattr(node.func, "attr", None)
@@ -210,7 +213,7 @@ def test_no_module_scope_credential_environ_reads():
     to be safe from the source alone, so it is not assumed to be.
     """
 
-    def check(node: ast.AST) -> str | None:
+    def check(node: ast.stmt | ast.expr) -> str | None:
         if not isinstance(node, ast.Subscript):
             return None
         target = node.value
