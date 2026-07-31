@@ -6,7 +6,7 @@ from src.wps.table_mapping import *
 from src.utils.colors import RED, GRAY_300, POSITIVE, NEGATIVE
 import dash
 from dash import html, dash_table, dcc, Input, Output
-from dash.dash_table.Format import Format, Group, Sign, Symbol
+from dash.dash_table.Format import Format, Group, Sign, Symbol, Scheme
 from src.app import app, initial_data
 import pandas as pd
 
@@ -51,6 +51,13 @@ def generate_dash_table(df, idents, table_id):
     # Check if this is a yield table (contains percentages)
     is_yield_table = 'Yield' in table_id
 
+    # `precision` alone does NOT mean decimal places. dash_table hands the
+    # specifier to d3-format, and a specifier with no scheme character is
+    # treated as `~g` -- *significant digits*. So `precision=1` rendered 12.7
+    # as "1e+1", the opposite of the intended "12.7". Naming the scheme makes
+    # `.1` mean one decimal place. The non-yield branch passes no precision at
+    # all, which d3 reads as ".12~g" -- that already renders 439279 as
+    # "439,279", so it must keep the default scheme.
     number_format = Format(
         symbol=Symbol.yes,
         symbol_suffix='',
@@ -60,6 +67,7 @@ def generate_dash_table(df, idents, table_id):
         decimal_delimiter='.',
         nully='N/A',
         sign=Sign.parantheses,
+        scheme=Scheme.fixed if is_yield_table else Scheme.default,
         precision=1 if is_yield_table else None  # Force 1 decimal for yields
     )
 

@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from dash import html, dash_table, dcc, Input, Output, callback
-from dash.dash_table.Format import Format, Group
+from dash.dash_table.Format import Format, Group, Scheme
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
@@ -48,14 +48,14 @@ def generate_port_summary_table(padd_filter='US'):
         data=port_stats.to_dict('records'),
         columns=[
             {"name": "Port", "id": "PORT_CITY"},
-            {"name": "Total Volume (kbd)", "id": "Total kbd", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
-            {"name": "Avg Monthly (kbd)", "id": "Avg Monthly kbd", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
-            {"name": "Volatility", "id": "Monthly Std Dev", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
-            {"name": "Companies", "id": "Companies", "type": "numeric", "format": Format(precision=0)},
-            {"name": "Countries", "id": "Countries", "type": "numeric", "format": Format(precision=0)},
-            {"name": "Avg API", "id": "Avg API", "type": "numeric", "format": Format(precision=1)},
-            {"name": "Avg Sulfur %", "id": "Avg Sulfur", "type": "numeric", "format": Format(precision=2)},
-            {"name": "Utilization %", "id": "Utilization %", "type": "numeric", "format": Format(precision=1)}
+            {"name": "Total Volume (kbd)", "id": "Total kbd", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Avg Monthly (kbd)", "id": "Avg Monthly kbd", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Volatility", "id": "Monthly Std Dev", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Companies", "id": "Companies", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=0)},
+            {"name": "Countries", "id": "Countries", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=0)},
+            {"name": "Avg API", "id": "Avg API", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1)},
+            {"name": "Avg Sulfur %", "id": "Avg Sulfur", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=2)},
+            {"name": "Utilization %", "id": "Utilization %", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1)}
         ],
         style_table={'border': 'none', 'borderRadius': '15px',
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)',

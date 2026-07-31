@@ -70,21 +70,21 @@ def generate_arbitrage_table(padd_filter='US'):
     # Define custom formatting for each row based on metric type
     def get_format_for_metric(metric_name):
         if 'Volume' in metric_name:
-            return Format(precision=1, group=Group.yes, group_delimiter=',')
+            return Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')
         elif 'Ratio' in metric_name or 'Spread' in metric_name:
-            return Format(precision=2)
+            return Format(scheme=Scheme.fixed, precision=2)
         elif 'API' in metric_name:
-            return Format(precision=1)
+            return Format(scheme=Scheme.fixed, precision=1)
         elif 'Sulfur' in metric_name:
-            return Format(precision=2)
+            return Format(scheme=Scheme.fixed, precision=2)
         else:
-            return Format(precision=2)
+            return Format(scheme=Scheme.fixed, precision=2)
     
     return dash_table.DataTable(
         data=arbitrage.to_dict('records'),
         columns=[
             {"name": "Metric", "id": "Metric"},
-            {"name": "Value", "id": "Value", "type": "numeric", "format": Format(precision=2, group=Group.yes, group_delimiter=',')}
+            {"name": "Value", "id": "Value", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=2, group=Group.yes, group_delimiter=',')}
         ],
         style_table={'border': 'none', 'borderRadius': '15px',
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},

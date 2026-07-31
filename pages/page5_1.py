@@ -47,11 +47,11 @@ def generate_market_summary_table(padd_filter='US'):
         columns=[
             {"name": "Metric", "id": "Metric"},
             {"name": "Current Month", "id": "Current", "type": "any",
-             "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+             "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
             {"name": "Previous Month", "id": "Previous", "type": "any",
-             "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+             "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
             {"name": "Change", "id": "Change %", "type": "numeric",
-             "format": Format(precision=1, sign=Sign.positive)}
+             "format": Format(scheme=Scheme.fixed, precision=1, sign=Sign.positive)}
         ],
         style_table={'border': 'none', 'borderRadius': '15px', 
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)'},
@@ -72,19 +72,19 @@ def generate_market_summary_table(padd_filter='US'):
             },
             {
                 'if': {'row_index': 0, 'column_id': 'Current'},
-                'format': Format(precision=1, group=Group.yes, group_delimiter=',')
+                'format': Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')
             },
             {
                 'if': {'row_index': 0, 'column_id': 'Previous'},
-                'format': Format(precision=1, group=Group.yes, group_delimiter=',')
+                'format': Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')
             },
             {
                 'if': {'row_index': 3, 'column_id': 'Current'},
-                'format': Format(precision=1)
+                'format': Format(scheme=Scheme.fixed, precision=1)
             },
             {
                 'if': {'row_index': 4, 'column_id': 'Current'},
-                'format': Format(precision=2)
+                'format': Format(scheme=Scheme.fixed, precision=2)
             }
         ]
     )
@@ -107,13 +107,13 @@ def generate_disruption_alerts_table(padd_filter='US'):
         columns=[
             {"name": "Country", "id": "Country"},
             {"name": "Change %", "id": "Change %", "type": "numeric", 
-             "format": Format(precision=1, sign=Sign.positive)},
+             "format": Format(scheme=Scheme.fixed, precision=1, sign=Sign.positive)},
             {"name": "Volume Impact (MB)", "id": "Volume Impact (MB)", "type": "numeric", 
              "format": Format(precision=0, scheme=Scheme.fixed, group=Group.yes, group_delimiter=',')},
             {"name": "Current kbd", "id": "Current kbd", "type": "numeric", 
-             "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+             "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
             {"name": "Affected Companies", "id": "Affected Companies", "type": "numeric",
-             "format": Format(precision=0)},
+             "format": Format(scheme=Scheme.fixed, precision=0)},
             {"name": "Signal", "id": "Signal"}
         ],
         style_table={'border': 'none', 'borderRadius': '15px', 

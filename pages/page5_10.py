@@ -41,12 +41,12 @@ def generate_supply_disruption_alerts(padd_filter='US'):
         data=alerts.to_dict('records') if not alerts.empty else [],
         columns=[
             {"name": "Country", "id": "Country"},
-            {"name": "Change %", "id": "Change %", "type": "numeric", "format": Format(precision=1)},
+            {"name": "Change %", "id": "Change %", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1)},
             {"name": "Volume Impact (MB)", "id": "Volume Impact (MB)", "type": "numeric", "format": Format(precision=0, scheme=Scheme.fixed, group=Group.yes, group_delimiter=',')},
-            {"name": "Current kbd", "id": "Current kbd", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Current kbd", "id": "Current kbd", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
             {"name": "Signal", "id": "Signal"},
             {"name": "Severity", "id": "Severity"},
-            {"name": "Affected Companies", "id": "Affected Companies", "type": "numeric", "format": Format(precision=0)}
+            {"name": "Affected Companies", "id": "Affected Companies", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=0)}
         ],
         style_table={'border': 'none', 'borderRadius': '15px',
                     'boxShadow': '0 4px 8px 0 rgba(0, 0, 0, 0.2)',

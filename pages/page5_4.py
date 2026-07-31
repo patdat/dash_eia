@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from dash import html, dash_table, dcc
-from dash.dash_table.Format import Format, Group, Sign, Symbol
+from dash.dash_table.Format import Format, Group, Sign, Symbol, Scheme
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
@@ -24,9 +24,9 @@ def generate_padd_summary_table():
         data=padd_summary.reset_index().to_dict('records'),
         columns=[
             {"name": col, "id": col, "type": "numeric" if col != "index" else "text",
-             "format": Format(precision=1, group=Group.yes, group_delimiter=',') if col == "Avg kbd" 
-                      else Format(precision=1) if col not in ["index", "Companies", "Countries"] 
-                      else Format(precision=0) if col in ["Companies", "Countries"]
+             "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',') if col == "Avg kbd" 
+                      else Format(scheme=Scheme.fixed, precision=1) if col not in ["index", "Companies", "Countries"] 
+                      else Format(scheme=Scheme.fixed, precision=0) if col in ["Companies", "Countries"]
                       else None}
             for col in padd_summary.reset_index().columns
         ],
@@ -57,9 +57,9 @@ def generate_port_analysis_table():
         data=port_analysis.to_dict('records'),
         columns=[
             {"name": col, "id": col, "type": "numeric" if col not in ["Port", "PADD"] else "text",
-             "format": Format(precision=1, group=Group.yes, group_delimiter=',') if col == "Total Volume"
-                      else Format(precision=1) if col == "Market Share %"
-                      else Format(precision=0) if col in ["Companies", "Countries", "PADD"]
+             "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',') if col == "Total Volume"
+                      else Format(scheme=Scheme.fixed, precision=1) if col == "Market Share %"
+                      else Format(scheme=Scheme.fixed, precision=0) if col in ["Companies", "Countries", "PADD"]
                       else None}
             for col in port_analysis.columns
         ],
