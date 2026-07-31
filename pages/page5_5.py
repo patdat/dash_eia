@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 from dash import html, dash_table, dcc, Input, Output, callback
-from dash.dash_table.Format import Format, Group
+from dash.dash_table.Format import Format, Group, Scheme
 import plotly.graph_objects as go
 import plotly.express as px
 from src.cli.cli_data_processor import CLIDataProcessor
@@ -30,11 +30,11 @@ def generate_country_risk_table(padd_filter='US'):
         data=country_data.to_dict('records'),
         columns=[
             {"name": "Country", "id": "index"},
-            {"name": "Avg kbd", "id": "Avg kbd", "type": "numeric", "format": Format(precision=1, group=Group.yes, group_delimiter=',')},
-            {"name": "Importers", "id": "Importers", "type": "numeric", "format": Format(precision=0)},
-            {"name": "Ports", "id": "Ports", "type": "numeric", "format": Format(precision=0)},
-            {"name": "Avg API", "id": "Avg API", "type": "numeric", "format": Format(precision=1)},
-            {"name": "Avg Sulfur", "id": "Avg Sulfur", "type": "numeric", "format": Format(precision=2)},
+            {"name": "Avg kbd", "id": "Avg kbd", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1, group=Group.yes, group_delimiter=',')},
+            {"name": "Importers", "id": "Importers", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=0)},
+            {"name": "Ports", "id": "Ports", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=0)},
+            {"name": "Avg API", "id": "Avg API", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=1)},
+            {"name": "Avg Sulfur", "id": "Avg Sulfur", "type": "numeric", "format": Format(scheme=Scheme.fixed, precision=2)},
             {"name": "Concentration", "id": "Concentration"}
         ],
         style_table={'border': 'none', 'borderRadius': '15px',

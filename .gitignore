@@ -4,6 +4,15 @@ __pycache__/
 *$py.class
 .Ds_Store
 
+# Canonical generated data. Reviewed data/reference content remains tracked.
+data/raw/
+data/interim/
+data/processed/
+data/exports/
+data/state/
+data/cache/
+logs/
+
 # C extensions
 *.so
 
@@ -155,3 +164,22 @@ cython_debug/
 
 # Superpowers brainstorming sessions
 .superpowers/
+
+# NOTE: *.feather / *.parquet are deliberately NOT ignored.
+#
+# They are generated, and tracking them does dirty git on every pipeline run.
+# But CI has no network, no credentials and no way to regenerate them, and the
+# dashboard loads them at import time: src/index.py imports all 40 page modules
+# eagerly, and ~19 of those read data at module scope. Untracking them broke the
+# "Import the dashboard from a foreign working directory" CI step outright.
+#
+# Making the import tolerate missing data is the better fix, but it is not a
+# one-line change: it needs guards at three loader chokepoints
+# (src/utils/simple_loader.py, src/cli/cli_data_processor.py,
+# src/steo/chart_dpr.py), three more CLIDataProcessor aggregations that raise on
+# an empty frame (get_market_summary, get_supply_disruption_alerts,
+# get_seasonality_analysis), and per-page empty-state handling across the page
+# modules. Do that first, then untrack these.
+
+# Editor backups do not belong in the repo.
+*.bak

@@ -13,6 +13,19 @@
 
 A comprehensive energy data analytics dashboard for tracking petroleum markets, drilling productivity, and energy forecasts using EIA (Energy Information Administration) data.
 
+## Canonical Setup and Launch
+
+```powershell
+uv sync --locked --extra apps
+dash-eia bootstrap
+eia-dashboard
+```
+
+The installed namespaced form is `dash-eia app eia-dashboard`. The current
+numeric page and duplicate ingestion trees remain compatibility surfaces while
+route and artifact parity are characterized; new work belongs under the
+installable `dash_eia` package. See `docs/architecture.md`.
+
 ## Overview
 
 This dashboard provides real-time analysis of energy markets by processing multiple EIA data sources into an interactive, multi-page Dash application. It serves traders, analysts, and researchers with fundamental market intelligence through 50+ specialized analysis pages.

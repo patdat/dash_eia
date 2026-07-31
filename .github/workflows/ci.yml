@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    # A commit that only touches prose cannot change a test result, so it does
+    # not need a six-runner matrix. Kept in sync with the pull_request list
+    # below by hand: GitHub Actions does not support YAML anchors.
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Without this, pushing three times in a minute leaves three full matrices
+# running; only the last one's result is ever looked at.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  foundation:
+    strategy:
+      fail-fast: false
+      matrix:
+        # macOS is opt-in: it runs only on a manual `workflow_dispatch`.
+        #
+        # Measured from the Actions API over 2026-07-27..31: macOS was 1,620 of
+        # 2,595 billed minutes (62%) while being only 18% of raw runner time --
+        # the 10x multiplier, not slowness. Gating it to "not a pull request"
+        # would have saved almost nothing, because 113 of 165 runs were pushes
+        # straight to main and only 14 were pull requests.
+        #
+        # Nothing here has a macOS-only code path: the only sys.platform
+        # branches in these repos open a file in the OS viewer, which no
+        # headless runner exercises. The one genuine cross-platform bug found
+        # so far (kpler's unstable sort on tied values) showed up as Linux and
+        # Windows agreeing against macOS -- Linux alone caught the divergence.
+        #
+        # Run `gh workflow run ci.yml` to get the macOS leg on demand.
+        os: ${{ fromJSON(github.event_name == 'workflow_dispatch' && '["ubuntu-latest", "windows-latest", "macos-latest"]' || '["ubuntu-latest", "windows-latest"]') }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version-file: pyproject.toml
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+      - run: uv sync --locked --extra apps
+      - run: uv lock --check
+      - run: uv run --locked ruff check src/dash_eia tests
+      - run: uv run --locked ruff format --check src/dash_eia tests
+      - run: uv run --locked pyright
+      # requirements.txt is a documented pip fallback generated from uv.lock.
+      # Re-export and diff so it cannot drift from the lock unnoticed. uv stamps
+      # its own command line into the header, so only column-0 comments are
+      # stripped; the indented `# via` annotations are still compared.
+      - name: requirements.txt matches uv.lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          uv export --locked --extra apps --no-dev --no-hashes >requirements.expected.txt
+          diff -u <(grep -v '^#' requirements.txt) <(grep -v '^#' requirements.expected.txt)
+          rm -f requirements.expected.txt
+      - run: uv run --locked pytest -m "not live"
+      - run: uv build --wheel --no-sources
+      # Runs the built wheel from outside the checkout, pointing --workspace at
+      # it. `bootstrap` needs no credentials and no app extras.
+      - name: Smoke-test the installed wheel outside the checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          wheel="$(ls "$PWD"/dist/*.whl)"
+          checkout="$PWD"
+          cd "$(mktemp -d)"
+          uv run --isolated --no-project --with "$wheel" dash-eia --help
+          uv run --isolated --no-project --with "$wheel" \
+            dash-eia --workspace "$checkout" bootstrap
+      # The dashboard itself lives at `src/index.py` in the workspace, so it
+      # cannot come from the wheel. Import it from a foreign working directory
+      # (without starting the server) to prove the compat layer still reaches
+      # it; `run_app` does exactly this before calling `app.run`.
+      - name: Import the dashboard from a foreign working directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$PWD"
+          uv run --locked --extra apps python - "$PWD" <<'PY'
+          import importlib, os, sys
+          from pathlib import Path
+          from dash_eia.apps.compat import working_directory
+          from dash_eia.apps.runner import APP_SPECS
+
+          checkout = Path(sys.argv[1])
+          os.chdir(Path(os.sep))
+          before = list(sys.path)
+          spec = APP_SPECS["eia-dashboard"]
+          with working_directory(checkout):
+              app = getattr(importlib.import_module(spec.module), spec.attribute)
+          assert app is not None, "dashboard object missing"
+          assert sys.path == before, "sys.path was not restored"
+          print(f"{spec.module} imported from {Path.cwd()}")
+          PY
