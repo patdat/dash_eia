@@ -3,18 +3,43 @@ name: CI
 on:
   push:
     branches: [main]
+    # A commit that only touches prose cannot change a test result, so it does
+    # not need a six-runner matrix. Kept in sync with the pull_request list
+    # below by hand: GitHub Actions does not support YAML anchors.
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
   pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - 'LICENSE'
+      - '.gitignore'
   workflow_dispatch:
 
 permissions:
   contents: read
+
+# Without this, pushing three times in a minute leaves three full matrices
+# running; only the last one's result is ever looked at.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   foundation:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        # macOS bills at 10x Linux and Windows at 2x, so the macOS leg runs on
+        # merges to main and on manual dispatch rather than on every PR push.
+        # Nothing here has a macOS-only code path: the only sys.platform
+        # branches in these repos open a file in the OS viewer, which no
+        # headless runner exercises. A macOS regression is still caught on
+        # merge, one run later.
+        os: ${{ fromJSON((github.event_name == 'push' || github.event_name == 'workflow_dispatch') && '["ubuntu-latest", "windows-latest", "macos-latest"]' || '["ubuntu-latest", "windows-latest"]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
