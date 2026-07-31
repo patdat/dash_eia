@@ -1,6 +1,7 @@
 import plotly.graph_objs as go
-from src.utils.plotly_theme import apply_minimal_chrome, FONT_FAMILY
+
 from src.utils import colors
+from src.utils.plotly_theme import FONT_FAMILY, apply_minimal_chrome
 
 
 def test_chrome_sets_white_bg_and_inter_font():
