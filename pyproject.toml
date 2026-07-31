@@ -7,7 +7,7 @@ name = "dash-eia"
 version = "0.1.0"
 description = "EIA energy analytics dashboard"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 classifiers = ["Private :: Do Not Upload"]
 dependencies = [
     "beautifulsoup4==4.13.5",
@@ -58,7 +58,7 @@ addopts = ["--import-mode=importlib", "--strict-config", "--strict-markers"]
 markers = ["live: requires EIA connectivity or developer-local data"]
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py313"
 line-length = 100
 force-exclude = true
 extend-exclude = [
@@ -78,7 +78,7 @@ select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
 line-ending = "lf"
 
 [tool.pyright]
-pythonVersion = "3.11"
+pythonVersion = "3.13"
 typeCheckingMode = "standard"
 venvPath = "."
 venv = ".venv"
