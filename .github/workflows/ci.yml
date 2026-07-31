@@ -33,13 +33,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # macOS bills at 10x Linux and Windows at 2x, so the macOS leg runs on
-        # merges to main and on manual dispatch rather than on every PR push.
+        # macOS is opt-in: it runs only on a manual `workflow_dispatch`.
+        #
+        # Measured from the Actions API over 2026-07-27..31: macOS was 1,620 of
+        # 2,595 billed minutes (62%) while being only 18% of raw runner time --
+        # the 10x multiplier, not slowness. Gating it to "not a pull request"
+        # would have saved almost nothing, because 113 of 165 runs were pushes
+        # straight to main and only 14 were pull requests.
+        #
         # Nothing here has a macOS-only code path: the only sys.platform
         # branches in these repos open a file in the OS viewer, which no
-        # headless runner exercises. A macOS regression is still caught on
-        # merge, one run later.
-        os: ${{ fromJSON((github.event_name == 'push' || github.event_name == 'workflow_dispatch') && '["ubuntu-latest", "windows-latest", "macos-latest"]' || '["ubuntu-latest", "windows-latest"]') }}
+        # headless runner exercises. The one genuine cross-platform bug found
+        # so far (kpler's unstable sort on tied values) showed up as Linux and
+        # Windows agreeing against macOS -- Linux alone caught the divergence.
+        #
+        # Run `gh workflow run ci.yml` to get the macOS leg on demand.
+        os: ${{ fromJSON(github.event_name == 'workflow_dispatch' && '["ubuntu-latest", "windows-latest", "macos-latest"]' || '["ubuntu-latest", "windows-latest"]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
     steps:
