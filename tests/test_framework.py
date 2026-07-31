@@ -5,9 +5,12 @@ import sys
 from collections.abc import Iterator
 from pathlib import Path
 
+import pytest
+
+from dash_eia.apps import launchers, runner
 from dash_eia.apps.compat import working_directory
 from dash_eia.cli import main
-from dash_eia.config.paths import WorkspacePaths
+from dash_eia.config.paths import WORKSPACE_ENV_VAR, WorkspacePaths
 
 
 def _workspace(path: Path) -> Path:
@@ -51,6 +54,105 @@ def test_app_registry_has_stable_name_and_port():
     from dash_eia.apps.runner import APP_SPECS
 
     assert APP_SPECS["eia-dashboard"].default_port == 8052
+
+
+# ---------------------------------------------------------------------------
+# `eia-dashboard` argument routing.
+#
+# The console script wraps `dash-eia app eia-dashboard`, appending the caller's
+# arguments *after* the subcommand. `--workspace` is registered on the
+# top-level parser, so argparse rejected the documented invocation outright:
+#
+#     $ eia-dashboard --workspace /checkout
+#     dash-eia: error: unrecognized arguments: --workspace /checkout
+#
+# That left `DASH_EIA_WORKSPACE` and CWD discovery as the only ways to reach a
+# workspace from an installed wheel, while CLAUDE.md documents the flag. These
+# tests drive the launcher, not the parser, because the defect was in how the
+# launcher composed argv -- a parser-level test would have passed throughout.
+# ---------------------------------------------------------------------------
+def _capture_run_app(monkeypatch) -> dict[str, object]:
+    """Record what `cli._app` hands `run_app`, without importing or serving the app."""
+    captured: dict[str, object] = {}
+
+    def fake_run_app(name, *, root, host, port, debug):
+        captured.update(name=name, root=root, host=host, port=port, debug=debug)
+        return 0
+
+    monkeypatch.setattr(runner, "run_app", fake_run_app)
+    return captured
+
+
+def _isolated_workspace(tmp_path: Path, monkeypatch) -> Path:
+    """A workspace that neither the env var nor CWD discovery could have supplied.
+
+    The CWD is moved to a sibling directory and the env var cleared, so a root
+    that still arrives at `run_app` can only have come from the flag.
+    """
+    root = tmp_path / "workspace"
+    root.mkdir()
+    _workspace(root)
+    elsewhere = tmp_path / "elsewhere"
+    elsewhere.mkdir()
+    monkeypatch.delenv(WORKSPACE_ENV_VAR, raising=False)
+    monkeypatch.chdir(elsewhere)
+    return root.resolve()
+
+
+@pytest.mark.parametrize(
+    "spelling",
+    [
+        pytest.param(["--workspace", "{root}"], id="two-token"),
+        pytest.param(["--workspace={root}"], id="single-token"),
+    ],
+)
+def test_eia_dashboard_accepts_workspace_before_the_subcommand(tmp_path, monkeypatch, spelling):
+    """`eia-dashboard --workspace X` must resolve the workspace to X.
+
+    Both spellings argparse accepts for the top-level option are covered; the
+    single-token `--workspace=X` form never reaches the two-token branch.
+    """
+    root = _isolated_workspace(tmp_path, monkeypatch)
+    captured = _capture_run_app(monkeypatch)
+
+    assert launchers.eia_dashboard([token.format(root=root) for token in spelling]) == 0
+    assert captured["root"] == root
+    assert captured["name"] == "eia-dashboard"
+
+
+def test_eia_dashboard_still_forwards_subcommand_arguments(tmp_path, monkeypatch):
+    """Lifting `--workspace` out must not swallow the options around it.
+
+    `--host`/`--port`/`--debug` belong to the `app` subparser and have to stay
+    behind; `run.py` passes `--debug` this way on every operator launch.
+    """
+    root = _isolated_workspace(tmp_path, monkeypatch)
+    captured = _capture_run_app(monkeypatch)
+
+    arguments = ["--host", "0.0.0.0", "--workspace", str(root), "--port", "9101", "--debug"]
+    assert launchers.eia_dashboard(arguments) == 0
+    assert captured["root"] == root
+    assert (captured["host"], captured["port"], captured["debug"]) == ("0.0.0.0", 9101, True)
+
+
+def test_eia_dashboard_still_honours_the_workspace_environment_variable(tmp_path, monkeypatch):
+    """`DASH_EIA_WORKSPACE` keeps working when no flag is given."""
+    root = _isolated_workspace(tmp_path, monkeypatch)
+    captured = _capture_run_app(monkeypatch)
+    monkeypatch.setenv(WORKSPACE_ENV_VAR, str(root))
+
+    assert launchers.eia_dashboard([]) == 0
+    assert captured["root"] == root
+
+
+def test_eia_dashboard_still_discovers_the_workspace_from_the_cwd(tmp_path, monkeypatch):
+    """Walking up from the CWD keeps working when no flag and no env var is given."""
+    root = _isolated_workspace(tmp_path, monkeypatch)
+    captured = _capture_run_app(monkeypatch)
+    monkeypatch.chdir(root)
+
+    assert launchers.eia_dashboard([]) == 0
+    assert captured["root"] == root
 
 
 def test_working_directory_puts_the_workspace_on_the_import_path(tmp_path):
